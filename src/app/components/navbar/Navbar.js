@@ -1,53 +1,54 @@
-import React from 'react';
+import React from "react";
 
-import * as Styled from './NavbarStyles';
+import * as Styled from "./NavbarStyles";
+import NavbarItem from "./NavbarItem";
 
 const Navbar = () => {
   return (
     <Styled.Menu>
       <Styled.Ul>
-        <Styled.Li active={true}>
-          <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+        <NavbarItem >
+          <Styled.A to="/About">
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
-        <Styled.Li>
-          <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+        </NavbarItem>
+        <NavbarItem>
+          <Styled.A to="/About">
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
-        <Styled.Li>
+        </NavbarItem>
+        <NavbarItem>
           <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
-        <Styled.Li>
+        </NavbarItem>
+        <NavbarItem>
           <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
-        <Styled.Li>
+        </NavbarItem>
+        <NavbarItem>
           <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
-        <Styled.Li>
+        </NavbarItem>
+        <NavbarItem>
           <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
-        <Styled.Li>
+        </NavbarItem>
+        <NavbarItem>
           <Styled.A>
-            <img src='https://dummyimage.com/30' alt='' />
+            <img src="https://dummyimage.com/30" alt="" />
             <span>label</span>
           </Styled.A>
-        </Styled.Li>
+        </NavbarItem>
       </Styled.Ul>
     </Styled.Menu>
   );

@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { StyledItem } from './NavbarStyles'
+import { Li } from './NavbarStyles'
  
 
 export const Item = ({children}) => {
     return (
-        <li>
-            <a href="#">{children}</a>
-        </li>
+        <Li>
+           {children}
+        </Li>
     )
 }
 

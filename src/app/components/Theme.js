@@ -10,6 +10,3 @@ export const darkTheme = {
     menuHover: '#614AC2',
 }
 
-export const StyledLayout = styled.div`
-    background: ${({theme}) => theme.mainSoft}
-`
