@@ -8,43 +8,56 @@ import { darkTheme } from './Theme';
 import { StyledLayout, Menu, Body } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from './Routing';
+import Logo from '../logo/Logo';
 
 const Layout = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <StyledLayout>
         <Menu>
+          <Logo />
           <Navbar />
         </Menu>
         <Body>
           <Switch>
+
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
             <Route path={Routing.Dashboard.path}>
               <Routing.Dashboard.Component />
             </Route>
+
             <Route path={Routing.Records.path}>
               <Routing.Records.Component />
             </Route>
+
             <Route exact path={Routing.Vehicles.path}>
               <Routing.Vehicles.Component />
             </Route>
             <Route path={Routing.VehicleDetails.path}>
               <Routing.VehicleDetails.Component />
             </Route>
-            <Route path={Routing.Drivers.path}>
+
+            <Route exact path={Routing.Drivers.path}>
               <Routing.Drivers.Component />
             </Route>
+            <Route path={Routing.DriversDetails.path}>
+              <Routing.DriversDetails.Component />
+            </Route>
+
             <Route path={Routing.Tours.path}>
               <Routing.Tours.Component />
             </Route>
+
             <Route path={Routing.Settings.path}>
               <Routing.Settings.Component />
             </Route>
+
             <Route path={Routing.Reports.path}>
               <Routing.Reports.Component />
             </Route>
+
           </Switch>
         </Body>
       </StyledLayout>

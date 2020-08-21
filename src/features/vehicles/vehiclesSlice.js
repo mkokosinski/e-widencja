@@ -10,6 +10,7 @@ export const vehicleSlice = createSlice({
       model: 'Picanto',
       registrationNumber: 'SK 999999',
       odometer: 4503.4,
+      checkupDate: '2020-10-02'
     },
     {
       id: '2',
@@ -18,6 +19,7 @@ export const vehicleSlice = createSlice({
       model: 'Picanto',
       registrationNumber: 'SK 888888',
       odometer: 18293.2,
+      checkupDate: '2020-10-02'
     },
     {
       id: '3',
@@ -26,6 +28,7 @@ export const vehicleSlice = createSlice({
       model: 'Ceed',
       registrationNumber: 'SK 777777',
       odometer: 124503.1,
+      checkupDate: '2020-10-02'
     },
     {
       id: '4',
@@ -34,6 +37,7 @@ export const vehicleSlice = createSlice({
       model: 'Venga',
       registrationNumber: 'SK 666666',
       odometer: 74023.4,
+      checkupDate: '2020-10-02'
     },
   ],
   reducers: {
