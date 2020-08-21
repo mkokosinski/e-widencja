@@ -1,16 +1,17 @@
-import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-import { A, Li } from "./NavbarStyles";
+import { A, Li, Icon, Label } from './NavbarStyles';
 
 export const Item = ({ to, label, icon }) => {
   return (
     <>
       <Li>
         <A to={to}>
-        <FontAwesomeIcon icon={icon} />
-          <span>{label}</span>
+          <Icon>
+            <FontAwesomeIcon icon={icon} />
+          </Icon>
+          <Label>{label}</Label>
         </A>
       </Li>
     </>

@@ -1,15 +1,15 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRecordVinyl } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   display: flex;
+  grid-area: logo;
+
   align-items: center;
   justify-content: center;
-  height: 200px;
-  width: 100%;
 `;
 
 const StyledLogo = styled.div`
@@ -24,7 +24,7 @@ const StyledLogo = styled.div`
 `;
 
 const Ico = styled.div`
-  padding:9px 10px;
+  padding: 9px 10px;
 `;
 
 const Content = styled.div`

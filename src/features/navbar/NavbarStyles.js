@@ -1,20 +1,32 @@
-import styled, { css } from "styled-components";
-import { NavLink, Link } from "react-router-dom";
-import Decorator from "./itemDecorator.svg";
+import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { device } from '../layout/LayoutStyles';
+import Decorator from './itemDecorator.svg';
 
 export const Menu = styled.nav`
-  align-items: flex-end;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
+  width: 77%;
+
+  @media screen and ${device.laptop} {
+    align-items: flex-end;
+    width: 100%;
+  }
 `;
 
 export const Ul = styled.ul`
-  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  position: relative;
   margin: 0;
   padding: 0px;
-  position: relative;
+  list-style-type: none;
+
+  @media screen and ${device.laptop} {
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 
 export const Li = styled.li`
@@ -22,7 +34,20 @@ export const Li = styled.li`
     display: flex;
     align-items: center;
     position: relative;
-    width: 220px;
+
+    :nth-child(1){
+      display: none;
+    }
+
+    @media screen and ${device.tablet} {
+      :nth-child(1){
+        display: flex;
+      }
+    }
+
+    @media screen and ${device.laptop} {
+      width: 220px;
+    }
   `}
 `;
 
@@ -30,14 +55,13 @@ export const A = styled(NavLink)`
   ${({ theme }) => css`
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    margin: 10px 0;
-    padding: 20px 40px;
+    justify-content: center;
+    flex-direction: column;
+    width: 62px;
+    height: 62px;
     z-index: 2;
 
     background: transparent;
-    border-radius: 20px 0px 0 20px;
     cursor: pointer;
 
     color: ${theme.nav.default.color};
@@ -46,37 +70,90 @@ export const A = styled(NavLink)`
     text-transform: capitalize;
     overflow: hidden;
 
-    :hover {
-      background: ${theme.nav.hover};
-    }
-
     &.active {
       background: ${theme.nav.active.background};
       color: ${theme.nav.active.color};
       font-weight: ${theme.font.nav.active.weight};
 
+      border-radius: 0 0px 20px 20px;
+
       ::before,
       ::after {
-        content: "";
-        width: 100%;
-        height: 20px;
+        content: '';
         background: url(${Decorator}) no-repeat right;
         position: absolute;
+        pointer-events: none;
       }
 
       ::before {
-        top: -10px;
-        right: -2px;
+        top: -12px;
+        left: -30px;
+        width: 32px;
+        transform: rotateZ(270deg);
+        height: 50px;
       }
       ::after {
-        bottom: -10px;
-        right: -2px;
-        transform: scale(1,-1);
+        top: -12px;
+        right: -30px;
+        width: 32px;
+        transform: rotateZ(270deg) scale(1, -1);
+        height: 50px;
       }
     }
 
-    span {
-      margin-left: 16px;
+    @media screen and ${device.laptop} {
+      border-radius: 20px 0px 0 20px;
+      margin: 10px 0;
+      padding: 20px 40px;
+      flex-direction: row;
+      justify-content: flex-start;
+      width: 100%;
+
+      :hover {
+        background: linear-gradient(90deg, ${theme.nav.hover}, transparent);
+      }
+
+      &.active {
+        border-radius: 20px 0px 0 20px;
+
+        :hover {
+          background: ${theme.nav.active.background};
+        }
+
+        ::before,
+        ::after {
+          width: 30px;
+          height: 30px;
+          transform: rotateZ(0deg);
+          left: auto;
+          top: auto;
+          right: auto;
+          bottom: auto;
+        }
+
+        ::before {
+          top: -19px;
+          right: -2px;
+        }
+        ::after {
+          bottom: -19px;
+          right: -2px;
+          transform: rotateZ(0deg) scale(1, -1);
+        }
+      }
     }
   `}
+`;
+
+export const Icon = styled.div``;
+
+export const Label = styled.div`
+  font-size: 0.8rem;
+
+  @media screen and ${device.laptop} {
+    font-size: 1rem;
+    margin-left: 20px;
+
+    display: block;
+  }
 `;

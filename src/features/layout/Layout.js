@@ -8,19 +8,18 @@ import { darkTheme } from './Theme';
 import { StyledLayout, Menu, Body } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from './Routing';
-import Logo from '../logo/Logo';
+import Logo from './Logo';
 
 const Layout = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <StyledLayout>
+        <Logo />
         <Menu>
-          <Logo />
           <Navbar />
         </Menu>
         <Body>
           <Switch>
-
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
@@ -57,7 +56,6 @@ const Layout = () => {
             <Route path={Routing.Reports.path}>
               <Routing.Reports.Component />
             </Route>
-
           </Switch>
         </Body>
       </StyledLayout>
