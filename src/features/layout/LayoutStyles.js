@@ -44,6 +44,8 @@ export const StyledLayout = styled.div`
       'logo body'
       'menu body';
 
+    overflow: auto;
+
     flex-direction: row;
     font-size: ${({ theme }) => theme.font.size};
   }
@@ -51,7 +53,7 @@ export const StyledLayout = styled.div`
 
 export const Menu = styled.div`
   display: flex;
-  align-items:center;
+  align-items: center;
   flex-direction: column;
   grid-area: menu;
 
