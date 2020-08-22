@@ -19,6 +19,6 @@ namespace EFDataAccess.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        public List<Permission> Permissions { get; set; }
+        public List<UserPermission> UserPermissions { get; set; }
     }
 }

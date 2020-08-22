@@ -11,6 +11,6 @@ namespace EFDataAccess.Models
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public List<User> Users { get; set; }
+        public List<UserPermission> UserPermissions { get; set; }
     }
 }
