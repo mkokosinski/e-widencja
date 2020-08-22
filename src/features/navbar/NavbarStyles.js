@@ -5,7 +5,8 @@ import Decorator from './itemDecorator.svg';
 
 export const Menu = styled.nav`
   display: flex;
-  width: 77%;
+  overflow: hidden;
+  width: 84%;
 
   @media screen and ${device.laptop} {
     align-items: flex-end;
@@ -35,14 +36,7 @@ export const Li = styled.li`
     align-items: center;
     position: relative;
 
-    :nth-child(1){
-      display: none;
-    }
-
     @media screen and ${device.tablet} {
-      :nth-child(1){
-        display: flex;
-      }
     }
 
     @media screen and ${device.laptop} {
@@ -103,8 +97,7 @@ export const A = styled(NavLink)`
 
     @media screen and ${device.laptop} {
       border-radius: 20px 0px 0 20px;
-      margin: 10px 0;
-      padding: 20px 40px;
+      padding: 10px 40px;
       flex-direction: row;
       justify-content: flex-start;
       width: 100%;
@@ -143,6 +136,14 @@ export const A = styled(NavLink)`
       }
     }
   `}
+`;
+
+export const ShowMore = styled(Li)`
+  display: flex;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Icon = styled.div``;

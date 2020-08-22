@@ -9,15 +9,15 @@ import Vehicles from '../vehicles/Vehicles';
 import VehicleDetails from '../vehicles/VehicleDetails';
 
 const Routing = {
-  Tours: { Component: Tours, path: '/tours' },
-  Settings: { Component: Settings, path: '/settings' },
-  Reports: { Component: Reports, path: '/reports' },
-  Records: { Component: Records, path: '/records' },
-  Drivers: { Component: Drivers, path: '/drivers' },
-  DriversDetails: { Component: DriverDetails, path: '/drivers/:id' },
-  Dashboard: { Component: Dashboard, path: '/dashboard' },
-  Vehicles: { Component: Vehicles, path: '/vehicles' },
-  VehicleDetails: { Component: VehicleDetails, path: '/vehicles/:id' },
+  Tours: { Component: Tours, path: '/e-widencja/tours' },
+  Settings: { Component: Settings, path: '/e-widencja/settings' },
+  Reports: { Component: Reports, path: '/e-widencja/reports' },
+  Records: { Component: Records, path: '/e-widencja/records' },
+  Drivers: { Component: Drivers, path: '/e-widencja/drivers' },
+  DriversDetails: { Component: DriverDetails, path: '/e-widencja/drivers/:id' },
+  Dashboard: { Component: Dashboard, path: '/e-widencja/dashboard' },
+  Vehicles: { Component: Vehicles, path: '/e-widencja/vehicles' },
+  VehicleDetails: { Component: VehicleDetails, path: '/e-widencja/vehicles/:id' },
 };
 
 export default Routing;

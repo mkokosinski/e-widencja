@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-
 import { ThemeProvider } from 'styled-components';
 
 import { darkTheme } from './Theme';
+
+import { setIsMobile, selectIsMobile } from './layoutSlice';
 
 import { StyledLayout, Menu, Body } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from './Routing';
 import Logo from './Logo';
 
+import { size } from './LayoutStyles';
+import { useDispatch, useSelector } from 'react-redux';
+
 const Layout = () => {
+  const dispatch = useDispatch();
+  const isMobile = useSelector(selectIsMobile);
+
+  const resizeHandler = (e) => {
+    const {
+      screen: { width },
+    } = window;
+    if (width < size.mobileXL && !isMobile) {
+      console.log('mobile');
+      dispatch(setIsMobile(true));
+    }
+
+    if (width > size.mobileXL && isMobile) {
+      console.log('not mobile');
+      dispatch(setIsMobile(false));
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeHandler);
+    resizeHandler();
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    };
+  });
+
   return (
     <ThemeProvider theme={darkTheme}>
       <StyledLayout>
