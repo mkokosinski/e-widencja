@@ -3,17 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFDataAccess
 {
-    class EFMainContext : DbContext
+    public class EFMainContext : DbContext
     {
-        private readonly string dbString;
-
-        public EFMainContext(string dbString)
-        {
-            this.dbString = dbString;
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(dbString);
-
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=test_code_first;Username=test;Password=test");
 
         public DbSet<Address> Address { get; set; }
         public DbSet<Company> Company { get; set; }

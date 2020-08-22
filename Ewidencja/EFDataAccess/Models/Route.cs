@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EFDataAccess.Models
 {
-    class Route
+    public class Route
     {
 
         [Required]

@@ -2,7 +2,7 @@
 
 namespace EFDataAccess.Models
 {
-    class Vehicle
+    public class Vehicle
     {
         [Required]
         public int Id { get; set; }

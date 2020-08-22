@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EFDataAccess.Models
 {
-    class Ride
+    public class Ride
     {
         [Required]
         public int Id { get; set; }
