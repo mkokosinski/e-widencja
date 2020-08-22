@@ -9,7 +9,7 @@ export const vehicleSlice = createSlice({
       mark: 'KIA',
       model: 'Picanto',
       registrationNumber: 'SK 999999',
-      odometer: 4503.4,
+      mileage: 4503.4,
       checkupDate: '2020-10-02'
     },
     {
@@ -18,7 +18,7 @@ export const vehicleSlice = createSlice({
       mark: 'KIA',
       model: 'Picanto',
       registrationNumber: 'SK 888888',
-      odometer: 18293.2,
+      mileage: 18293.2,
       checkupDate: '2020-10-02'
     },
     {
@@ -27,7 +27,7 @@ export const vehicleSlice = createSlice({
       mark: 'KIA',
       model: 'Ceed',
       registrationNumber: 'SK 777777',
-      odometer: 124503.1,
+      mileage: 124503.1,
       checkupDate: '2020-10-02'
     },
     {
@@ -36,7 +36,7 @@ export const vehicleSlice = createSlice({
       mark: 'KIA',
       model: 'Venga',
       registrationNumber: 'SK 666666',
-      odometer: 74023.4,
+      mileage: 74023.4,
       checkupDate: '2020-10-02'
     },
   ],

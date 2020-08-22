@@ -125,11 +125,11 @@ export const A = styled(NavLink)`
         }
 
         ::before {
-          top: -19px;
+          top: -29px;
           right: -2px;
         }
         ::after {
-          bottom: -19px;
+          bottom: -29px;
           right: -2px;
           transform: rotateZ(0deg) scale(1, -1);
         }

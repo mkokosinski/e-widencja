@@ -24,6 +24,12 @@ export const device = {
 };
 
 export const StyledLayout = styled.div`
+  * {
+    box-sizing: content-box;
+    font-family: ${({ theme }) => theme.font.family};
+    font-size: 1rem;
+  }
+
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 60px 1fr 80px;
@@ -37,7 +43,6 @@ export const StyledLayout = styled.div`
 
   background: ${({ theme }) => theme.mainSoft};
   box-sizing: content-box;
-  font-family: ${({ theme }) => theme.font.family};
 
   @media screen and ${device.laptop} {
     grid-template-columns: 20% 80%;
@@ -69,10 +74,72 @@ export const Body = styled.div`
   background: white;
   margin: 10px 10px 0 10px;
   border-radius: 30px;
+  padding: 10px;
+  overflow-y: scroll;
 
   @media screen and ${device.laptop} {
     margin: 10px 10px 10px 0px;
+    padding: 30px;
 
     font-size: ${({ theme }) => theme.font.size};
   }
+`;
+
+export const ProfileBar = styled.div`
+  height: 60px;
+  border: 1px solid black;
+`;
+
+export const PanelBordered = styled.div`
+  background: #ffffff;
+  border: 1px solid #5840bb;
+  border-radius: 50px 10px;
+  padding: 40px;
+`;
+
+export const Button = styled.div`
+  align-items: center;
+  border-radius: 20px 3px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  user-select: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 150ms;
+
+  :focus,
+  :active {
+    outline: none;
+  }
+
+  :disabled {
+    cursor: not-allowed;
+  }
+
+  :hover {
+    filter: brightness(1.2);
+  }
+
+  :active{
+    filter: brightness(1);
+    box-shadow: 0 0 4px -2px ${({theme})=> theme.mainSoft}
+  }
+`;
+
+export const ButtonMain = styled(Button)`
+  background: ${({ theme }) => theme.mainSoft};
+  color: white;
+`;
+
+export const ButtonBorderedMain = styled(Button)`
+  background: white;
+  border: 1px solid ${({ theme }) => theme.mainSoft};
+  color: ${({ theme }) => theme.mainSoft};
+`;
+
+export const ButtonBorderedSeconderySoft = styled(Button)`
+  background: white;
+  border: 1px solid ${({ theme }) => theme.seconderySoft};
+  color: ${({ theme }) => theme.seconderySoft};
 `;

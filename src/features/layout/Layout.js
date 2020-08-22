@@ -10,6 +10,7 @@ import { StyledLayout, Menu, Body } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from './Routing';
 import Logo from './Logo';
+import Profile from '../profile/Profile'
 
 import { size } from './LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,6 +50,7 @@ const Layout = () => {
           <Navbar />
         </Menu>
         <Body>
+        <Profile />
           <Switch>
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
@@ -63,6 +65,9 @@ const Layout = () => {
 
             <Route exact path={Routing.Vehicles.path}>
               <Routing.Vehicles.Component />
+            </Route>
+            <Route exact path={Routing.VehicleForm.path}>
+              <Routing.VehicleForm.Component />
             </Route>
             <Route path={Routing.VehicleDetails.path}>
               <Routing.VehicleDetails.Component />

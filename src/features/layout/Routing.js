@@ -7,6 +7,7 @@ import DriverDetails from '../drivers/DriverDetails';
 import Dashboard from '../dashboard/Dashboard';
 import Vehicles from '../vehicles/Vehicles';
 import VehicleDetails from '../vehicles/VehicleDetails';
+import VehicleForm from '../forms/vehicleForm';
 
 const Routing = {
   Tours: { Component: Tours, path: '/e-widencja/tours' },
@@ -17,6 +18,7 @@ const Routing = {
   DriversDetails: { Component: DriverDetails, path: '/e-widencja/drivers/:id' },
   Dashboard: { Component: Dashboard, path: '/e-widencja/dashboard' },
   Vehicles: { Component: Vehicles, path: '/e-widencja/vehicles' },
+  VehicleForm: { Component: VehicleForm, path: '/e-widencja/vehicles/addVehicle' },
   VehicleDetails: { Component: VehicleDetails, path: '/e-widencja/vehicles/:id' },
 };
 
