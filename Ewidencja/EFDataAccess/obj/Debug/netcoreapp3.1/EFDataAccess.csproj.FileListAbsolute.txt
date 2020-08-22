@@ -1,0 +1,8 @@
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\bin\Debug\netcoreapp3.1\EFDataAccess.deps.json
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\bin\Debug\netcoreapp3.1\EFDataAccess.dll
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\bin\Debug\netcoreapp3.1\EFDataAccess.pdb
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\obj\Debug\netcoreapp3.1\EFDataAccess.csprojAssemblyReference.cache
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\obj\Debug\netcoreapp3.1\EFDataAccess.AssemblyInfoInputs.cache
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\obj\Debug\netcoreapp3.1\EFDataAccess.AssemblyInfo.cs
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\obj\Debug\netcoreapp3.1\EFDataAccess.dll
+C:\Users\świdur\source\repos\e-widencja\Ewidencja\EFDataAccess\obj\Debug\netcoreapp3.1\EFDataAccess.pdb
