@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#backend
+/.vs
+/Ewidencja/.vs
+/Ewidencja/EFDataAccess/bin
+/Ewidencja/EFDataAccess/obj
