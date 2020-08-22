@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace EFDataAccess.Models
 {
@@ -12,10 +10,10 @@ namespace EFDataAccess.Models
 
         [Required]
         public Route Route { get; set; }
-        
+
         [Required]
         public Vehicle Vehicle { get; set; }
-        
+
         [Required]
         public User Driver { get; set; }
 

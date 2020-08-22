@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace EFDataAccess.Models
 {
@@ -15,7 +13,7 @@ namespace EFDataAccess.Models
         public string DocumentNumber { get; set; }
 
         [Required]
-        [Range(0,1000000)]
+        [Range(0, 1000000)]
         public double Value { get; set; }
     }
 }

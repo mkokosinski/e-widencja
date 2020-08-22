@@ -7,7 +7,7 @@ namespace EFDataAccess.Models
     {
         [Required]
         public int Id { get; set; }
-        
+
         [Required]
         [MaxLength(30)]
         public string FirstName { get; set; }
