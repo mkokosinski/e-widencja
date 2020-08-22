@@ -9,7 +9,6 @@ namespace EFDataAccess.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
         [MaxLength(50)]
         public string Name { get; set; }
 
@@ -29,9 +28,8 @@ namespace EFDataAccess.Models
         [MaxLength(50)]
         public string Purpose { get; set; }
 
-        [Required]
         [MaxLength(50)]
-        public Route IsContinuation { get; set; }
+        public Route IsContinuation { get; set; } = null!;
 
         [MaxLength(250)]
         public string Comment { get; set; }

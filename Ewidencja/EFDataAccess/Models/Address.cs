@@ -23,7 +23,6 @@ namespace EFDataAccess.Models
         [MaxLength(5)]
         public string HouseNumber { get; set; }
 
-        [Required]
         [MaxLength(5)]
         public string FlatNumber { get; set; }
     }

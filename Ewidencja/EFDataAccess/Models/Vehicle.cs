@@ -13,9 +13,12 @@ namespace EFDataAccess.Models
 
         [Required]
         [MaxLength(10)]
-        public int RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; }
 
         [Required]
         public VehicleType VehicleType { get; set; }
+
+        [MaxLength(50)]
+        public string Comment { get; set; }
     }
 }

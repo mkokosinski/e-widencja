@@ -7,11 +7,11 @@ namespace EFDataAccess
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Host=localhost;Database=test_code_first;Username=test;Password=test");
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserPermission>()
-                .HasKey(t => new { t.UserId, t.PermissionId });
+                .HasKey(t => new {t.Id});
 
             modelBuilder.Entity<UserPermission>()
                 .HasOne(up => up.User)

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EFDataAccess.Models
 {
     public class UserPermission
     {
+        [Key]
         [Required]
         public int Id { get; set; }
         [Required]
