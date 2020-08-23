@@ -18,6 +18,8 @@ export const darkTheme = {
   mainSoft: '#5840BB',
   secondary: '#7979B2',
   seconderySoft: '#A0AAC8',
+  light: '#C7F2FF',
+  lightSoft: '#F3F6FF',
   nav: {
     default: {
       color: 'white',

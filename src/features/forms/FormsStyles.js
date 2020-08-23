@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Form, Field } from 'formik';
-import { PanelBordered } from '../layout/LayoutStyles';
+import { PanelBordered, device } from '../layout/LayoutStyles';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -8,15 +8,49 @@ import { PanelBordered } from '../layout/LayoutStyles';
 //     flex-direction: column;
 // `;
 export const Container = styled(PanelBordered)`
-  max-width: 600px;
-  margin: 100px auto;
-  padding: 100px;
+  padding: 30px;
+  margin: 20px 10px;
+  width: 90%;
+
+  @media screen and ${device.tablet} {
+    width: 70%;
+    padding: 40px 60px;
+  }
+
+  @media screen and ${device.laptop} {
+    max-width: 500px;
+    width: auto;
+    margin: 60px auto;
+    padding: 40px 60px;
+  }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 3px 0;
+  gap: 8px;
+
+  @media screen and ${device.laptop} {
+    justify-content: space-between;
+    margin: 10px 0;
+    gap: 20px;
+  }
 `;
 
 export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
+
+export const FormField = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const Label = styled.label``;
 
 const inputStyle = css`
   padding: 8px 10px;
@@ -27,6 +61,12 @@ const inputStyle = css`
   color: #363636;
   cursor: pointer;
   font-size: 0.9rem;
+
+  border-color: ${(props) => props.hasError && 'red'};
+
+  div[class*='react-datepicker'] {
+    height: 200px;
+  }
 
   :focus,
   :active {
@@ -75,15 +115,38 @@ export const Option = styled.option`
   padding: 10px;
 `;
 
+export const StyledError = styled.div`
+  color: red;
+  font-size: 0.8rem;
+`;
+
 export const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-  padding:20px;
-  width: 80%;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px auto 0;
 
-  & > div{
-    height: 36px;
-    width: 116px;
+  & > div {
+    height: 40px;
+    width: 100px;
+  }
+
+  @media screen and ${device.tablet} {
+    gap: 40px;
+
+    & > div {
+      height: 50px;
+      width: 120px;
+    }
+  }
+
+  @media screen and ${device.laptop} {
+    padding: 20px;
+    gap: 50px;
+
+    & > div {
+      height: 50px;
+      width: 130px;
+    }
   }
 `;

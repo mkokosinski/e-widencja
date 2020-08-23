@@ -1,21 +1,25 @@
-import React from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
+import React, { useState } from 'react';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import SelectCreatable from 'react-select/creatable';
+
+import FieldWithErrors from './fieldWithErrors';
+import DateInput from './DateInput';
 
 import {
   StyledForm,
   Container,
   Input,
   StyledSelect,
-  Option,
   ButtonsContainer,
+  Row,
 } from './FormsStyles';
 import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../layout/LayoutStyles';
+import { useHistory } from 'react-router';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -47,6 +51,7 @@ const handleSubmit = (values) => {
 };
 
 const VehicleForm = () => {
+  const { goBack } = useHistory();
   return (
     <Container>
       <Formik
@@ -64,65 +69,87 @@ const VehicleForm = () => {
       >
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
-            <label htmlFor='name'>Nazwa</label>
-            <Input name='name' type='text' />
-            <ErrorMessage name='name' />
+            {/* <FormField>
+              <Label htmlFor='name'>Nazwa</Label>
+              <Input name='name' type='text' />
+              <ErrorMessage name='name'>
+                {(msg) => <StyledError>{msg}</StyledError>}
+              </ErrorMessage>
+            </FormField> */}
 
-            <label htmlFor='mark'>Marka</label>
-            <StyledSelect>
-              <SelectCreatable
-                name='mark'
-                as='select'
-                isSearchable={true}
-                options={[
-                  { label: 'test', value: 'test' },
-                  { label: 'test2', value: 'test2' },
-                ]}
-                onChange={({ value }) => {
-                  setFieldTouched('mark');
-                  setFieldValue('mark', value);
-                }}
-              />
-            </StyledSelect>
-            <ErrorMessage name='mark' />
+            <Row>
+              <FieldWithErrors name='name' label='Nazwa'>
+                <Input type='text' />
+              </FieldWithErrors>
+            </Row>
+            <Row>
+              <FieldWithErrors name='mark' label='Marka'>
+                <StyledSelect>
+                  <SelectCreatable
+                    as='select'
+                    isSearchable={true}
+                    options={[
+                      { label: 'test', value: 'test' },
+                      { label: 'test2', value: 'test2' },
+                    ]}
+                    onChange={({ value }) => {
+                      setFieldTouched('mark');
+                      setFieldValue('mark', value);
+                    }}
+                  />
+                </StyledSelect>
+              </FieldWithErrors>
+            </Row>
+            <Row>
+              <FieldWithErrors name='model' label='Model'>
+                <Input type='text' />
+              </FieldWithErrors>
+            </Row>
+            <Row>
+              <FieldWithErrors
+                name='registrationNumber'
+                label='Numer rejestracyjny'
+              >
+                <Input type='text' />
+              </FieldWithErrors>
+            </Row>
 
-            <label htmlFor='model'>Model</label>
-            <Input name='model' type='text' />
-            <ErrorMessage name='model' />
+            <Row>
+              <FieldWithErrors name='mileage' label='Przebieg'>
+                <Input type='number' />
+              </FieldWithErrors>
 
-            <label htmlFor='registrationNumber'>Numer rejestracyjny</label>
-            <Input name='registrationNumber' type='text' />
-            <ErrorMessage name='registrationNumber' />
+              <FieldWithErrors name='checkupDate' label='Data przeglądu'>
+                <DateInput
+                  setFieldTouched={setFieldTouched}
+                  setFieldValue={setFieldValue}
+                />
+              </FieldWithErrors>
+            </Row>
 
-            <label htmlFor='mileage'>Przebieg</label>
-            <Input name='mileage' type='text' />
-            <ErrorMessage name='mileage' />
+            <Row>
+              <FieldWithErrors name='type' label='Typ'>
+                <StyledSelect>
+                  <Select
+                    as='select'
+                    styles={StyledSelect}
+                    isSearchable={true}
+                    options={[
+                      { label: 'test', value: 'test' },
+                      { label: 'test2', value: 'test2' },
+                    ]}
+                    onChange={({ value }) => {
+                      setFieldTouched('type');
+                      setFieldValue('type', value);
+                    }}
+                  />
+                </StyledSelect>
+              </FieldWithErrors>
+            </Row>
 
-            <label htmlFor='checkupDate'>Data przeglądu</label>
-            <Input name='checkupDate' type='text' />
-            <ErrorMessage name='checkupDate' />
-            <label htmlFor='type'>Typ</label>
-            <StyledSelect>
-              <Select
-                name='type'
-                as='select'
-                styles={StyledSelect}
-                isSearchable={true}
-                options={[
-                  { label: 'test', value: 'test' },
-                  { label: 'test2', value: 'test2' },
-                ]}
-                onChange={({ value }) => {
-                  setFieldTouched('type');
-                  setFieldValue('type', value);
-                }}
-              />
-            </StyledSelect>
-
-            <ErrorMessage name='type' />
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={() => console.log(values)}>
+              <ButtonBorderedSeconderySoft onClick={goBack}>
                 Anuluj
               </ButtonBorderedSeconderySoft>
             </ButtonsContainer>

@@ -4,13 +4,13 @@ import { ThemeProvider } from 'styled-components';
 
 import { darkTheme } from './Theme';
 
-import { setIsMobile, selectIsMobile } from './layoutSlice';
+import { setIsMobile, selectIsMobile, setIsLaptop, selectIsLaptop } from './layoutSlice';
 
 import { StyledLayout, Menu, Body } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from './Routing';
 import Logo from './Logo';
-import Profile from '../profile/Profile'
+import Profile from '../profile/Profile';
 
 import { size } from './LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,19 +18,27 @@ import { useDispatch, useSelector } from 'react-redux';
 const Layout = () => {
   const dispatch = useDispatch();
   const isMobile = useSelector(selectIsMobile);
+  const IsLaptop = useSelector(selectIsLaptop);
 
   const resizeHandler = (e) => {
     const {
       screen: { width },
     } = window;
+
     if (width < size.mobileXL && !isMobile) {
-      console.log('mobile');
       dispatch(setIsMobile(true));
     }
 
     if (width > size.mobileXL && isMobile) {
-      console.log('not mobile');
       dispatch(setIsMobile(false));
+    }
+
+    if (width < size.laptop && !IsLaptop) {
+      dispatch(setIsLaptop(true));
+    }
+
+    if (width > size.laptop && IsLaptop) {
+      dispatch(setIsLaptop(false));
     }
   };
 
@@ -46,11 +54,12 @@ const Layout = () => {
     <ThemeProvider theme={darkTheme}>
       <StyledLayout>
         <Logo />
+        {IsLaptop && <Profile />}
         <Menu>
           <Navbar />
         </Menu>
         <Body>
-        <Profile />
+          {!IsLaptop && <Profile />}
           <Switch>
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />

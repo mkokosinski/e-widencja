@@ -15,7 +15,7 @@ export const device = {
   mobileS: `(min-width: ${size.mobileS}px)`,
   mobileM: `(min-width: ${size.mobileM}px)`,
   mobileL: `(min-width: ${size.mobileL}px)`,
-  mobileXL: `(min-width: ${size.mobileL}px)`,
+  mobileXL: `(min-width: ${size.mobileXL}px)`,
   tablet: `(min-width: ${size.tablet}px)`,
   laptop: `(min-width: ${size.laptop}px)`,
   laptopL: `(min-width: ${size.laptopL}px)`,
@@ -25,18 +25,24 @@ export const device = {
 
 export const StyledLayout = styled.div`
   * {
-    box-sizing: content-box;
+    box-sizing: border-box;
     font-family: ${({ theme }) => theme.font.family};
-    font-size: 1rem;
+    font-size: 1em;
+  }
+
+  a, span {
+    color: inherit;
+    font-size: inherit;
+    text-decoration: none;
   }
 
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 60px 1fr 80px;
   grid-template-areas:
-    'logo'
-    'body'
-    'menu';
+    'logo profile'
+    'body body'
+    'menu menu';
   flex-direction: column-reverse;
   height: 100vh;
   overflow: hidden;
@@ -71,30 +77,90 @@ export const Menu = styled.div`
 
 export const Body = styled.div`
   grid-area: body;
-  background: white;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   margin: 10px 10px 0 10px;
-  border-radius: 30px;
   padding: 10px;
+
   overflow-y: scroll;
 
+  background: white;
+  border-radius: 30px;
+
+  @media screen and ${device.tablet} {
+    align-items: flex-start;
+  }
   @media screen and ${device.laptop} {
+    display: block;
+
     margin: 10px 10px 10px 0px;
     padding: 30px;
+    align-items: flex-start;
 
     font-size: ${({ theme }) => theme.font.size};
   }
 `;
 
 export const ProfileBar = styled.div`
+  grid-area: profile;
   height: 60px;
   border: 1px solid black;
+
+  @media screen and ${device.laptop} {
+  }
 `;
 
-export const PanelBordered = styled.div`
+export const H2 = styled.h2`
+  font-size: 16px;
+  line-height: 1.7rem;
+  margin: 0;
+  padding: 0;
+
+  @media screen and ${device.tablet} {
+    font-size: 18px;
+  }
+`;
+
+const Panel = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px 6px;
+`;
+
+export const PanelBordered = styled(Panel)`
   background: #ffffff;
   border: 1px solid #5840bb;
+`;
+
+/* export const PanelMain = styled(Panel)`
+  background: ${({ theme }) => theme.main};
   border-radius: 50px 10px;
   padding: 40px;
+`;
+
+export const PanelMainSoft = styled(Panel)`
+  background: ${({ theme }) => theme.mainSoft};
+  border-radius: 50px 10px;
+  padding: 40px;
+`;
+
+export const PanelSeconderySoft = styled(Panel)`
+  background: ${({ theme }) => theme.seconderySoft};
+  border-radius: 50px 10px;
+  padding: 40px;
+`; */
+
+export const PanelLight = styled(Panel)`
+  background: ${({ theme }) => theme.light};
+  color: ${({ theme }) => theme.main};
+`;
+
+export const PanelLightSoft = styled(Panel)`
+  background: ${({ theme }) => theme.lightSoft};
+  color: ${({ theme }) => theme.main};
 `;
 
 export const Button = styled.div`
@@ -102,7 +168,6 @@ export const Button = styled.div`
   border-radius: 20px 3px;
   display: flex;
   justify-content: center;
-  padding: 5px;
   user-select: none;
   cursor: pointer;
   white-space: nowrap;
@@ -121,15 +186,20 @@ export const Button = styled.div`
     filter: brightness(1.2);
   }
 
-  :active{
+  :active {
     filter: brightness(1);
-    box-shadow: 0 0 4px -2px ${({theme})=> theme.mainSoft}
+    box-shadow: 0 0 4px -2px ${({ theme }) => theme.mainSoft};
   }
 `;
 
 export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
   color: white;
+`;
+
+export const ButtonLightSoft = styled(Button)`
+  background: ${({ theme }) => theme.lightSoft};
+  color: ${({ theme }) => theme.main};
 `;
 
 export const ButtonBorderedMain = styled(Button)`

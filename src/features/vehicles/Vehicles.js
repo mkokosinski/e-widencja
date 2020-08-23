@@ -2,19 +2,39 @@ import React from 'react';
 import { selectVehicles } from './vehiclesSlice';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import Routing from '../layout/Routing';
+import { PanelLight, ButtonMain } from '../layout/LayoutStyles';
+import VehiclePanel from './VehiclePanel';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  TopPanel,
+  AddVehicle,
+  SearchVehicle,
+  VehicleList,
+} from './VehicleStyles';
 
 function Vehicles() {
   const vehicles = useSelector(selectVehicles);
   return (
-    <div>
-      <Link to={`${Routing.Vehicles.path}/addVehicle`}>Add vehicle</Link>
+    <VehicleList>
+      <TopPanel>
+        <ButtonMain>
+          <AddVehicle to={`${Routing.Vehicles.path}/addVehicle`}>
+            <FontAwesomeIcon icon={faPlus} />
+            Nowy pojazd
+          </AddVehicle>
+        </ButtonMain>
+        <SearchVehicle />
+      </TopPanel>
+
       {vehicles.map((vehicle) => (
-        <div key={vehicle.id}>
-          <Link to={`${Routing.Vehicles.path}/${vehicle.id}`} props={{...vehicle}}>{vehicle.name}</Link>
-        </div>
+        <VehiclePanel vehicle={vehicle} />
       ))}
-    </div>
+    </VehicleList>
   );
 }
 

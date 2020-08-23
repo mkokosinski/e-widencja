@@ -35,6 +35,7 @@ export const Li = styled.li`
     display: flex;
     align-items: center;
     position: relative;
+    color: white;
 
     @media screen and ${device.tablet} {
     }
