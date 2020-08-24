@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EFDataAccess.Migrations
 {
-    [DbContext(typeof(EFMainContext))]
+    [DbContext(typeof(EwidencjaContext))]
     partial class EFMainContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

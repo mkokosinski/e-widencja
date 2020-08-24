@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EFDataAccess.Migrations
 {
-    [DbContext(typeof(EFMainContext))]
+    [DbContext(typeof(EwidencjaContext))]
     [Migration("20200822125217_initialMigration")]
     partial class initialMigration
     {

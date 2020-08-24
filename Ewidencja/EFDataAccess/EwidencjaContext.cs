@@ -3,8 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFDataAccess
 {
-    public class EFMainContext : DbContext
+    public class EwidencjaContext : DbContext
     {
+        public EwidencjaContext(DbContextOptions<EwidencjaContext> opt) : base(opt)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Host=localhost;Database=test_code_first;Username=test;Password=test");
 
