@@ -27,3 +27,8 @@ yarn-error.log*
 /Ewidencja/.vs
 /Ewidencja/EFDataAccess/bin
 /Ewidencja/EFDataAccess/obj
+/Ewidencja/EwidencjaAPI/bin
+/Ewidencja/EwidencjaAPI/obj
+/Ewidencja/EwidencjaAPI/Properties
+/Ewidencja/EwidencjaAPI/appsettings.json
+/Ewidencja/EwidencjaAPI/appsettings.development.json
