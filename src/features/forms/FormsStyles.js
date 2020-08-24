@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { Form, Field } from 'formik';
 import { PanelBordered, device } from '../layout/LayoutStyles';
+import { useSelector } from 'react-redux';
+import { selectIsMobileKeyboard } from '../layout/layoutSlice';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -8,13 +10,15 @@ import { PanelBordered, device } from '../layout/LayoutStyles';
 //     flex-direction: column;
 // `;
 export const Container = styled(PanelBordered)`
-  padding: 30px;
-  margin: 20px 10px;
-  width: 90%;
+  width: 96%;
+  padding: 10px;
+  align-self: center;
 
   @media screen and ${device.tablet} {
-    width: 70%;
+    margin: 20px 10px;
     padding: 40px 60px;
+    
+    width: 70%;
   }
 
   @media screen and ${device.laptop} {
@@ -31,7 +35,8 @@ export const Row = styled.div`
   margin: 3px 0;
   gap: 8px;
 
-  @media screen and ${device.laptop} {
+  @media screen and ${device.tablet} {
+    flex-direction: row;
     justify-content: space-between;
     margin: 10px 0;
     gap: 20px;
@@ -42,6 +47,10 @@ export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   width: 100%;
+  ${(props) =>
+    props.theme.isMobileKeyboard &&
+    css`
+    `}
 `;
 
 export const FormField = styled.div`
@@ -61,7 +70,6 @@ const inputStyle = css`
   color: #363636;
   cursor: pointer;
   font-size: 0.9rem;
-
   border-color: ${(props) => props.hasError && 'red'};
 
   div[class*='react-datepicker'] {

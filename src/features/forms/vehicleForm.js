@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Formik } from 'formik';
+import React, { useState, useRef } from 'react';
+import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import SelectCreatable from 'react-select/creatable';
@@ -52,6 +52,14 @@ const handleSubmit = (values) => {
 
 const VehicleForm = () => {
   const { goBack } = useHistory();
+  const modelRef = useRef(null);
+  const typeRef = useRef(null);
+
+  const focusOn = (ref) => {
+    console.log(ref);
+    ref.current.focus();
+  };
+
   return (
     <Container>
       <Formik
@@ -95,14 +103,15 @@ const VehicleForm = () => {
                     onChange={({ value }) => {
                       setFieldTouched('mark');
                       setFieldValue('mark', value);
+                      focusOn(modelRef);
                     }}
                   />
                 </StyledSelect>
               </FieldWithErrors>
             </Row>
             <Row>
-              <FieldWithErrors name='model' label='Model'>
-                <Input type='text' />
+              <FieldWithErrors name='model' label='Model' >
+                <Input type='text' innerRef={modelRef} />
               </FieldWithErrors>
             </Row>
             <Row>
@@ -121,6 +130,7 @@ const VehicleForm = () => {
 
               <FieldWithErrors name='checkupDate' label='Data przeglądu'>
                 <DateInput
+                  focusOn={() => focusOn(typeRef)}
                   setFieldTouched={setFieldTouched}
                   setFieldValue={setFieldValue}
                 />
@@ -131,6 +141,7 @@ const VehicleForm = () => {
               <FieldWithErrors name='type' label='Typ'>
                 <StyledSelect>
                   <Select
+                    ref={typeRef}
                     as='select'
                     styles={StyledSelect}
                     isSearchable={true}
@@ -142,6 +153,7 @@ const VehicleForm = () => {
                       setFieldTouched('type');
                       setFieldValue('type', value);
                     }}
+                    openMenuOnFocus={true}
                   />
                 </StyledSelect>
               </FieldWithErrors>

@@ -1,10 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { darkTheme } from './Theme';
 
-import { setIsMobile, selectIsMobile, setIsLaptop, selectIsLaptop } from './layoutSlice';
+import {
+  setIsMobile,
+  selectIsMobile,
+  setIsLaptop,
+  selectIsLaptop,
+  setSiteHeight,
+  selectSiteHeight,
+  setIsMobileKeyboard,
+  selectIsMobileKeyboard,
+} from './layoutSlice';
 
 import { StyledLayout, Menu, Body } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
@@ -19,11 +28,14 @@ const Layout = () => {
   const dispatch = useDispatch();
   const isMobile = useSelector(selectIsMobile);
   const IsLaptop = useSelector(selectIsLaptop);
+  const siteHeight = useSelector(selectSiteHeight);
+  const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
   const resizeHandler = (e) => {
     const {
-      screen: { width },
-    } = window;
+      clientWidth: width,
+      clientHeight: height,
+    } = document.documentElement;
 
     if (width < size.mobileXL && !isMobile) {
       dispatch(setIsMobile(true));
@@ -33,33 +45,44 @@ const Layout = () => {
       dispatch(setIsMobile(false));
     }
 
-    if (width < size.laptop && !IsLaptop) {
+    if (width > size.laptop && !IsLaptop) {
       dispatch(setIsLaptop(true));
     }
 
-    if (width > size.laptop && IsLaptop) {
+    if (width < size.laptop && IsLaptop) {
       dispatch(setIsLaptop(false));
+    }
+
+    if (height < siteHeight && !isMobileKeyboard) {
+      dispatch(setIsMobileKeyboard(true));
+    } else if(height === siteHeight && isMobileKeyboard) {
+      dispatch(setIsMobileKeyboard(false));
     }
   };
 
   useEffect(() => {
     window.addEventListener('resize', resizeHandler);
+
     resizeHandler();
     return () => {
       window.removeEventListener('resize', resizeHandler);
     };
   });
 
+  useEffect(() => {
+    dispatch(setSiteHeight(document.documentElement.clientHeight));
+  }, [])
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <StyledLayout>
+    <ThemeProvider theme={{...darkTheme, isMobileKeyboard}}>
+      <StyledLayout height={siteHeight}>
         <Logo />
-        {IsLaptop && <Profile />}
+        {!IsLaptop && <Profile />}
         <Menu>
           <Navbar />
         </Menu>
         <Body>
-          {!IsLaptop && <Profile />}
+          {IsLaptop && <Profile />}
           <Switch>
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />

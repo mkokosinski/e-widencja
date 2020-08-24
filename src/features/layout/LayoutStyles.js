@@ -30,25 +30,36 @@ export const StyledLayout = styled.div`
     font-size: 1em;
   }
 
-  a, span {
+  a,
+  span {
     color: inherit;
     font-size: inherit;
     text-decoration: none;
   }
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 60px 1fr 80px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 50px;
   grid-template-areas:
-    'logo profile'
-    'body body'
-    'menu menu';
+    'body'
+    'menu';
+
+    
   flex-direction: column-reverse;
-  height: 100vh;
+  height: ${(props) => props.height}px;
   overflow: hidden;
 
   background: ${({ theme }) => theme.mainSoft};
   box-sizing: content-box;
+
+  @media screen and ${device.mobileM} {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 60px 1fr 80px;
+    grid-template-areas:
+      'logo profile'
+      'body body'
+      'menu menu';
+  }
 
   @media screen and ${device.laptop} {
     grid-template-columns: 20% 80%;
@@ -81,15 +92,17 @@ export const Body = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  margin: 10px 10px 0 10px;
-  padding: 10px;
+  margin: 2px 2px 0 2px;
+  padding: 5px;
 
   overflow-y: scroll;
 
   background: white;
-  border-radius: 30px;
 
   @media screen and ${device.tablet} {
+    margin: 10px 10px 0 10px;
+    padding: 10px;
+    border-radius: 30px;
     align-items: flex-start;
   }
   @media screen and ${device.laptop} {
@@ -104,11 +117,13 @@ export const Body = styled.div`
 `;
 
 export const ProfileBar = styled.div`
+  display: none;
   grid-area: profile;
   height: 60px;
   border: 1px solid black;
 
-  @media screen and ${device.laptop} {
+  @media screen and ${device.mobileM} {
+    display: flex;
   }
 `;
 
@@ -132,7 +147,12 @@ const Panel = styled.div`
 
 export const PanelBordered = styled(Panel)`
   background: #ffffff;
-  border: 1px solid #5840bb;
+  border: none;
+
+  @media screen and ${device.tablet} {
+    border: 1px solid #5840bb;
+
+  }
 `;
 
 /* export const PanelMain = styled(Panel)`

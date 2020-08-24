@@ -3,13 +3,19 @@ import styled from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRecordVinyl } from '@fortawesome/free-solid-svg-icons';
+import { device } from './LayoutStyles';
 
 const Container = styled.div`
-  display: flex;
   grid-area: logo;
 
   align-items: center;
   justify-content: center;
+
+  display: none;
+
+  @media screen and ${device.mobileM} {
+    display: flex;
+  }
 `;
 
 const StyledLogo = styled.div`

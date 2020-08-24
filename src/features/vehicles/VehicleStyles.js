@@ -20,6 +20,16 @@ export const AddVehicle = styled(Link)`
   line-height: 12px;
   padding: 10px 16px;
   gap: 6px;
+
+  span {
+    display: none;
+  }
+
+  @media screen and ${device.mobileL} {
+    span {
+      display: block;
+    }
+  }
 `;
 
 export const SearchVehicle = styled(SearchBar)`
@@ -31,7 +41,6 @@ export const VehicleList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 16px;
 `;
 
 export const Container = styled(PanelLight)`
@@ -39,7 +48,7 @@ export const Container = styled(PanelLight)`
   padding: 0;
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 8px auto;
 `;
 
 export const Body = styled.div`
@@ -56,10 +65,11 @@ export const Body = styled.div`
     grid-template-columns: 50px 1fr 2fr 1fr;
     grid-template-areas: 'ico name journeys buttons';
     grid-gap: 10px;
-    padding: 10px 30px;
-    gap: 16px;
+    margin: 16px;
     justify-content: space-between;
+    padding: 10px 30px;
   }
+
   @media screen and ${device.tablet} {
     grid-template-columns: 50px 1fr 1fr 1fr;
   }
@@ -116,6 +126,9 @@ export const Journey = styled.div`
 export const InfoMain = styled.div`
   font-size: 0.9em;
   font-weight: bold;
+  @media screen and ${device.laptopL} {
+    font-size: 1em;
+  }
 `;
 
 export const InfoSecondary = styled.div`
@@ -126,8 +139,12 @@ export const Buttons = styled.div`
   grid-area: buttons;
   display: flex;
   justify-content: center;
-  gap: 10px;
+
   height: 70%;
+
+  & > * {
+    margin: 0 6px;
+  }
 
   @media screen and ${device.mobileXL} {
     width: auto;

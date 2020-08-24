@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { PanelLight } from '../layout/LayoutStyles'
+import {  PanelLightSoft } from '../layout/LayoutStyles'
 
-export const SeachBarPanel = styled(PanelLight)`
+export const SeachBarPanel = styled(PanelLightSoft)`
 justify-content:flex-start;
 width:100%;
 padding:0 30px;

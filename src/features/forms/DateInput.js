@@ -6,6 +6,8 @@ import { pl } from 'date-fns/locale';
 import formatLong from 'date-fns/locale/pl/_lib/formatLong/index';
 
 import { Input } from './FormsStyles';
+import { selectIsLaptop } from '../layout/layoutSlice';
+import { useSelector } from 'react-redux';
 
 const months = [
   'Styczeń',
@@ -35,8 +37,11 @@ const locale = {
   formatLong,
 };
 
-const DateInput = ({ setFieldTouched, setFieldValue }) => {
+const DateInput = ({ setFieldTouched, setFieldValue, focusOn }) => {
   const [startDate, setStartDate] = useState(new Date());
+  const isLaptop = useSelector(selectIsLaptop);
+
+  console.log(isLaptop);
 
   return (
     <DatePicker
@@ -47,12 +52,13 @@ const DateInput = ({ setFieldTouched, setFieldValue }) => {
         setStartDate(value);
         setFieldTouched('checkupDate');
         setFieldValue('checkupDate', date);
+        focusOn();
       }}
       customInput={<Input />}
       dateFormat='yyyy-MM-dd'
       locale={locale}
       minDate={new Date()}
-      day
+      withPortal={!isLaptop}
     />
   );
 };

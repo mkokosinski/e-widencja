@@ -2,7 +2,7 @@ import React from 'react';
 import { FormField, Label, StyledError } from './FormsStyles';
 import { ErrorMessage, useFormikContext, getIn } from 'formik';
 
-const FieldWithErrors = ({ children, label, name }) => {
+const FieldWithErrors = ({ children, label, name, ref }) => {
   const context = useFormikContext();
 
   const errors = getIn(context.errors, name);
@@ -14,7 +14,7 @@ const FieldWithErrors = ({ children, label, name }) => {
     <FormField>
       <Label htmlFor={name}>{label}</Label>
       {React.Children.map(children, (child) =>
-        React.cloneElement(child, { name, hasError })
+        React.cloneElement(child, { name, hasError, ref })
       )}
       <ErrorMessage name={name}>
         {(msg) => <StyledError>{msg}</StyledError>}

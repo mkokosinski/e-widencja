@@ -25,7 +25,7 @@ function Vehicles() {
         <ButtonMain>
           <AddVehicle to={`${Routing.Vehicles.path}/addVehicle`}>
             <FontAwesomeIcon icon={faPlus} />
-            Nowy pojazd
+            Nowy <span>pojazd</span>
           </AddVehicle>
         </ButtonMain>
         <SearchVehicle />

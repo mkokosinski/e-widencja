@@ -5,7 +5,6 @@ import Decorator from './itemDecorator.svg';
 
 export const Menu = styled.nav`
   display: flex;
-  overflow: hidden;
   width: 84%;
 
   @media screen and ${device.laptop} {
@@ -150,7 +149,11 @@ export const ShowMore = styled(Li)`
 export const Icon = styled.div``;
 
 export const Label = styled.div`
-  font-size: 0.8rem;
+  display: none;
+  
+  @media screen and ${device.mobileL} {
+    display: block;
+  }
 
   @media screen and ${device.laptop} {
     font-size: 1rem;
