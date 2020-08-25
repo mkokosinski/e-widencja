@@ -12,6 +12,7 @@ namespace WebAPI.Infrastructure.Interfaces
         public IEnumerable<User> GetAllUsers();
         public User GetUserById(int id);
         public void CreateUser(User user);
+        public void UpdateUser(User user);
         bool SaveChanges();
     }
 }

@@ -51,6 +51,7 @@ namespace EwidencjaAPI.Controllers
             return NotFound();
         }
 
+        //POST api/Users
         [HttpPost]
         public ActionResult<UserReadDTO> CreateUser(UserCreateDTO userCreateDTO)
         {
@@ -62,6 +63,24 @@ namespace EwidencjaAPI.Controllers
 
             return CreatedAtRoute(nameof(GetUserById), new { Id = userRead.Id }, userRead);
 
+        }
+
+        //PUT api/Users/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateUser(int id, UserCreateDTO userCreateDTO)
+        {
+            var userModelFromRepo = repository.GetUserById(id);
+            if (userModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            mapper.Map(userCreateDTO, userModelFromRepo);
+
+            repository.UpdateUser(userModelFromRepo);
+            repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }

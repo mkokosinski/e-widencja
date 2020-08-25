@@ -38,5 +38,10 @@ namespace WebAPI.Infrastructure.Repositories.Implementations
         {
             return (context.SaveChanges() >= 0);
         }
+
+        public void UpdateUser(User user)
+        {
+            //Not needed 
+        }
     }
 }
