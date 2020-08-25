@@ -1,5 +1,6 @@
 ﻿using EFDataAccess;
 using EFDataAccess.Models;
+using EwidencjaAPI.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,12 @@ namespace WebAPI.Infrastructure.Repositories.Implementations
         {
             this.context = context;
         }
+
+        public void CreateUser(User user)
+        {
+            context.User.Add(user);
+        }
+
         public IEnumerable<User> GetAllUsers()
         {
             return context.User.ToList();
@@ -25,6 +32,11 @@ namespace WebAPI.Infrastructure.Repositories.Implementations
         public User GetUserById(int id)
         {
             return context.User.Find(id);
+        }
+
+        public bool SaveChanges()
+        {
+            return (context.SaveChanges() >= 0);
         }
     }
 }

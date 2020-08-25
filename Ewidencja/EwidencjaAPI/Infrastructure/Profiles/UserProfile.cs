@@ -13,6 +13,7 @@ namespace EwidencjaAPI.Infrastructure.Profiles
         public UserProfile()
         {
             CreateMap<User, UserReadDTO>();
+            CreateMap<UserCreateDTO, User>();
         }
     }
 }

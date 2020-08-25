@@ -26,19 +26,20 @@ namespace EwidencjaAPI.Controllers
         }
 
         //GET api/Users
+        [HttpGet]
         public ActionResult<IEnumerable<UserReadDTO>> GetAllUsers()
         {
             var usersList = repository.GetAllUsers();
 
             if (usersList != null)
             {
-                return Ok(mapper.Map<UserReadDTO>(usersList));
+                return Ok(mapper.Map<IEnumerable<UserReadDTO>>(usersList));
             }
             return NotFound();
         }
 
         //GET api/Users/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name= "GetUserById")]
         public ActionResult<UserReadDTO> GetUserById(int id)
         {
             var user = repository.GetUserById(id);
@@ -48,6 +49,19 @@ namespace EwidencjaAPI.Controllers
                 return Ok(mapper.Map<UserReadDTO>(user));
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<UserReadDTO> CreateUser(UserCreateDTO userCreateDTO)
+        {
+            User userModel = mapper.Map<User>(userCreateDTO);
+            repository.CreateUser(userModel);
+            repository.SaveChanges();
+
+            UserReadDTO userRead = mapper.Map<UserReadDTO>(userModel);
+
+            return CreatedAtRoute(nameof(GetUserById), new { Id = userRead.Id }, userRead);
+
         }
     }
 }
