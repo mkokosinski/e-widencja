@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebAPI.Infrastructure.Interfaces;
 using WebAPI.Infrastructure.Repositories.Implementations;
+using Newtonsoft.Json.Serialization;
 
 namespace EwidencjaAPI
 {
@@ -33,7 +34,9 @@ namespace EwidencjaAPI
             services.AddDbContext<EwidencjaContext>(opt => opt.UseNpgsql
                 (Configuration.GetConnectionString("EwidencjaConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson( s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

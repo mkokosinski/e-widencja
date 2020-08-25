@@ -34,14 +34,18 @@ namespace WebAPI.Infrastructure.Repositories.Implementations
             return context.User.Find(id);
         }
 
-        public bool SaveChanges()
-        {
-            return (context.SaveChanges() >= 0);
-        }
-
         public void UpdateUser(User user)
         {
             //Not needed 
+        }
+        
+        public void DeleteUser(User user)
+        {
+            context.User.Remove(user);
+        }
+        public bool SaveChanges()
+        {
+            return (context.SaveChanges() >= 0);
         }
     }
 }

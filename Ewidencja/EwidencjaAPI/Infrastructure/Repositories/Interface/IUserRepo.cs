@@ -13,6 +13,7 @@ namespace WebAPI.Infrastructure.Interfaces
         public User GetUserById(int id);
         public void CreateUser(User user);
         public void UpdateUser(User user);
+        public void DeleteUser(User user);
         bool SaveChanges();
     }
 }

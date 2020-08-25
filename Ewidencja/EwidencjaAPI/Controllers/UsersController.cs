@@ -7,6 +7,7 @@ using EFDataAccess;
 using EFDataAccess.Models;
 using EwidencjaAPI.DTOs;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Infrastructure.Interfaces;
 
@@ -82,5 +83,48 @@ namespace EwidencjaAPI.Controllers
 
             return NoContent();
         }
+
+
+        //PATCH api/Users/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialUpdateUser(int id, JsonPatchDocument<UserUpdateDTO> patchDoc)
+        {
+            var userModelFromRepo = repository.GetUserById(id);
+            if (userModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var userToPatch = mapper.Map<UserUpdateDTO>(userModelFromRepo);
+            patchDoc.ApplyTo(userToPatch, ModelState);
+
+            if (!TryValidateModel(userToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            mapper.Map(userToPatch, userModelFromRepo);
+            repository.UpdateUser(userModelFromRepo);
+            repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        //DELETE api/Users/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(int id)
+        {
+            var userModelFromRepo = repository.GetUserById(id);
+            if (userModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            repository.DeleteUser(userModelFromRepo);
+            repository.SaveChanges();
+
+            return NoContent();
+        }
+
+
     }
 }

@@ -12,8 +12,11 @@ namespace EwidencjaAPI.Infrastructure.Profiles
     {
         public UserProfile()
         {
+            // source to target
             CreateMap<User, UserReadDTO>();
             CreateMap<UserCreateDTO, User>();
+            CreateMap<User, UserUpdateDTO>();
+            CreateMap<UserUpdateDTO, User>();
         }
     }
 }
