@@ -67,7 +67,7 @@ namespace EwidencjaAPI.Controllers
 
         //PUT api/Users/{id}
         [HttpPut("{id}")]
-        public ActionResult UpdateUser(int id, UserCreateDTO userCreateDTO)
+        public ActionResult UpdateUser(int id, UserUpdateDTO userUpdateDTO)
         {
             var userModelFromRepo = repository.GetUserById(id);
             if (userModelFromRepo == null)
@@ -75,7 +75,7 @@ namespace EwidencjaAPI.Controllers
                 return NotFound();
             }
 
-            mapper.Map(userCreateDTO, userModelFromRepo);
+            mapper.Map(userUpdateDTO, userModelFromRepo);
 
             repository.UpdateUser(userModelFromRepo);
             repository.SaveChanges();
