@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EFDataAccess;
 using EFDataAccess.Models;
+using EwidencjaAPI.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Infrastructure.Interfaces;
@@ -15,24 +17,37 @@ namespace EwidencjaAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepo repository;
+        private readonly IMapper mapper;
 
-        public UsersController(IUserRepo repository)
+        public UsersController(IUserRepo repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
-        public ActionResult<IEnumerable<User>> GetAllUsers()
+
+        //GET api/Users
+        public ActionResult<IEnumerable<UserReadDTO>> GetAllUsers()
         {
             var usersList = repository.GetAllUsers();
 
-            return Ok(usersList);
+            if (usersList != null)
+            {
+                return Ok(mapper.Map<UserReadDTO>(usersList));
+            }
+            return NotFound();
         }
 
+        //GET api/Users/{id}
         [HttpGet("{id}")]
-        public ActionResult<User> GetUserById(int id)
+        public ActionResult<UserReadDTO> GetUserById(int id)
         {
             var user = repository.GetUserById(id);
 
-            return Ok(user);
+            if (user != null)
+            {
+                return Ok(mapper.Map<UserReadDTO>(user));
+            }
+            return NotFound();
         }
     }
 }
