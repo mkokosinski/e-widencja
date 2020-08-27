@@ -16,12 +16,18 @@ export const Container = styled(PanelBordered)`
 
   @media screen and ${device.tablet} {
     margin: 20px 10px;
-    padding: 40px 60px;
+    padding: 32px 54px;
     
     width: 70%;
   }
 
   @media screen and ${device.laptop} {
+    max-width: 500px;
+    width: auto;
+    margin: 20px auto;
+  }
+
+  @media screen and ${device.laptopL} {
     max-width: 500px;
     width: auto;
     margin: 60px auto;
@@ -32,14 +38,22 @@ export const Container = styled(PanelBordered)`
 export const Row = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 3px 0;
-  gap: 8px;
+  margin: 2px 0;
+
+   & > *{
+     margin: 6px;
+   }
 
   @media screen and ${device.tablet} {
     flex-direction: row;
     justify-content: space-between;
-    margin: 10px 0;
-    gap: 20px;
+    margin: 4px 0;
+  }
+
+  @media screen and ${device.laptopL} {
+    & > *{
+     margin: 8px;
+   }
   }
 `;
 

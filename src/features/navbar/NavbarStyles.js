@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { device } from '../layout/LayoutStyles';
-import Decorator from './itemDecorator.svg';
+import styled, { css } from "styled-components";
+import { NavLink } from "react-router-dom";
+import { device } from "../layout/LayoutStyles";
+import Decorator from "./itemDecorator.svg";
 
 export const Menu = styled.nav`
   display: flex;
@@ -54,6 +54,7 @@ export const A = styled(NavLink)`
     width: 62px;
     height: 62px;
     z-index: 2;
+    border-radius: 0;
 
     background: transparent;
     cursor: pointer;
@@ -65,34 +66,14 @@ export const A = styled(NavLink)`
     overflow: hidden;
 
     &.active {
+      border: 1px solid ${theme.mainSoft};
       background: ${theme.nav.active.background};
       color: ${theme.nav.active.color};
       font-weight: ${theme.font.nav.active.weight};
+    }
 
-      border-radius: 0 0px 20px 20px;
-
-      ::before,
-      ::after {
-        content: '';
-        background: url(${Decorator}) no-repeat right;
-        position: absolute;
-        pointer-events: none;
-      }
-
-      ::before {
-        top: -12px;
-        left: -30px;
-        width: 32px;
-        transform: rotateZ(270deg);
-        height: 50px;
-      }
-      ::after {
-        top: -12px;
-        right: -30px;
-        width: 32px;
-        transform: rotateZ(270deg) scale(1, -1);
-        height: 50px;
-      }
+    :focus {
+      outline: none;
     }
 
     @media screen and ${device.laptop} {
@@ -107,14 +88,17 @@ export const A = styled(NavLink)`
       }
 
       &.active {
-        border-radius: 20px 0px 0 20px;
-
+        border: none;
         :hover {
           background: ${theme.nav.active.background};
         }
 
         ::before,
         ::after {
+          content: "";
+          background: url(${Decorator}) no-repeat right;
+          position: absolute;
+          pointer-events: none;
           width: 30px;
           height: 30px;
           transform: rotateZ(0deg);
@@ -150,7 +134,7 @@ export const Icon = styled.div``;
 
 export const Label = styled.div`
   display: none;
-  
+
   @media screen and ${device.mobileL} {
     display: block;
   }

@@ -1,16 +1,18 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import SearchBar from '../searchbar/SearchBar';
+import SearchBar from "../searchbar/SearchBar";
 
-import { device, H2, PanelLight, PanelLightSoft } from '../layout/LayoutStyles';
+import { device, H2, PanelLight, PanelLightSoft } from "../layout/LayoutStyles";
 
 export const TopPanel = styled.div`
   display: flex;
-  height: 46px;
-  margin-top: 10px;
   width: 100%;
-  gap: 16px;
+  margin: 8px 0px;
+
+  & > * {
+    margin: 4px 8px;
+  }
 `;
 
 export const AddVehicle = styled(Link)`
@@ -18,8 +20,10 @@ export const AddVehicle = styled(Link)`
   align-items: center;
   justify-content: center;
   line-height: 12px;
-  padding: 10px 16px;
-  gap: 6px;
+  padding: 12px 16px;
+  & > * {
+    margin: 0px 3px;
+  }
 
   span {
     display: none;
@@ -29,6 +33,9 @@ export const AddVehicle = styled(Link)`
     span {
       display: block;
     }
+  }
+  @media screen and ${device.tablet} {
+    padding: 16px;
   }
 `;
 
@@ -53,17 +60,18 @@ export const Container = styled(PanelLight)`
 
 export const Body = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: ' name  buttons';
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: " name  buttons";
 
   height: 100%;
   width: 100%;
   padding: 10px;
   align-items: center;
+  overflow: hidden;
 
   @media screen and ${device.mobileXL} {
-    grid-template-columns: 50px 1fr 2fr 1fr;
-    grid-template-areas: 'ico name journeys buttons';
+    grid-template-columns: 50px 3fr 3fr 1fr;
+    grid-template-areas: "ico name journeys buttons";
     grid-gap: 10px;
     margin: 16px;
     justify-content: space-between;
@@ -71,11 +79,9 @@ export const Body = styled.div`
   }
 
   @media screen and ${device.tablet} {
-    grid-template-columns: 50px 1fr 1fr 1fr;
   }
 
   @media screen and ${device.laptop} {
-    grid-template-columns: 100px 1fr 2fr 2fr;
     font-size: 18px;
   }
   @media screen and ${device.desktopL} {
@@ -99,10 +105,12 @@ export const Name = styled(H2)`
   text-align: center;
   text-align: left;
   padding: 0 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   @media screen and ${device.mobileXL} {
     font-size: 1.2em;
-
     width: auto;
   }
 `;
@@ -159,10 +167,10 @@ export const ButtonBody = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  font-size: 0.8em;
+  font-size: 0.7em;
   padding: 5px;
 
   @media screen and ${device.laptop} {
-    padding: 6px 16px;
+    padding: 5px 10px;
   }
 `;

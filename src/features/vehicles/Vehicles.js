@@ -34,6 +34,12 @@ function Vehicles() {
       {vehicles.map((vehicle) => (
         <VehiclePanel vehicle={vehicle} />
       ))}
+      {vehicles.map((vehicle) => (
+        <VehiclePanel vehicle={vehicle} />
+      ))}
+      {vehicles.map((vehicle) => (
+        <VehiclePanel vehicle={vehicle} />
+      ))}
     </VehicleList>
   );
 }

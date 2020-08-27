@@ -25,10 +25,12 @@ import { size } from './LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Layout = () => {
+  const [height, setheight] = useState(0);
+
   const dispatch = useDispatch();
   const isMobile = useSelector(selectIsMobile);
   const IsLaptop = useSelector(selectIsLaptop);
-  const siteHeight = useSelector(selectSiteHeight);
+  const initialSiteHeight = useSelector(selectSiteHeight);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
   const resizeHandler = (e) => {
@@ -36,6 +38,8 @@ const Layout = () => {
       clientWidth: width,
       clientHeight: height,
     } = document.documentElement;
+
+    setheight(height);
 
     if (width < size.mobileXL && !isMobile) {
       dispatch(setIsMobile(true));
@@ -53,9 +57,9 @@ const Layout = () => {
       dispatch(setIsLaptop(false));
     }
 
-    if (height < siteHeight && !isMobileKeyboard) {
+    if (height < initialSiteHeight && !isMobileKeyboard) {
       dispatch(setIsMobileKeyboard(true));
-    } else if(height === siteHeight && isMobileKeyboard) {
+    } else if(height === initialSiteHeight && isMobileKeyboard) {
       dispatch(setIsMobileKeyboard(false));
     }
   };
@@ -75,7 +79,7 @@ const Layout = () => {
 
   return (
     <ThemeProvider theme={{...darkTheme, isMobileKeyboard}}>
-      <StyledLayout height={siteHeight}>
+      <StyledLayout height={height}>
         <Logo />
         {!IsLaptop && <Profile />}
         <Menu>
