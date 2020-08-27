@@ -1,0 +1,43 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+export const layoutSlice = createSlice({
+  name: 'layout',
+  initialState: {
+    isMobile: false,
+    IsLaptop: false,
+    isMobileKeyboard: false,
+    siteHeight: 0
+  },
+  reducers: {
+    func: (state) => {
+      //function body
+    },
+    setIsMobile: (state, payload) => {
+      state.isMobile = payload.payload;
+      console.log('asdasdasd');
+
+    },
+    setIsLaptop: (state, payload) => {
+      state.IsLaptop = payload.payload;
+    },
+    setSiteHeight: (state, payload) => {
+      state.siteHeight = payload.payload;
+    },
+    setIsMobileKeyboard: (state, payload) => {
+      state.isMobileKeyboard = payload.payload;
+    },
+  },
+});
+
+export const selectIsMobile = (state) => state.layout.isMobile;
+
+export const selectIsLaptop = (state) => state.layout.IsLaptop;
+
+export const selectSiteHeight = (state) => state.layout.siteHeight;
+
+export const selectIsMobileKeyboard = (state) =>
+  state.layout.isMobileKeyboard;
+
+export const { setIsMobile, setIsLaptop, setSiteHeight, setIsMobileKeyboard } = layoutSlice.actions;
+
+export default layoutSlice.reducer;
