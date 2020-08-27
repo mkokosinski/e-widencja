@@ -1,46 +1,68 @@
 import React from 'react';
-import { selectVehicles } from './vehiclesSlice';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
+import { selectVehicles } from './vehiclesSlice';
 import Routing from '../layout/Routing';
-import { PanelLight, ButtonMain } from '../layout/LayoutStyles';
-import VehiclePanel from './VehiclePanel';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
 import {
+  faPlus,
+  faCarAlt,
+  faFileAlt,
+  faPlusSquare,
+} from '@fortawesome/free-solid-svg-icons';
+
+import ListViewItem from '../templates/ListView/ListViewItem';
+import {
+  ButtonAdd,
   TopPanel,
-  AddVehicle,
-  SearchVehicle,
-  VehicleList,
-} from './VehicleStyles';
+  AddItem,
+  SearchInput,
+  ItemsList,
+} from '../templates/ListView/ListViewStyles';
+
+const buttons = [
+  {
+    ico: faFileAlt,
+    label: 'Szczegóły',
+    action: 'details',
+  },
+  {
+    ico: faPlusSquare,
+    label: 'Przejazd',
+    action: 'details',
+  },
+  {
+    ico: faPlusSquare,
+    label: 'Przejazd',
+    action: 'details',
+  },
+];
 
 function Vehicles() {
   const vehicles = useSelector(selectVehicles);
+
   return (
-    <VehicleList>
+    <ItemsList>
       <TopPanel>
-        <ButtonMain>
-          <AddVehicle to={`${Routing.Vehicles.path}/addVehicle`}>
+        <ButtonAdd>
+          <AddItem to={`${Routing.Vehicles.path}/addVehicle`}>
             <FontAwesomeIcon icon={faPlus} />
             Nowy <span>pojazd</span>
-          </AddVehicle>
-        </ButtonMain>
-        <SearchVehicle />
+          </AddItem>
+        </ButtonAdd>
+        <SearchInput />
       </TopPanel>
 
       {vehicles.map((vehicle) => (
-        <VehiclePanel vehicle={vehicle} />
+        <ListViewItem
+          ico={faCarAlt}
+          item={vehicle}
+          path={Routing.Vehicles.path}
+          buttons={buttons}
+        />
       ))}
-      {vehicles.map((vehicle) => (
-        <VehiclePanel vehicle={vehicle} />
-      ))}
-      {vehicles.map((vehicle) => (
-        <VehiclePanel vehicle={vehicle} />
-      ))}
-    </VehicleList>
+    </ItemsList>
   );
 }
 

@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { Formik, Field } from 'formik';
+import React, {  useRef } from 'react';
+import { Formik } from 'formik';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
+
 import Select from 'react-select';
 import SelectCreatable from 'react-select/creatable';
 
-import FieldWithErrors from './fieldWithErrors';
-import DateInput from './DateInput';
+import FieldWithErrors from '../fieldWithErrors';
+import DateInput from '../DateInput';
 
 import {
   StyledForm,
@@ -14,12 +16,11 @@ import {
   StyledSelect,
   ButtonsContainer,
   Row,
-} from './FormsStyles';
+} from '../FormsStyles';
 import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
-} from '../layout/LayoutStyles';
-import { useHistory } from 'react-router';
+} from '../../layout/LayoutStyles';
 
 const validationSchema = Yup.object({
   name: Yup.string()

@@ -1,21 +1,67 @@
-import React from "react";
-import { selectDrivers } from "./driversSlice";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import Routing from "../layout/Routing";
+import React from 'react';
+import { selectDrivers } from './driversSlice';
+import { useSelector } from 'react-redux';
+import Routing from '../layout/Routing';
+
+import ListViewItem from '../templates/ListView/ListViewItem';
+import {
+  ButtonAdd,
+  TopPanel,
+  AddItem,
+  SearchInput,
+  ItemsList,
+} from '../templates/ListView/ListViewStyles';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlus,
+  faUser,
+  faFileAlt,
+  faPlusSquare,
+} from '@fortawesome/free-solid-svg-icons';
+
+const buttons = [
+  {
+    ico: faFileAlt,
+    label: 'Szczegóły',
+    action: 'details',
+  },
+  {
+    ico: faPlusSquare,
+    label: 'cośtam',
+    action: 'details',
+  },
+  {
+    ico: faPlusSquare,
+    label: 'cośtam',
+    action: 'details',
+  },
+];
 
 function Drivers() {
   const drivers = useSelector(selectDrivers);
+  
   return (
-    <div>
+    <ItemsList>
+      <TopPanel>
+        <ButtonAdd>
+          <AddItem to={`${Routing.Drivers.path}/addDriver`}>
+            <FontAwesomeIcon icon={faPlus} />
+            Nowy <span>kierowca</span>
+          </AddItem>
+        </ButtonAdd>
+        <SearchInput />
+      </TopPanel>
+
       {drivers.map((driver) => (
-        <div key={driver.id}>
-          <Link to={`${Routing.Drivers.path}/${driver.id}`} props={{ ...driver }}>
-            {driver.name} {driver.surname}
-          </Link>
-        </div>
+        <ListViewItem
+          ico={faUser}
+          item={driver}
+          path={Routing.Drivers.path}
+          buttons={buttons}
+        />
       ))}
-    </div>
+    </ItemsList>
   );
 }
 

@@ -59,7 +59,7 @@ const Layout = () => {
 
     if (height < initialSiteHeight && !isMobileKeyboard) {
       dispatch(setIsMobileKeyboard(true));
-    } else if(height === initialSiteHeight && isMobileKeyboard) {
+    } else if (height === initialSiteHeight && isMobileKeyboard) {
       dispatch(setIsMobileKeyboard(false));
     }
   };
@@ -75,10 +75,10 @@ const Layout = () => {
 
   useEffect(() => {
     dispatch(setSiteHeight(document.documentElement.clientHeight));
-  }, [])
+  }, []);
 
   return (
-    <ThemeProvider theme={{...darkTheme, isMobileKeyboard}}>
+    <ThemeProvider theme={{ ...darkTheme, isMobileKeyboard }}>
       <StyledLayout height={height}>
         <Logo />
         {!IsLaptop && <Profile />}
@@ -88,15 +88,19 @@ const Layout = () => {
         <Body>
           {IsLaptop && <Profile />}
           <Switch>
+
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
-            <Route path={Routing.Dashboard.path}>
+            <Route exact path={Routing.Dashboard.path}>
               <Routing.Dashboard.Component />
             </Route>
 
-            <Route path={Routing.Records.path}>
+            <Route exact path={Routing.Records.path}>
               <Routing.Records.Component />
+            </Route>
+            <Route exact path={Routing.RecordDetails.path}>
+              <Routing.RecordDetails.Component />
             </Route>
 
             <Route exact path={Routing.Vehicles.path}>
@@ -105,14 +109,17 @@ const Layout = () => {
             <Route exact path={Routing.VehicleForm.path}>
               <Routing.VehicleForm.Component />
             </Route>
-            <Route path={Routing.VehicleDetails.path}>
+            <Route exact path={Routing.VehicleDetails.path}>
               <Routing.VehicleDetails.Component />
             </Route>
 
             <Route exact path={Routing.Drivers.path}>
               <Routing.Drivers.Component />
             </Route>
-            <Route path={Routing.DriversDetails.path}>
+            <Route exact path={Routing.DriverForm.path}>
+              <Routing.DriverForm.Component />
+            </Route>
+            <Route exact path={Routing.DriversDetails.path}>
               <Routing.DriversDetails.Component />
             </Route>
 
@@ -127,6 +134,8 @@ const Layout = () => {
             <Route path={Routing.Reports.path}>
               <Routing.Reports.Component />
             </Route>
+            <Route component={()=><div>Error 404</div>} />
+
           </Switch>
         </Body>
       </StyledLayout>
