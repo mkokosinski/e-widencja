@@ -49,7 +49,7 @@ function Vehicles() {
     return () => {
       promise.abort();
     };
-  }, []);
+  });
 
   return (
     <ItemsList>

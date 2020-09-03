@@ -1,8 +1,13 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
   async (arg = 1, thunkAPI) => {
+    console.log('async');
     const test = await fetch(
       `https://run.mocky.io/v3/c102e1e8-a6f3-461b-acf7-217884df0c65`
     );
@@ -46,6 +51,14 @@ export const vehicleSlice = createSlice({
 });
 
 export const selectVehicles = (state) => state.vehicles.vehicles;
+
+export const selectVehicleById = (id) =>{
+  return createSelector(selectVehicles, (vehicles) =>{
+    const veh = vehicles.find(veh => veh.id === id);
+    return veh;
+  }
+);
+}
 
 export const { next } = vehicleSlice.actions;
 

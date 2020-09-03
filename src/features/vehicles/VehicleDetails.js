@@ -1,17 +1,21 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router';
+import { useParams, useHistory, Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
+import { selectVehicleById } from './vehiclesSlice';
+
+import Routing from '../layout/Routing'
 
 const VehileDetails = () => {
   const { id } = useParams();
   const {goBack} = useHistory();
 
 
-  const vehicle = useSelector((state) =>
-    state.vehicles.find((veh) => veh.id === id)
-  );
+  const vehicle = useSelector(selectVehicleById(id));
+
+  
 
   return (
+    vehicle ?
     <div>
       <button onClick={goBack}>go back</button>
       <div>Name: {vehicle.name}</div>
@@ -20,6 +24,8 @@ const VehileDetails = () => {
       <div>odometer: {vehicle.odometer}</div>
       <div>registrationNumber: {vehicle.registrationNumber}</div>
     </div>
+    :
+    <Redirect to={Routing.Vehicles.path} />
   );
 };
 

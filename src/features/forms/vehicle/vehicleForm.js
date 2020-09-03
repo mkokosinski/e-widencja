@@ -22,6 +22,7 @@ import {
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
 import { useSelector } from 'react-redux';
+import { selectVehicleById } from '../../vehicles/vehiclesSlice';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -59,9 +60,7 @@ const VehicleForm = () => {
 
   const { id } = useParams();
 
-  const vehicle = useSelector((state) =>
-    state.vehicles.find((vehicle) => vehicle.id === id)
-  );
+  const vehicle = useSelector(selectVehicleById(id));
 
   const focusOn = (ref) => {
     console.log(ref);
