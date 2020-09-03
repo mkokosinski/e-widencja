@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "670eade9e72b4b48d37c52ed5837d198",
+    "revision": "eef7ce687417e0aafdb063408aa66e25",
     "url": "/e-widencja/index.html"
   },
   {
-    "revision": "ed57d2b32b1afed6b717",
+    "revision": "00e2a8e026d3bcaf7637",
     "url": "/e-widencja/static/css/2.25ff2e5b.chunk.css"
   },
   {
-    "revision": "af3adc118a56f416fb7e",
+    "revision": "85109cbbce8d98d4c287",
     "url": "/e-widencja/static/css/main.69eda509.chunk.css"
   },
   {
-    "revision": "ed57d2b32b1afed6b717",
-    "url": "/e-widencja/static/js/2.22d79923.chunk.js"
+    "revision": "00e2a8e026d3bcaf7637",
+    "url": "/e-widencja/static/js/2.91a9f6e4.chunk.js"
   },
   {
     "revision": "e0546182649f50a2eb923c2a881ed896",
-    "url": "/e-widencja/static/js/2.22d79923.chunk.js.LICENSE.txt"
+    "url": "/e-widencja/static/js/2.91a9f6e4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "af3adc118a56f416fb7e",
-    "url": "/e-widencja/static/js/main.0863c8e5.chunk.js"
+    "revision": "85109cbbce8d98d4c287",
+    "url": "/e-widencja/static/js/main.55399705.chunk.js"
   },
   {
     "revision": "4496e344ab59c56b3fb3",
