@@ -66,7 +66,7 @@ const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
               <Buttons>
               {buttons.map((button, index) => (
                   <Button key={index}>
-                    <Link to={`${path}/details/${item.id}`} props={{ ...item }}>
+                    <Link to={{pathname: button.action, item}} >
                       <ButtonBody>
                         <FontAwesomeIcon icon={button.ico} />
                         <span>{button.label}</span>

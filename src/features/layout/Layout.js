@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 
-import { darkTheme } from './Theme';
+import { darkTheme } from "./Theme";
 
 import {
   setIsMobile,
@@ -13,16 +13,17 @@ import {
   selectSiteHeight,
   setIsMobileKeyboard,
   selectIsMobileKeyboard,
-} from './layoutSlice';
+} from "./layoutSlice";
 
-import { StyledLayout, Menu, Body } from './LayoutStyles';
-import Navbar from '../navbar/Navbar';
-import Routing from './Routing';
-import Logo from './Logo';
-import Profile from '../profile/Profile';
+import { StyledLayout, Menu, Body } from "./LayoutStyles";
+import Navbar from "../navbar/Navbar";
+import Routing from "./Routing";
+import Logo from "./Logo";
+import Profile from "../profile/Profile";
 
-import { size } from './LayoutStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { size } from "./LayoutStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
 
 const Layout = () => {
   const [height, setheight] = useState(0);
@@ -32,6 +33,10 @@ const Layout = () => {
   const IsLaptop = useSelector(selectIsLaptop);
   const initialSiteHeight = useSelector(selectSiteHeight);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
+
+  const initSize = useCallback(() => {
+    dispatch(setSiteHeight(document.documentElement.clientHeight));
+  }, [dispatch]);
 
   const resizeHandler = (e) => {
     const {
@@ -65,17 +70,17 @@ const Layout = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', resizeHandler);
+    window.addEventListener("resize", resizeHandler);
 
     resizeHandler();
     return () => {
-      window.removeEventListener('resize', resizeHandler);
+      window.removeEventListener("resize", resizeHandler);
     };
   });
 
   useEffect(() => {
-    dispatch(setSiteHeight(document.documentElement.clientHeight));
-  }, []);
+    initSize();
+  }, [initSize]);
 
   return (
     <ThemeProvider theme={{ ...darkTheme, isMobileKeyboard }}>
@@ -88,8 +93,7 @@ const Layout = () => {
         <Body>
           {IsLaptop && <Profile />}
           <Switch>
-
-            <Route exact path='/'>
+            <Route exact path="/">
               <Redirect to={Routing.Dashboard.path} />
             </Route>
             <Route exact path={Routing.Dashboard.path}>
@@ -99,6 +103,9 @@ const Layout = () => {
             <Route exact path={Routing.Records.path}>
               <Routing.Records.Component />
             </Route>
+            <Route exact path={Routing.RecordForm.path}>
+              <Routing.RecordForm.Component />
+            </Route>
             <Route exact path={Routing.RecordDetails.path}>
               <Routing.RecordDetails.Component />
             </Route>
@@ -106,21 +113,27 @@ const Layout = () => {
             <Route exact path={Routing.Vehicles.path}>
               <Routing.Vehicles.Component />
             </Route>
-            <Route exact path={Routing.VehicleForm.path}>
-              <Routing.VehicleForm.Component />
+            <Route exact path={Routing.VehicleAdd.path}>
+              <Routing.VehicleAdd.Component />
+            </Route>
+            <Route exact path={Routing.VehicleEdit.path}>
+              <Routing.VehicleEdit.Component />
             </Route>
             <Route exact path={Routing.VehicleDetails.path}>
               <Routing.VehicleDetails.Component />
             </Route>
 
-            <Route exact path={Routing.Drivers.path}>
-              <Routing.Drivers.Component />
+            <Route exact path={Routing.Users.path}>
+              <Routing.Users.Component />
             </Route>
-            <Route exact path={Routing.DriverForm.path}>
-              <Routing.DriverForm.Component />
+            <Route exact path={Routing.UserAdd.path}>
+              <Routing.UserAdd.Component />
             </Route>
-            <Route exact path={Routing.DriversDetails.path}>
-              <Routing.DriversDetails.Component />
+            <Route exact path={Routing.UserEdit.path}>
+              <Routing.UserEdit.Component />
+            </Route>
+            <Route exact path={Routing.UserDetails.path}>
+              <Routing.UserDetails.Component />
             </Route>
 
             <Route path={Routing.Tours.path}>
@@ -134,8 +147,7 @@ const Layout = () => {
             <Route path={Routing.Reports.path}>
               <Routing.Reports.Component />
             </Route>
-            <Route component={()=><div>Error 404</div>} />
-
+            <Route component={() => <div>Error 404</div>} />
           </Switch>
         </Body>
       </StyledLayout>

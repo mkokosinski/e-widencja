@@ -1,6 +1,6 @@
-import React, {  useRef } from 'react';
+import React, { useRef } from 'react';
 import { Formik } from 'formik';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import * as Yup from 'yup';
 
 import Select from 'react-select';
@@ -21,6 +21,7 @@ import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
+import { useSelector } from 'react-redux';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -56,36 +57,36 @@ const VehicleForm = () => {
   const modelRef = useRef(null);
   const typeRef = useRef(null);
 
+  const { id } = useParams();
+
+  const vehicle = useSelector((state) =>
+    state.vehicles.find((vehicle) => vehicle.id === id)
+  );
+
   const focusOn = (ref) => {
     console.log(ref);
     ref.current.focus();
   };
 
+  const initValues = vehicle || {
+    name: '',
+    mark: '',
+    model: '',
+    registrationNumber: '',
+    mileage: '',
+    checkupDate: '',
+    type: '',
+  };
+
   return (
     <Container>
       <Formik
-        initialValues={{
-          name: '',
-          mark: '',
-          model: '',
-          registrationNumber: '',
-          mileage: '',
-          checkupDate: '',
-          type: '',
-        }}
+        initialValues={initValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
-            {/* <FormField>
-              <Label htmlFor='name'>Nazwa</Label>
-              <Input name='name' type='text' />
-              <ErrorMessage name='name'>
-                {(msg) => <StyledError>{msg}</StyledError>}
-              </ErrorMessage>
-            </FormField> */}
-
             <Row>
               <FieldWithErrors name='name' label='Nazwa'>
                 <Input type='text' />
@@ -111,7 +112,7 @@ const VehicleForm = () => {
               </FieldWithErrors>
             </Row>
             <Row>
-              <FieldWithErrors name='model' label='Model' >
+              <FieldWithErrors name='model' label='Model'>
                 <Input type='text' innerRef={modelRef} />
               </FieldWithErrors>
             </Row>
@@ -155,6 +156,7 @@ const VehicleForm = () => {
                       setFieldValue('type', value);
                     }}
                     openMenuOnFocus={true}
+                    defaultValue={{ label: values.type, value: values.type }}
                   />
                 </StyledSelect>
               </FieldWithErrors>

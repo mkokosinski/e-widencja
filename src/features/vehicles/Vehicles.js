@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { selectVehicles } from './vehiclesSlice';
+import { selectVehicles, fetchVehicles } from './vehiclesSlice';
 import Routing from '../layout/Routing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import {
   faCarAlt,
   faFileAlt,
   faPlusSquare,
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
@@ -21,16 +22,16 @@ import {
   ItemsList,
 } from '../templates/ListView/ListViewStyles';
 
-const buttons = [
+const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: 'details',
+    action: `${Routing.VehicleDetails.action}/${id}`,
   },
   {
-    ico: faPlusSquare,
-    label: 'Przejazd',
-    action: 'details',
+    ico: faEdit,
+    label: 'Edytuj',
+    action: `${Routing.VehicleEdit.action}/${id}`,
   },
   {
     ico: faPlusSquare,
@@ -40,13 +41,21 @@ const buttons = [
 ];
 
 function Vehicles() {
+  const dispatch = useDispatch();
   const vehicles = useSelector(selectVehicles);
+
+  useEffect(() => {
+    const promise = dispatch(fetchVehicles());
+    return () => {
+      promise.abort();
+    };
+  }, []);
 
   return (
     <ItemsList>
       <TopPanel>
         <ButtonAdd>
-          <AddItem to={`${Routing.Vehicles.path}/addVehicle`}>
+          <AddItem to={`${Routing.VehicleAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
             Nowy <span>pojazd</span>
           </AddItem>
@@ -56,10 +65,11 @@ function Vehicles() {
 
       {vehicles.map((vehicle) => (
         <ListViewItem
+          key={vehicle.id}
           ico={faCarAlt}
           item={vehicle}
           path={Routing.Vehicles.path}
-          buttons={buttons}
+          buttons={buttons(vehicle.id)}
         />
       ))}
     </ItemsList>

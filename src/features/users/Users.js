@@ -1,5 +1,5 @@
 import React from 'react';
-import { selectDrivers } from './driversSlice';
+import { selectUsers } from './usersSlice';
 import { useSelector } from 'react-redux';
 import Routing from '../layout/Routing';
 
@@ -18,18 +18,19 @@ import {
   faUser,
   faFileAlt,
   faPlusSquare,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 
-const buttons = [
+const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: 'details',
+    action: `${Routing.UserDetails.action}/${id}`
   },
   {
-    ico: faPlusSquare,
-    label: 'cośtam',
-    action: 'details',
+    ico: faEdit,
+    label: 'Edytuj',
+    action: `${Routing.UserEdit.action}/${id}`,
   },
   {
     ico: faPlusSquare,
@@ -38,14 +39,14 @@ const buttons = [
   },
 ];
 
-function Drivers() {
-  const drivers = useSelector(selectDrivers);
-  
+function Users() {
+  const users = useSelector(selectUsers);
+
   return (
     <ItemsList>
       <TopPanel>
         <ButtonAdd>
-          <AddItem to={`${Routing.Drivers.path}/addDriver`}>
+          <AddItem to={`${Routing.UserAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
             Nowy <span>kierowca</span>
           </AddItem>
@@ -53,16 +54,17 @@ function Drivers() {
         <SearchInput />
       </TopPanel>
 
-      {drivers.map((driver) => (
+      {users.map((user) => (
         <ListViewItem
+          key={user.id}
           ico={faUser}
-          item={driver}
-          path={Routing.Drivers.path}
-          buttons={buttons}
+          item={user}
+          path={Routing.Users.path}
+          buttons={buttons(user.id)}
         />
       ))}
     </ItemsList>
   );
 }
 
-export default Drivers;
+export default Users;

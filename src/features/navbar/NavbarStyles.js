@@ -40,6 +40,9 @@ export const Li = styled.li`
     }
 
     @media screen and ${device.laptop} {
+      width: 180px;
+    }
+    @media screen and ${device.laptopL} {
       width: 220px;
     }
   `}
@@ -51,8 +54,8 @@ export const A = styled(NavLink)`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 62px;
-    height: 62px;
+    width: 50px;
+    height: 50px;
     z-index: 2;
     border-radius: 0;
 
@@ -78,7 +81,7 @@ export const A = styled(NavLink)`
 
     @media screen and ${device.laptop} {
       border-radius: 20px 0px 0 20px;
-      padding: 10px 40px;
+      padding: 10px 30px;
       flex-direction: row;
       justify-content: flex-start;
       width: 100%;
@@ -119,6 +122,9 @@ export const A = styled(NavLink)`
         }
       }
     }
+    @media screen and ${device.laptopL} {
+      height: 62px;
+    }
   `}
 `;
 
@@ -135,11 +141,8 @@ export const Icon = styled.div``;
 export const Label = styled.div`
   display: none;
 
-  @media screen and ${device.mobileL} {
-    display: block;
-  }
-
   @media screen and ${device.laptop} {
+    display: block;
     font-size: 1rem;
     margin-left: 20px;
 

@@ -1,8 +1,6 @@
-import styled, { css } from 'styled-components';
-import { Form, Field } from 'formik';
-import { PanelBordered, device } from '../layout/LayoutStyles';
-import { useSelector } from 'react-redux';
-import { selectIsMobileKeyboard } from '../layout/layoutSlice';
+import styled, { css } from "styled-components";
+import { Form, Field } from "formik";
+import { PanelBordered, device } from "../layout/LayoutStyles";
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -17,7 +15,7 @@ export const Container = styled(PanelBordered)`
   @media screen and ${device.tablet} {
     margin: 20px 10px;
     padding: 32px 54px;
-    
+
     width: 70%;
   }
 
@@ -40,9 +38,9 @@ export const Row = styled.div`
   flex-direction: column;
   margin: 2px 0;
 
-   & > *{
-     margin: 6px;
-   }
+  & > * {
+    margin: 6px;
+  }
 
   @media screen and ${device.tablet} {
     flex-direction: row;
@@ -51,9 +49,9 @@ export const Row = styled.div`
   }
 
   @media screen and ${device.laptopL} {
-    & > *{
-     margin: 8px;
-   }
+    & > * {
+      margin: 8px;
+    }
   }
 `;
 
@@ -61,16 +59,22 @@ export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   width: 100%;
-  ${(props) =>
-    props.theme.isMobileKeyboard &&
-    css`
-    `}
+  ${(props) => props.theme.isMobileKeyboard && css``}
 `;
 
 export const FormField = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+export const StyledCheckbox = styled(FormField)`
+  align-items: center;
+  flex-direction: row;
+
+  & > * {
+    margin: 0 3px;
+  }
 `;
 
 export const Label = styled.label``;
@@ -84,9 +88,9 @@ const inputStyle = css`
   color: #363636;
   cursor: pointer;
   font-size: 0.9rem;
-  border-color: ${(props) => props.hasError && 'red'};
+  border-color: ${(props) => props.haserror && "red"};
 
-  div[class*='react-datepicker'] {
+  div[class*="react-datepicker"] {
     height: 200px;
   }
 
@@ -120,7 +124,7 @@ export const Input = styled(Field)`
 `;
 
 export const StyledSelect = styled.div`
-  div[class*='control'] {
+  div[class*="control"] {
     min-height: 0;
     ${inputStyle}
     box-sizing: content-box;

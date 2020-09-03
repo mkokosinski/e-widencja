@@ -10,11 +10,17 @@ const RecordDetails = () => {
     state.records.find((record) => record.id === id)
   );
 
+  const vehicle = useSelector(({vehicles}) =>
+    vehicles.find((veh) => veh.id === record.vehicleId)
+  );
+
+
   return (
     <div>
       <button onClick={goBack}>go back</button>
       <div>Year: {record.year}</div>
       <div>Month: {record.month}</div>
+      <div>Vehicle: {vehicle.name}</div>
     </div>
   );
 };

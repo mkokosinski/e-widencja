@@ -1,53 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const fetchVehicles = createAsyncThunk(
+  'vehicles/fetchVehicles',
+  async (arg = 1, thunkAPI) => {
+    const test = await fetch(
+      `https://run.mocky.io/v3/c102e1e8-a6f3-461b-acf7-217884df0c65`
+    );
+
+    return await test.json();
+  }
+);
 
 export const vehicleSlice = createSlice({
   name: 'vehicles',
-  initialState: [
-    {
-      id: '1',
-      name: 'Nowe Picanto',
-      mark: 'KIA',
-      model: 'Picanto',
-      registrationNumber: 'SK 999999',
-      mileage: 4503.4,
-      checkupDate: '2020-10-02'
-    },
-    {
-      id: '2',
-      name: 'Stare Picanto',
-      mark: 'KIA',
-      model: 'Picanto',
-      registrationNumber: 'SK 888888',
-      mileage: 18293.2,
-      checkupDate: '2020-10-02'
-    },
-    {
-      id: '3',
-      name: 'Ceed',
-      mark: 'KIA',
-      model: 'Ceed',
-      registrationNumber: 'SK 777777',
-      mileage: 124503.1,
-      checkupDate: '2020-10-02'
-    },
-    {
-      id: '4',
-      name: 'Venga',
-      mark: 'KIA',
-      model: 'Venga',
-      registrationNumber: 'SK 666666',
-      mileage: 74023.4,
-      checkupDate: '2020-10-02'
-    },
-  ],
+  initialState: {
+    loading: false,
+    vehicles: [],
+  },
   reducers: {
     func: (state) => {
       //function body
     },
   },
+  extraReducers: {
+    [fetchVehicles.pending]: (state, action) => {
+      console.log('pending', action);
+      state.loading = true;
+    },
+
+    [fetchVehicles.fulfilled]: (state, action) => {
+      state.loading = false;
+
+      console.log(action.payload.vehicles);
+      state.vehicles = [...action.payload.vehicles];
+      console.log(state.vehicles);
+    },
+
+    [fetchVehicles.rejected]: (state, action) => {
+      state.loading = false;
+
+      console.log('rejected', action);
+      console.log(state);
+    },
+  },
 });
 
-export const selectVehicles = (state) => state.vehicles;
+export const selectVehicles = (state) => state.vehicles.vehicles;
 
 export const { next } = vehicleSlice.actions;
 
