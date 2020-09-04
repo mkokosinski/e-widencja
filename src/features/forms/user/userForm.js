@@ -43,13 +43,9 @@ const handleSubmit = (values) => {
   console.log(values);
 };
 
-const UserForm = () => {
+const UserForm = ({user}) => {
   const { goBack } = useHistory();
-  const { id } = useParams();
 
-  const user = useSelector((state) =>
-    state.users.find((user) => user.id === id)
-  );
 
   const initValues = user || {
     id: '',

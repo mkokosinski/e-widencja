@@ -3,16 +3,13 @@ import { useParams, useHistory, Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectVehicleById } from './vehiclesSlice';
 
-import Routing from '../layout/Routing'
+import Routing from '../layout/Routing';
 
 const VehileDetails = () => {
   const { id } = useParams();
-  const {goBack} = useHistory();
+  const { goBack } = useHistory();
 
-
-  const vehicle = useSelector(selectVehicleById(id));
-
-  
+  const vehicle = useSelector((state) => selectVehicleById(state, id));
 
   return (
     vehicle ?
@@ -25,7 +22,7 @@ const VehileDetails = () => {
       <div>registrationNumber: {vehicle.registrationNumber}</div>
     </div>
     :
-    <Redirect to={Routing.Vehicles.path} />
+    null
   );
 };
 

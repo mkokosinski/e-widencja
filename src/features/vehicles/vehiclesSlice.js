@@ -1,26 +1,22 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
   async (arg = 1, thunkAPI) => {
-    console.log('async');
-    const test = await fetch(
+    const resp = await fetch(
       `https://run.mocky.io/v3/c102e1e8-a6f3-461b-acf7-217884df0c65`
     );
 
-    return await test.json();
+    return await resp.json();
   }
 );
 
 export const vehicleSlice = createSlice({
   name: 'vehicles',
   initialState: {
-    loading: false,
+    status: 'idle',
     vehicles: [],
+    error: null,
   },
   reducers: {
     func: (state) => {
@@ -29,36 +25,25 @@ export const vehicleSlice = createSlice({
   },
   extraReducers: {
     [fetchVehicles.pending]: (state, action) => {
-      console.log('pending', action);
-      state.loading = true;
+      state.status = 'loading';
     },
 
     [fetchVehicles.fulfilled]: (state, action) => {
-      state.loading = false;
-
-      console.log(action.payload.vehicles);
+      state.status = 'succeeded';
       state.vehicles = [...action.payload.vehicles];
-      console.log(state.vehicles);
     },
 
     [fetchVehicles.rejected]: (state, action) => {
-      state.loading = false;
-
-      console.log('rejected', action);
-      console.log(state);
+      state.status = 'failed';
+      state.error = action.error.message;
     },
   },
 });
 
-export const selectVehicles = (state) => state.vehicles.vehicles;
+export const selectVehicles = (state) => state.vehicles;
 
-export const selectVehicleById = (id) =>{
-  return createSelector(selectVehicles, (vehicles) =>{
-    const veh = vehicles.find(veh => veh.id === id);
-    return veh;
-  }
-);
-}
+export const selectVehicleById = (state, vehicleId) =>
+  state.vehicles.vehicles.find((vehicle) => vehicle.id === vehicleId);
 
 export const { next } = vehicleSlice.actions;
 

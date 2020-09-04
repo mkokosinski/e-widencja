@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useHistory, useParams } from 'react-router';
 import * as Yup from 'yup';
@@ -53,21 +53,17 @@ const handleSubmit = (values) => {
   console.log(values);
 };
 
-const VehicleForm = () => {
+const VehicleForm = ({ vehicle }) => {
   const { goBack } = useHistory();
   const modelRef = useRef(null);
   const typeRef = useRef(null);
-
-  const { id } = useParams();
-
-  const vehicle = useSelector(selectVehicleById(id));
 
   const focusOn = (ref) => {
     console.log(ref);
     ref.current.focus();
   };
 
-  const initValues = vehicle || {
+  let initValues = vehicle || {
     name: '',
     mark: '',
     model: '',
@@ -106,6 +102,7 @@ const VehicleForm = () => {
                       setFieldValue('mark', value);
                       focusOn(modelRef);
                     }}
+                    defaultValue={{ label: values.mark, value: values.mark }}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -134,6 +131,7 @@ const VehicleForm = () => {
                   focusOn={() => focusOn(typeRef)}
                   setFieldTouched={setFieldTouched}
                   setFieldValue={setFieldValue}
+                  initialValue={initValues.checkupDate}
                 />
               </FieldWithErrors>
             </Row>

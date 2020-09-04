@@ -110,30 +110,12 @@ const Layout = () => {
               <Routing.RecordDetails.Component />
             </Route>
 
-            <Route exact path={Routing.Vehicles.path}>
+            <Route path={Routing.Vehicles.path}>
               <Routing.Vehicles.Component />
             </Route>
-            <Route exact path={Routing.VehicleAdd.path}>
-              <Routing.VehicleAdd.Component />
-            </Route>
-            <Route exact path={Routing.VehicleEdit.path}>
-              <Routing.VehicleEdit.Component />
-            </Route>
-            <Route exact path={Routing.VehicleDetails.path}>
-              <Routing.VehicleDetails.Component />
-            </Route>
-
-            <Route exact path={Routing.Users.path}>
+           
+            <Route path={Routing.Users.path}>
               <Routing.Users.Component />
-            </Route>
-            <Route exact path={Routing.UserAdd.path}>
-              <Routing.UserAdd.Component />
-            </Route>
-            <Route exact path={Routing.UserEdit.path}>
-              <Routing.UserEdit.Component />
-            </Route>
-            <Route exact path={Routing.UserDetails.path}>
-              <Routing.UserDetails.Component />
             </Route>
 
             <Route path={Routing.Tours.path}>

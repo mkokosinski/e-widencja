@@ -1,6 +1,12 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { device, H2, PanelLight, PanelLightSoft, ButtonLightSoft } from "../../layout/LayoutStyles";
+import {
+  device,
+  H2,
+  PanelLight,
+  PanelLightSoft,
+  ButtonLightSoft,
+} from '../../layout/LayoutStyles';
 
 export const Container = styled(PanelLight)`
   height: 80px;
@@ -12,8 +18,8 @@ export const Container = styled(PanelLight)`
 
 export const Body = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas: " name  buttons";
+  grid-template-columns: 50px 2fr 1fr;
+  grid-template-areas: 'ico name  buttons';
 
   height: 100%;
   width: 100%;
@@ -22,15 +28,18 @@ export const Body = styled.div`
   overflow: hidden;
 
   @media screen and ${device.mobileXL} {
-    grid-template-columns: 50px 3fr 3fr 1fr;
-    grid-template-areas: "ico name journeys buttons";
-    grid-gap: 10px;
     margin: 16px;
-    justify-content: space-between;
     padding: 10px 30px;
+
+    & > * {
+      margin: 0 5px;
+    }
   }
 
   @media screen and ${device.tablet} {
+    grid-template-columns: 60px 3fr 3fr 1fr;
+    grid-template-areas: 'ico name journeys buttons';
+    justify-content: space-between;
   }
 
   @media screen and ${device.laptop} {
@@ -45,9 +54,8 @@ export const Ico = styled(PanelLightSoft)`
   grid-area: ico;
   height: 40px;
 
-  @media screen and ${device.laptop} {
-    height: 60px;
-    width: 80px;
+  @media screen and ${device.tablet} {
+    height: 50px;
   }
 `;
 
@@ -69,10 +77,11 @@ export const Name = styled(H2)`
 
 export const Journeys = styled.div`
   grid-area: journeys;
-  display: flex;
+  display: none;
   justify-content: space-around;
 
-  @media screen and ${device.mobileXL} {
+  @media screen and ${device.tablet} {
+    display: flex;
   }
 `;
 export const Journey = styled.div`
@@ -115,7 +124,12 @@ export const Buttons = styled.div`
 `;
 
 export const Button = styled(ButtonLightSoft)`
-`
+  width: 60px;
+
+  @media screen and ${device.laptopL} {
+    width: 80px;
+  }
+`;
 
 export const ButtonBody = styled.div`
   display: flex;

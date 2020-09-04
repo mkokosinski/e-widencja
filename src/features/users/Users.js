@@ -1,6 +1,6 @@
-import React from 'react';
-import { selectUsers } from './usersSlice';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { selectUsers, fetchUsers } from './usersSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import Routing from '../layout/Routing';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
@@ -18,14 +18,15 @@ import {
   faUser,
   faFileAlt,
   faPlusSquare,
-  faEdit
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons';
+import { Route, Switch } from 'react-router';
 
 const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.UserDetails.action}/${id}`
+    action: `${Routing.UserDetails.action}/${id}`,
   },
   {
     ico: faEdit,
@@ -39,9 +40,7 @@ const buttons = (id) => [
   },
 ];
 
-function Users() {
-  const users = useSelector(selectUsers);
-
+const List = ({ users }) => {
   return (
     <ItemsList>
       <TopPanel>
@@ -64,6 +63,34 @@ function Users() {
         />
       ))}
     </ItemsList>
+  );
+};
+
+function Users() {
+  const { users, status, error } = useSelector(selectUsers);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchUsers());
+    }
+  }, [status, dispatch]);
+  
+  return (
+    <Switch>
+      <Route exact path={Routing.UserAdd.path}>
+        <Routing.UserAdd.Component />
+      </Route>
+      <Route exact path={Routing.UserEdit.path}>
+        <Routing.UserEdit.Component />
+      </Route>
+      <Route exact path={Routing.UserDetails.path}>
+        <Routing.UserDetails.Component />
+      </Route>
+      <Route>
+        <List users={users} />
+      </Route>
+    </Switch>
   );
 }
 

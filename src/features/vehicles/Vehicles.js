@@ -21,6 +21,7 @@ import {
   SearchInput,
   ItemsList,
 } from '../templates/ListView/ListViewStyles';
+import { Switch, Route, useParams } from 'react-router';
 
 const buttons = (id) => [
   {
@@ -40,17 +41,7 @@ const buttons = (id) => [
   },
 ];
 
-function Vehicles() {
-  const dispatch = useDispatch();
-  const vehicles = useSelector(selectVehicles);
-
-  useEffect(() => {
-    const promise = dispatch(fetchVehicles());
-    return () => {
-      promise.abort();
-    };
-  });
-
+const List = ({ vehicles }) => {
   return (
     <ItemsList>
       <TopPanel>
@@ -73,6 +64,35 @@ function Vehicles() {
         />
       ))}
     </ItemsList>
+  );
+};
+
+function Vehicles() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { vehicles, status, error } = useSelector(selectVehicles);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchVehicles());
+    }
+  }, [status, dispatch]);
+
+  return (
+    <Switch>
+      <Route exact path={Routing.VehicleAdd.path}>
+        <Routing.VehicleAdd.Component />
+      </Route>
+      <Route exact path={Routing.VehicleEdit.path}>
+        <Routing.VehicleEdit.Component />
+      </Route>
+      <Route exact path={Routing.VehicleDetails.path}>
+        <Routing.VehicleDetails.Component />
+      </Route>
+      <Route>
+        <List vehicles={vehicles} />
+      </Route>
+    </Switch>
   );
 }
 

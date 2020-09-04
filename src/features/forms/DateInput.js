@@ -8,6 +8,7 @@ import formatLong from 'date-fns/locale/pl/_lib/formatLong/index';
 import { Input } from './FormsStyles';
 import { selectIsLaptop } from '../layout/layoutSlice';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const months = [
   'Styczeń',
@@ -37,30 +38,35 @@ const locale = {
   formatLong,
 };
 
-const DateInput = ({ setFieldTouched, setFieldValue, focusOn }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const isLaptop = useSelector(selectIsLaptop);
+const DateInput = React.forwardRef(
+  ({ setFieldTouched, setFieldValue, focusOn, initialValue }, ref) => {
+    const [startDate, setStartDate] = useState(new Date());
+    const isLaptop = useSelector(selectIsLaptop);
 
-  console.log(isLaptop);
+    useEffect(()=>{
+      if (initialValue) {
+        setStartDate(new Date(initialValue))
+      }
+    },[])
 
-  return (
-    <DatePicker
-      selected={startDate}
-      onChange={(value) => {
-        console.log(value);
-        const date = format(value, 'yyyy-MM-dd');
-        setStartDate(value);
-        setFieldTouched('checkupDate');
-        setFieldValue('checkupDate', date);
-        focusOn();
-      }}
-      customInput={<Input />}
-      dateFormat='yyyy-MM-dd'
-      locale={locale}
-      minDate={new Date()}
-      withPortal={!isLaptop}
-    />
-  );
-};
+    return (
+      <DatePicker
+        selected={startDate}
+        onChange={(value) => {
+          const date = format(value, 'yyyy-MM-dd');
+          setStartDate(value);
+          setFieldTouched('checkupDate');
+          setFieldValue('checkupDate', date);
+          focusOn();
+        }}
+        customInput={<Input />}
+        dateFormat='yyyy-MM-dd'
+        locale={locale}
+        minDate={new Date()}
+        withPortal={!isLaptop}
+      />
+    );
+  }
+);
 
 export default DateInput;

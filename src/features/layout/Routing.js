@@ -5,11 +5,13 @@ import Records from '../records/Records';
 import RecordForm from '../forms/record/recordForm';
 import RecordDetails from '../records/RecordDetails';
 import Users from '../users/Users';
-import UserForm from '../forms/user/userForm';
+import AddUserForm from '../forms/user/AddUserForm';
+import EditUserForm from '../forms/user/EditUserForm';
 import UserDetails from '../users/UserDetails';
 import Dashboard from '../dashboard/Dashboard';
 import Vehicles from '../vehicles/Vehicles';
-import VehicleForm from '../forms/vehicle/vehicleForm';
+import AddVehicleForm from '../forms/vehicle/AddVehicleForm';
+import EditVehicleForm from '../forms/vehicle/EditVehicleForm';
 import VehicleDetails from '../vehicles/VehicleDetails';
 
 const Routing = {
@@ -30,9 +32,9 @@ const Routing = {
   },
 
   Users: { Component: Users, path: '/e-widencja/users', label: 'Użytkownicy' },
-  UserAdd: { Component: UserForm, path: '/e-widencja/users/add' },
+  UserAdd: { Component: AddUserForm, path: '/e-widencja/users/add' },
   UserEdit: {
-    Component: UserForm,
+    Component: EditUserForm,
     action: '/e-widencja/users/edit',
     get path() {
       return `${this.action}/:id`;
@@ -50,11 +52,11 @@ const Routing = {
 
   Vehicles: { Component: Vehicles, path: '/e-widencja/vehicles' },
   VehicleAdd: {
-    Component: VehicleForm,
+    Component: AddVehicleForm,
     path: '/e-widencja/vehicles/add',
   },
   VehicleEdit: {
-    Component: VehicleForm,
+    Component: EditVehicleForm,
     action: '/e-widencja/vehicles/edit',
     get path() {
       return `${this.action}/:id`;
