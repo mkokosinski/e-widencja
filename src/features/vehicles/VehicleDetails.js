@@ -9,7 +9,7 @@ const VehileDetails = () => {
   const { id } = useParams();
   const { goBack } = useHistory();
 
-  const { vehicle } = useSelector((state) => selectVehicleById(state, id));
+  const vehicle = useSelector((state) => selectVehicleById(state, id));
 
   return vehicle ? (
     <div>
