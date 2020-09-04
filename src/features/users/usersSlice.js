@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchUsers = createAsyncThunk(
-  'vehicles/fetchUsers',
+  'users/fetchUsers',
   async (arg = 1, thunkAPI) => {
     const resp = await fetch(
       `https://run.mocky.io/v3/bc54bd66-37a1-4490-b0c4-472beed48806`

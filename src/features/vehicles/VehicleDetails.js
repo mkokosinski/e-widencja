@@ -9,10 +9,9 @@ const VehileDetails = () => {
   const { id } = useParams();
   const { goBack } = useHistory();
 
-  const vehicle = useSelector((state) => selectVehicleById(state, id));
+  const { vehicle } = useSelector((state) => selectVehicleById(state, id));
 
-  return (
-    vehicle ?
+  return vehicle ? (
     <div>
       <button onClick={goBack}>go back</button>
       <div>Name: {vehicle.name}</div>
@@ -21,9 +20,7 @@ const VehileDetails = () => {
       <div>odometer: {vehicle.odometer}</div>
       <div>registrationNumber: {vehicle.registrationNumber}</div>
     </div>
-    :
-    null
-  );
+  ) : null;
 };
 
 export default VehileDetails;
