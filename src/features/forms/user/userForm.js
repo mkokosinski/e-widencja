@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { useHistory, useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
 import FieldWithErrors from '../fieldWithErrors';
@@ -17,7 +17,6 @@ import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
-import { useSelector } from 'react-redux';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -64,7 +63,7 @@ const UserForm = ({user}) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, submitForm }) => (
+        {({ submitForm }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Imię'>

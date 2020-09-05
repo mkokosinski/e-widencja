@@ -70,12 +70,6 @@ function Users() {
   const { users, status, error } = useSelector(selectUsers);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchUsers());
-    }
-  }, [status, dispatch]);
-  
   return (
     <Switch>
       <Route exact path={Routing.UserAdd.path}>

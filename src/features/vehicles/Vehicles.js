@@ -71,13 +71,7 @@ function Vehicles() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { vehicles, status, error } = useSelector(selectVehicles);
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchVehicles());
-    }
-  }, [status, dispatch]);
-
+ 
   return (
     <Switch>
       <Route exact path={Routing.VehicleAdd.path}>

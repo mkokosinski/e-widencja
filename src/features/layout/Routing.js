@@ -2,7 +2,8 @@ import Tours from '../tours/Tours';
 import Settings from '../settings/Settings';
 import Reports from '../reports/Reports';
 import Records from '../records/Records';
-import RecordForm from '../forms/record/recordForm';
+import AddRecordForm from '../forms/record/AddRecordForm';
+import EditRecordForm from '../forms/record/EditRecordForm';
 import RecordDetails from '../records/RecordDetails';
 import Users from '../users/Users';
 import AddUserForm from '../forms/user/AddUserForm';
@@ -22,7 +23,14 @@ const Routing = {
   Reports: { Component: Reports, path: '/e-widencja/reports' },
 
   Records: { Component: Records, path: '/e-widencja/records' },
-  RecordForm: { Component: RecordForm, path: '/e-widencja/records/addRecord' },
+  RecordAdd: { Component: AddRecordForm, path: '/e-widencja/records/add' },
+  RecordEdit: {
+    Component: EditRecordForm,
+    action: '/e-widencja/records/edit',
+    get path() {
+      return `${this.action}/:id`;
+    },
+  },
   RecordDetails: {
     Component: RecordDetails,
     action: '/e-widencja/records/details',

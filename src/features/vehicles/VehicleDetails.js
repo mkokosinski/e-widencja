@@ -17,7 +17,7 @@ const VehileDetails = () => {
       <div>Name: {vehicle.name}</div>
       <div>mark: {vehicle.mark}</div>
       <div>model: {vehicle.model}</div>
-      <div>odometer: {vehicle.odometer}</div>
+      <div>mileage: {vehicle.mileage}</div>
       <div>registrationNumber: {vehicle.registrationNumber}</div>
     </div>
   ) : null;

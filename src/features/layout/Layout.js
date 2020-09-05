@@ -100,14 +100,8 @@ const Layout = () => {
               <Routing.Dashboard.Component />
             </Route>
 
-            <Route exact path={Routing.Records.path}>
+            <Route path={Routing.Records.path}>
               <Routing.Records.Component />
-            </Route>
-            <Route exact path={Routing.RecordForm.path}>
-              <Routing.RecordForm.Component />
-            </Route>
-            <Route exact path={Routing.RecordDetails.path}>
-              <Routing.RecordDetails.Component />
             </Route>
 
             <Route path={Routing.Vehicles.path}>
