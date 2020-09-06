@@ -11,6 +11,8 @@ export const Container = styled(PanelBordered)`
   width: 96%;
   padding: 10px;
   align-self: center;
+  margin-bottom: 20px;
+
 
   @media screen and ${device.tablet} {
     margin: 20px 10px;

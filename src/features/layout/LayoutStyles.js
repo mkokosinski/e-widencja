@@ -1,14 +1,14 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const size = {
-  mobileS: "320",
-  mobileM: "375",
-  mobileL: "425",
-  mobileXL: "570",
-  tablet: "768",
-  laptop: "1024",
-  laptopL: "1440",
-  desktop: "2560",
+  mobileS: '320',
+  mobileM: '375',
+  mobileL: '425',
+  mobileXL: '570',
+  tablet: '768',
+  laptop: '1024',
+  laptopL: '1440',
+  desktop: '2560',
 };
 
 export const device = {
@@ -38,11 +38,13 @@ export const StyledLayout = styled.div`
   }
 
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 60px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 40px 1fr 50px;
+
   grid-template-areas:
-    "body"
-    "menu";
+    'logo profile'
+    'body body'
+    'menu menu';
 
   min-height: 100vh;
   flex-direction: column-reverse;
@@ -51,25 +53,25 @@ export const StyledLayout = styled.div`
   box-sizing: content-box;
 
   @media screen and ${device.mobileM} {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 60px 1fr 60px;
-    grid-template-areas:
-      "logo profile"
-      "body body"
-      "menu menu";
+    grid-template-rows: 60px 1fr 50px;
   }
 
   @media screen and ${device.laptop} {
     grid-template-columns: 20% 80%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
-      "logo body"
-      "menu body";
+      'logo body'
+      'menu body';
 
     overflow: auto;
 
     flex-direction: row;
     font-size: ${({ theme }) => theme.font.size};
+  }
+
+  @media screen and ${device.laptopL} {
+    grid-template-columns: 14% 86%;
+    grid-template-rows: 200px 1fr;
   }
 `;
 
@@ -78,9 +80,9 @@ export const Menu = styled.div`
   align-items: center;
   flex-direction: column;
   grid-area: menu;
+  z-index: 998;
 
   background: inherit;
-  height: 60px;
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -99,28 +101,23 @@ export const Body = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  margin: 2px 2px 0 2px;
   padding: 5px;
 
   background: white;
 
   @media screen and ${device.tablet} {
-    margin: 6px 6px 0 6px;
     padding: 6px;
-    border-radius: 30px;
     align-items: flex-start;
   }
 
   @media screen and ${device.laptop} {
     display: block;
     font-size: 0.9em;
-    margin: 6px 6px 6px 0px;
     padding: 20px;
   }
 
   @media screen and ${device.laptopL} {
     font-size: 1em;
-    margin: 10px 10px 10px 0px;
     padding: 30px;
   }
 `;
@@ -128,12 +125,8 @@ export const Body = styled.div`
 export const ProfileBar = styled.div`
   display: none;
   grid-area: profile;
-  height: 60px;
+  height: 50px;
   border: 1px solid black;
-
-  @media screen and ${device.mobileM} {
-    display: flex;
-  }
 `;
 
 export const H2 = styled.h2`
@@ -240,4 +233,46 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
   background: white;
   border: 1px solid ${({ theme }) => theme.seconderySoft};
   color: ${({ theme }) => theme.seconderySoft};
+`;
+
+export const DetailsTopPanel = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+export const DetailsGoBack = styled(Button)`
+  width: 10%;
+`;
+
+export const DetailsTitle = styled(H2)`
+  padding: 10px;
+  width: 80%;
+`;
+
+export const DetailsEdit = styled(Button)`
+  height: 100%;
+  width: 10%;
+`;
+
+export const DetailsInfo = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 100, 0.2);
+  color: #333;
+  display: flex;
+  font-size: 0.9em;
+  margin: 6px 0;
+  padding: 12px;
+`;
+
+export const DetailsIco = styled.div`
+  color: #444;
+  width: 10%;
+`;
+
+export const DetailsLabel = styled.div`
+  width: 60%;
+`;
+
+export const DetailsData = styled.div`
+  font-weight: 600;
+  width: 30%;
 `;

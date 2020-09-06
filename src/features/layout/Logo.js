@@ -10,12 +10,7 @@ const Container = styled.div`
 
   align-items: center;
   justify-content: center;
-
-  display: none;
-
-  @media screen and ${device.mobileM} {
-    display: flex;
-  }
+  display: flex;
 `;
 
 const StyledLogo = styled.div`
@@ -27,6 +22,14 @@ const StyledLogo = styled.div`
     margin: 0;
     padding: 0;
   }
+
+  h4 {
+    display: none;
+
+    @media screen and ${device.tablet} {
+      display: block;
+    }
+  }
 `;
 
 const Ico = styled.div`
@@ -34,7 +37,13 @@ const Ico = styled.div`
 `;
 
 const Content = styled.div`
+  display: flex;
   text-align: right;
+  align-items: center;
+  
+  @media screen and ${device.tablet} {
+    display: block;
+  }
 `;
 
 const Logo = () => {
