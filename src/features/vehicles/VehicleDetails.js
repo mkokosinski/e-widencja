@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useHistory, Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectVehicleById } from './vehiclesSlice';
@@ -23,6 +23,7 @@ import {
   DetailsIco,
   DetailsLabel,
   DetailsData,
+  Details,
 } from '../layout/LayoutStyles';
 
 const sampleData = {
@@ -52,13 +53,29 @@ const sampleData = {
 };
 
 const VehileDetails = () => {
+  const [data, setData] = useState();
+
   const { id } = useParams();
   const { goBack } = useHistory();
 
   const vehicle = useSelector((state) => selectVehicleById(state, id));
 
+  useEffect(() => {
+    setData(limitData(6));
+  }, []);
+
+  const limitData = (limit) => {
+    const { labels, datasets } = sampleData;
+    const limitedLabels = labels.slice(limit - 6, limit);
+    const limitData = datasets[0].data.slice(limit - 6, limit);
+    return {
+      labels: limitedLabels,
+      datasets: [{ ...datasets[0], data: limitData }],
+    };
+  };
+
   return vehicle ? (
-    <div>
+    <Details>
       <DetailsTopPanel>
         <DetailsGoBack onClick={goBack}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -101,8 +118,14 @@ const VehileDetails = () => {
         <DetailsData>{vehicle.registrationNumber}</DetailsData>
       </DetailsInfo>
 
-      <LineChart data={sampleData} />
-    </div>
+      <LineChart
+        data={data}
+        next={() => {
+          setData(limitData(12));
+          console.log('next');
+        }}
+      />
+    </Details>
   ) : null;
 };
 

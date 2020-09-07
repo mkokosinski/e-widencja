@@ -235,6 +235,10 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
   color: ${({ theme }) => theme.seconderySoft};
 `;
 
+export const Details = styled.div`
+  display: grid;
+`;
+
 export const DetailsTopPanel = styled.div`
   display: flex;
   align-items: center;
