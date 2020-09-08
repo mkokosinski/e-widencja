@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import Chart from 'chart.js';
 import { useState } from 'react';
 import { Button } from '../layout/LayoutStyles';
+import { Buttons, StyledChart, ButtonPagintation, Title, Canvas } from './ChartsStyles';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
 
@@ -15,10 +16,10 @@ const custom = Chart.controllers.line.extend({
     const originalStroke = ctx.stroke;
     ctx.stroke = function () {
       ctx.save();
-      ctx.shadowColor = 'rgba(0,0,50,0)';
-      ctx.shadowBlur = 5;
+      ctx.shadowColor = 'rgba(0,0,50,0.4)';
+      ctx.shadowBlur =4;
       ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 5;
+      ctx.shadowOffsetY = 2;
       originalStroke.apply(this, arguments);
       ctx.restore();
     };
@@ -26,7 +27,7 @@ const custom = Chart.controllers.line.extend({
 });
 Chart.controllers.lineAlt = custom;
 
-const LineChart = ({ data, dataOffset }) => {
+const LineChart = ({ title='', data, dataOffset }) => {
   const [chart, setChart] = useState(null);
   const [limitedData, setLimitedData] = useState({});
   // const [paginationIndex, setPaginationIndex] = useState(0)
@@ -51,7 +52,7 @@ const LineChart = ({ data, dataOffset }) => {
         layout: {
           padding: {
             left: 0,
-            right: 10,
+            right: 20,
             top: 0,
             bottom: 0,
           },
@@ -67,7 +68,7 @@ const LineChart = ({ data, dataOffset }) => {
               ticks: {
                 display: true,
                 fontSize: 10,
-                maxTicksLimit: 4,
+                maxTicksLimit: 6,
               },
             },
           ],
@@ -89,7 +90,7 @@ const LineChart = ({ data, dataOffset }) => {
   };
 
   const limitData = (offset) => {
-    if (chart) {
+    if (chart && data) {
       const { labels, datasets } = data;
       const limitedLabels = labels.slice(currentOffset, currentOffset + offset);
       const limitedDatasets = [];
@@ -106,7 +107,7 @@ const LineChart = ({ data, dataOffset }) => {
       chart.data.datasets = limitedDatasets;
       chart.update();
     }
-  };
+  }; 
 
   const nextStep = () => {
     if (currentOffset + dataOffset < data.labels.length)
@@ -119,11 +120,16 @@ const LineChart = ({ data, dataOffset }) => {
   };
 
   return (
-    <>
-      <Button onClick={previuosStep}> {'<'} </Button>
-      <Button onClick={nextStep}> {'>'} </Button>
-      <canvas id='lineChart' ref={chartRef}></canvas>
-    </>
+    <StyledChart>
+      <Title>
+        {title}
+      </Title>
+      <Buttons>
+        <ButtonPagintation onClick={previuosStep}> {'< wcześniej'} </ButtonPagintation>
+        <ButtonPagintation onClick={nextStep}> {'później >'} </ButtonPagintation>
+      </Buttons>
+      <Canvas id='lineChart' ref={chartRef}></Canvas>
+    </StyledChart>
   );
 };
 

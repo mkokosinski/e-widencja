@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const size = {
   mobileS: '320',
@@ -35,6 +36,13 @@ export const StyledLayout = styled.div`
     color: inherit;
     font-size: inherit;
     text-decoration: none;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    list-style-type: none;
   }
 
   display: grid;
@@ -237,13 +245,14 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
 
 export const Details = styled.div`
   display: grid;
-  width:100%;
+  width: 100%;
 `;
 
 export const DetailsTopPanel = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 40px;
 `;
 export const DetailsGoBack = styled(Button)`
   width: 10%;
@@ -258,6 +267,7 @@ export const DetailsEdit = styled(Button)`
   height: 100%;
   width: 10%;
 `;
+export const DetailsEditButton = styled(Link)``;
 
 export const DetailsInfo = styled.div`
   border-bottom: 1px solid rgba(0, 0, 100, 0.2);

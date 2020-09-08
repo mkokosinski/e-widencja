@@ -17,10 +17,8 @@ export const Ul = styled.ul`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  position: relative;
   margin: 0;
   padding: 0px;
-  list-style-type: none;
 
   @media screen and ${device.laptop} {
     align-items: flex-end;
