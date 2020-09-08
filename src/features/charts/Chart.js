@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import Chart from 'chart.js';
 import { useState } from 'react';
+import { Button } from '../layout/LayoutStyles';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
 
@@ -14,7 +15,7 @@ const custom = Chart.controllers.line.extend({
     const originalStroke = ctx.stroke;
     ctx.stroke = function () {
       ctx.save();
-      ctx.shadowColor = 'rgba(0,0,50,0.3)';
+      ctx.shadowColor = 'rgba(0,0,50,0)';
       ctx.shadowBlur = 5;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 5;
@@ -25,29 +26,32 @@ const custom = Chart.controllers.line.extend({
 });
 Chart.controllers.lineAlt = custom;
 
-const LineChart = ({ data, next }) => {
-  const [chart, setChart] = useState();
+const LineChart = ({ data, dataOffset }) => {
+  const [chart, setChart] = useState(null);
+  const [limitedData, setLimitedData] = useState({});
+  // const [paginationIndex, setPaginationIndex] = useState(0)
+  const [currentOffset, setCurrentOffset] = useState(0);
   const chartRef = useRef(null);
+
+  useEffect(() => {
+    limitData(dataOffset);
+  }, [chart, currentOffset]);
 
   useEffect(() => {
     buildChart();
   }, []);
 
-  useEffect(() => {
-    buildChart()
-  });
-
   const buildChart = () => {
     const ctx = chartRef.current.getContext('2d');
 
-    new Chart(ctx, {
+    const chartLine = new Chart(ctx, {
       type: 'lineAlt',
-      data: data,
+      data: {},
       options: {
         layout: {
           padding: {
-            left: 10,
-            right: 0,
+            left: 0,
+            right: 10,
             top: 0,
             bottom: 0,
           },
@@ -58,7 +62,12 @@ const LineChart = ({ data, next }) => {
             {
               gridLines: {
                 // drawOnChartArea: false,
-                color: 'rgba(0,0,0,.03)',
+                color: 'rgba(0,0,0,.08)',
+              },
+              ticks: {
+                display: true,
+                fontSize: 10,
+                maxTicksLimit: 4,
               },
             },
           ],
@@ -66,7 +75,7 @@ const LineChart = ({ data, next }) => {
             {
               gridLines: {
                 // drawOnChartArea: false,
-                color: 'rgba(0,0,0,.03)',
+                color: 'rgba(0,0,0,.01)',
               },
               tricks: {
                 display: false,
@@ -76,15 +85,44 @@ const LineChart = ({ data, next }) => {
         },
       },
     });
+    setChart(chartLine);
   };
 
-  const nextStep = () => {};
+  const limitData = (offset) => {
+    if (chart) {
+      const { labels, datasets } = data;
+      const limitedLabels = labels.slice(currentOffset, currentOffset + offset);
+      const limitedDatasets = [];
+
+      datasets.forEach((dataset) => {
+        const newDataset = {
+          ...dataset,
+          data: dataset.data.slice(currentOffset, currentOffset + offset),
+        };
+        limitedDatasets.push(newDataset);
+      });
+
+      chart.data.labels = limitedLabels;
+      chart.data.datasets = limitedDatasets;
+      chart.update();
+    }
+  };
+
+  const nextStep = () => {
+    if (currentOffset + dataOffset < data.labels.length)
+      setCurrentOffset(currentOffset + dataOffset);
+  };
+
+  const previuosStep = () => {
+    if (currentOffset - dataOffset >= 0)
+      setCurrentOffset(currentOffset - dataOffset);
+  };
 
   return (
     <>
-      <button onClick={next}> {'<'} </button>
-      {/* <button> {'>'} </button> */}
-      <canvas id='chartTest' ref={chartRef}></canvas>;
+      <Button onClick={previuosStep}> {'<'} </Button>
+      <Button onClick={nextStep}> {'>'} </Button>
+      <canvas id='lineChart' ref={chartRef}></canvas>
     </>
   );
 };

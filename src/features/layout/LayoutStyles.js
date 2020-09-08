@@ -237,6 +237,7 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
 
 export const Details = styled.div`
   display: grid;
+  width:100%;
 `;
 
 export const DetailsTopPanel = styled.div`

@@ -48,31 +48,19 @@ const sampleData = {
       backgroundColor: ['transparent'],
       borderColor: ['#5840BB'],
       borderWidth: 2,
+      pointBorderColor: '#ffffff',
+      pointBackgroundColor: '#5840BB',
+      pointRadius: 6,
+      pointBorderWidth: 3
     },
   ],
 };
 
 const VehileDetails = () => {
-  const [data, setData] = useState();
-
   const { id } = useParams();
   const { goBack } = useHistory();
 
   const vehicle = useSelector((state) => selectVehicleById(state, id));
-
-  useEffect(() => {
-    setData(limitData(6));
-  }, []);
-
-  const limitData = (limit) => {
-    const { labels, datasets } = sampleData;
-    const limitedLabels = labels.slice(limit - 6, limit);
-    const limitData = datasets[0].data.slice(limit - 6, limit);
-    return {
-      labels: limitedLabels,
-      datasets: [{ ...datasets[0], data: limitData }],
-    };
-  };
 
   return vehicle ? (
     <Details>
@@ -118,13 +106,7 @@ const VehileDetails = () => {
         <DetailsData>{vehicle.registrationNumber}</DetailsData>
       </DetailsInfo>
 
-      <LineChart
-        data={data}
-        next={() => {
-          setData(limitData(12));
-          console.log('next');
-        }}
-      />
+      <LineChart data={sampleData} dataOffset={4} />
     </Details>
   ) : null;
 };
