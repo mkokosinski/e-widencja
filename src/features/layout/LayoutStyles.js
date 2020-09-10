@@ -95,10 +95,16 @@ export const Menu = styled.div`
   position: fixed;
   bottom: 0;
 
+  height: ${({ theme }) => {
+      console.log(theme.isMobileKeyboard);
+      return theme.isMobileKeyboard ? '0px' : 'initial';
+    }};
+
   @media screen and ${device.laptop} {
     font-size: ${({ theme }) => theme.font.size};
     position: relative;
-    height: auto;
+    height:  auto;
+    
     width: auto;
   }
 `;
