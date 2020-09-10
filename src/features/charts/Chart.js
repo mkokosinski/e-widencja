@@ -16,7 +16,7 @@ const custom = Chart.controllers.line.extend({
     const originalStroke = ctx.stroke;
     ctx.stroke = function () {
       ctx.save();
-      ctx.shadowColor = 'rgba(0,0,50,0.4)';
+      ctx.shadowColor = 'rgba(0,0,50,0.0)';
       ctx.shadowBlur =4;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 2;

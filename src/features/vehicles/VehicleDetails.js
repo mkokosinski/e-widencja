@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faPencilAlt,
+  faTrashAlt,
   faCopyright,
   faCarSide,
   faTachometerAlt,
@@ -19,6 +20,7 @@ import {
   DetailsTopPanel,
   DetailsGoBack,
   DetailsTitle,
+  DetailsDelete,
   DetailsEdit,
   DetailsInfo,
   DetailsIco,
@@ -26,6 +28,9 @@ import {
   DetailsData,
   Details,
   DetailsEditButton,
+  SectionDesc,
+  SectionChart,
+  SectionRecent,
 } from '../layout/LayoutStyles';
 import RecentList from '../templates/detailsView/RecentTours';
 
@@ -49,10 +54,10 @@ const sampleData = {
       label: 'Przejechano',
       data: [142, 145, 154, 142, 121, 130, 132, 124, 100, 121, 130, 144],
       backgroundColor: ['transparent'],
-      borderColor: 'rgba(50,50,200,0.5)',
+      borderColor: 'rgba(88, 64, 187,0.8)',
       borderWidth: 2,
       pointBorderColor: '#ffffff',
-      pointBackgroundColor: 'rgba(50,50,200,0.7)',
+      pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
       pointBorderWidth: 3,
     },
@@ -79,56 +84,84 @@ const VehileDetails = () => {
 
   return vehicle ? (
     <Details>
-      <DetailsTopPanel>
-        <DetailsGoBack onClick={goBack}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </DetailsGoBack>
-        <DetailsTitle>{vehicle.name}</DetailsTitle>
-        <DetailsEdit>
-          <DetailsEditButton to={`${Routing.VehicleEdit.action}/${vehicle.id}`}>
-            <FontAwesomeIcon icon={faPencilAlt} />
-          </DetailsEditButton>
-        </DetailsEdit>
-      </DetailsTopPanel>
+      <SectionDesc>
+        <DetailsTopPanel>
+          <DetailsGoBack onClick={goBack}>
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </DetailsGoBack>
 
-      <DetailsInfo>
-        <DetailsIco>
-          <FontAwesomeIcon icon={faCopyright} />
-        </DetailsIco>
-        <DetailsLabel>Marka</DetailsLabel>
-        <DetailsData>{vehicle.mark}</DetailsData>
-      </DetailsInfo>
+          <DetailsTitle>{vehicle.name}</DetailsTitle>
 
-      <DetailsInfo>
-        <DetailsIco>
-          <FontAwesomeIcon icon={faCarSide} />
-        </DetailsIco>
-        <DetailsLabel>Model</DetailsLabel>
-        <DetailsData>{vehicle.model}</DetailsData>
-      </DetailsInfo>
+          <DetailsEdit>
+            <DetailsEditButton
+              to={`${Routing.VehicleEdit.action}/${vehicle.id}`}
+            >
+              <FontAwesomeIcon icon={faPencilAlt} />
+            </DetailsEditButton>
+          </DetailsEdit>
 
-      <DetailsInfo>
-        <DetailsIco>
-          <FontAwesomeIcon icon={faTachometerAlt} />
-        </DetailsIco>
-        <DetailsLabel>Przebieg</DetailsLabel>
-        <DetailsData>{vehicle.mileage}</DetailsData>
-      </DetailsInfo>
+          <DetailsDelete
+            onClick={() => {
+              const isDel = window.confirm(`Na pewno chcesz usunąć ${vehicle.name}`);
 
-      <DetailsInfo>
-        <DetailsIco>
-          <FontAwesomeIcon icon={faColumns} />
-        </DetailsIco>
-        <DetailsLabel>Numer rejestracyjny</DetailsLabel>
-        <DetailsData>{vehicle.registrationNumber}</DetailsData>
-      </DetailsInfo>
+              if (isDel) {
+                alert("Pojazd zostanie usunięty jak będzie api")
+              }
+            }}
+          >
+            {/* <DetailsEditButton
+              to={`${Routing.VehicleEdit.action}/${vehicle.id}`}
+            >
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </DetailsEditButton> */}
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </DetailsDelete>
+        </DetailsTopPanel>
 
-      <LineChart
-        data={sampleData}
-        dataOffset={6}
-        title={'Przejechane kilometry'}
-      />
-      <RecentList title='Ostatnie trasy' list={sampletours} />
+        <DetailsInfo>
+          <DetailsIco>
+            <FontAwesomeIcon icon={faCopyright} />
+          </DetailsIco>
+          <DetailsLabel>Marka</DetailsLabel>
+          <DetailsData>{vehicle.mark}</DetailsData>
+        </DetailsInfo>
+
+        <DetailsInfo>
+          <DetailsIco>
+            <FontAwesomeIcon icon={faCarSide} />
+          </DetailsIco>
+          <DetailsLabel>Model</DetailsLabel>
+          <DetailsData>{vehicle.model}</DetailsData>
+        </DetailsInfo>
+
+        <DetailsInfo>
+          <DetailsIco>
+            <FontAwesomeIcon icon={faTachometerAlt} />
+          </DetailsIco>
+          <DetailsLabel>Przebieg</DetailsLabel>
+          <DetailsData>{vehicle.mileage}</DetailsData>
+        </DetailsInfo>
+
+        <DetailsInfo>
+          <DetailsIco>
+            <FontAwesomeIcon icon={faColumns} />
+          </DetailsIco>
+          <DetailsLabel>Numer rejestracyjny</DetailsLabel>
+          <DetailsData>{vehicle.registrationNumber}</DetailsData>
+        </DetailsInfo>
+      </SectionDesc>
+
+      <SectionChart>
+        <LineChart
+          data={sampleData}
+          dataOffset={6}
+          title={'Przejechane kilometry'}
+        />
+      </SectionChart>
+
+      <SectionRecent>
+        <RecentList title='Ostatnie trasy' list={sampletours} />
+      </SectionRecent>
     </Details>
   ) : null;
 };

@@ -16,7 +16,7 @@ import {
   StyledSelect,
   ButtonsContainer,
   Row,
-} from '../FormsStyles';
+} from '../FormsStyles'; 
 import {
   ButtonMain,
   ButtonBorderedSeconderySoft,

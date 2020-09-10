@@ -13,7 +13,7 @@ import {
   ButtonsContainer,
   Row,
 } from '../FormsStyles';
-import {
+import { 
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';

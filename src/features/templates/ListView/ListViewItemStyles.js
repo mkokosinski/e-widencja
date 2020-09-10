@@ -11,15 +11,14 @@ import {
 export const Container = styled(PanelLight)`
   height: 80px;
   padding: 0;
-  width: 100%;
   max-width: 1400px;
-  margin: 8px auto;
+  margin: 8px;
 `;
 
 export const Body = styled.div`
   display: grid;
-  grid-template-columns: 50px 2fr 1fr;
-  grid-template-areas: 'ico name  buttons';
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: 'name  buttons';
 
   height: 100%;
   width: 100%;
@@ -28,6 +27,9 @@ export const Body = styled.div`
   overflow: hidden;
 
   @media screen and ${device.mobileXL} {
+    grid-template-columns: 50px 2fr 1fr;
+    grid-template-areas: 'ico name buttons';
+
     margin: 16px;
     padding: 10px 30px;
 
@@ -52,8 +54,12 @@ export const Body = styled.div`
 
 export const Ico = styled(PanelLightSoft)`
   grid-area: ico;
+  display: none;
   height: 40px;
 
+  @media screen and ${device.mobileXL} {
+    display: flex;
+  }
   @media screen and ${device.tablet} {
     height: 50px;
   }
@@ -61,7 +67,7 @@ export const Ico = styled(PanelLightSoft)`
 
 export const Name = styled(H2)`
   grid-area: name;
-  font-size: 1em;
+  font-size: 0.9em;
   text-align: center;
   text-align: left;
   padding: 0 30px;
@@ -70,8 +76,11 @@ export const Name = styled(H2)`
   overflow: hidden;
 
   @media screen and ${device.mobileXL} {
-    font-size: 1.2em;
+    font-size: 1em;
     width: auto;
+  }
+  @media screen and ${device.mobileXL} {
+    font-size: 1.1em;
   }
 `;
 
@@ -126,6 +135,15 @@ export const Buttons = styled.div`
 export const Button = styled(ButtonLightSoft)`
   width: 60px;
 
+  :nth-child(2) {
+    display: none;
+  }
+
+  @media screen and ${device.mobileL} {
+    :nth-child(2) {
+      display: flex;
+    }
+  }
   @media screen and ${device.laptopL} {
     width: 80px;
   }

@@ -109,7 +109,7 @@ export const Body = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 5px;
+  padding: 0px;
 
   background: white;
 
@@ -152,6 +152,8 @@ const Panel = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* clip-path: polygon(0 16px, 20px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 22px) 100%, 0 100%); */
   /* border-radius: 40px 6px; */
 `;
 
@@ -194,7 +196,7 @@ export const PanelLightSoft = styled(Panel)`
 
 export const Button = styled.div`
   align-items: center;
-  /* border-radius: 20px 3px; */
+  /* clip-path: polygon(0 8px, 10px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 10px) 100%, 0 100%); */
   display: flex;
   justify-content: center;
   user-select: none;
@@ -244,8 +246,45 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
 `;
 
 export const Details = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+
+  background-color: #f2f3f5;
+  font-size: 0.9em;
+
+  @media screen and ${device.laptop} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'desc recent'
+      'chart chart';
+
+    background-color: #ffffff;
+    font-size: 1em;
+  }
+`;
+
+export const DetailsSection = styled.section`
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
+
+  margin: 4px;
+  padding: 2px;
+
+  @media screen and ${device.laptop} {
+    margin: 10px;
+    padding: 10px;
+
+    border: none;
+    box-shadow: 0px 2px 10px -6px rgba(0, 0, 0, 0.3);
+  }
+`;
+
+export const SectionDesc = styled(DetailsSection)`
+  grid-area: desc;
 `;
 
 export const DetailsTopPanel = styled.div`
@@ -253,29 +292,62 @@ export const DetailsTopPanel = styled.div`
   align-items: center;
   width: 100%;
   height: 40px;
+
+  color: ${({ theme }) => theme.main};
+
+  @media screen and ${device.laptop} {
+    height: 60px;
+    margin-left: 30px;
+    font-size: 1.2em;
+  }
 `;
 export const DetailsGoBack = styled(Button)`
   width: 10%;
+  @media screen and ${device.laptop} {
+    width: auto;
+  }
 `;
 
 export const DetailsTitle = styled(H2)`
   padding: 10px;
   width: 80%;
+  @media screen and ${device.laptop} {
+    width: auto;
+    margin: 0 20px;
+  }
 `;
+
+export const DetailsEditButton = styled(Link)``;
 
 export const DetailsEdit = styled(Button)`
   height: 100%;
   width: 10%;
+  @media screen and ${device.laptop} {
+    width: auto;
+    margin-right: 20px;
+  }
 `;
-export const DetailsEditButton = styled(Link)``;
+
+export const DetailsDelete = styled(Button)`
+  height: 100%;
+  width: 10%;
+  color: rgba(220, 80, 80, 1);
+
+  @media screen and ${device.laptop} {
+    width: auto;
+  }
+`;
 
 export const DetailsInfo = styled.div`
   border-bottom: 1px solid rgba(0, 0, 100, 0.2);
   color: #333;
   display: flex;
-  font-size: 0.9em;
   margin: 6px 0;
   padding: 12px;
+
+  :last-child {
+    border: none;
+  }
 `;
 
 export const DetailsIco = styled.div`
@@ -290,4 +362,12 @@ export const DetailsLabel = styled.div`
 export const DetailsData = styled.div`
   font-weight: 600;
   width: 30%;
+`;
+
+export const SectionChart = styled(DetailsSection)`
+  grid-area: chart;
+`;
+
+export const SectionRecent = styled(DetailsSection)`
+  grid-area: recent;
 `;
