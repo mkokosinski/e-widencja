@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { selectUsers, fetchUsers } from './usersSlice';
+import React from 'react';
+import { selectUsers } from './usersSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import Routing from '../layout/Routing';
+import Routing from '../routing/Routing';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
@@ -68,7 +68,6 @@ const List = ({ users }) => {
 
 function Users() {
   const { users, status, error } = useSelector(selectUsers);
-  const dispatch = useDispatch();
 
   return (
     <Switch>

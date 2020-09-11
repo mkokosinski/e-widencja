@@ -65,7 +65,7 @@ export const StyledLayout = styled.div`
   }
 
   @media screen and ${device.laptop} {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 16% 84%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
       'logo body'
@@ -96,15 +96,15 @@ export const Menu = styled.div`
   bottom: 0;
 
   height: ${({ theme }) => {
-      console.log(theme.isMobileKeyboard);
-      return theme.isMobileKeyboard ? '0px' : 'initial';
-    }};
+    console.log(theme.isMobileKeyboard);
+    return theme.isMobileKeyboard ? '0px' : 'initial';
+  }};
 
   @media screen and ${device.laptop} {
     font-size: ${({ theme }) => theme.font.size};
     position: relative;
-    height:  auto;
-    
+    height: auto;
+
     width: auto;
   }
 `;
@@ -154,10 +154,20 @@ export const H2 = styled.h2`
   }
 `;
 
+export const A = styled(Link)`
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Panel = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
 
   /* clip-path: polygon(0 16px, 20px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 22px) 100%, 0 100%); */
   /* border-radius: 40px 6px; */
@@ -168,7 +178,9 @@ export const PanelBordered = styled(Panel)`
   border: none;
 
   @media screen and ${device.tablet} {
-    border: 1px solid #5840bb;
+    border: 1px solid rgba(88, 64, 187, 0.1);
+
+    box-shadow: 0 2px 12px -8px rgba(0, 0, 0, 0.5);
   }
 `;
 
@@ -209,6 +221,7 @@ export const Button = styled.div`
   cursor: pointer;
   white-space: nowrap;
   transition: filter 150ms;
+  border-radius: 6px;
 
   :focus,
   :active {
@@ -249,131 +262,4 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
   background: white;
   border: 1px solid ${({ theme }) => theme.seconderySoft};
   color: ${({ theme }) => theme.seconderySoft};
-`;
-
-export const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  background-color: #f2f3f5;
-  font-size: 0.9em;
-
-  @media screen and ${device.laptop} {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      'desc recent'
-      'chart chart';
-
-    background-color: #ffffff;
-    font-size: 1em;
-  }
-`;
-
-export const DetailsSection = styled.section`
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
-
-  margin: 4px;
-  padding: 2px;
-
-  @media screen and ${device.laptop} {
-    margin: 10px;
-    padding: 10px;
-
-    border: none;
-    box-shadow: 0px 2px 10px -6px rgba(0, 0, 0, 0.3);
-  }
-`;
-
-export const SectionDesc = styled(DetailsSection)`
-  grid-area: desc;
-`;
-
-export const DetailsTopPanel = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-
-  color: ${({ theme }) => theme.main};
-
-  @media screen and ${device.laptop} {
-    height: 60px;
-    margin-left: 30px;
-    font-size: 1.2em;
-  }
-`;
-export const DetailsGoBack = styled(Button)`
-  width: 10%;
-  @media screen and ${device.laptop} {
-    width: auto;
-  }
-`;
-
-export const DetailsTitle = styled(H2)`
-  padding: 10px;
-  width: 80%;
-  @media screen and ${device.laptop} {
-    width: auto;
-    margin: 0 20px;
-  }
-`;
-
-export const DetailsEditButton = styled(Link)``;
-
-export const DetailsEdit = styled(Button)`
-  height: 100%;
-  width: 10%;
-  @media screen and ${device.laptop} {
-    width: auto;
-    margin-right: 20px;
-  }
-`;
-
-export const DetailsDelete = styled(Button)`
-  height: 100%;
-  width: 10%;
-  color: rgba(220, 80, 80, 1);
-
-  @media screen and ${device.laptop} {
-    width: auto;
-  }
-`;
-
-export const DetailsInfo = styled.div`
-  border-bottom: 1px solid rgba(0, 0, 100, 0.2);
-  color: #333;
-  display: flex;
-  margin: 6px 0;
-  padding: 12px;
-
-  :last-child {
-    border: none;
-  }
-`;
-
-export const DetailsIco = styled.div`
-  color: #444;
-  width: 10%;
-`;
-
-export const DetailsLabel = styled.div`
-  width: 60%;
-`;
-
-export const DetailsData = styled.div`
-  font-weight: 600;
-  width: 30%;
-`;
-
-export const SectionChart = styled(DetailsSection)`
-  grid-area: chart;
-`;
-
-export const SectionRecent = styled(DetailsSection)`
-  grid-area: recent;
 `;

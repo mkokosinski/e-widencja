@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
-import { NavLink } from "react-router-dom";
-import { device } from "../layout/LayoutStyles";
-import Decorator from "./itemDecorator.svg";
+import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { device } from '../layout/LayoutStyles';
+import Decorator from './itemDecorator.svg';
 
 export const Menu = styled.nav`
   display: flex;
@@ -31,16 +31,22 @@ export const Li = styled.li`
   ${({ theme, active }) => css`
     display: flex;
     align-items: center;
+
     position: relative;
+
     color: white;
 
     @media screen and ${device.tablet} {
     }
 
     @media screen and ${device.laptop} {
+      margin: 2px 0;
+
       width: 180px;
     }
     @media screen and ${device.laptopL} {
+      margin: 6px 0;
+
       width: 220px;
     }
   `}
@@ -52,11 +58,12 @@ export const A = styled(NavLink)`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     width: 50px;
     height: 50px;
     z-index: 2;
-    border-radius: 0;
 
+    border-radius: 4px;
     background: transparent;
     cursor: pointer;
 
@@ -78,11 +85,13 @@ export const A = styled(NavLink)`
     }
 
     @media screen and ${device.laptop} {
-      border-radius: 20px 0px 0 20px;
-      padding: 10px 30px;
       flex-direction: row;
       justify-content: flex-start;
+
       width: 100%;
+      padding: 12px 30px;
+
+      border-radius: 20px 0px 0 20px;
 
       :hover {
         background: linear-gradient(90deg, ${theme.nav.hover}, transparent);
@@ -96,7 +105,7 @@ export const A = styled(NavLink)`
 
         ::before,
         ::after {
-          content: "";
+          content: '';
           background: url(${Decorator}) no-repeat right;
           position: absolute;
           pointer-events: none;
@@ -121,7 +130,8 @@ export const A = styled(NavLink)`
       }
     }
     @media screen and ${device.laptopL} {
-      height: 62px;
+      height: 70px;
+      padding: 20px 40px;
     }
   `}
 `;

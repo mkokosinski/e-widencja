@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectVehicles, fetchVehicles } from './vehiclesSlice';
-import Routing from '../layout/Routing';
+import Routing from '../routing/Routing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

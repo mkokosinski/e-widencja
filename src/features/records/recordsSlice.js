@@ -27,7 +27,7 @@ export const recordsSlice = createSlice({
 
     [fetchRecords.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-
+      state.records = [];
       action.payload.records.forEach((rec) => {
         state.records.push({
           ...rec,

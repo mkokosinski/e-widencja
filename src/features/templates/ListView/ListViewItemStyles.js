@@ -12,7 +12,8 @@ export const Container = styled(PanelLight)`
   height: 80px;
   padding: 0;
   max-width: 1400px;
-  margin: 8px;
+  margin: 8px auto;
+  width: 98%;
 `;
 
 export const Body = styled.div`

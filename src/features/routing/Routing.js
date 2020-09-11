@@ -1,3 +1,4 @@
+import Login from '../auth/AuthPage';
 import Tours from '../tours/Tours';
 import Settings from '../settings/Settings';
 import Reports from '../reports/Reports';
@@ -16,6 +17,8 @@ import EditVehicleForm from '../forms/vehicle/EditVehicleForm';
 import VehicleDetails from '../vehicles/VehicleDetails';
 
 const Routing = {
+  Login: { Component: Login, path: '/e-widencja/login' },
+
   Tours: { Component: Tours, path: '/e-widencja/tours' },
 
   Settings: { Component: Settings, path: '/e-widencja/settings' },

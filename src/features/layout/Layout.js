@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
+import React, { useEffect, useState } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
-import { darkTheme } from "./Theme";
+import { darkTheme } from './Theme';
 
 import {
   setIsMobile,
@@ -13,17 +13,22 @@ import {
   selectSiteHeight,
   setIsMobileKeyboard,
   selectIsMobileKeyboard,
-} from "./layoutSlice";
+} from './layoutSlice';
 
-import { StyledLayout, Menu, Body } from "./LayoutStyles";
-import Navbar from "../navbar/Navbar";
-import Routing from "./Routing";
-import Logo from "./Logo";
-import Profile from "../profile/Profile";
+import { StyledLayout, Menu, Body } from './LayoutStyles';
+import Navbar from '../navbar/Navbar';
+import Routing from '../routing/Routing';
+import Logo from './Logo';
+import Profile from '../profile/Profile';
 
-import { size } from "./LayoutStyles";
-import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
+import { size } from './LayoutStyles';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCallback } from 'react';
+
+import { fetchRecords } from '../records/recordsSlice';
+import { fetchVehicles } from '../vehicles/vehiclesSlice';
+import { fetchUsers } from '../users/usersSlice';
+import PrivateRoute from '../routing/PrivateRoute';
 
 const Layout = () => {
   const [height, setheight] = useState(0);
@@ -34,9 +39,28 @@ const Layout = () => {
   const initialSiteHeight = useSelector(selectSiteHeight);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
+  useEffect(() => {
+    dispatch(fetchRecords());
+    dispatch(fetchVehicles());
+    dispatch(fetchUsers());
+  });
+
   const initSize = useCallback(() => {
     dispatch(setSiteHeight(document.documentElement.clientHeight));
   }, [dispatch]);
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeHandler);
+
+    resizeHandler();
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    };
+  });
+
+  useEffect(() => {
+    initSize();
+  }, [initSize]);
 
   const resizeHandler = (e) => {
     const {
@@ -69,19 +93,6 @@ const Layout = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", resizeHandler);
-
-    resizeHandler();
-    return () => {
-      window.removeEventListener("resize", resizeHandler);
-    };
-  });
-
-  useEffect(() => {
-    initSize();
-  }, [initSize]);
-
   return (
     <ThemeProvider theme={{ ...darkTheme, isMobileKeyboard }}>
       <StyledLayout height={height}>
@@ -93,10 +104,10 @@ const Layout = () => {
         <Body>
           {IsLaptop && <Profile />}
           <Switch>
-            <Route exact path="/">
+            <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
-            <Route exact path="/e-widencja">
+            <Route exact path='/e-widencja'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
             <Route exact path={Routing.Dashboard.path}>
@@ -107,10 +118,10 @@ const Layout = () => {
               <Routing.Records.Component />
             </Route>
 
-            <Route path={Routing.Vehicles.path}>
+            <PrivateRoute path={Routing.Vehicles.path}>
               <Routing.Vehicles.Component />
-            </Route>
-           
+            </PrivateRoute>
+
             <Route path={Routing.Users.path}>
               <Routing.Users.Component />
             </Route>
@@ -126,6 +137,11 @@ const Layout = () => {
             <Route path={Routing.Reports.path}>
               <Routing.Reports.Component />
             </Route>
+
+            <Route path={Routing.Login.path}>
+              <Routing.Login.Component />
+            </Route>
+
             <Route component={() => <div>Error 404</div>} />
           </Switch>
         </Body>

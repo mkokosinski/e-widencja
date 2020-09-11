@@ -9,7 +9,7 @@ import {
   ShowMore,
   TopPanel,
   StyledRecentList,
-} from './DetailsViewStyles';
+} from './RecentToursStyles';
 
 const RecentList = ({ title, list }) => {
   return (
@@ -20,7 +20,7 @@ const RecentList = ({ title, list }) => {
       </TopPanel>
       <List>
         {list.map((item) => (
-          <ListItem>
+          <ListItem key={item.id}>
             <FromTo>
               <span> {item.from}</span>
               <span> {'<->'}</span>

@@ -18,7 +18,7 @@ import {
   faPlusSquare,
   faEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import Routing from '../layout/Routing';
+import Routing from '../routing/Routing';
 import { selectRecords, fetchRecords } from './recordsSlice';
 import { Switch, Route } from 'react-router';
 

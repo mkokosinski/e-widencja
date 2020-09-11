@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectIsMobile } from '../../layout/layoutSlice';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   Container,
@@ -19,6 +16,10 @@ import {
   InfoMain,
   Journey,
 } from './ListViewItemStyles';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { A } from '../../layout/LayoutStyles';
+
 
 const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
   return (
@@ -45,12 +46,12 @@ const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
             <Buttons>
               {buttons.map((button, index) => (
                 <Button key={index}>
-                  <Link to={{ pathname: button.action, item }}>
+                  <A to={{ pathname: button.action, item }}>
                     <ButtonBody>
                       <FontAwesomeIcon icon={button.ico} />
                       <span>{button.label}</span>
                     </ButtonBody>
-                  </Link>
+                  </A>
                 </Button>
               ))}
             </Buttons>

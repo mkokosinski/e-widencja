@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useHistory, Redirect } from 'react-router';
+import React from 'react';
+import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectVehicleById } from './vehiclesSlice';
-import Routing from '../layout/Routing';
+import Routing from '../routing/Routing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronLeft,
-  faPencilAlt,
-  faTrashAlt,
   faCopyright,
   faCarSide,
   faTachometerAlt,
@@ -18,21 +15,22 @@ import {
 import LineChart from '../charts/Chart';
 import {
   DetailsTopPanel,
-  DetailsGoBack,
   DetailsTitle,
-  DetailsDelete,
-  DetailsEdit,
   DetailsInfo,
   DetailsIco,
   DetailsLabel,
   DetailsData,
   Details,
-  DetailsEditButton,
   SectionDesc,
   SectionChart,
   SectionRecent,
-} from '../layout/LayoutStyles';
+} from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTours';
+import {
+  ButtonGoBack,
+  ButtonEdit,
+  ButtonDelete,
+} from '../templates/detailsView/DetailsComponents';
 
 const sampleData = {
   labels: [
@@ -78,7 +76,6 @@ const sampletours = [
 
 const VehileDetails = () => {
   const { id } = useParams();
-  const { goBack } = useHistory();
 
   const vehicle = useSelector((state) => selectVehicleById(state, id));
 
@@ -86,36 +83,12 @@ const VehileDetails = () => {
     <Details>
       <SectionDesc>
         <DetailsTopPanel>
-          <DetailsGoBack onClick={goBack}>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </DetailsGoBack>
-
+          <ButtonGoBack />
           <DetailsTitle>{vehicle.name}</DetailsTitle>
-
-          <DetailsEdit>
-            <DetailsEditButton
-              to={`${Routing.VehicleEdit.action}/${vehicle.id}`}
-            >
-              <FontAwesomeIcon icon={faPencilAlt} />
-            </DetailsEditButton>
-          </DetailsEdit>
-
-          <DetailsDelete
-            onClick={() => {
-              const isDel = window.confirm(`Na pewno chcesz usunąć ${vehicle.name}`);
-
-              if (isDel) {
-                alert("Pojazd zostanie usunięty jak będzie api")
-              }
-            }}
-          >
-            {/* <DetailsEditButton
-              to={`${Routing.VehicleEdit.action}/${vehicle.id}`}
-            >
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </DetailsEditButton> */}
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </DetailsDelete>
+          <ButtonEdit
+            actionPath={`${Routing.VehicleEdit.action}/${vehicle.id}`}
+          />
+          <ButtonDelete item={vehicle} />
         </DetailsTopPanel>
 
         <DetailsInfo>

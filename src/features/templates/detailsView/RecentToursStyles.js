@@ -27,8 +27,11 @@ export const List = styled.ul`
 export const ListItem = styled.li`
   display: flex;
   justify-content: space-between;
+
   width: 100%;
   padding: 6px 3px;
+
+  cursor: pointer;
   font-size: 0.8em;
 
   :hover {

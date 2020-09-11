@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import SearchBar from "../../searchbar/SearchBar";
+import SearchBar from '../../searchbar/SearchBar';
 
-import { device, ButtonMain } from "../../layout/LayoutStyles";
+import { device, ButtonMain } from '../../layout/LayoutStyles';
 
 export const TopPanel = styled.div`
   display: flex;
@@ -15,8 +15,7 @@ export const TopPanel = styled.div`
   }
 `;
 
-export const ButtonAdd = styled(ButtonMain)`
-`
+export const ButtonAdd = styled(ButtonMain)``;
 
 export const AddItem = styled(Link)`
   display: flex;
@@ -50,5 +49,6 @@ export const SearchInput = styled(SearchBar)`
 export const ItemsList = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
 `;
