@@ -94,7 +94,7 @@ const Layout = () => {
   };
 
   return (
-    <ThemeProvider theme={{ ...darkTheme, isMobileKeyboard }}>
+    <ThemeProvider theme={{ isMobileKeyboard }}>
       <StyledLayout height={height}>
         <Logo />
         {!IsLaptop && <Profile />}
@@ -107,40 +107,38 @@ const Layout = () => {
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
+
             <Route exact path='/e-widencja'>
               <Redirect to={Routing.Dashboard.path} />
             </Route>
-            <Route exact path={Routing.Dashboard.path}>
-              <Routing.Dashboard.Component />
-            </Route>
 
-            <Route path={Routing.Records.path}>
+            <PrivateRoute exact path={Routing.Dashboard.path}>
+              <Routing.Dashboard.Component />
+            </PrivateRoute>
+
+            <PrivateRoute path={Routing.Records.path}>
               <Routing.Records.Component />
-            </Route>
+            </PrivateRoute>
 
             <PrivateRoute path={Routing.Vehicles.path}>
               <Routing.Vehicles.Component />
             </PrivateRoute>
 
-            <Route path={Routing.Users.path}>
+            <PrivateRoute path={Routing.Users.path}>
               <Routing.Users.Component />
-            </Route>
+            </PrivateRoute>
 
-            <Route path={Routing.Tours.path}>
+            <PrivateRoute path={Routing.Tours.path}>
               <Routing.Tours.Component />
-            </Route>
+            </PrivateRoute>
 
-            <Route path={Routing.Settings.path}>
+            <PrivateRoute path={Routing.Settings.path}>
               <Routing.Settings.Component />
-            </Route>
+            </PrivateRoute>
 
-            <Route path={Routing.Reports.path}>
+            <PrivateRoute path={Routing.Reports.path}>
               <Routing.Reports.Component />
-            </Route>
-
-            <Route path={Routing.Login.path}>
-              <Routing.Login.Component />
-            </Route>
+            </PrivateRoute>
 
             <Route component={() => <div>Error 404</div>} />
           </Switch>

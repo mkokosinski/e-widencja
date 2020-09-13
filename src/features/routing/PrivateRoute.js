@@ -1,16 +1,15 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
+import Routing from './Routing';
 
-const PrivateRoute = ({ component: Component, ...restProps }) => {
+const PrivateRoute = ({ children, ...rest }) => {
   const isAuth = localStorage.getItem('token');
-
-  console.log(isAuth);
 
   return (
     <Route
-      {...restProps}
-      render={(props) =>
-        isAuth ? <Component {...props} /> : <Redirect to='/e-widencja/login' />
+      {...rest}
+      render={({ location }) =>
+        isAuth ? children : <Redirect to={Routing.Login.path} />
       }
     />
   );

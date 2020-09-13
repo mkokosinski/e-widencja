@@ -7,7 +7,7 @@ const FieldWithErrors = ({ label, name }) => {
     <StyledCheckbox>
       <Label>
         <Field name={name} type="checkbox" />
-        {label}
+        {`  ${label}`}
       </Label>
 
       <ErrorMessage name={name}>

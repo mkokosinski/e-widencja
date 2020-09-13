@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
-import { Form, Field } from "formik";
-import { PanelBordered, device } from "../layout/LayoutStyles";
+import styled, { css } from 'styled-components';
+import { Form, Field } from 'formik';
+import { PanelBordered, device } from '../layout/LayoutStyles';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -12,7 +12,6 @@ export const Container = styled(PanelBordered)`
   padding: 10px;
   align-self: center;
   margin-bottom: 20px;
-
 
   @media screen and ${device.tablet} {
     margin: 20px 10px;
@@ -41,7 +40,7 @@ export const Row = styled.div`
   margin: 2px 0;
 
   & > * {
-    margin: 6px;
+    padding: 6px 0;
   }
 
   @media screen and ${device.tablet} {
@@ -52,7 +51,7 @@ export const Row = styled.div`
 
   @media screen and ${device.laptopL} {
     & > * {
-      margin: 8px;
+      padding: 8px 0;
     }
   }
 `;
@@ -75,11 +74,13 @@ export const StyledCheckbox = styled(FormField)`
   flex-direction: row;
 
   & > * {
-    margin: 0 3px;
+    padding: 0 3px;
   }
 `;
 
-export const Label = styled.label``;
+export const Label = styled.label`
+padding: 2px 0;
+`;
 
 const inputStyle = css`
   padding: 8px 10px;
@@ -90,9 +91,9 @@ const inputStyle = css`
   color: #363636;
   cursor: pointer;
   font-size: 0.9rem;
-  border-color: ${(props) => props.haserror && "red"};
+  border-color: ${(props) => props.haserror && 'red'};
 
-  div[class*="react-datepicker"] {
+  div[class*='react-datepicker'] {
     height: 200px;
   }
 
@@ -126,7 +127,7 @@ export const Input = styled(Field)`
 `;
 
 export const StyledSelect = styled.div`
-  div[class*="control"] {
+  div[class*='control'] {
     min-height: 0;
     ${inputStyle}
     box-sizing: content-box;
@@ -134,7 +135,7 @@ export const StyledSelect = styled.div`
     * {
       padding: 0;
       box-sizing: content-box;
-      font-size: 1.05rem;
+      font-size: 1em;
     }
   }
 `;

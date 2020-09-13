@@ -25,26 +25,7 @@ export const device = {
 };
 
 export const StyledLayout = styled.div`
-  * {
-    box-sizing: border-box;
-    font-family: ${({ theme }) => theme.font.family};
-    font-size: 1em;
-  }
-
-  a,
-  span {
-    color: inherit;
-    font-size: inherit;
-    text-decoration: none;
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    position: relative;
-    list-style-type: none;
-  }
-
+ 
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 40px 1fr 50px;
@@ -95,10 +76,7 @@ export const Menu = styled.div`
   position: fixed;
   bottom: 0;
 
-  height: ${({ theme }) => {
-    console.log(theme.isMobileKeyboard);
-    return theme.isMobileKeyboard ? '0px' : 'initial';
-  }};
+  height: ${({ theme }) => theme.isMobileKeyboard ? '0px' : 'initial'};
 
   @media screen and ${device.laptop} {
     font-size: ${({ theme }) => theme.font.size};
@@ -179,7 +157,6 @@ export const PanelBordered = styled(Panel)`
 
   @media screen and ${device.tablet} {
     border: 1px solid rgba(88, 64, 187, 0.1);
-
     box-shadow: 0 2px 12px -8px rgba(0, 0, 0, 0.5);
   }
 `;

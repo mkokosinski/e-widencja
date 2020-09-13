@@ -17,7 +17,7 @@ import EditVehicleForm from '../forms/vehicle/EditVehicleForm';
 import VehicleDetails from '../vehicles/VehicleDetails';
 
 const Routing = {
-  Login: { Component: Login, path: '/e-widencja/login' },
+  Login: { Component: Login, path: '/login' },
 
   Tours: { Component: Tours, path: '/e-widencja/tours' },
 
