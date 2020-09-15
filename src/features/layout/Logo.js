@@ -15,7 +15,6 @@ const Container = styled.div`
 
 const StyledLogo = styled.div`
   display: flex;
-  color: white;
 
   h2,
   h4 {

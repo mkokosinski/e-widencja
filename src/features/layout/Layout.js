@@ -15,7 +15,7 @@ import {
   selectIsMobileKeyboard,
 } from './layoutSlice';
 
-import { StyledLayout, Menu, Body } from './LayoutStyles';
+import { StyledLayout, Menu, Body, StyledLogo } from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from '../routing/Routing';
 import Logo from './Logo';
@@ -96,7 +96,9 @@ const Layout = () => {
   return (
     <ThemeProvider theme={{ isMobileKeyboard }}>
       <StyledLayout height={height}>
-        <Logo />
+        <StyledLogo>
+          <Logo />
+        </StyledLogo>
         {!IsLaptop && <Profile />}
         <Menu>
           <Navbar />

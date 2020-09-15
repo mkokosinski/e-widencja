@@ -25,7 +25,6 @@ export const device = {
 };
 
 export const StyledLayout = styled.div`
- 
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 40px 1fr 50px;
@@ -76,7 +75,7 @@ export const Menu = styled.div`
   position: fixed;
   bottom: 0;
 
-  height: ${({ theme }) => theme.isMobileKeyboard ? '0px' : 'initial'};
+  height: ${({ theme }) => (theme.isMobileKeyboard ? '0px' : 'initial')};
 
   @media screen and ${device.laptop} {
     font-size: ${({ theme }) => theme.font.size};
@@ -85,6 +84,12 @@ export const Menu = styled.div`
 
     width: auto;
   }
+`;
+
+export const StyledLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  color: white;
 `;
 
 export const Body = styled.div`

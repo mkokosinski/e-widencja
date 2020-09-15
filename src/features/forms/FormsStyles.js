@@ -40,7 +40,7 @@ export const Row = styled.div`
   margin: 2px 0;
 
   & > * {
-    padding: 6px 0;
+    padding: 6px;
   }
 
   @media screen and ${device.tablet} {
@@ -51,7 +51,7 @@ export const Row = styled.div`
 
   @media screen and ${device.laptopL} {
     & > * {
-      padding: 8px 0;
+      padding: 8px;
     }
   }
 `;
@@ -79,7 +79,7 @@ export const StyledCheckbox = styled(FormField)`
 `;
 
 export const Label = styled.label`
-padding: 2px 0;
+  padding: 2px 0;
 `;
 
 const inputStyle = css`
@@ -152,17 +152,15 @@ export const StyledError = styled.div`
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 20px;
   margin: 30px auto 0;
 
   & > div {
-    height: 40px;
-    width: 100px;
+    height: 50px;
+    width: 120px;
+    margin: 0 20px;
   }
 
   @media screen and ${device.tablet} {
-    gap: 40px;
-
     & > div {
       height: 50px;
       width: 120px;
@@ -171,11 +169,12 @@ export const ButtonsContainer = styled.div`
 
   @media screen and ${device.laptop} {
     padding: 20px;
-    gap: 50px;
 
     & > div {
       height: 50px;
       width: 130px;
+
+      margin: 0 20px;
     }
   }
 `;
