@@ -120,10 +120,14 @@ export const Body = styled.div`
 `;
 
 export const ProfileBar = styled.div`
-  display: none;
   grid-area: profile;
-  height: 50px;
-  border: 1px solid black;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 4px;
+  height: 100%;
+  width: 100%;
 `;
 
 export const H2 = styled.h2`

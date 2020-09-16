@@ -15,7 +15,13 @@ import {
   selectIsMobileKeyboard,
 } from './layoutSlice';
 
-import { StyledLayout, Menu, Body, StyledLogo } from './LayoutStyles';
+import {
+  StyledLayout,
+  Menu,
+  Body,
+  StyledLogo,
+  ProfileBar,
+} from './LayoutStyles';
 import Navbar from '../navbar/Navbar';
 import Routing from '../routing/Routing';
 import Logo from './Logo';
@@ -29,6 +35,7 @@ import { fetchRecords } from '../records/recordsSlice';
 import { fetchVehicles } from '../vehicles/vehiclesSlice';
 import { fetchUsers } from '../users/usersSlice';
 import PrivateRoute from '../routing/PrivateRoute';
+import Notification from '../profile/Notification';
 
 const Layout = () => {
   const [height, setheight] = useState(0);
@@ -99,12 +106,22 @@ const Layout = () => {
         <StyledLogo>
           <Logo />
         </StyledLogo>
-        {!IsLaptop && <Profile />}
+        {!IsLaptop && (
+          <ProfileBar>
+            <Notification />
+            <Profile />
+          </ProfileBar>
+        )}
         <Menu>
           <Navbar />
         </Menu>
         <Body>
-          {IsLaptop && <Profile />}
+          {IsLaptop && (
+            <ProfileBar>
+              <Notification />
+              <Profile />
+            </ProfileBar>
+          )}
           <Switch>
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />
