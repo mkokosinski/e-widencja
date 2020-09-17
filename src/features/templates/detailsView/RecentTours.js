@@ -11,6 +11,8 @@ import {
   StyledRecentList,
 } from './RecentToursStyles';
 
+import { v4 } from 'uuid';
+
 const RecentList = ({ title, list }) => {
   return (
     <StyledRecentList>
@@ -20,7 +22,7 @@ const RecentList = ({ title, list }) => {
       </TopPanel>
       <List>
         {list.map((item) => (
-          <ListItem key={item.id}>
+          <ListItem key={v4()}>
             <FromTo>
               <span> {item.from}</span>
               <span> {'<->'}</span>

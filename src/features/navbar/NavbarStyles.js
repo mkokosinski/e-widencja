@@ -138,10 +138,19 @@ export const A = styled(NavLink)`
 
 export const ShowMore = styled(Li)`
   display: flex;
-  color: white;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  height: 50px;
+  width: 50px;
+
+  background: ${(props) =>
+    props.active ? props.theme.nav.active.background : 'transparent'};
+  color: ${(props) => (props.active ? props.theme.nav.active.color : 'white')};
+
+  border-radius: 4px;
+  cursor: pointer;
 `;
 
 export const Icon = styled.div``;

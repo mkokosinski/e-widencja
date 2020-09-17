@@ -5,11 +5,10 @@ import PrivateRoute from './features/routing/PrivateRoute';
 import Routing from './features/routing/Routing';
 
 import Layout from './features/layout/Layout';
-import { StyledApp } from './AppStyles';
 
 const App = () => {
   return (
-    <StyledApp>
+    <>
       <Switch>
         <Route path={Routing.Login.path}>
           <Routing.Login.Component />
@@ -19,7 +18,7 @@ const App = () => {
           <Layout />
         </PrivateRoute>
       </Switch>
-    </StyledApp>
+    </>
   );
 };
 

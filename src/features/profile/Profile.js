@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 
 import { ProfileButton } from './ProfileStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from '../dropdown/Dropdown';
-import { DropdownItem } from '../dropdown/DropdownStyles';
+import { useDropdown } from '../hooks/useDropdown';
 
 const Profile = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const button = useRef(null);
+  const [DropdownList, DropdownItem, setIsDropdownOpen] = useDropdown(button);
 
   return (
     <>
-      <ProfileButton onClick={() => setIsOpen(!isOpen)}>
+      <ProfileButton ref={button} onClick={() => setIsDropdownOpen(true)}>
         <FontAwesomeIcon icon={faUserCircle} />
       </ProfileButton>
-      <Dropdown isOpen={isOpen}>
+
+      <DropdownList>
         <DropdownItem>Item</DropdownItem>
         <DropdownItem>Item</DropdownItem>
         <DropdownItem>Item</DropdownItem>
         <DropdownItem>Item</DropdownItem>
         <DropdownItem>Item</DropdownItem>
-      </Dropdown>
+      </DropdownList>
     </>
   );
 };

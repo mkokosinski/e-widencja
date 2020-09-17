@@ -46,6 +46,7 @@ const LoginForm = () => {
 
   const handleSubmit = ({ login, password }) => {
     signIn(login, password).then((res) => {
+      console.log(res);
       res ? loginSuccess() : setStatus('Zły login lub hasło');
     });
   };
