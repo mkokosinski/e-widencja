@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import store from './app/store';
@@ -16,7 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={{ ...darkTheme }}>
-        <Router>
+        <Router basename={'/'}>
           <App />
         </Router>
       </ThemeProvider>

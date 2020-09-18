@@ -1,28 +1,72 @@
 import React, { useState, useRef } from 'react';
 
-import { NotificationButton } from './ProfileStyles';
+import {
+  ItemDesc,
+  ItemTitle,
+  ListItem,
+  NotificationButton,
+} from './ProfileStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faChartPie, faCloudMoonRain, faSnowboarding } from '@fortawesome/free-solid-svg-icons';
 
 import { useDropdown } from '../hooks/useDropdown';
 
 const Notification = () => {
+  const [isNewNotification, setIsNewNotification] = useState(true);
+
   const button = useRef(null);
-  const [DropdownList, DropdownItem, setIsDropdownOpen] = useDropdown(button);
+  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
+
+  const handleClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+    setIsNewNotification(false);
+  };
 
   return (
     <>
-      <NotificationButton ref={button} onClick={() => setIsDropdownOpen(true)}>
+      <NotificationButton
+        ref={button}
+        onClick={handleClick}
+        active={isDropdownOpen}
+        isNewNotification={isNewNotification}
+      >
         <FontAwesomeIcon icon={faBell} />
       </NotificationButton>
-      
+
       <DropdownList>
-        <DropdownItem>Powiadomienie</DropdownItem>
-        <DropdownItem>Powiadomienie</DropdownItem>
-        <DropdownItem>Powiadomienie</DropdownItem>
-        <DropdownItem>Powiadomienie</DropdownItem>
-        <DropdownItem>Powiadomienie</DropdownItem>
+        <ListItem>
+          <ItemTitle>
+            Nowa wersja! <FontAwesomeIcon icon={faCloudMoonRain} />
+          </ItemTitle>
+          <ItemDesc>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
+            voluptates reiciendis tempora quisquam veniam. Eum vel Lorem ipsum
+            dolor sit amet consectetur adipisicing elit.
+          </ItemDesc>
+        </ListItem>
+
+        <ListItem>
+          <ItemTitle>
+            Dodano kierowcę <FontAwesomeIcon icon={faChartPie} />{' '}
+          </ItemTitle>
+          <ItemDesc>
+            Explicabo commodi omnis illo minus similique eos minima labore,
+            perspiciatis quas natus facilis in ducimus numquam ab quia provident
+            possimus id reprehenderit aspernatur quae illum quidem velit
+            voluptatem quo?
+          </ItemDesc>
+        </ListItem>
+
+        <ListItem>
+          <ItemTitle>
+            Ciągle ni ma API <FontAwesomeIcon icon={faSnowboarding} />
+          </ItemTitle>
+          <ItemDesc>
+            Modi beatae neque sequi ratione accusantium nemo? Vitae doloremque
+            unde aliquid impedit ut?
+          </ItemDesc>
+        </ListItem>
       </DropdownList>
     </>
   );

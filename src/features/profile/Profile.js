@@ -1,27 +1,50 @@
 import React, { useRef } from 'react';
 
-import { ProfileButton } from './ProfileStyles';
+import { useDropdown } from '../hooks/useDropdown';
+import { signOut } from '../DAL/api';
+
+import { ItemTitle, ListItem, ProfileButton } from './ProfileStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { useDropdown } from '../hooks/useDropdown';
+import {
+  faSignOutAlt,
+  faUserAlt,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import Routing from '../routing/Routing';
+import { useHistory } from 'react-router';
 
 const Profile = () => {
+  const history = useHistory();
   const button = useRef(null);
-  const [DropdownList, DropdownItem, setIsDropdownOpen] = useDropdown(button);
+
+  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
+
+  const handleSignOut = () => {
+    signOut('Admin').then((res) => history.push(Routing.Login.path));
+  };
 
   return (
     <>
-      <ProfileButton ref={button} onClick={() => setIsDropdownOpen(true)}>
+      <ProfileButton
+        ref={button}
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        active={isDropdownOpen}
+      >
         <FontAwesomeIcon icon={faUserCircle} />
       </ProfileButton>
 
       <DropdownList>
-        <DropdownItem>Item</DropdownItem>
-        <DropdownItem>Item</DropdownItem>
-        <DropdownItem>Item</DropdownItem>
-        <DropdownItem>Item</DropdownItem>
-        <DropdownItem>Item</DropdownItem>
+        <ListItem>
+          <ItemTitle>
+            <FontAwesomeIcon icon={faUserAlt} /> Profil
+          </ItemTitle>
+        </ListItem>
+        <ListItem onClick={handleSignOut}>
+          <ItemTitle>
+            <FontAwesomeIcon icon={faSignOutAlt} /> Wyloguj
+          </ItemTitle>
+        </ListItem>
       </DropdownList>
     </>
   );

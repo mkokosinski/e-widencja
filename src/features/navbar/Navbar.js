@@ -38,6 +38,16 @@ const itemsMobile = [
   { name: "Raporty", path: Routing.Reports.path, icon: faFileAlt },
 ];
 
+const hiddenMobileItems = [
+  { name: "Dashboard", path: Routing.Dashboard.path, icon: faChartLine },
+  {
+    name: Routing.Users.label,
+    path: Routing.Users.path,
+    icon: faUserFriends,
+  },
+  { name: "Ustawienia", path: Routing.Settings.path, icon: faCog },
+]
+
 const Navbar = () => {
   const isMobile = useSelector(selectIsMobile);
   const items = isMobile ? itemsMobile : itemsDesktop;
@@ -52,7 +62,7 @@ const Navbar = () => {
             icon={item.icon}
           />
         ))}
-        {isMobile && <ShowMore />}
+        {isMobile && <ShowMore items={hiddenMobileItems} />}
       </Styled.Ul>
     </Styled.Menu>
   );

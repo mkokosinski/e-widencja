@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-
 import styled from 'styled-components';
 
 const StyledDropdown = styled.div`
@@ -9,28 +8,25 @@ const StyledDropdown = styled.div`
 
   position: absolute;
 
-  /* left: ${(props) => props.pos.left}px; */
-  /* right: ${(props) => props.pos.right}px; */
+  left: ${(props) => props.pos.left};
+  right: ${(props) => props.pos.right};
   bottom: ${(props) => props.pos.bottom};
   top: ${(props) => props.pos.top};
 
-  width: 99%;
+  width: calc(100% - 8px);
   z-index: 997;
-  padding: 10px;
-  margin: 5px 0;
+  margin: 4px;
 
   background: white;
   box-shadow: 0 12px 46px -2px rgba(0, 0, 0, 0.7);
   border-radius: 10px;
-`;
 
-const DropdownItem = styled.div`
-  display: flex;
-  align-items: center;
+  @media screen and (min-width: 768px) {
+    height: fit-content;
+    width: 400px;
 
-  width: 100%;
-
-  cursor: pointer;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+  }
 `;
 
 export const useDropdown = (buttonRef, direction = 'bottom') => {
@@ -49,6 +45,8 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
       } = buttonRef.current;
 
       let top, bottom, left, right;
+
+      right = window.innerWidth >= 768 ? '10px' : undefined;
 
       switch (direction) {
         case 'top':
@@ -79,12 +77,15 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
 
   useEffect(() => {
     document.addEventListener('mousedown', detectExit);
-    detectPosition();
 
     return () => {
       document.removeEventListener('mousedown', detectExit);
     };
   }, []);
+
+  useEffect(() => {
+    detectPosition();
+  },[isDropdownOpen]);
 
   const DropdownList = ({ children }) => {
     return createPortal(
@@ -97,5 +98,5 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
     );
   };
 
-  return [DropdownList, DropdownItem, setIsDropdownOpen, isDropdownOpen];
+  return [DropdownList, setIsDropdownOpen, isDropdownOpen];
 };

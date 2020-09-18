@@ -29,12 +29,13 @@ export const DetailsSection = styled.section`
   box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
 
-  margin: 4px;
+  margin: 4px auto;
   padding: 2px;
+  width: 98%;
 
   @media screen and ${device.laptop} {
-    margin: 10px;
     padding: 10px;
+    margin: 8px auto;
 
     border: none;
     box-shadow: 0px 2px 10px -6px rgba(0, 0, 0, 0.3);
