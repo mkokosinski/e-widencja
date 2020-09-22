@@ -153,7 +153,9 @@ export const ShowMore = styled(Li)`
   cursor: pointer;
 `;
 
-export const Icon = styled.div``;
+export const Icon = styled.div`
+  font-size: 1.1em;
+`;
 
 export const Label = styled.div`
   display: none;

@@ -18,14 +18,15 @@ const StyledDropdown = styled.div`
   margin: 4px;
 
   background: white;
-  box-shadow: 0 12px 46px -2px rgba(0, 0, 0, 0.7);
+  
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+
   border-radius: 10px;
 
   @media screen and (min-width: 768px) {
     height: fit-content;
     width: 400px;
 
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.5);
   }
 `;
 

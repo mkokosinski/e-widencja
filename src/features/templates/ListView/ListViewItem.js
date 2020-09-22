@@ -12,6 +12,7 @@ import {
   Buttons,
   Button,
   ButtonBody,
+  ButtonIco,
   InfoSecondary,
   InfoMain,
   Journey,
@@ -20,41 +21,42 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { A } from '../../layout/LayoutStyles';
 
-
 const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
   return (
     <div key={item.id}>
       <Container>
         <Body>
-            <Ico>
-              <FontAwesomeIcon icon={ico} />
-            </Ico>
+          <Ico>
+            <FontAwesomeIcon icon={ico} />
+          </Ico>
 
-            <Name>{item.name}</Name>
+          <Name>{item.name}</Name>
 
-            <Journeys>
-              <Journey>
-                <InfoMain>359,34km</InfoMain>
-                <InfoSecondary>w tym miesiącu</InfoSecondary>
-              </Journey>
-              <Journey>
-                <InfoMain>29 przejazdów</InfoMain>
-                <InfoSecondary>w tym miesiącu</InfoSecondary>
-              </Journey>
-            </Journeys>
+          <Journeys>
+            <Journey>
+              <InfoMain>359,34km</InfoMain>
+              <InfoSecondary>w tym miesiącu</InfoSecondary>
+            </Journey>
+            <Journey>
+              <InfoMain>29 przejazdów</InfoMain>
+              <InfoSecondary>w tym miesiącu</InfoSecondary>
+            </Journey>
+          </Journeys>
 
-            <Buttons>
-              {buttons.map((button, index) => (
-                <Button key={index}>
-                  <A to={{ pathname: button.action, item }}>
-                    <ButtonBody>
+          <Buttons>
+            {buttons.map((button, index) => (
+              <Button key={index}>
+                <A to={{ pathname: button.action, item }}>
+                  <ButtonBody>
+                    <ButtonIco>
                       <FontAwesomeIcon icon={button.ico} />
-                      <span>{button.label}</span>
-                    </ButtonBody>
-                  </A>
-                </Button>
-              ))}
-            </Buttons>
+                    </ButtonIco>
+                    <span>{button.label}</span>
+                  </ButtonBody>
+                </A>
+              </Button>
+            ))}
+          </Buttons>
         </Body>
       </Container>
     </div>

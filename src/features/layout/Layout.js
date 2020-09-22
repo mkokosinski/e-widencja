@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { darkTheme } from './Theme';
-
 import {
   setIsMobile,
   selectIsMobile,
   setIsLaptop,
   selectIsLaptop,
-  setSiteHeight,
-  selectSiteHeight,
+  setSiteSize,
+  selectSiteSize,
   setIsMobileKeyboard,
   selectIsMobileKeyboard,
 } from './layoutSlice';
@@ -43,7 +41,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const isMobile = useSelector(selectIsMobile);
   const IsLaptop = useSelector(selectIsLaptop);
-  const initialSiteHeight = useSelector(selectSiteHeight);
+  const initialSiteSize = useSelector(selectSiteSize);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
   useEffect(() => {
@@ -53,7 +51,10 @@ const Layout = () => {
   });
 
   const initSize = useCallback(() => {
-    dispatch(setSiteHeight(document.documentElement.clientHeight));
+    const {
+      documentElement: { clientHeight, clientWidth },
+    } = document;
+    dispatch(setSiteSize({ height: clientHeight, width: clientWidth }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -93,10 +94,18 @@ const Layout = () => {
       dispatch(setIsLaptop(false));
     }
 
-    if (height < initialSiteHeight && !isMobileKeyboard) {
+    if (
+      height < initialSiteSize.height &&
+      width === initialSiteSize.width &&
+      !isMobileKeyboard
+    ) {
       dispatch(setIsMobileKeyboard(true));
-    } else if (height === initialSiteHeight && isMobileKeyboard) {
+    } else if (height === initialSiteSize && isMobileKeyboard) {
       dispatch(setIsMobileKeyboard(false));
+    }
+
+    if (width !== initialSiteSize.width) {
+      dispatch(setSiteSize({ height, width }));
     }
   };
 

@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components';
-import { device, Button } from '../layout/LayoutStyles';
+import { device, ButtonLightSoft } from '../layout/LayoutStyles';
 
-const ButtonStyles = styled(Button)`
+const ButtonStyles = styled(ButtonLightSoft)`
   position: relative;
   height: 40px;
   width: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.02);
 
-  margin: 0 12px;
+  margin: 0 4px;
 
   background: ${(props) => (props.active ? 'white' : 'transparent')};
   color: ${(props) =>
@@ -16,8 +17,7 @@ const ButtonStyles = styled(Button)`
   @media screen and ${device.laptop} {
     height: 50px;
     width: 50px;
-
-    margin: 0 4px;
+    margin: 0 6px;
 
     background: ${(props) => (props.active ? 'white' : props.theme.lightSoft)};
     box-shadow: ${(props) =>
@@ -59,7 +59,7 @@ export const ListItem = styled.div`
     background: ${(props) => props.theme.lightSoft};
   }
 
-  :active{
+  :active {
     background: ${(props) => props.theme.light};
   }
 `;

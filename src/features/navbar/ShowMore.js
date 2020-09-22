@@ -30,8 +30,8 @@ const ShowMore = ({ items }) => {
 
       <DropdownList>
         {items.map((item) => (
-          <A to={item.path}>
-            <ListItemMenu key={item.name}>
+          <A to={item.path} key={item.name}>
+            <ListItemMenu>
               <ItemMenuIco>
                 <FontAwesomeIcon icon={item.icon} />
               </ItemMenuIco>

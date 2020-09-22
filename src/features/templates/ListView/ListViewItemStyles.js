@@ -3,17 +3,18 @@ import styled from 'styled-components';
 import {
   device,
   H2,
-  PanelLight,
+  PanelOverlapLight,
   PanelLightSoft,
   ButtonLightSoft,
+  PanelOverlap,
 } from '../../layout/LayoutStyles';
 
-export const Container = styled(PanelLight)`
+export const Container = styled(PanelOverlapLight)`
   height: 80px;
   padding: 0;
-  max-width: 1400px;
+  max-width: 1100px;
   margin: 8px auto;
-  width: 98%;
+  width: 97%;
 `;
 
 export const Body = styled.div`
@@ -28,11 +29,11 @@ export const Body = styled.div`
   overflow: hidden;
 
   @media screen and ${device.mobileXL} {
-    grid-template-columns: 50px 2fr 1fr;
+    grid-template-columns: 60px 2fr 1fr;
     grid-template-areas: 'ico name buttons';
 
     margin: 16px;
-    padding: 10px 30px;
+    padding: 10px 20px;
 
     & > * {
       margin: 0 5px;
@@ -40,7 +41,7 @@ export const Body = styled.div`
   }
 
   @media screen and ${device.tablet} {
-    grid-template-columns: 60px 3fr 3fr 1fr;
+    grid-template-columns: 60px 2fr 3fr 1fr;
     grid-template-areas: 'ico name journeys buttons';
     justify-content: space-between;
   }
@@ -56,13 +57,12 @@ export const Body = styled.div`
 export const Ico = styled(PanelLightSoft)`
   grid-area: ico;
   display: none;
-  height: 40px;
+  height: 50px;
 
   @media screen and ${device.mobileXL} {
     display: flex;
   }
   @media screen and ${device.tablet} {
-    height: 50px;
   }
 `;
 
@@ -71,7 +71,7 @@ export const Name = styled(H2)`
   font-size: 0.9em;
   text-align: center;
   text-align: left;
-  padding: 0 30px;
+  padding: 0 10px 0 20px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -81,7 +81,6 @@ export const Name = styled(H2)`
     width: auto;
   }
   @media screen and ${device.mobileXL} {
-    font-size: 1.1em;
   }
 `;
 
@@ -119,7 +118,7 @@ export const Buttons = styled.div`
   display: flex;
   justify-content: center;
 
-  height: 70%;
+  height: 90%;
 
   & > * {
     margin: 0 6px;
@@ -127,9 +126,6 @@ export const Buttons = styled.div`
 
   @media screen and ${device.mobileXL} {
     width: auto;
-  }
-  @media screen and ${device.laptop} {
-    height: 90%;
   }
 `;
 
@@ -146,7 +142,7 @@ export const Button = styled(ButtonLightSoft)`
     }
   }
   @media screen and ${device.laptopL} {
-    width: 80px;
+    width: 70px;
   }
 `;
 
@@ -159,6 +155,10 @@ export const ButtonBody = styled.div`
   padding: 5px;
 
   @media screen and ${device.laptop} {
-    padding: 5px 10px;
+    font-size: 0.6em;
   }
+`;
+
+export const ButtonIco = styled.i`
+  font-size: 1.4em;
 `;

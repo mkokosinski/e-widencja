@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const size = {
   mobileS: '320',
   mobileM: '375',
-  mobileL: '425',
+  mobileL: '410',
   mobileXL: '570',
   tablet: '768',
   laptop: '1024',
@@ -94,25 +94,20 @@ export const StyledLogo = styled.div`
 
 export const Body = styled.div`
   grid-area: body;
-
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 0px;
-
-  background: white;
-
+  background: ${(props) => props.theme.body.background};
   @media screen and ${device.tablet} {
     padding: 6px;
     align-items: flex-start;
   }
-
   @media screen and ${device.laptop} {
     display: block;
     font-size: 0.9em;
     padding: 20px;
   }
-
   @media screen and ${device.laptopL} {
     font-size: 1em;
     padding: 30px;
@@ -121,14 +116,11 @@ export const Body = styled.div`
 
 export const ProfileBar = styled.div`
   grid-area: profile;
-
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 4px;
-  
+  padding: 0 16px;
   width: 100%;
-
   @media screen and ${device.tablet} {
     height: 60px;
   }
@@ -202,6 +194,13 @@ export const PanelLightSoft = styled(Panel)`
   color: ${({ theme }) => theme.main};
 `;
 
+export const PanelOverlapLight = styled(Panel)`
+  background: white;
+  border-left: 10px solid ${({ theme }) => theme.seconadry};
+  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.4);
+  color: ${({ theme }) => theme.main};
+`;
+
 export const Button = styled.div`
   align-items: center;
   /* clip-path: polygon(0 8px, 10px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 10px) 100%, 0 100%); */
@@ -210,7 +209,7 @@ export const Button = styled.div`
   user-select: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: filter 150ms;
+  transition: background-color 150ms;
   border-radius: 6px;
 
   :focus,
@@ -221,35 +220,50 @@ export const Button = styled.div`
   :disabled {
     cursor: not-allowed;
   }
-
-  :hover {
-    filter: brightness(1.2);
-  }
-
-  :active {
-    filter: brightness(1);
-    box-shadow: 0 0 4px -2px ${({ theme }) => theme.mainSoft};
-  }
 `;
+
 
 export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
+  border: 1px solid rgba(0, 0, 0, 0.04);
   color: white;
+
+  :hover{
+    background: ${({ theme }) => theme.hover.mainSoft};
+  }
+
+  :active {
+    box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.5);
+  }
 `;
 
 export const ButtonLightSoft = styled(Button)`
   background: ${({ theme }) => theme.lightSoft};
+  border: 1px solid rgba(0, 0, 0, 0.04);
   color: ${({ theme }) => theme.main};
+
+  :hover{
+    background: ${({ theme }) => theme.hover.lightSoft};
+  }
 `;
 
 export const ButtonBorderedMain = styled(Button)`
   background: white;
   border: 1px solid ${({ theme }) => theme.mainSoft};
   color: ${({ theme }) => theme.mainSoft};
+
+  :hover{
+    background: ${({ theme }) => theme.hover.lightSoft};
+  }
 `;
 
 export const ButtonBorderedSeconderySoft = styled(Button)`
   background: white;
   border: 1px solid ${({ theme }) => theme.seconderySoft};
   color: ${({ theme }) => theme.seconderySoft};
+  transition: opacity 150ms;
+
+  :hover{
+    opacity: 0.6;
+  }
 `;

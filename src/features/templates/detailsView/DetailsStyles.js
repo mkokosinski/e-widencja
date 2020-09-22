@@ -29,14 +29,11 @@ export const DetailsSection = styled.section`
   box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
 
-  margin: 4px auto;
+  margin: 8px auto;
   padding: 2px;
   width: 98%;
 
   @media screen and ${device.laptop} {
-    padding: 10px;
-    margin: 8px auto;
-
     border: none;
     box-shadow: 0px 2px 10px -6px rgba(0, 0, 0, 0.3);
   }
@@ -44,25 +41,37 @@ export const DetailsSection = styled.section`
 
 export const SectionDesc = styled(DetailsSection)`
   grid-area: desc;
+
+  display: grid;
+  grid-template: 60px 1fr 1fr/1fr 1fr;
+  grid-template-areas:
+    'toppanel toppanel'
+    'info info'
+    'info info';
 `;
 
 export const DetailsTopPanel = styled.div`
+  grid-area: toppanel;
   display: flex;
   align-items: center;
   width: 100%;
-  height: 40px;
+  padding: 0 16px;
 
-  color: ${({ theme }) => theme.main};
+  background: ${({ theme }) => theme.mainSoft};
+  border-radius: 10px 10px 0 0;
+  color: white;
   font-size: 1.2em;
 
   @media screen and ${device.laptop} {
+    border-radius: none;
+
     height: 60px;
-    margin-left: 30px;
     font-size: 1.2em;
   }
 `;
+
 export const DetailsGoBack = styled(Button)`
-  height: 100%;
+  height: 50%;
   width: 10%;
   @media screen and ${device.laptop} {
     height: 40px;
@@ -72,11 +81,11 @@ export const DetailsGoBack = styled(Button)`
 
 export const DetailsTitle = styled(H2)`
   font-size: 1.1em;
+  margin: 0 10px;
   padding: 10px;
   width: 80%;
   @media screen and ${device.laptop} {
     font-size: 1em;
-    margin: 0 10px;
     width: auto;
   }
 `;
@@ -95,7 +104,7 @@ export const DetailsEdit = styled(Button)`
 export const DetailsDelete = styled(Button)`
   height: 100%;
   width: 10%;
-  color: rgba(220, 80, 80, 1);
+  color: rgba(220, 180, 180, 1);
 
   @media screen and ${device.laptop} {
     width: 40px;
@@ -104,14 +113,20 @@ export const DetailsDelete = styled(Button)`
 `;
 
 export const DetailsInfo = styled.div`
-  border-bottom: 1px solid rgba(0, 0, 100, 0.2);
   color: #333;
   display: flex;
-  margin: 6px 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 12px;
 
-  :last-child {
-    border: none;
+  :nth-child(odd) {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  :nth-child(2),
+  :nth-child(3) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -120,13 +135,10 @@ export const DetailsIco = styled.div`
   width: 10%;
 `;
 
-export const DetailsLabel = styled.div`
-  width: 60%;
-`;
+export const DetailsLabel = styled.div``;
 
 export const DetailsData = styled.div`
   font-weight: 600;
-  width: 30%;
 `;
 
 export const SectionChart = styled(DetailsSection)`

@@ -22,7 +22,7 @@ export const AddItem = styled(Link)`
   align-items: center;
   justify-content: center;
   line-height: 12px;
-  padding: 12px 16px;
+  padding: 10px 12px;
   & > * {
     margin: 0px 3px;
   }
