@@ -3,15 +3,14 @@ import { useHistory } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import Routing from '../../routing/Routing';
-import FieldWithErrors from '../fieldWithErrors';
-import {
-  ButtonBorderedSeconderySoft,
-  ButtonMain,
-} from '../../layout/LayoutStyles';
-import { ButtonsContainer, Input, Row, StyledForm } from '../FormsStyles';
+import Routing from '../routing/Routing';
+import FieldWithErrors from '../forms/fieldWithErrors';
+import { ButtonMain } from '../layout/LayoutStyles';
+import { ButtonsContainer, Input, Row, StyledForm } from '../forms/FormsStyles';
 
-import { signIn } from '../../DAL/api.js';
+import { signIn } from '../DAL/api.js';
+import { setUser } from './authSlice';
+import { useDispatch } from 'react-redux';
 
 const validationSchema = Yup.object({
   login: Yup.string()
@@ -33,22 +32,28 @@ const initValues = {
 
 const LoginForm = () => {
   const [status, setStatus] = useState('');
-
+  const dispatch = useDispatch();
   const history = useHistory();
 
-  const loginSuccess = () => {
+  const loginSuccess = (res) => {
     setStatus('Udało się zalogować');
-    localStorage.setItem('token', 'someToken');
+    localStorage.setItem('token', res.token);
+    dispatch(setUser(res.user));
     setTimeout(() => {
       history.replace(Routing.Dashboard.path);
     }, 500);
   };
 
   const handleSubmit = ({ login, password }) => {
-    signIn(login, password).then((res) => {
-      console.log(res);
-      res ? loginSuccess() : setStatus('Zły login lub hasło');
-    });
+    signIn(login, password)
+      .then((res) => {
+        console.log(res);
+        loginSuccess(res);
+      })
+      .catch((err) => {
+        setStatus('Zły login lub hasło');
+        console.log(err);
+      });
   };
 
   return (

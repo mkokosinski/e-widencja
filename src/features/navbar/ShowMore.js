@@ -8,7 +8,7 @@ import {
   ItemMenuTitle,
   ListItem,
   ListItemMenu,
-} from '../profile/ProfileStyles';
+} from '../profile/ProfilebarStyles';
 import { A } from '../layout/LayoutStyles';
 
 const ShowMore = ({ items }) => {

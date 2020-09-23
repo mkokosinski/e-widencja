@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { ThemeProvider } from 'styled-components';
 
 import {
@@ -13,27 +16,19 @@ import {
   selectIsMobileKeyboard,
 } from './layoutSlice';
 
-import {
-  StyledLayout,
-  Menu,
-  Body,
-  StyledLogo,
-  ProfileBar,
-} from './LayoutStyles';
+import { fetchRecords } from '../records/recordsSlice';
+import { fetchUsers } from '../users/usersSlice';
+import { fetchVehicles } from '../vehicles/vehiclesSlice';
+
 import Navbar from '../navbar/Navbar';
 import Routing from '../routing/Routing';
+
 import Logo from './Logo';
-import Profile from '../profile/Profile';
-
-import { size } from './LayoutStyles';
-import { useDispatch, useSelector } from 'react-redux';
-import { useCallback } from 'react';
-
-import { fetchRecords } from '../records/recordsSlice';
-import { fetchVehicles } from '../vehicles/vehiclesSlice';
-import { fetchUsers } from '../users/usersSlice';
 import PrivateRoute from '../routing/PrivateRoute';
-import Notification from '../profile/Notification';
+import Profilebar from '../profile/Profilebar';
+
+import { StyledLayout, Menu, Body, StyledLogo } from './LayoutStyles';
+import { size } from './LayoutStyles';
 
 const Layout = () => {
   const [height, setheight] = useState(0);
@@ -44,17 +39,15 @@ const Layout = () => {
   const initialSiteSize = useSelector(selectSiteSize);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
-  useEffect(() => {
-    dispatch(fetchRecords());
-    dispatch(fetchVehicles());
-    dispatch(fetchUsers());
-  });
-
   const initSize = useCallback(() => {
     const {
       documentElement: { clientHeight, clientWidth },
     } = document;
     dispatch(setSiteSize({ height: clientHeight, width: clientWidth }));
+
+    dispatch(fetchRecords());
+    dispatch(fetchVehicles());
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -100,7 +93,7 @@ const Layout = () => {
       !isMobileKeyboard
     ) {
       dispatch(setIsMobileKeyboard(true));
-    } else if (height === initialSiteSize && isMobileKeyboard) {
+    } else if (height === initialSiteSize.height && isMobileKeyboard) {
       dispatch(setIsMobileKeyboard(false));
     }
 
@@ -115,22 +108,12 @@ const Layout = () => {
         <StyledLogo>
           <Logo />
         </StyledLogo>
-        {!IsLaptop && (
-          <ProfileBar>
-            <Notification />
-            <Profile />
-          </ProfileBar>
-        )}
+        {!IsLaptop && <Profilebar />}
         <Menu>
           <Navbar />
         </Menu>
         <Body>
-          {IsLaptop && (
-            <ProfileBar>
-              <Notification />
-              <Profile />
-            </ProfileBar>
-          )}
+          {IsLaptop && <Profilebar />}
           <Switch>
             <Route exact path='/'>
               <Redirect to={Routing.Dashboard.path} />

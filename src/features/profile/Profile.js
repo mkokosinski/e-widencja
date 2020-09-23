@@ -3,7 +3,11 @@ import React, { useRef } from 'react';
 import { useDropdown } from '../hooks/useDropdown';
 import { signOut } from '../DAL/api';
 
-import { ItemTitle, ListItem, ProfileButton } from './ProfileStyles';
+import {
+  ProfileButton,
+  ItemTitle,
+  ListItem,
+} from './ProfilebarStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

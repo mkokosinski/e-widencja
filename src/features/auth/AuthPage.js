@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoginForm from '../forms/auth/LoginForm';
+import LoginForm from './LoginForm';
 
 import {
   AuthContainer,

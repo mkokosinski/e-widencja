@@ -53,13 +53,10 @@ import {
   SectionRecent,
 } from '../templates/detailsView/DetailsStyles';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCopyright,
-  faCarSide,
-  faTachometerAlt,
-  faColumns,
-} from '@fortawesome/free-solid-svg-icons';
+import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
+import { ReactComponent as YearIco } from '../../assets/year.svg';
+import { ReactComponent as MonthIco } from '../../assets/month.svg';
+import { ReactComponent as CarIco } from '../../assets/car.svg';
 
 const sampleData = {
   labels: [
@@ -79,7 +76,7 @@ const sampleData = {
   datasets: [
     {
       label: 'Przejechano',
-      data: [242, 215, 224, 242,  232, 224, 200, 199, 202, 222, 230, 244],
+      data: [242, 215, 224, 242, 232, 224, 200, 199, 202, 222, 230, 244],
       backgroundColor: ['transparent'],
       borderColor: 'rgba(88, 64, 187,0.8)',
       borderWidth: 2,
@@ -124,34 +121,34 @@ const VehileDetails = () => {
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faColumns} />
+            <CompanyIco />
           </DetailsIco>
-          <DetailsLabel>Firma</DetailsLabel>
           <DetailsData>{record.company}</DetailsData>
+          <DetailsLabel>Firma</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faColumns} />
+            <YearIco />
           </DetailsIco>
-          <DetailsLabel>Rok</DetailsLabel>
           <DetailsData>{record.year}</DetailsData>
+          <DetailsLabel>Rok</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faColumns} />
+            <MonthIco />
           </DetailsIco>
-          <DetailsLabel>Miesiąc</DetailsLabel>
           <DetailsData>{record.month}</DetailsData>
+          <DetailsLabel>Miesiąc</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faColumns} />
+            <CarIco />
           </DetailsIco>
-          <DetailsLabel>Pojazd</DetailsLabel>
           <DetailsData>{record.vehicle.name}</DetailsData>
+          <DetailsLabel>Pojazd</DetailsLabel>
         </DetailsInfo>
       </SectionDesc>
 

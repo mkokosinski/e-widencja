@@ -23,8 +23,7 @@ import { A } from '../../layout/LayoutStyles';
 
 const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
   return (
-    <div key={item.id}>
-      <Container>
+      <Container key={item.id}>
         <Body>
           <Ico>
             <FontAwesomeIcon icon={ico} />
@@ -59,7 +58,6 @@ const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
           </Buttons>
         </Body>
       </Container>
-    </div>
   );
 };
 

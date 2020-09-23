@@ -5,7 +5,7 @@ import {
   ItemTitle,
   ListItem,
   NotificationButton,
-} from './ProfileStyles';
+} from './ProfilebarStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faChartPie, faCloudMoonRain, faSnowboarding } from '@fortawesome/free-solid-svg-icons';

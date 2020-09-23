@@ -45,7 +45,7 @@ export const StyledLayout = styled.div`
   }
 
   @media screen and ${device.laptop} {
-    grid-template-columns: 16% 84%;
+    grid-template-columns: 18% 82%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
       'logo body'
@@ -111,18 +111,6 @@ export const Body = styled.div`
   @media screen and ${device.laptopL} {
     font-size: 1em;
     padding: 30px;
-  }
-`;
-
-export const ProfileBar = styled.div`
-  grid-area: profile;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 16px;
-  width: 100%;
-  @media screen and ${device.tablet} {
-    height: 60px;
   }
 `;
 
@@ -196,9 +184,9 @@ export const PanelLightSoft = styled(Panel)`
 
 export const PanelOverlapLight = styled(Panel)`
   background: white;
-  border-left: 10px solid ${({ theme }) => theme.seconadry};
+  border-left: 10px solid ${({ theme }) => theme.secondary};
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.4);
-  color: ${({ theme }) => theme.main};
+  color: rgba(0, 0, 0, 0.8);
 `;
 
 export const Button = styled.div`
@@ -222,13 +210,12 @@ export const Button = styled.div`
   }
 `;
 
-
 export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: white;
 
-  :hover{
+  :hover {
     background: ${({ theme }) => theme.hover.mainSoft};
   }
 
@@ -242,7 +229,7 @@ export const ButtonLightSoft = styled(Button)`
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: ${({ theme }) => theme.main};
 
-  :hover{
+  :hover {
     background: ${({ theme }) => theme.hover.lightSoft};
   }
 `;
@@ -252,7 +239,7 @@ export const ButtonBorderedMain = styled(Button)`
   border: 1px solid ${({ theme }) => theme.mainSoft};
   color: ${({ theme }) => theme.mainSoft};
 
-  :hover{
+  :hover {
     background: ${({ theme }) => theme.hover.lightSoft};
   }
 `;
@@ -263,7 +250,7 @@ export const ButtonBorderedSeconderySoft = styled(Button)`
   color: ${({ theme }) => theme.seconderySoft};
   transition: opacity 150ms;
 
-  :hover{
+  :hover {
     opacity: 0.6;
   }
 `;

@@ -32,6 +32,11 @@ import {
   ButtonDelete,
 } from '../templates/detailsView/DetailsComponents';
 
+import { ReactComponent as BrandIco } from '../../assets/branding.svg';
+import { ReactComponent as CarIco } from '../../assets/car.svg';
+import { ReactComponent as LicenseIco } from '../../assets/licensePlate.svg';
+import { ReactComponent as TachometerIco } from '../../assets/tachometer.svg';
+
 const sampleData = {
   labels: [
     'Sty',
@@ -93,34 +98,34 @@ const VehileDetails = () => {
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faCopyright} />
+            <BrandIco />
           </DetailsIco>
-          <DetailsLabel>Marka</DetailsLabel>
           <DetailsData>{vehicle.mark}</DetailsData>
+          <DetailsLabel>Marka</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faCarSide} />
+            <CarIco />
           </DetailsIco>
-          <DetailsLabel>Model</DetailsLabel>
           <DetailsData>{vehicle.model}</DetailsData>
+          <DetailsLabel>Model</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faTachometerAlt} />
+            <TachometerIco />
           </DetailsIco>
+          <DetailsData>{vehicle.mileage} km</DetailsData>
           <DetailsLabel>Przebieg</DetailsLabel>
-          <DetailsData>{vehicle.mileage}</DetailsData>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faColumns} />
+            <LicenseIco />
           </DetailsIco>
-          <DetailsLabel>Numer rejestracyjny</DetailsLabel>
           <DetailsData>{vehicle.registrationNumber}</DetailsData>
+          <DetailsLabel>Numer rejestracyjny</DetailsLabel>
         </DetailsInfo>
       </SectionDesc>
 

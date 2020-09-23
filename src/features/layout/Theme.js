@@ -30,7 +30,7 @@ export const darkTheme = {
     hover: '#614AC2',
   },
   body: {
-    background: '#fdfdfd',
+    background: '#fbfbfb',
   },
   hover: {
     main: '#52527d',

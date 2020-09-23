@@ -19,7 +19,7 @@ const StyledDropdown = styled.div`
 
   background: white;
   
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.5);
 
   border-radius: 10px;
 

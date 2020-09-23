@@ -11,8 +11,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
-  faPencilAlt,
-  faTrashAlt,
+  faPen,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const ButtonGoBack = () => {
@@ -29,7 +29,7 @@ export const ButtonEdit = ({ actionPath }) => {
   return (
     <DetailsEdit>
       <DetailsEditButton to={actionPath}>
-        <FontAwesomeIcon icon={faPencilAlt} />
+        <FontAwesomeIcon icon={faPen} />
       </DetailsEditButton>
     </DetailsEdit>
   );
@@ -45,7 +45,7 @@ export const ButtonDelete = ({ item }) => {
         }
       }}
     >
-      <FontAwesomeIcon icon={faTrashAlt} />
+      <FontAwesomeIcon icon={faTrash} />
     </DetailsDelete>
   );
 };

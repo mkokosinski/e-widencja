@@ -1,42 +1,8 @@
-// import React from 'react';
-// import { useParams, useHistory } from 'react-router';
-// import { useSelector } from 'react-redux';
-// import { selectUserById } from './usersSlice';
-
-// const UserDetails = () => {
-//   const { id } = useParams();
-//   const { goBack } = useHistory();
-
-//   const user = useSelector((state) => selectUserById(state, id));
-
-//   return user ? (
-//     <div>
-//       <button onClick={goBack}>go back</button>
-//       <div>name: {user.name}</div>
-//       <div>surname: {user.surname}</div>
-//       <div>label: {user.label}</div>
-//       <div>isDriver: {user.isDriver.toString()}</div>
-//       <div>eMail: {user.eMail}</div>
-//       <div>password: {user.password}</div>
-//     </div>
-//   ) : null;
-// };
-
-// export default UserDetails;
-
 import React from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUserById } from './usersSlice';
 import Routing from '../routing/Routing';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCopyright,
-  faCarSide,
-  faTachometerAlt,
-  faColumns,
-} from '@fortawesome/free-solid-svg-icons';
 
 import LineChart from '../charts/Chart';
 import {
@@ -57,6 +23,11 @@ import {
   ButtonEdit,
   ButtonDelete,
 } from '../templates/detailsView/DetailsComponents';
+
+import { ReactComponent as NameIco } from '../../assets/man.svg';
+import { ReactComponent as SurnameIco } from '../../assets/idCard.svg';
+import { ReactComponent as DriverIco } from '../../assets/driver.svg';
+import { ReactComponent as EmailIco } from '../../assets/email.svg';
 
 const sampleData = {
   labels: [
@@ -117,34 +88,34 @@ const UserDetalis = () => {
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faCopyright} />
+            <NameIco />
           </DetailsIco>
-          <DetailsLabel>Imię</DetailsLabel>
           <DetailsData>{user.name}</DetailsData>
+          <DetailsLabel>Imię</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faCopyright} />
+            <SurnameIco />
           </DetailsIco>
-          <DetailsLabel>Nazwisko</DetailsLabel>
           <DetailsData>{user.surname}</DetailsData>
+          <DetailsLabel>Nazwisko</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faCopyright} />
+            <DriverIco />
           </DetailsIco>
-          <DetailsLabel>Kierowca</DetailsLabel>
           <DetailsData>{user.isDriver ? 'Tak' : 'Nie'}</DetailsData>
+          <DetailsLabel>Kierowca</DetailsLabel>
         </DetailsInfo>
 
         <DetailsInfo>
           <DetailsIco>
-            <FontAwesomeIcon icon={faCopyright} />
+            <EmailIco />
           </DetailsIco>
-          <DetailsLabel>Adres e-mail</DetailsLabel>
           <DetailsData>{user.eMail}</DetailsData>
+          <DetailsLabel>Adres e-mail</DetailsLabel>
         </DetailsInfo>
       </SectionDesc>
 
