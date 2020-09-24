@@ -14,6 +14,8 @@ import {
   ButtonsContainer,
   Row,
   StyledSelect,
+  AddItemButton,
+  RemoveItemButton,
 } from '../FormsStyles';
 import {
   ButtonMain,
@@ -47,8 +49,8 @@ let initValues = false || {
   date: '',
   tourTemplate: '',
   stops: [
-    { label: 'Start', place: '' },
-    { label: 'Cel', place: '' },
+    { label: 'Start', place: '', mileage: '' },
+    { label: 'Cel', place: '', mileage: '' },
   ],
   driver: '',
 };
@@ -67,7 +69,6 @@ const RecordForm = () => {
         initialValues={initValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        validateOnChange={false}
       >
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
@@ -131,29 +132,39 @@ const RecordForm = () => {
               <FieldArray name='stops'>
                 {({ insert, remove, push }) =>
                   values.stops.map((stop, index) => (
-                    <div key={index}>
-                      <FieldWithErrors
-                        name={`stops[${index}].label`}
-                        label={stop.label}
-                      />
-                      {/* <FieldWithErrors name={stop.label} label={stop.label} /> */}
-
-                      {index === 0 && (
-                        <div
-                          onClick={() => {
-                            insert(values.stops.length - 1, {
-                              label: `Przystanek`,
-                              stop: '',
-                            });
-                          }}
+                    <Row>
+                      <div key={index}>
+                        <FieldWithErrors
+                          name={`stops[${index}].place`}
+                          label={stop.label}
                         >
-                          +
-                        </div>
-                      )}
-                      {index === values.stops.length - 1 && index > 1 && (
-                        <div>-</div>
-                      )}
-                    </div>
+                          <Input type='text' placeholder='Miejsce' />
+                        </FieldWithErrors>
+
+                        <FieldWithErrors name={`stops[${index}].mileage`}>
+                          <Input type='number' placeholder='Przebieg' />
+                        </FieldWithErrors>
+
+                        {index === 0 && (
+                          <AddItemButton
+                            onClick={() => {
+                              insert(values.stops.length - 1, {
+                                label: `Przystanek`,
+                                stop: '',
+                              });
+                            }}
+                          >
+                            +
+                          </AddItemButton>
+                        )}
+
+                        {index > 0 && values.stops.length - 1 !== index && (
+                          <RemoveItemButton onClick={() => remove(index)}>
+                            -
+                          </RemoveItemButton>
+                        )}
+                      </div>
+                    </Row>
                   ))
                 }
               </FieldArray>

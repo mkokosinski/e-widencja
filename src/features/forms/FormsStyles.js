@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Form, Field } from 'formik';
-import { PanelBordered, device } from '../layout/LayoutStyles';
+import { PanelBordered, device, Button } from '../layout/LayoutStyles';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -178,3 +178,11 @@ export const ButtonsContainer = styled.div`
     }
   }
 `;
+
+export const ItemButton = styled(Button)`
+  border: 1px solid black;
+`;
+
+export const AddItemButton = styled(ItemButton)``;
+
+export const RemoveItemButton = styled(ItemButton)``;

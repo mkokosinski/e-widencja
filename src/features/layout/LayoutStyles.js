@@ -236,8 +236,8 @@ export const ButtonBorderedMain = styled(Button)`
 
 export const ButtonBorderedSeconderySoft = styled(Button)`
   background: white;
-  border: 1px solid ${({ theme }) => theme.seconderySoft};
-  color: ${({ theme }) => theme.seconderySoft};
+  border: 1px solid ${({ theme }) => theme.secondarySoft};
+  color: ${({ theme }) => theme.secondarySoft};
   transition: opacity 150ms;
 
   :hover {
