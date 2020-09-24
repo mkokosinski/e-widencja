@@ -48,7 +48,7 @@ const List = ({ vehicles }) => {
         <ButtonAdd>
           <AddItem to={`${Routing.VehicleAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
-            Nowy <span>pojazd</span>
+            <span>Nowy pojazd</span>
           </AddItem>
         </ButtonAdd>
         <SearchInput />

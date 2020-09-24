@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import SearchBar from '../../searchbar/SearchBar';
 
-import { device, ButtonMain } from '../../layout/LayoutStyles';
+import { device, ButtonMain, size } from '../../layout/LayoutStyles';
 
 export const TopPanel = styled.div`
   display: flex;
@@ -15,7 +15,20 @@ export const TopPanel = styled.div`
   }
 `;
 
-export const ButtonAdd = styled(ButtonMain)``;
+export const ButtonAdd = styled(ButtonMain)`
+  @media screen and (max-width: ${size.mobileXL}px) {
+    position: fixed;
+    bottom: 60px;
+    right: 16px;
+    height: 60px;
+    width: 60px;
+    z-index: 2;
+    background: ${(props) => props.theme.secondary};
+    border-radius: 50%;
+    box-shadow: 0 1px 12px -4px rgba(0, 0, 0, 0.7);
+    color: white;
+  }
+`;
 
 export const AddItem = styled(Link)`
   display: flex;
@@ -31,7 +44,7 @@ export const AddItem = styled(Link)`
     display: none;
   }
 
-  @media screen and ${device.mobileL} {
+  @media screen and ${device.mobileXL} {
     span {
       display: block;
     }

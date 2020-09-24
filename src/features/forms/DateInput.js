@@ -39,7 +39,7 @@ const locale = {
 };
 
 const DateInput = React.forwardRef(
-  ({ setFieldTouched, setFieldValue, focusOn, initialValue }, ref) => {
+  ({ name,setFieldTouched, setFieldValue, focusOn, initialValue }, ref) => {
     const [startDate, setStartDate] = useState(new Date());
     const isLaptop = useSelector(selectIsLaptop);
 
@@ -55,11 +55,11 @@ const DateInput = React.forwardRef(
         onChange={(value) => {
           const date = format(value, 'yyyy-MM-dd');
           setStartDate(value);
-          setFieldTouched('checkupDate');
-          setFieldValue('checkupDate', date);
+          setFieldTouched(name);
+          setFieldValue(name, date);
           focusOn();
         }}
-        customInput={<Input />}
+        customInput={<Input ref={ref} />}
         dateFormat='yyyy-MM-dd'
         locale={locale}
         minDate={new Date()}

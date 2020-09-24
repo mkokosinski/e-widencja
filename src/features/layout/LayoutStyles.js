@@ -28,35 +28,27 @@ export const StyledLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 50px 1fr 50px;
-
   grid-template-areas:
     'logo profile'
     'body body'
     'menu menu';
-
   min-height: 100vh;
   flex-direction: column-reverse;
-
   background: ${({ theme }) => theme.mainSoft};
   box-sizing: content-box;
-
   @media screen and ${device.mobileM} {
     grid-template-rows: 60px 1fr 50px;
   }
-
   @media screen and ${device.laptop} {
     grid-template-columns: 18% 82%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
       'logo body'
       'menu body';
-
     overflow: auto;
-
     flex-direction: row;
     font-size: ${({ theme }) => theme.font.size};
   }
-
   @media screen and ${device.laptopL} {
     grid-template-columns: 14% 86%;
     grid-template-rows: 200px 1fr;
@@ -64,25 +56,21 @@ export const StyledLayout = styled.div`
 `;
 
 export const Menu = styled.div`
+  grid-area: menu;
+  position: fixed;
+  bottom: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
-  grid-area: menu;
-  z-index: 998;
-
-  background: inherit;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-
   height: ${({ theme }) => (theme.isMobileKeyboard ? '0px' : 'initial')};
-
+  width: 100%;
+  z-index: 998;
+  background: inherit;
   @media screen and ${device.laptop} {
-    font-size: ${({ theme }) => theme.font.size};
     position: relative;
     height: auto;
-
     width: auto;
+    font-size: ${({ theme }) => theme.font.size};
   }
 `;
 
@@ -94,6 +82,7 @@ export const StyledLogo = styled.div`
 
 export const Body = styled.div`
   grid-area: body;
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -193,6 +182,7 @@ export const Button = styled.div`
   align-items: center;
   /* clip-path: polygon(0 8px, 10px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 10px) 100%, 0 100%); */
   display: flex;
+  align-items: center;
   justify-content: center;
   user-select: none;
   cursor: pointer;

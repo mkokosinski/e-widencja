@@ -1,10 +1,11 @@
-import React from "react";
-import { Formik } from "formik";
-import { useHistory } from "react-router";
-import * as Yup from "yup";
+import React, { useRef } from 'react';
+import { FieldArray, Formik } from 'formik';
+import { useHistory } from 'react-router';
+import * as Yup from 'yup';
 
-import FieldWithErrors from "../fieldWithErrors";
-import Checkbox from "../checkbox"
+import FieldWithErrors from '../fieldWithErrors';
+import Select from 'react-select';
+import SelectCreatable from 'react-select/creatable';
 
 import {
   StyledForm,
@@ -12,85 +13,173 @@ import {
   Input,
   ButtonsContainer,
   Row,
-} from "../FormsStyles";
+  StyledSelect,
+} from '../FormsStyles';
 import {
-  ButtonMain, 
+  ButtonMain,
   ButtonBorderedSeconderySoft,
-} from "../../layout/LayoutStyles";
+} from '../../layout/LayoutStyles';
+import DateInput from '../DateInput';
 
 const validationSchema = Yup.object({
-  name: Yup.string()
-    .max(30, "Must be 30 characters or less")
-    .required("Required"),
-  surname: Yup.string()
-    .max(30, "Must be 30 characters or less")
-    .required("Required"),
-  label: Yup.string()
-    .max(15, "Must be 15 characters or less")
-    .required("Required"),
-  isDriver: Yup.bool(),
-  eMail: Yup.string().email("Nipoprawny format email")
-    .min(7, "Must be 7 characters or more")
-    .required("Required"),
-  password: Yup.string()
-    .min(6, "Must be 6 characters or more")
-    .required("Required"),
+  record: Yup.string()
+    .max(30, 'Must be 30 characters or less')
+    .required('Required'),
+  date: Yup.string()
+    .max(20, 'Must be 20 characters or less')
+    .required('Pole wymagane'),
+  tourTemplate: Yup.string().required('Pole wymagane'),
+  stops: Yup.array().of(
+    Yup.object().shape({
+      label: Yup.string().max(28, 'Max 28 chars'),
+      stop: Yup.string().max(28, 'Max 28 chars'),
+    })
+  ),
+  driver: Yup.string().required('Pole wymagane'),
 });
 
 const handleSubmit = (values) => {
   console.log(values);
 };
 
+let initValues = false || {
+  record: '',
+  date: '',
+  tourTemplate: '',
+  stops: [
+    { label: 'Start', place: '' },
+    { label: 'Cel', place: '' },
+  ],
+  driver: '',
+};
+
 const RecordForm = () => {
   const { goBack } = useHistory();
+  const tourTemplateRef = useRef(null);
+
+  const focusOn = (ref) => {
+    ref.current.focus();
+  };
 
   return (
     <Container>
       <Formik
-        initialValues={{
-          name: "",
-          surname: "",
-          label: "",
-          isDriver: false,
-          eMail: "",
-          password: "",
-        }}
+        initialValues={initValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        validateOnChange={false}
       >
-        {({ values, submitForm }) => (
+        {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name="name" label="Imię">
-                <Input type="text" />
+              <FieldWithErrors name='date' label='Data'>
+                <DateInput
+                  focusOn={() => focusOn(tourTemplateRef)}
+                  setFieldTouched={setFieldTouched}
+                  setFieldValue={setFieldValue}
+                  initialValue={initValues.date}
+                />
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <FieldWithErrors name="surname" label="Nazwisko">
-                <Input type="text" />
+              <FieldWithErrors name='record' label='Ewidencja'>
+                <StyledSelect>
+                  <Select
+                    as='select'
+                    isSearchable={true}
+                    options={[
+                      { label: 'test', value: 'test' },
+                      { label: 'test2', value: 'test2' },
+                    ]}
+                    onChange={({ value }) => {
+                      setFieldTouched('record');
+                      setFieldValue('record', value);
+                      focusOn(tourTemplateRef);
+                    }}
+                    // defaultValue={{ label: values.record, value: values.record }}
+                  />
+                </StyledSelect>
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <FieldWithErrors name="label" label="Skrót">
-                <Input type="text" />
+              <FieldWithErrors
+                name='tourTemplate'
+                label='Trasa'
+                ref={tourTemplateRef}
+              >
+                <StyledSelect>
+                  <SelectCreatable
+                    as='select'
+                    isSearchable={true}
+                    options={[
+                      { label: 'test', value: 'test' },
+                      { label: 'test2', value: 'test2' },
+                    ]}
+                    onChange={({ value }) => {
+                      setFieldTouched('tourTemplate');
+                      setFieldValue('tourTemplate', value);
+                    }}
+                    // defaultValue={{ label: values.record, value: values.record }}
+                  />
+                </StyledSelect>
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <Checkbox name="isDriver" label="Kierowca" />
+              <FieldArray name='stops'>
+                {({ insert, remove, push }) =>
+                  values.stops.map((stop, index) => (
+                    <div key={index}>
+                      <FieldWithErrors
+                        name={`stops[${index}].label`}
+                        label={stop.label}
+                      />
+                      {/* <FieldWithErrors name={stop.label} label={stop.label} /> */}
+
+                      {index === 0 && (
+                        <div
+                          onClick={() => {
+                            insert(values.stops.length - 1, {
+                              label: `Przystanek`,
+                              stop: '',
+                            });
+                          }}
+                        >
+                          +
+                        </div>
+                      )}
+                      {index === values.stops.length - 1 && index > 1 && (
+                        <div>-</div>
+                      )}
+                    </div>
+                  ))
+                }
+              </FieldArray>
             </Row>
 
             <Row>
-              <FieldWithErrors name="eMail" label="E-mail">
-                <Input type="email" />
-              </FieldWithErrors>
-            </Row>
-
-            <Row>
-              <FieldWithErrors name="password" label="Hasło">
-                <Input type="password" />
+              <FieldWithErrors
+                name='tourTemplate'
+                label='Kierowca'
+                ref={tourTemplateRef}
+              >
+                <StyledSelect>
+                  <SelectCreatable
+                    as='select'
+                    isSearchable={true}
+                    options={[
+                      { label: 'test', value: 'test' },
+                      { label: 'test2', value: 'test2' },
+                    ]}
+                    onChange={({ value }) => {
+                      setFieldTouched('driver');
+                      setFieldValue('driver', value);
+                    }}
+                    // defaultValue={{ label: values.record, value: values.record }}
+                  />
+                </StyledSelect>
               </FieldWithErrors>
             </Row>
 

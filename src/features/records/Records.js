@@ -47,7 +47,7 @@ const List = ({ records }) => {
         <ButtonAdd>
           <AddItem to={`${Routing.RecordAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
-            Nowa <span>ewidencja</span>
+            <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
         <SearchInput />

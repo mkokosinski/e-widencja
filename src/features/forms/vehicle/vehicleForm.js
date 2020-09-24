@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Formik } from 'formik';
-import { useHistory, useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
 import Select from 'react-select';
@@ -21,8 +21,6 @@ import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
-import { useSelector } from 'react-redux';
-import { selectVehicleById } from '../../vehicles/vehiclesSlice';
 
 const validationSchema = Yup.object({
   name: Yup.string()
