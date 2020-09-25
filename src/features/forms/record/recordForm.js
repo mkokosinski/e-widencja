@@ -16,12 +16,19 @@ import {
   StyledSelect,
   AddItemButton,
   RemoveItemButton,
+  FieldsGroup,
 } from '../FormsStyles';
 import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
 import DateInput from '../DateInput';
+import {
+  faMinus,
+  faPlus,
+  faPlusCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const validationSchema = Yup.object({
   record: Yup.string()
@@ -132,8 +139,8 @@ const RecordForm = () => {
               <FieldArray name='stops'>
                 {({ insert, remove, push }) =>
                   values.stops.map((stop, index) => (
-                    <Row>
-                      <div key={index}>
+                    <>
+                      <FieldsGroup>
                         <FieldWithErrors
                           name={`stops[${index}].place`}
                           label={stop.label}
@@ -145,26 +152,27 @@ const RecordForm = () => {
                           <Input type='number' placeholder='Przebieg' />
                         </FieldWithErrors>
 
-                        {index === 0 && (
-                          <AddItemButton
-                            onClick={() => {
-                              insert(values.stops.length - 1, {
-                                label: `Przystanek`,
-                                stop: '',
-                              });
-                            }}
-                          >
-                            +
-                          </AddItemButton>
-                        )}
-
-                        {index > 0 && values.stops.length - 1 !== index && (
+                        {index >= 1 && index < values.stops.length - 1 && (
                           <RemoveItemButton onClick={() => remove(index)}>
-                            -
+                            <FontAwesomeIcon icon={faMinus} />
                           </RemoveItemButton>
                         )}
-                      </div>
-                    </Row>
+                        
+                      </FieldsGroup>
+                      {index === values.stops.length - 2 && (
+                        <AddItemButton
+                          onClick={() => {
+                            insert(values.stops.length - 1, {
+                              label: `Przystanek`,
+                              stop: '',
+                            });
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faPlusCircle} />
+                          <span> Dodaj przystanek </span>
+                        </AddItemButton>
+                      )}
+                    </>
                   ))
                 }
               </FieldArray>

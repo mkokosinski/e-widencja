@@ -25,12 +25,12 @@ export const darkTheme = {
     },
     active: {
       color: '#42427D',
-      background: '#fdfdfd',
+      background: 'white',
     },
     hover: '#614AC2',
   },
   body: {
-    background: '#fbfbfb',
+    background: '#f9f9f9',
   },
   hover: {
     main: '#52527d',

@@ -38,7 +38,7 @@ const ButtonStyles = styled(ButtonLightSoft)`
   position: relative;
   height: 40px;
   width: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   margin: 0 4px;
   background: ${(props) => (props.active ? 'white' : 'transparent')};
   color: ${(props) =>

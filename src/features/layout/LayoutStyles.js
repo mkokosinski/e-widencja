@@ -96,6 +96,13 @@ export const Body = styled.div`
     display: block;
     font-size: 0.9em;
     padding: 20px;
+    background: linear-gradient(
+      90deg,
+      white 5%,
+      ${(props) => props.theme.body.background} 20%,
+      ${(props) => props.theme.body.background} 80%,
+      white 95%
+    );
   }
   @media screen and ${device.laptopL} {
     font-size: 1em;
@@ -171,11 +178,14 @@ export const PanelLightSoft = styled(Panel)`
   color: ${({ theme }) => theme.main};
 `;
 
-export const PanelOverlapLight = styled(Panel)`
-  background: white;
-  border-left: 10px solid ${({ theme }) => theme.secondary};
+export const PanelBoxShadow = styled(Panel)`
+ background: white;
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.8);
+`
+
+export const PanelOverlapLight = styled(PanelBoxShadow)`
+  border-left: 10px solid ${({ theme }) => theme.secondary};
 `;
 
 export const Button = styled.div`

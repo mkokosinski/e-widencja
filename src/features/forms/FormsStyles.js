@@ -21,15 +21,14 @@ export const Container = styled(PanelBordered)`
   }
 
   @media screen and ${device.laptop} {
-    max-width: 500px;
+    max-width: 600px;
     width: auto;
-    margin: 20px auto;
+    margin: 10px auto;
   }
 
   @media screen and ${device.laptopL} {
-    max-width: 500px;
+    max-width: 700px;
     width: auto;
-    margin: 60px auto;
     padding: 40px 60px;
   }
 `;
@@ -37,6 +36,7 @@ export const Container = styled(PanelBordered)`
 export const Row = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   margin: 2px 0;
 
   & > * {
@@ -84,10 +84,10 @@ export const Label = styled.label`
 
 const inputStyle = css`
   padding: 8px 10px;
+  width: 100%;
   border: 1px solid rgba(54, 54, 54, 0.7);
   border-color: #dbdbdb;
   border-radius: 4px;
-  box-sizing: content-box;
   color: #363636;
   cursor: pointer;
   font-size: 0.9rem;
@@ -130,11 +130,9 @@ export const StyledSelect = styled.div`
   div[class*='control'] {
     min-height: 0;
     ${inputStyle}
-    box-sizing: content-box;
     padding: 4px 6px;
     * {
       padding: 0;
-      box-sizing: content-box;
       font-size: 1em;
     }
   }
@@ -179,10 +177,34 @@ export const ButtonsContainer = styled.div`
   }
 `;
 
-export const ItemButton = styled(Button)`
-  border: 1px solid black;
+export const FieldsGroup = styled.div`
+  display: grid;
+  grid-template: 1fr/2fr 1fr auto;
+
+  grid-gap: 10px;
+  align-items: flex-end;
+
+  @media screen and ${device.tablet} {
+    width: 100%;
+  }
 `;
 
-export const AddItemButton = styled(ItemButton)``;
+export const ItemButton = styled(Button)`
+  font-size: 0.8em;
+  color: ${(props) => props.theme.mainSoft};
+`;
 
-export const RemoveItemButton = styled(ItemButton)``;
+export const AddItemButton = styled(ItemButton)`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  span {
+    margin-left: 4px;
+  }
+`;
+
+export const RemoveItemButton = styled(ItemButton)`
+  border: 1px solid ${(props) => props.theme.mainSoft};
+  height: 32px;
+  width: 32px;
+`;

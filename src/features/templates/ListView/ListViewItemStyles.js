@@ -13,7 +13,7 @@ export const Container = styled(PanelOverlapLight)`
   height: 80px;
   padding: 0;
   max-width: 1100px;
-  margin: 8px auto;
+  margin: 12px auto;
   width: 97%;
 `;
 
@@ -91,6 +91,7 @@ export const Journeys = styled.div`
 
   @media screen and ${device.tablet} {
     display: flex;
+    font-size: 0.9em;
   }
 `;
 export const Journey = styled.div`
