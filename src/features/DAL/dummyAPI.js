@@ -1,5 +1,5 @@
 const loginAdmin = 'Admin';
-const passAdmin = 'Dupa123';
+const passAdmin = 'Demo123';
 
 export const signIn = async (login, password) => {
   if (login === loginAdmin && password === passAdmin) {
