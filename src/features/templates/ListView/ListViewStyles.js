@@ -7,11 +7,12 @@ import { device, ButtonMain, size } from '../../layout/LayoutStyles';
 
 export const TopPanel = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   margin: 8px 0px;
-
+  padding: 4px;
   & > * {
-    margin: 4px 8px;
+    margin: 4px 0px;
   }
 `;
 

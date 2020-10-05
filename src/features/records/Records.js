@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Switch, Route } from 'react-router';
+
+import Select from 'react-select';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  SearchInput,
   ItemsList,
 } from '../templates/ListView/ListViewStyles';
+import { selectRecordsWithVehicles, setVehicleFilter, selectActiveVehicleFilter } from './recordsSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -19,8 +22,7 @@ import {
   faEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import Routing from '../routing/Routing';
-import { selectRecords, fetchRecords } from './recordsSlice';
-import { Switch, Route } from 'react-router';
+import { selectVehicles } from '../vehicles/vehiclesSlice';
 
 const buttons = (id) => [
   {
@@ -41,6 +43,17 @@ const buttons = (id) => [
 ];
 
 const List = ({ records }) => {
+  const dispatch = useDispatch();
+
+  const { vehicles } = useSelector(selectVehicles);
+  const t = useSelector(selectActiveVehicleFilter);
+
+  console.log(t);
+
+  const sortItems = [
+    { label: 'Wszystkie', value: '0' },
+    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id })),
+  ];
   return (
     <ItemsList>
       <TopPanel>
@@ -50,27 +63,37 @@ const List = ({ records }) => {
             <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
-        <SearchInput />
+        <Select
+          as='select'
+          options={sortItems}
+          defaultValue={t}
+          onChange={(filter) => {
+            dispatch(setVehicleFilter(filter));
+          }}
+        />
       </TopPanel>
 
-      {records.map((record) => (
-        <ListViewItem
-          key={record.id}
-          ico={faUser}
-          item={record}
-          path={Routing.Records.path}
-          buttons={buttons(record.id)}
-        />
-      ))}
+      {records.map((record) => {
+        const subname = record.vehicle && record.vehicle.name;
+        console.log(subname);
+        return (
+          <ListViewItem
+            key={record.id}
+            ico={faUser}
+            item={{ ...record, subname }}
+            path={Routing.Records.path}
+            buttons={buttons(record.id)}
+          />
+        );
+      })}
     </ItemsList>
   );
 };
 
 const Records = () => {
-  const dispatch = useDispatch();
-  const { records, status, error } = useSelector(selectRecords);
-
-console.log('rec', records);
+  const { records, status, error } = useSelector((state) =>
+    selectRecordsWithVehicles(state)
+  );
   return (
     <Switch>
       <Route exact path={Routing.RecordAdd.path}>

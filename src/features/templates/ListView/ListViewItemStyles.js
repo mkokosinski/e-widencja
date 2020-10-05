@@ -66,22 +66,29 @@ export const Ico = styled(PanelLightSoft)`
   }
 `;
 
-export const Name = styled(H2)`
+export const Title = styled.div`
   grid-area: name;
-  font-size: 0.9em;
-  text-align: center;
-  text-align: left;
   padding: 0 10px 0 20px;
+  text-align: left;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  width: auto;
+
+`;
+
+export const Name = styled(H2)`
+  font-size: 0.9em;
 
   @media screen and ${device.mobileXL} {
     font-size: 1em;
-    width: auto;
   }
   @media screen and ${device.mobileXL} {
   }
+`;
+
+export const Subname = styled.div`
+  font-size: 0.8em;
 `;
 
 export const Journeys = styled.div`

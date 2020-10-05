@@ -14,10 +14,35 @@ export const fetchRecords = createAsyncThunk(
 
 export const recordsSlice = createSlice({
   name: 'records',
-  initialState: { status: 'idle', records: [], error: null },
+  initialState: {
+    status: 'idle',
+    records: [],
+    error: null,
+    dateFilter: { enable: false, filter: '' },
+    vehicleFilter: { enable: false, filter: { label: 'Wszytkie', value: '0' } },
+  },
   reducers: {
-    func: (state) => {
-      //function body
+    setDateFilter: (state, action) => {
+      const { payload } = action;
+      console.log('dateFilter', payload);
+      if (payload.value === '0') {
+        state.dateFilter = { enable: false, filter: '' };
+      } else {
+        state.dateFilter = { enable: true, filter: payload };
+      }
+    },
+
+    setVehicleFilter: (state, action) => {
+      const { payload } = action;
+      console.log('dateFilter', payload);
+      if (payload.value === '0') {
+        state.vehicleFilter = {
+          enable: false,
+          filter: { label: 'Wszytko', value: '0' },
+        };
+      } else {
+        state.vehicleFilter = { enable: true, filter: payload };
+      }
     },
   },
   extraReducers: {
@@ -47,6 +72,26 @@ export const recordsSlice = createSlice({
 
 export const selectRecords = (state) => state.records;
 
+export const selectRecordsWithVehicles = (state) => {
+  const { vehicleFilter, dateFilter } = state.records;
+  const records = [];
+  state.records.records
+    .filter((rec) =>
+      vehicleFilter.enable ? rec.vehicleId === vehicleFilter.filter.value : rec
+    )
+    .filter((rec) =>
+      dateFilter.enable ? rec.vehicleId === dateFilter.filter : rec
+    )
+    .forEach((rec) => {
+      const vehicle = state.vehicles.vehicles.find(
+        (vehicle) => vehicle.id === rec.vehicleId
+      );
+      records.push({ ...rec, vehicle });
+    });
+
+  return { ...state.records, records };
+};
+
 export const selectRecordById = (state, recordId) => {
   const record = state.records.records.find((record) => record.id === recordId);
   const vehicle = state.vehicles.vehicles.find(
@@ -55,6 +100,8 @@ export const selectRecordById = (state, recordId) => {
   return { ...record, vehicle: { ...vehicle } };
 };
 
-export const { next } = recordsSlice.actions;
+export const selectActiveVehicleFilter = (state) => state.records.vehicleFilter.filter;
+
+export const { setDateFilter, setVehicleFilter } = recordsSlice.actions;
 
 export default recordsSlice.reducer;
