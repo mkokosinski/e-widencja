@@ -12,7 +12,7 @@ import DateInput from '../DateInput';
 import {
   StyledForm,
   Container,
-  Input,
+  StyledField,
   StyledSelect,
   ButtonsContainer,
   Row,
@@ -82,7 +82,7 @@ const VehicleForm = ({ vehicle }) => {
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa'>
-                <Input type='text' />
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
             <Row>
@@ -107,7 +107,7 @@ const VehicleForm = ({ vehicle }) => {
             </Row>
             <Row>
               <FieldWithErrors name='model' label='Model'>
-                <Input type='text' innerRef={modelRef} />
+                <StyledField type='text' innerRef={modelRef} />
               </FieldWithErrors>
             </Row>
             <Row>
@@ -115,13 +115,13 @@ const VehicleForm = ({ vehicle }) => {
                 name='registrationNumber'
                 label='Numer rejestracyjny'
               >
-                <Input type='text' />
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
             <Row>
               <FieldWithErrors name='mileage' label='Przebieg'>
-                <Input type='number' />
+                <StyledField type='number' />
               </FieldWithErrors>
 
               <FieldWithErrors name='checkupDate' label='Data przeglądu'>

@@ -122,7 +122,11 @@ const inputStyle = css`
   }
 `;
 
-export const Input = styled(Field)`
+export const Input = styled.input`
+  ${inputStyle}
+`;
+
+export const StyledField = styled(Field)`
   ${inputStyle}
 `;
 

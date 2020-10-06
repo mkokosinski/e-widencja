@@ -9,7 +9,7 @@ import Checkbox from '../checkbox';
 import {
   StyledForm,
   Container,
-  Input,
+  StyledField,
   ButtonsContainer,
   Row,
 } from '../FormsStyles';
@@ -67,19 +67,19 @@ const UserForm = ({user}) => {
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Imię'>
-                <Input type='text' />
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
             <Row>
               <FieldWithErrors name='surname' label='Nazwisko'>
-                <Input type='text' />
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
             <Row>
               <FieldWithErrors name='label' label='Skrót'>
-                <Input type='text' />
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
@@ -89,13 +89,13 @@ const UserForm = ({user}) => {
 
             <Row>
               <FieldWithErrors name='eMail' label='E-mail'>
-                <Input type='email' />
+                <StyledField type='email' />
               </FieldWithErrors>
             </Row>
 
             <Row>
               <FieldWithErrors name='password' label='Hasło'>
-                <Input type='password' />
+                <StyledField type='password' />
               </FieldWithErrors>
             </Row>
 

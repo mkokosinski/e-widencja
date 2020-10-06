@@ -10,7 +10,7 @@ import SelectCreatable from 'react-select/creatable';
 import {
   StyledForm,
   Container,
-  Input,
+  StyledField,
   ButtonsContainer,
   Row,
   StyledSelect,
@@ -139,17 +139,17 @@ const RecordForm = () => {
               <FieldArray name='stops'>
                 {({ insert, remove, push }) =>
                   values.stops.map((stop, index) => (
-                    <>
+                    <React.Fragment key={stop.label + index}>
                       <FieldsGroup>
                         <FieldWithErrors
                           name={`stops[${index}].place`}
                           label={stop.label}
                         >
-                          <Input type='text' placeholder='Miejsce' />
+                          <StyledField type='text' placeholder='Miejsce' />
                         </FieldWithErrors>
 
                         <FieldWithErrors name={`stops[${index}].mileage`}>
-                          <Input type='number' placeholder='Przebieg' />
+                          <StyledField type='number' placeholder='Przebieg' />
                         </FieldWithErrors>
 
                         {index >= 1 && index < values.stops.length - 1 && (
@@ -157,7 +157,6 @@ const RecordForm = () => {
                             <FontAwesomeIcon icon={faMinus} />
                           </RemoveItemButton>
                         )}
-                        
                       </FieldsGroup>
                       {index === values.stops.length - 2 && (
                         <AddItemButton
@@ -172,7 +171,7 @@ const RecordForm = () => {
                           <span> Dodaj przystanek </span>
                         </AddItemButton>
                       )}
-                    </>
+                    </React.Fragment>
                   ))
                 }
               </FieldArray>

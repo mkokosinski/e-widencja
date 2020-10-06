@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
+import { months } from '../forms/DatePickerLocale';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
 
 export const fetchRecords = createAsyncThunk(
@@ -24,17 +25,16 @@ export const recordsSlice = createSlice({
   reducers: {
     setDateFilter: (state, action) => {
       const { payload } = action;
-      console.log('dateFilter', payload);
-      if (payload.value === '0') {
-        state.dateFilter = { enable: false, filter: '' };
-      } else {
-        state.dateFilter = { enable: true, filter: payload };
-      }
+      // if (payload.value === '0') {
+      //   state.dateFilter = { enable: false, filter: '' };
+      // } else {
+      //   state.dateFilter = { enable: true, filter: payload };
+      // }
+      state.dateFilter = { enable: true, filter: payload };
     },
 
     setVehicleFilter: (state, action) => {
       const { payload } = action;
-      console.log('dateFilter', payload);
       if (payload.value === '0') {
         state.vehicleFilter = {
           enable: false,
@@ -79,9 +79,23 @@ export const selectRecordsWithVehicles = (state) => {
     .filter((rec) =>
       vehicleFilter.enable ? rec.vehicleId === vehicleFilter.filter.value : rec
     )
-    .filter((rec) =>
-      dateFilter.enable ? rec.vehicleId === dateFilter.filter : rec
-    )
+    .filter((rec) => {
+      if (dateFilter.enable || true) {
+        const dateFrom = new Date(dateFilter.filter.from);
+        const dateTo = new Date(dateFilter.filter.to);
+        const recDate = new Date(rec.year, months.indexOf(rec.month));
+
+
+        console.log(dateFrom);
+        console.log(dateTo);
+        console.log(recDate);
+
+
+        return recDate >= dateFrom && recDate <= dateTo;
+      } else {
+        return rec;
+      }
+    })
     .forEach((rec) => {
       const vehicle = state.vehicles.vehicles.find(
         (vehicle) => vehicle.id === rec.vehicleId
@@ -100,7 +114,18 @@ export const selectRecordById = (state, recordId) => {
   return { ...record, vehicle: { ...vehicle } };
 };
 
-export const selectActiveVehicleFilter = (state) => state.records.vehicleFilter.filter;
+export const selectActiveVehicleFilter = (state) =>
+  state.records.vehicleFilter.filter;
+
+const searchMinDate = (arr) => {
+  if (arr.length > 0) {
+    const dates = arr.map((item) => item.year);
+    const min = Math.min(...dates);
+    return min;
+  } else return new Date();
+};
+
+export const selectEldestDate = (state) => searchMinDate(state.records.records);
 
 export const { setDateFilter, setVehicleFilter } = recordsSlice.actions;
 

@@ -1,69 +1,22 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { StyledField } from './FormsStyles';
 import { format } from 'date-fns';
-import { pl } from 'date-fns/locale';
-import formatLong from 'date-fns/locale/pl/_lib/formatLong/index';
 
-import { Input } from './FormsStyles';
-import { selectIsLaptop } from '../layout/layoutSlice';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-
-const months = [
-  'Styczeń',
-  'Luty',
-  'Marzec',
-  'Kwiecień',
-  'Maj',
-  'Czerwiec',
-  'Lipiec',
-  'Sierpień',
-  'Wrzesień',
-  'Październik',
-  'Listopad',
-  'Grudzień',
-];
-const days = ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'];
-
-const locale = {
-  pl,
-  localize: {
-    day: (n) => days[n],
-    month: (n) => months[n],
-  },
-  options: {
-    weekStartsOn: 1,
-  },
-  formatLong,
-};
+import DatePicker from './DatePickerLocale';
 
 const DateInput = React.forwardRef(
-  ({ name,setFieldTouched, setFieldValue, focusOn, initialValue }, ref) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const isLaptop = useSelector(selectIsLaptop);
-
-    useEffect(()=>{
-      if (initialValue) {
-        setStartDate(new Date(initialValue))
-      }
-    },[])
+  ({ name, setFieldTouched, setFieldValue, focusOn, initialValue }, ref) => {
 
     return (
       <DatePicker
-        selected={startDate}
         onChange={(value) => {
           const date = format(value, 'yyyy-MM-dd');
-          setStartDate(value);
           setFieldTouched(name);
           setFieldValue(name, date);
           focusOn();
         }}
-        customInput={<Input ref={ref} />}
-        dateFormat='yyyy-MM-dd'
-        locale={locale}
         minDate={new Date()}
-        withPortal={!isLaptop}
+        customInput={<StyledField ref={ref} />}
       />
     );
   }

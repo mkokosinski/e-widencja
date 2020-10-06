@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import Routing from '../routing/Routing';
 import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
-import { ButtonsContainer, Input, Row, StyledForm } from '../forms/FormsStyles';
+import { ButtonsContainer, StyledField, Row, StyledForm } from '../forms/FormsStyles';
 
 import { signIn } from '../DAL/api.js';
 import { setUser } from './authSlice';
@@ -66,13 +66,13 @@ const LoginForm = () => {
         <StyledForm>
           <Row>
             <FieldWithErrors label='Login' name='login'>
-              <Input type='text' />
+              <StyledField type='text' />
             </FieldWithErrors>
           </Row>
 
           <Row>
             <FieldWithErrors label='Hasło' name='password'>
-              <Input type='password' />
+              <StyledField type='password' />
             </FieldWithErrors>
           </Row>
 
