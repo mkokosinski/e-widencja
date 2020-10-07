@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import { months } from '../forms/DatePickerLocale';
-import { selectVehicleById } from '../vehicles/vehiclesSlice';
 
 export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',
@@ -19,17 +17,12 @@ export const recordsSlice = createSlice({
     status: 'idle',
     records: [],
     error: null,
-    dateFilter: { enable: false, filter: '' },
-    vehicleFilter: { enable: false, filter: { label: 'Wszytkie', value: '0' } },
+    dateFilter: { enable: true, filter: '' },
+    vehicleFilter: { enable: false, filter: { label: '', value: '0' } },
   },
   reducers: {
     setDateFilter: (state, action) => {
       const { payload } = action;
-      // if (payload.value === '0') {
-      //   state.dateFilter = { enable: false, filter: '' };
-      // } else {
-      //   state.dateFilter = { enable: true, filter: payload };
-      // }
       state.dateFilter = { enable: true, filter: payload };
     },
 
@@ -38,7 +31,7 @@ export const recordsSlice = createSlice({
       if (payload.value === '0') {
         state.vehicleFilter = {
           enable: false,
-          filter: { label: 'Wszytko', value: '0' },
+          filter: { label: '', value: '0' },
         };
       } else {
         state.vehicleFilter = { enable: true, filter: payload };
@@ -80,16 +73,10 @@ export const selectRecordsWithVehicles = (state) => {
       vehicleFilter.enable ? rec.vehicleId === vehicleFilter.filter.value : rec
     )
     .filter((rec) => {
-      if (dateFilter.enable || true) {
+      if (dateFilter.enable) {
         const dateFrom = new Date(dateFilter.filter.from);
         const dateTo = new Date(dateFilter.filter.to);
         const recDate = new Date(rec.year, months.indexOf(rec.month));
-
-
-        console.log(dateFrom);
-        console.log(dateTo);
-        console.log(recDate);
-
 
         return recDate >= dateFrom && recDate <= dateTo;
       } else {

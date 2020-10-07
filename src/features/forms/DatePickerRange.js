@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { selectIsLaptop } from '../layout/layoutSlice';
 
@@ -34,7 +35,7 @@ const DatePickerRange = (props) => {
         endDate={endDate}
         onChange={(date) => {
           setStartDate(date);
-          onChange({from: date, to: endDate})
+          onChange({ from: date, to: endDate });
         }}
         selectsStart
         showMonthYearPicker
@@ -49,7 +50,7 @@ const DatePickerRange = (props) => {
         endDate={endDate}
         onChange={(date) => {
           setEndDate(date);
-          onChange({from: startDate, to: date})
+          onChange({ from: startDate, to: date });
         }}
         selectsEnd
         showMonthYearPicker

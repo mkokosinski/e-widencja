@@ -14,6 +14,10 @@ export const TopPanel = styled.div`
   & > * {
     margin: 4px 0px;
   }
+
+  @media screen and ${device.mobileXL} {
+    flex-direction: row;
+  }
 `;
 
 export const ButtonAdd = styled(ButtonMain)`
@@ -29,6 +33,17 @@ export const ButtonAdd = styled(ButtonMain)`
     box-shadow: 0 1px 12px -4px rgba(0, 0, 0, 0.7);
     color: white;
   }
+`;
+
+export const SelectContainer = styled.div`
+  @media screen and ${device.mobileXL} {
+  }
+`;
+
+export const DatePickerContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 14px;
 `;
 
 export const AddItem = styled(Link)`

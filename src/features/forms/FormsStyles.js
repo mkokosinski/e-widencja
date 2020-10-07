@@ -126,6 +126,10 @@ export const Input = styled.input`
   ${inputStyle}
 `;
 
+export const DateRange = styled(Input)`
+  width: 50%;
+`;
+
 export const StyledField = styled(Field)`
   ${inputStyle}
 `;

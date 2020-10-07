@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router';
 
@@ -9,20 +9,21 @@ import { selectVehicles } from '../vehicles/vehiclesSlice';
 import { Input } from '../forms/FormsStyles';
 import DatePickerRange from '../forms/DatePickerRange';
 
-
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
   ButtonAdd,
   TopPanel,
   AddItem,
   ItemsList,
+  DatePickerContainer,
+  SelectContainer
 } from '../templates/ListView/ListViewStyles';
 import {
   selectRecordsWithVehicles,
   setVehicleFilter,
   selectActiveVehicleFilter,
   selectEldestDate,
-   setDateFilter
+  setDateFilter
 } from './recordsSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,38 +32,48 @@ import {
   faUser,
   faFileAlt,
   faPlusSquare,
-  faEdit,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
+import { useDropdown } from '../hooks/useDropdown';
 
 const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.RecordDetails.action}/${id}`,
+    action: `${Routing.RecordDetails.action}/${id}`
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.RecordEdit.action}/${id}`,
+    action: `${Routing.RecordEdit.action}/${id}`
   },
   {
     ico: faPlusSquare,
     label: 'Przejazd',
-    action: 'details',
-  },
+    action: 'details'
+  }
 ];
 
 const List = ({ records }) => {
   const dispatch = useDispatch();
 
   const { vehicles } = useSelector(selectVehicles);
-  const filteredItems = useSelector(selectActiveVehicleFilter);
   const minDate = useSelector(selectEldestDate);
+
+  const button = useRef(null);
+  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
+
+  const initDateFrom = new Date(new Date().getFullYear(), 0, 1);
+  const initDateTo = new Date();
 
   const sortItems = [
     { label: 'Wszystkie', value: '0' },
-    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id })),
+    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
   ];
+
+  useEffect(() => {
+    dispatch(setDateFilter({ from: initDateFrom, to: initDateTo }));
+  }, [dispatch]);
 
   return (
     <ItemsList>
@@ -73,27 +84,37 @@ const List = ({ records }) => {
             <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
-        <DatePickerRange
-          onChange={(date) => {
-            dispatch(setDateFilter(date));
-          }}
-          minDate={minDate}
-          maxDate={new Date()}
-          customInput={<Input />}
-          dateFormat='yyyy-MM'
-          from={new Date(new Date().getFullYear(), 0, 1)}
-          to={new Date()}
-          showMonthYearPicker
-          selectsRange
-        />
-        <Select
-          as='select'
-          options={sortItems}
-          defaultValue={filteredItems}
-          onChange={(filter) => {
-            dispatch(setVehicleFilter(filter));
-          }}
-        />
+        <SelectContainer>
+          <Select
+            as='select'
+            options={sortItems}
+            onChange={(filter) => {
+              dispatch(setVehicleFilter(filter));
+            }}
+            placeholder='Wybierz pojazd'
+          />
+        </SelectContainer>
+
+        <button ref={button} onClick={() => setIsDropdownOpen(true)}>
+          Data
+        </button>
+        <DropdownList>
+          <DatePickerContainer>
+            <DatePickerRange
+              onChange={(date) => {
+                dispatch(setDateFilter(date));
+              }}
+              minDate={minDate}
+              maxDate={new Date()}
+              customInput={<Input />}
+              dateFormat='yyyy-MM'
+              from={initDateFrom}
+              to={initDateTo}
+              showMonthYearPicker
+              selectsRange
+            />
+          </DatePickerContainer>
+        </DropdownList>
       </TopPanel>
 
       {records.map((record) => {
