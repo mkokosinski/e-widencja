@@ -71,10 +71,6 @@ const List = ({ records }) => {
     ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
   ];
 
-  useEffect(() => {
-    dispatch(setDateFilter({ from: initDateFrom, to: initDateTo }));
-  }, [dispatch]);
-
   return (
     <ItemsList>
       <TopPanel>
@@ -115,6 +111,19 @@ const List = ({ records }) => {
             />
           </DatePickerContainer>
         </DropdownList>
+        <DatePickerRange
+              onChange={(date) => {
+                dispatch(setDateFilter(date));
+              }}
+              minDate={minDate}
+              maxDate={new Date()}
+              customInput={<Input />}
+              dateFormat='yyyy-MM'
+              from={initDateFrom}
+              to={initDateTo}
+              showMonthYearPicker
+              selectsRange
+            />
       </TopPanel>
 
       {records.map((record) => {

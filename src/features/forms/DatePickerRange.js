@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { selectIsLaptop } from '../layout/layoutSlice';
@@ -9,49 +9,41 @@ import DatePicker from 'react-datepicker';
 const DatePickerRange = (props) => {
   const { from, to, customInput, onChange } = props;
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const isLaptop = useSelector(selectIsLaptop);
-
-  useEffect(() => {
-    if (from) {
-      setStartDate(new Date(from));
-    }
-    if (to) {
-      setEndDate(new Date(to));
-    }
-  }, []);
 
   return (
     <>
       <DatePicker
         selected={startDate}
-        dateFormat='yyyy-MM-dd'
+        dateFormat='yyyy-MM'
         locale={locale}
         withPortal={!isLaptop}
         customInput={customInput}
-        startDate={startDate}
-        endDate={endDate}
         onChange={(date) => {
           setStartDate(date);
-          onChange({ from: date, to: endDate });
+          
+          onChange({ from: date.toString()});
         }}
+        startDate={startDate}
+        endDate={endDate}
         selectsStart
         showMonthYearPicker
       />
       <DatePicker
         selected={endDate}
-        dateFormat='yyyy-MM-dd'
+        dateFormat='yyyy-MM'
         locale={locale}
         withPortal={!isLaptop}
         customInput={customInput}
-        startDate={startDate}
-        endDate={endDate}
         onChange={(date) => {
           setEndDate(date);
-          onChange({ from: startDate, to: date });
+          onChange({ to: date.toString() });
         }}
+        startDate={startDate}
+        endDate={endDate}
         selectsEnd
         showMonthYearPicker
       />

@@ -18,12 +18,15 @@ export const recordsSlice = createSlice({
     records: [],
     error: null,
     dateFilter: { enable: true, filter: '' },
-    vehicleFilter: { enable: false, filter: { label: '', value: '0' } },
+    vehicleFilter: { enable: false, filter: { label: '', value: '0' } }
   },
   reducers: {
     setDateFilter: (state, action) => {
       const { payload } = action;
-      state.dateFilter = { enable: true, filter: payload };
+      state.dateFilter = {
+        enable: true,
+        filter: { ...state.dateFilter.filter, ...payload }
+      };
     },
 
     setVehicleFilter: (state, action) => {
@@ -31,12 +34,12 @@ export const recordsSlice = createSlice({
       if (payload.value === '0') {
         state.vehicleFilter = {
           enable: false,
-          filter: { label: '', value: '0' },
+          filter: { label: '', value: '0' }
         };
       } else {
         state.vehicleFilter = { enable: true, filter: payload };
       }
-    },
+    }
   },
   extraReducers: {
     [fetchRecords.pending]: (state, action) => {
@@ -51,7 +54,7 @@ export const recordsSlice = createSlice({
           ...rec,
           get name() {
             return `${this.month} ${this.year}`;
-          },
+          }
         });
       });
     },
@@ -59,8 +62,8 @@ export const recordsSlice = createSlice({
     [fetchRecords.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
-    },
-  },
+    }
+  }
 });
 
 export const selectRecords = (state) => state.records;

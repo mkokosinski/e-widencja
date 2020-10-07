@@ -8,15 +8,15 @@ const StyledDropdown = styled.div`
 
   position: absolute;
 
-  /* left: ${(props) => props.pos.left};
-  right: ${(props) => props.pos.right};
-  bottom: ${(props) => props.pos.bottom};
-  top: ${(props) => props.pos.top}; */
+  left: ${(props) => props.pos.left}px;
+  right: ${(props) => props.pos.right}px;
+  bottom: ${(props) => props.pos.bottom}px;
+  top: ${(props) => props.pos.top}px;
 
-  top: 0;
+  /* top: 0;
   left: 0;
 
-  transform: ${(props) => `translate(${props.pos.left}, ${props.pos.top})`};
+  transform: ${(props) => `translate(${props.pos.left}, ${props.pos.top})`}; */
 
   width: calc(100% - 8px);
   z-index: 997;
@@ -30,45 +30,50 @@ const StyledDropdown = styled.div`
 
   @media screen and (min-width: 768px) {
     height: fit-content;
-    width: ${(props) => props.width};
+    width: 400px;
   }
 `;
 
-export const useDropdown = (buttonRef, direction = 'bottom', width = 400) => {
+export const useDropdown = (buttonRef, direction = 'bottom') => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [position, setPosition] = useState({ top: 0, left: 0, width });
+  const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const dropdownRef = useRef();
 
   const detectPosition = () => {
     if (buttonRef.current) {
+    //pos = {bottom, height, left, right, top, width, x, y}
       const pos = buttonRef.current.getBoundingClientRect();
-      
+      // const {
+      //   offsetHeight: height,
+      //   offsetWidth: width,
+      //   offsetLeft,
+      //   offsetTop
+      // } = buttonRef.current;
+
       let top, bottom, left, right;
 
       const x = Math.floor(pos.x);
-      const y = Math.floor(pos.y)
+      const y = Math.floor(pos.y);
 
-      // right = window.innerWidth >= 768 ? '10px' : undefined;
+      // 
 
-      if (x + width > window.innerWidth) {
-        console.log('over');
+      if (x + 400 > window.innerWidth) {
+        right = window.innerWidth >= 768 ? '10' : undefined;
+      } else {
+        left = Math.floor(pos.x) - 200 + (Math.floor(pos.width)/2);
       }
-
-      left = Math.floor(pos.x) + 'px';
 
       switch (direction) {
         case 'top':
-          bottom = 1 + 'px';
+          bottom = 60;
           break;
         case 'bottom':
-          top = 1 + 1 + 'px';
+          top = y + pos.height;
           break;
         default:
           break;
       }
-
-      console.log(top, bottom, left, right);
 
       setPosition({ top, bottom, left, right });
     }
@@ -101,7 +106,7 @@ export const useDropdown = (buttonRef, direction = 'bottom', width = 400) => {
   const DropdownList = ({ children }) => {
     return createPortal(
       isDropdownOpen && (
-        <StyledDropdown pos={position} ref={dropdownRef}>
+        <StyledDropdown pos={position}  ref={dropdownRef}>
           {children}
         </StyledDropdown>
       ),

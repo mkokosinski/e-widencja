@@ -42,8 +42,8 @@ export const SelectContainer = styled.div`
 
 export const DatePickerContainer = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin-top: 14px;
+  flex-direction:column;
+  padding:10px;
 `;
 
 export const AddItem = styled(Link)`
