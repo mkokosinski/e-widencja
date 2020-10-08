@@ -93,7 +93,7 @@ export const ItemTitle = styled.h6``;
 
 export const ItemDesc = styled.article`
   font-size: 0.9em;
-  padding: 5px 0;
+  padding: 3px 0;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

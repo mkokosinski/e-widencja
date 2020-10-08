@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import SearchBar from '../../searchbar/SearchBar';
 
-import { device, ButtonMain, size } from '../../layout/LayoutStyles';
+import { device, ButtonMain, size, Button, ButtonBorderedMain } from '../../layout/LayoutStyles';
 
 export const TopPanel = styled.div`
   display: flex;
@@ -81,3 +81,18 @@ export const ItemsList = styled.div`
   justify-content: center;
   width: 100%;
 `;
+
+export const FilterButton = styled(ButtonBorderedMain)`
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+`
+
+export const filterItemsStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    borderRadius: '50%',
+    height: '50px',
+    width: '50px'
+  }),
+} 

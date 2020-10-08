@@ -9,7 +9,7 @@ export const size = {
   tablet: '768',
   laptop: '1024',
   laptopL: '1440',
-  desktop: '2560',
+  desktop: '2560'
 };
 
 export const device = {
@@ -21,7 +21,7 @@ export const device = {
   laptop: `(min-width: ${size.laptop}px)`,
   laptopL: `(min-width: ${size.laptopL}px)`,
   desktop: `(min-width: ${size.desktop}px)`,
-  desktopL: `(min-width: ${size.desktop}px)`,
+  desktopL: `(min-width: ${size.desktop}px)`
 };
 
 export const StyledLayout = styled.div`
@@ -179,10 +179,10 @@ export const PanelLightSoft = styled(Panel)`
 `;
 
 export const PanelBoxShadow = styled(Panel)`
- background: white;
+  background: white;
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.8);
-`
+`;
 
 export const PanelOverlapLight = styled(PanelBoxShadow)`
   border-left: 10px solid ${({ theme }) => theme.secondary};
@@ -236,11 +236,17 @@ export const ButtonLightSoft = styled(Button)`
 
 export const ButtonBorderedMain = styled(Button)`
   background: white;
-  border: 1px solid ${({ theme }) => theme.mainSoft};
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   color: ${({ theme }) => theme.mainSoft};
 
   :hover {
     background: ${({ theme }) => theme.hover.lightSoft};
+    box-shadow: none;
+  }
+
+  :active {
+    background: white;
   }
 `;
 

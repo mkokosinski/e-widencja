@@ -17,27 +17,35 @@ export const recordsSlice = createSlice({
     status: 'idle',
     records: [],
     error: null,
-    dateFilter: { enable: true, filter: '' },
-    vehicleFilter: { enable: false, filter: { label: '', value: '0' } }
+    filters: {
+      dateFilter: {
+        enable: true,
+        filter: {
+          from: new Date(new Date().getFullYear(), 0, 1),
+          to: new Date()
+        }
+      },
+      vehicleFilter: { enable: false, filter: { label: '', value: '0' } }
+    }
   },
   reducers: {
     setDateFilter: (state, action) => {
       const { payload } = action;
-      state.dateFilter = {
+      state.filters.dateFilter = {
         enable: true,
-        filter: { ...state.dateFilter.filter, ...payload }
+        filter: { ...state.filters.dateFilter.filter, ...payload }
       };
     },
 
     setVehicleFilter: (state, action) => {
       const { payload } = action;
       if (payload.value === '0') {
-        state.vehicleFilter = {
+        state.filters.vehicleFilter = {
           enable: false,
           filter: { label: '', value: '0' }
         };
       } else {
-        state.vehicleFilter = { enable: true, filter: payload };
+        state.filters.vehicleFilter = { enable: true, filter: payload };
       }
     }
   },
@@ -69,7 +77,7 @@ export const recordsSlice = createSlice({
 export const selectRecords = (state) => state.records;
 
 export const selectRecordsWithVehicles = (state) => {
-  const { vehicleFilter, dateFilter } = state.records;
+  const { vehicleFilter, dateFilter } = state.records.filters;
   const records = [];
   state.records.records
     .filter((rec) =>
@@ -116,6 +124,8 @@ const searchMinDate = (arr) => {
 };
 
 export const selectEldestDate = (state) => searchMinDate(state.records.records);
+
+export const selectFilters = (state) => state.records.filters;
 
 export const { setDateFilter, setVehicleFilter } = recordsSlice.actions;
 

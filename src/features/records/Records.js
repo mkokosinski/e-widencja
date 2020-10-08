@@ -16,14 +16,16 @@ import {
   AddItem,
   ItemsList,
   DatePickerContainer,
-  SelectContainer
+  SelectContainer,
+  FilterButton
 } from '../templates/ListView/ListViewStyles';
 import {
   selectRecordsWithVehicles,
   setVehicleFilter,
   selectActiveVehicleFilter,
   selectEldestDate,
-  setDateFilter
+  setDateFilter,
+  selectFilters
 } from './recordsSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,7 +34,9 @@ import {
   faUser,
   faFileAlt,
   faPlusSquare,
-  faEdit
+  faEdit,
+  faBolt,
+  faCalendar
 } from '@fortawesome/free-solid-svg-icons';
 import { useDropdown } from '../hooks/useDropdown';
 import { locale } from '../forms/DatePickerLocale';
@@ -63,6 +67,7 @@ const List = ({ records }) => {
 
   const { vehicles } = useSelector(selectVehicles);
   const minDate = useSelector(selectEldestDate);
+  const { dateFilter } = useSelector(selectFilters);
   const isLaptop = useSelector(selectIsLaptop);
 
   const button = useRef(null);
@@ -73,6 +78,15 @@ const List = ({ records }) => {
     ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
   ];
 
+  useEffect(() => {
+    if (!startDate) {
+      setStartDate(dateFilter.filter.from);
+    }
+    if (!endDate) {
+      setEndDate(dateFilter.filter.to);
+    }
+  }, []);
+
   return (
     <ItemsList>
       <TopPanel>
@@ -82,20 +96,21 @@ const List = ({ records }) => {
             <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
-        <SelectContainer>
+        <DropdownList>
           <Select
-            as='select'
+            menuIsOpen
             options={sortItems}
             onChange={(filter) => {
               dispatch(setVehicleFilter(filter));
             }}
             placeholder='Wybierz pojazd'
           />
-        </SelectContainer>
+        </DropdownList>
 
-        <button ref={button} onClick={() => setIsDropdownOpen(true)}>
-          Data
-        </button>
+        <FilterButton ref={button} onClick={() => setIsDropdownOpen(true)}>
+          <FontAwesomeIcon icon={faCalendar} />
+        </FilterButton>
+
         <DropdownList>
           <DatePicker
             selected={startDate}
