@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { selectIsLaptop } from '../layout/layoutSlice';
@@ -7,12 +7,18 @@ import { locale } from './DatePickerLocale';
 import DatePicker from 'react-datepicker';
 
 const DatePickerRange = (props) => {
-  const { from, to, customInput, onChange } = props;
+  const { customInput } = props;
 
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
   const isLaptop = useSelector(selectIsLaptop);
+
+  console.log('render', startDate);
+
+  useEffect(() => {
+    console.log('effect', startDate);
+  });
 
   return (
     <>
@@ -24,8 +30,8 @@ const DatePickerRange = (props) => {
         customInput={customInput}
         onChange={(date) => {
           setStartDate(date);
-          
-          onChange({ from: date.toString()});
+
+          // onChange({ from: date.toString()});
         }}
         startDate={startDate}
         endDate={endDate}
@@ -40,7 +46,7 @@ const DatePickerRange = (props) => {
         customInput={customInput}
         onChange={(date) => {
           setEndDate(date);
-          onChange({ to: date.toString() });
+          // onChange({ to: date.toString() });
         }}
         startDate={startDate}
         endDate={endDate}

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
 const StyledDropdown = styled.div`
-  display: flex;
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
 
   position: absolute;
@@ -42,7 +42,7 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
 
   const detectPosition = () => {
     if (buttonRef.current) {
-    //pos = {bottom, height, left, right, top, width, x, y}
+      //pos = {bottom, height, left, right, top, width, x, y}
       const pos = buttonRef.current.getBoundingClientRect();
       // const {
       //   offsetHeight: height,
@@ -56,12 +56,12 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
       const x = Math.floor(pos.x);
       const y = Math.floor(pos.y);
 
-      // 
+      //
 
       if (x + 400 > window.innerWidth) {
         right = window.innerWidth >= 768 ? '10' : undefined;
       } else {
-        left = Math.floor(pos.x) - 200 + (Math.floor(pos.width)/2);
+        left = Math.floor(pos.x) - 200 + Math.floor(pos.width) / 2;
       }
 
       switch (direction) {
@@ -105,11 +105,9 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
 
   const DropdownList = ({ children }) => {
     return createPortal(
-      isDropdownOpen && (
-        <StyledDropdown pos={position}  ref={dropdownRef}>
-          {children}
-        </StyledDropdown>
-      ),
+      <StyledDropdown pos={position} ref={dropdownRef} isOpen={isDropdownOpen}>
+        {children}
+      </StyledDropdown>,
       document.getElementById('root')
     );
   };

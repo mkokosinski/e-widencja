@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router';
 
@@ -7,7 +7,7 @@ import Select from 'react-select';
 import Routing from '../routing/Routing';
 import { selectVehicles } from '../vehicles/vehiclesSlice';
 import { Input } from '../forms/FormsStyles';
-import DatePickerRange from '../forms/DatePickerRange';
+import DatePicker from 'react-datepicker';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
@@ -35,6 +35,8 @@ import {
   faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import { useDropdown } from '../hooks/useDropdown';
+import { locale } from '../forms/DatePickerLocale';
+import { selectIsLaptop } from '../layout/layoutSlice';
 
 const buttons = (id) => [
   {
@@ -55,16 +57,16 @@ const buttons = (id) => [
 ];
 
 const List = ({ records }) => {
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const dispatch = useDispatch();
 
   const { vehicles } = useSelector(selectVehicles);
   const minDate = useSelector(selectEldestDate);
+  const isLaptop = useSelector(selectIsLaptop);
 
   const button = useRef(null);
   const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
-
-  const initDateFrom = new Date(new Date().getFullYear(), 0, 1);
-  const initDateTo = new Date();
 
   const sortItems = [
     { label: 'Wszystkie', value: '0' },
@@ -95,35 +97,37 @@ const List = ({ records }) => {
           Data
         </button>
         <DropdownList>
-          <DatePickerContainer>
-            <DatePickerRange
-              onChange={(date) => {
-                dispatch(setDateFilter(date));
-              }}
-              minDate={minDate}
-              maxDate={new Date()}
-              customInput={<Input />}
-              dateFormat='yyyy-MM'
-              from={initDateFrom}
-              to={initDateTo}
-              showMonthYearPicker
-              selectsRange
-            />
-          </DatePickerContainer>
+          <DatePicker
+            selected={startDate}
+            dateFormat='yyyy-MM'
+            locale={locale}
+            withPortal={!isLaptop}
+            customInput={<Input />}
+            onChange={(date) => {
+              setStartDate(date);
+              dispatch(setDateFilter({ from: date }));
+            }}
+            startDate={startDate}
+            endDate={endDate}
+            selectsStart
+            showMonthYearPicker
+          />
+          <DatePicker
+            selected={endDate}
+            dateFormat='yyyy-MM'
+            locale={locale}
+            withPortal={!isLaptop}
+            customInput={<Input />}
+            onChange={(date) => {
+              setEndDate(date);
+              dispatch(setDateFilter({ to: date }));
+            }}
+            startDate={startDate}
+            endDate={endDate}
+            selectsEnd
+            showMonthYearPicker
+          />
         </DropdownList>
-        <DatePickerRange
-              onChange={(date) => {
-                dispatch(setDateFilter(date));
-              }}
-              minDate={minDate}
-              maxDate={new Date()}
-              customInput={<Input />}
-              dateFormat='yyyy-MM'
-              from={initDateFrom}
-              to={initDateTo}
-              showMonthYearPicker
-              selectsRange
-            />
       </TopPanel>
 
       {records.map((record) => {
