@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
+const root = document.getElementById('root');
+
 const StyledDropdown = styled.div`
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
 
   position: absolute;
 
-  left: ${(props) => props.pos.left}px;
-  right: ${(props) => props.pos.right}px;
   bottom: ${(props) => props.pos.bottom}px;
   top: ${(props) => props.pos.top}px;
 
@@ -18,7 +18,7 @@ const StyledDropdown = styled.div`
 
   transform: ${(props) => `translate(${props.pos.left}, ${props.pos.top})`}; */
 
-  width: calc(100% - 8px);
+  width: calc(100% - 10px);
   z-index: 997;
   margin: 4px;
 
@@ -29,13 +29,15 @@ const StyledDropdown = styled.div`
   border-radius: 10px;
 
   @media screen and (min-width: 768px) {
+    left: ${(props) => props.pos.left}px;
+    right: ${(props) => props.pos.right}px;
     height: fit-content;
-    width: 400px;
+    width: fit-content;
   }
 `;
 
 export const useDropdown = (buttonRef, direction = 'bottom') => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const dropdownRef = useRef();
@@ -44,6 +46,7 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
     if (buttonRef.current) {
       //pos = {bottom, height, left, right, top, width, x, y}
       const pos = buttonRef.current.getBoundingClientRect();
+      const { offsetWidth: dropdownWidth } = dropdownRef.current;
       // const {
       //   offsetHeight: height,
       //   offsetWidth: width,
@@ -56,12 +59,15 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
       const x = Math.floor(pos.x);
       const y = Math.floor(pos.y);
 
+      console.log(dropdownRef);
+
       //
 
-      if (x + 400 > window.innerWidth) {
+      if (x + dropdownWidth > window.innerWidth) {
         right = window.innerWidth >= 768 ? '10' : undefined;
       } else {
-        left = Math.floor(pos.x) - 200 + Math.floor(pos.width) / 2;
+        left =
+          Math.floor(pos.x) - dropdownWidth / 2 + Math.floor(pos.width) / 2;
       }
 
       switch (direction) {
@@ -88,29 +94,35 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
       return;
     }
 
-    setIsDropdownOpen(false);
+    setIsOpen(false);
+  };
+
+  const openDropdown = () => {
+    setIsOpen(true);
   };
 
   useEffect(() => {
     document.addEventListener('mousedown', detectExit);
+    buttonRef.current.addEventListener('mousedown', openDropdown);
 
     return () => {
       document.removeEventListener('mousedown', detectExit);
+      buttonRef.current.removeEventListener('mousedown', openDropdown);
     };
   }, []);
 
   useEffect(() => {
     detectPosition();
-  }, [isDropdownOpen]);
+  }, [isOpen]);
 
-  const DropdownList = ({ children }) => {
+  const List = ({ children }) => {
     return createPortal(
-      <StyledDropdown pos={position} ref={dropdownRef} isOpen={isDropdownOpen}>
+      <StyledDropdown pos={position} ref={dropdownRef} isOpen={isOpen}>
         {children}
       </StyledDropdown>,
-      document.getElementById('root')
+      root
     );
   };
 
-  return [DropdownList, setIsDropdownOpen, isDropdownOpen];
+  return { List, setIsOpen, isOpen };
 };

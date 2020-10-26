@@ -3,17 +3,13 @@ import React, { useRef } from 'react';
 import { useDropdown } from '../hooks/useDropdown';
 import { signOut } from '../DAL/api';
 
-import {
-  ProfileButton,
-  ItemTitle,
-  ListItem,
-} from './ProfilebarStyles';
+import { ProfileButton, ItemTitle, ListItem } from './ProfilebarStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignOutAlt,
   faUserAlt,
-  faUserCircle,
+  faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
 import Routing from '../routing/Routing';
 import { useHistory } from 'react-router';
@@ -22,7 +18,7 @@ const Profile = () => {
   const history = useHistory();
   const button = useRef(null);
 
-  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
+  const { List, isOpen } = useDropdown(button);
 
   const handleSignOut = () => {
     signOut('Admin').then((res) => history.push(Routing.Login.path));
@@ -32,13 +28,12 @@ const Profile = () => {
     <>
       <ProfileButton
         ref={button}
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        active={isDropdownOpen}
+        active={isOpen}
       >
         <FontAwesomeIcon icon={faUserCircle} />
       </ProfileButton>
 
-      <DropdownList>
+      <List>
         <ListItem>
           <ItemTitle>
             <FontAwesomeIcon icon={faUserAlt} /> Profil
@@ -49,7 +44,7 @@ const Profile = () => {
             <FontAwesomeIcon icon={faSignOutAlt} /> Wyloguj
           </ItemTitle>
         </ListItem>
-      </DropdownList>
+      </List>
     </>
   );
 };

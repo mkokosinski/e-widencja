@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { ShowMore as StyledShowMore } from './NavbarStyles';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +14,7 @@ import { A } from '../layout/LayoutStyles';
 
 const ShowMore = ({ items }) => {
   const button = useRef(null);
-  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(
+  const {List, isOpen} = useDropdown(
     button,
     'top'
   );
@@ -21,14 +22,13 @@ const ShowMore = ({ items }) => {
   return (
     <>
       <StyledShowMore
-        active={isDropdownOpen}
+        active={isOpen}
         ref={button}
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <FontAwesomeIcon icon={faEllipsisV} />
       </StyledShowMore>
 
-      <DropdownList>
+      <List>
         {items.map((item) => (
           <A to={item.path} key={item.name}>
             <ListItemMenu>
@@ -39,7 +39,7 @@ const ShowMore = ({ items }) => {
             </ListItemMenu>
           </A>
         ))}
-      </DropdownList>
+      </List>
     </>
   );
 };

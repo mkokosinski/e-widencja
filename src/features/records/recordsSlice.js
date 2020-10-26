@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { format } from 'date-fns';
 import { months } from '../forms/DatePickerLocale';
 
 export const fetchRecords = createAsyncThunk(
@@ -21,8 +22,8 @@ export const recordsSlice = createSlice({
       dateFilter: {
         enable: true,
         filter: {
-          from: new Date(new Date().getFullYear(), 0, 1),
-          to: new Date()
+          from: format(new Date(new Date().getFullYear(), 0, 1),'yyyy-MM'),
+          to: format(new Date(), 'yyyy-MM')
         }
       },
       vehicleFilter: { enable: false, filter: { label: '', value: '0' } }

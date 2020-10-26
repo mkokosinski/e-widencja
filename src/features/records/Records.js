@@ -1,46 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Switch, Route } from 'react-router';
-
-import Select from 'react-select';
-
+import {
+  faEdit,
+  faFileAlt,
+  faPlus,
+  faPlusSquare,
+  faSortAmountUpAlt,
+  faUser
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import useModal from '../hooks/useModal';
+import { selectIsLaptop, selectIsMobileKeyboard } from '../layout/layoutSlice';
 import Routing from '../routing/Routing';
-import { selectVehicles } from '../vehicles/vehiclesSlice';
-import { Input } from '../forms/FormsStyles';
-import DatePicker from 'react-datepicker';
-
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
-  ButtonAdd,
-  TopPanel,
   AddItem,
+  ButtonAdd,
   ItemsList,
-  DatePickerContainer,
-  SelectContainer,
-  FilterButton
+  ShowFilterButton,
+  ShowFilterIco,
+  ShowFilterLabel,
+  TopPanel
 } from '../templates/ListView/ListViewStyles';
-import {
-  selectRecordsWithVehicles,
-  setVehicleFilter,
-  selectActiveVehicleFilter,
-  selectEldestDate,
-  setDateFilter,
-  selectFilters
-} from './recordsSlice';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPlus,
-  faUser,
-  faFileAlt,
-  faPlusSquare,
-  faEdit,
-  faBolt,
-  faCalendar
-} from '@fortawesome/free-solid-svg-icons';
-import { useDropdown } from '../hooks/useDropdown';
-import { locale } from '../forms/DatePickerLocale';
-import { selectIsLaptop } from '../layout/layoutSlice';
+import { selectVehicles } from '../vehicles/vehiclesSlice';
+import FilterModal from './FilterModal';
+import { selectEldestDate, selectRecordsWithVehicles } from './recordsSlice';
 
 const buttons = (id) => [
   {
@@ -61,88 +46,31 @@ const buttons = (id) => [
 ];
 
 const List = ({ records }) => {
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const dispatch = useDispatch();
+  const [showFilters, setShowFilters] = useState(false);
+  const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
-  const { vehicles } = useSelector(selectVehicles);
-  const minDate = useSelector(selectEldestDate);
-  const { dateFilter } = useSelector(selectFilters);
-  const isLaptop = useSelector(selectIsLaptop);
-
-  const button = useRef(null);
-  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
-
-  const sortItems = [
-    { label: 'Wszystkie', value: '0' },
-    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
-  ];
-
-  useEffect(() => {
-    if (!startDate) {
-      setStartDate(dateFilter.filter.from);
-    }
-    if (!endDate) {
-      setEndDate(dateFilter.filter.to);
-    }
-  }, []);
+  const { Modal, openModal } = useModal();
 
   return (
     <ItemsList>
-      <TopPanel>
+      <TopPanel isMobileKeyboard={isMobileKeyboard}>
         <ButtonAdd>
           <AddItem to={`${Routing.RecordAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
             <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
-        <DropdownList>
-          <Select
-            menuIsOpen
-            options={sortItems}
-            onChange={(filter) => {
-              dispatch(setVehicleFilter(filter));
-            }}
-            placeholder='Wybierz pojazd'
-          />
-        </DropdownList>
 
-        <FilterButton ref={button} onClick={() => setIsDropdownOpen(true)}>
-          <FontAwesomeIcon icon={faCalendar} />
-        </FilterButton>
+        <ShowFilterButton onClick={openModal} showFilters={showFilters}>
+          <Modal>
+            <FilterModal />
+          </Modal>
 
-        <DropdownList>
-          <DatePicker
-            selected={startDate}
-            dateFormat='yyyy-MM'
-            locale={locale}
-            withPortal={!isLaptop}
-            customInput={<Input />}
-            onChange={(date) => {
-              setStartDate(date);
-              dispatch(setDateFilter({ from: date }));
-            }}
-            startDate={startDate}
-            endDate={endDate}
-            selectsStart
-            showMonthYearPicker
-          />
-          <DatePicker
-            selected={endDate}
-            dateFormat='yyyy-MM'
-            locale={locale}
-            withPortal={!isLaptop}
-            customInput={<Input />}
-            onChange={(date) => {
-              setEndDate(date);
-              dispatch(setDateFilter({ to: date }));
-            }}
-            startDate={startDate}
-            endDate={endDate}
-            selectsEnd
-            showMonthYearPicker
-          />
-        </DropdownList>
+          <ShowFilterIco showFilters={showFilters}>
+            <FontAwesomeIcon icon={faSortAmountUpAlt} />
+          </ShowFilterIco>
+          <ShowFilterLabel>Filtry</ShowFilterLabel>
+        </ShowFilterButton>
       </TopPanel>
 
       {records.map((record) => {

@@ -124,7 +124,7 @@ const inputStyle = css`
 
 export const Input = styled.input`
   ${inputStyle}
-`;
+`
 
 export const DateRange = styled(Input)`
   width: 50%;

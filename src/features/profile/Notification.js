@@ -16,10 +16,9 @@ const Notification = () => {
   const [isNewNotification, setIsNewNotification] = useState(true);
 
   const button = useRef(null);
-  const [DropdownList, setIsDropdownOpen, isDropdownOpen] = useDropdown(button);
+  const {List, isOpen} = useDropdown(button);
 
   const handleClick = () => {
-    setIsDropdownOpen(!isDropdownOpen);
     setIsNewNotification(false);
   };
 
@@ -28,13 +27,13 @@ const Notification = () => {
       <NotificationButton
         ref={button}
         onClick={handleClick}
-        active={isDropdownOpen}
+        active={isOpen}
         isNewNotification={isNewNotification}
       >
         <FontAwesomeIcon icon={faBell} />
       </NotificationButton>
 
-      <DropdownList>
+      <List>
         <ListItem>
           <ItemTitle>
             Nowa wersja! <FontAwesomeIcon icon={faCloudMoonRain} />
@@ -67,7 +66,7 @@ const Notification = () => {
             unde aliquid impedit ut?
           </ItemDesc>
         </ListItem>
-      </DropdownList>
+      </List>
     </>
   );
 };

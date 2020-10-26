@@ -95,7 +95,7 @@ export const Body = styled.div`
   @media screen and ${device.laptop} {
     display: block;
     font-size: 0.9em;
-    padding: 20px;
+    padding: 0 20px;
     background: linear-gradient(
       90deg,
       white 5%,
@@ -197,7 +197,7 @@ export const Button = styled.div`
   user-select: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 150ms;
+  transition: background-color 100ms;
   border-radius: 6px;
 
   :focus,
@@ -237,7 +237,7 @@ export const ButtonLightSoft = styled(Button)`
 export const ButtonBorderedMain = styled(Button)`
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   color: ${({ theme }) => theme.mainSoft};
 
   :hover {

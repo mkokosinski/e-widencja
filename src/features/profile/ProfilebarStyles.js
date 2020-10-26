@@ -32,6 +32,10 @@ export const Username = styled.span`
 
 export const ButtonsContainer = styled.div`
   display: flex;
+
+  @media screen and ${device.laptop} {
+    transform: translateX(40px);
+  }
 `;
 
 const ButtonStyles = styled(ButtonLightSoft)`
@@ -86,6 +90,10 @@ export const ListItem = styled.div`
   }
   :active {
     background: ${(props) => props.theme.light};
+  }
+
+  @media screen and ${device.tablet} {
+    max-width: 400px;
   }
 `;
 
