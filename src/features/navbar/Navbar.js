@@ -2,7 +2,7 @@ import React from "react";
 
 import * as Styled from "./NavbarStyles";
 import NavbarItem from "./NavbarItem";
-import Routing from "../routing/Routing";
+import Routing from "../routing/RoutingPaths";
 
 import {
   faChartLine,

@@ -1,18 +1,9 @@
-import {
-  faEdit,
-  faFileAlt,
-  faPlus,
-  faPlusSquare,
-  faSortAmountUpAlt,
-  faUser
-} from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { useSelector } from 'react-redux';
 import useModal from '../hooks/useModal';
-import { selectIsLaptop, selectIsMobileKeyboard } from '../layout/layoutSlice';
-import Routing from '../routing/Routing';
+import { selectIsMobileKeyboard } from '../layout/layoutSlice';
+import Routing from '../routing/RoutingPaths';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
   AddItem,
@@ -23,9 +14,18 @@ import {
   ShowFilterLabel,
   TopPanel
 } from '../templates/ListView/ListViewStyles';
-import { selectVehicles } from '../vehicles/vehiclesSlice';
-import FilterModal from './FilterModal';
-import { selectEldestDate, selectRecordsWithVehicles } from './recordsSlice';
+import RecordsFilterModal from './RecordsFilterModal';
+import {
+  selectFiteredRecords,
+} from './recordsSlice';
+import {
+  faEdit,
+  faFileAlt,
+  faPlus,
+  faPlusSquare,
+  faSortAmountUpAlt,
+  faUser
+} from '@fortawesome/free-solid-svg-icons';
 
 const buttons = (id) => [
   {
@@ -45,11 +45,12 @@ const buttons = (id) => [
   }
 ];
 
-const List = ({ records }) => {
-  const [showFilters, setShowFilters] = useState(false);
+const Records = () => {
+  const { items: records } = useSelector(selectFiteredRecords);
+
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
-  const { Modal, openModal } = useModal();
+  const { Modal, openModal, closeModal } = useModal();
 
   return (
     <ItemsList>
@@ -61,16 +62,15 @@ const List = ({ records }) => {
           </AddItem>
         </ButtonAdd>
 
-        <ShowFilterButton onClick={openModal} showFilters={showFilters}>
-          <Modal>
-            <FilterModal />
-          </Modal>
-
-          <ShowFilterIco showFilters={showFilters}>
+        <ShowFilterButton onClick={openModal}>
+          <ShowFilterIco>
             <FontAwesomeIcon icon={faSortAmountUpAlt} />
           </ShowFilterIco>
           <ShowFilterLabel>Filtry</ShowFilterLabel>
         </ShowFilterButton>
+        <Modal>
+          <RecordsFilterModal closeModal={closeModal} />
+        </Modal>
       </TopPanel>
 
       {records.map((record) => {
@@ -86,28 +86,6 @@ const List = ({ records }) => {
         );
       })}
     </ItemsList>
-  );
-};
-
-const Records = () => {
-  const { records, status, error } = useSelector((state) =>
-    selectRecordsWithVehicles(state)
-  );
-  return (
-    <Switch>
-      <Route exact path={Routing.RecordAdd.path}>
-        <Routing.RecordAdd.Component />
-      </Route>
-      <Route exact path={Routing.RecordEdit.path}>
-        <Routing.RecordEdit.Component />
-      </Route>
-      <Route exact path={Routing.RecordDetails.path}>
-        <Routing.RecordDetails.Component />
-      </Route>
-      <Route>
-        <List records={records} />
-      </Route>
-    </Switch>
   );
 };
 

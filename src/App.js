@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './features/routing/PrivateRoute';
-import Routing from './features/routing/Routing';
+import Routing from './features/routing/RoutingPaths';
 
 import Layout from './features/layout/Layout';
 

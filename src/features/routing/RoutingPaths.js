@@ -1,16 +1,25 @@
 import Login from '../auth/AuthPage';
+
 import Tours from '../tours/Tours';
+import AddTourForm from '../forms/tour/AddTourForm';
+import EditTourForm from '../forms/tour/EditTourForm';
+import TourDetails from '../tours/TourDetails';
+
 import Settings from '../settings/Settings';
 import Reports from '../reports/Reports';
+
 import Records from '../records/Records';
 import AddRecordForm from '../forms/record/AddRecordForm';
 import EditRecordForm from '../forms/record/EditRecordForm';
 import RecordDetails from '../records/RecordDetails';
+
 import Users from '../users/Users';
 import AddUserForm from '../forms/user/AddUserForm';
 import EditUserForm from '../forms/user/EditUserForm';
 import UserDetails from '../users/UserDetails';
+
 import Dashboard from '../dashboard/Dashboard';
+
 import Vehicles from '../vehicles/Vehicles';
 import AddVehicleForm from '../forms/vehicle/AddVehicleForm';
 import EditVehicleForm from '../forms/vehicle/EditVehicleForm';
@@ -20,6 +29,21 @@ const Routing = {
   Login: { Component: Login, path: '/login' },
 
   Tours: { Component: Tours, path: '/app/tours' },
+  TourAdd: { Component: AddTourForm, path: '/app/tours/add' },
+  TourEdit: {
+    Component: EditTourForm,
+    action: '/app/tours/edit',
+    get path() {
+      return `${this.action}/:id`;
+    },
+  },
+  TourDetails: {
+    Component: TourDetails,
+    action: '/app/tours/details',
+    get path() {
+      return `${this.action}/:id`;
+    },
+  },
 
   Settings: { Component: Settings, path: '/app/settings' },
 

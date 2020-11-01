@@ -124,7 +124,7 @@ const inputStyle = css`
 
 export const Input = styled.input`
   ${inputStyle}
-`
+`;
 
 export const DateRange = styled(Input)`
   width: 50%;
@@ -161,9 +161,9 @@ export const ButtonsContainer = styled.div`
   margin: 30px auto 0;
 
   & > div {
-    height: 50px;
-    width: 120px;
+    height: 42px;
     margin: 0 20px;
+    width: 100px;
   }
 
   @media screen and ${device.tablet} {

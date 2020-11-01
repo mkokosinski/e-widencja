@@ -1,15 +1,17 @@
 import React from 'react';
-import { selectUsers } from './usersSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import Routing from '../routing/Routing';
+import { selectFilteredUsers } from './usersSlice';
+import { useSelector } from 'react-redux';
+import Routing from '../routing/RoutingPaths';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  SearchInput,
   ItemsList,
+  ShowFilterButton,
+  ShowFilterIco,
+  ShowFilterLabel
 } from '../templates/ListView/ListViewStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,28 +21,34 @@ import {
   faFileAlt,
   faPlusSquare,
   faEdit,
+  faSortAmountUpAlt
 } from '@fortawesome/free-solid-svg-icons';
-import { Route, Switch } from 'react-router';
+import useModal from '../hooks/useModal';
+import UserFiltersModal from './UserFiltersModal';
 
 const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.UserDetails.action}/${id}`,
+    action: `${Routing.UserDetails.action}/${id}`
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.UserEdit.action}/${id}`,
+    action: `${Routing.UserEdit.action}/${id}`
   },
   {
     ico: faPlusSquare,
     label: 'cośtam',
-    action: 'details',
-  },
+    action: 'details'
+  }
 ];
 
-const List = ({ users }) => {
+function Users() {
+  const { items: users } = useSelector(selectFilteredUsers);
+
+  const { Modal, openModal, closeModal } = useModal();
+
   return (
     <ItemsList>
       <TopPanel>
@@ -50,7 +58,15 @@ const List = ({ users }) => {
             <span>Nowy kierowca</span>
           </AddItem>
         </ButtonAdd>
-        <SearchInput />
+        <ShowFilterButton onClick={openModal}>
+          <ShowFilterIco>
+            <FontAwesomeIcon icon={faSortAmountUpAlt} />
+          </ShowFilterIco>
+          <ShowFilterLabel>Filtry</ShowFilterLabel>
+        </ShowFilterButton>
+        <Modal>
+          <UserFiltersModal closeModal={closeModal} />
+        </Modal>
       </TopPanel>
 
       {users.map((user) => (
@@ -63,27 +79,6 @@ const List = ({ users }) => {
         />
       ))}
     </ItemsList>
-  );
-};
-
-function Users() {
-  const { users, status, error } = useSelector(selectUsers);
-
-  return (
-    <Switch>
-      <Route exact path={Routing.UserAdd.path}>
-        <Routing.UserAdd.Component />
-      </Route>
-      <Route exact path={Routing.UserEdit.path}>
-        <Routing.UserEdit.Component />
-      </Route>
-      <Route exact path={Routing.UserDetails.path}>
-        <Routing.UserDetails.Component />
-      </Route>
-      <Route>
-        <List users={users} />
-      </Route>
-    </Switch>
   );
 }
 

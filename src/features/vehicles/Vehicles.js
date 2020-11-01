@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { selectVehicles, fetchVehicles } from './vehiclesSlice';
-import Routing from '../routing/Routing';
+import { selectFilteredVehicles } from './vehiclesSlice';
+import Routing from '../routing/RoutingPaths';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,6 +11,7 @@ import {
   faFileAlt,
   faPlusSquare,
   faEdit,
+  faSortAmountUpAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
@@ -18,30 +19,37 @@ import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  SearchInput,
   ItemsList,
+  ShowFilterButton,
+  ShowFilterIco,
+  ShowFilterLabel
 } from '../templates/ListView/ListViewStyles';
-import { Switch, Route, useParams } from 'react-router';
+import VehiclesFiltersModal from './VehiclesFiltersModal';
+import useModal from '../hooks/useModal';
 
 const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.VehicleDetails.action}/${id}`,
+    action: `${Routing.VehicleDetails.action}/${id}`
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.VehicleEdit.action}/${id}`,
+    action: `${Routing.VehicleEdit.action}/${id}`
   },
   {
     ico: faPlusSquare,
     label: 'Przejazd',
-    action: 'details',
-  },
+    action: 'details'
+  }
 ];
 
-const List = ({ vehicles }) => {
+function Vehicles() {
+  const { items: vehicles } = useSelector(selectFilteredVehicles);
+
+  const { Modal, openModal, closeModal } = useModal();
+
   return (
     <ItemsList>
       <TopPanel>
@@ -51,42 +59,27 @@ const List = ({ vehicles }) => {
             <span>Nowy pojazd</span>
           </AddItem>
         </ButtonAdd>
-        <SearchInput />
+        <ShowFilterButton onClick={openModal}>
+          <ShowFilterIco>
+            <FontAwesomeIcon icon={faSortAmountUpAlt} />
+          </ShowFilterIco>
+          <ShowFilterLabel>Filtry</ShowFilterLabel>
+        </ShowFilterButton>
+        <Modal>
+          <VehiclesFiltersModal closeModal={closeModal} />
+        </Modal>
       </TopPanel>
 
       {vehicles.map((vehicle) => (
         <ListViewItem
           key={vehicle.id}
           ico={faCarAlt}
-          item={vehicle}
+          item={{ ...vehicle, subname: `${vehicle.brand} ${vehicle.model}` }}
           path={Routing.Vehicles.path}
           buttons={buttons(vehicle.id)}
         />
       ))}
     </ItemsList>
-  );
-};
-
-function Vehicles() {
-  const dispatch = useDispatch();
-  const { id } = useParams();
-  const { vehicles, status, error } = useSelector(selectVehicles);
- 
-  return (
-    <Switch>
-      <Route exact path={Routing.VehicleAdd.path}>
-        <Routing.VehicleAdd.Component />
-      </Route>
-      <Route exact path={Routing.VehicleEdit.path}>
-        <Routing.VehicleEdit.Component />
-      </Route>
-      <Route exact path={Routing.VehicleDetails.path}>
-        <Routing.VehicleDetails.Component />
-      </Route>
-      <Route>
-        <List vehicles={vehicles} />
-      </Route>
-    </Switch>
   );
 }
 

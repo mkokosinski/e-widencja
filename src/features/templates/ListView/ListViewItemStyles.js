@@ -6,14 +6,13 @@ import {
   PanelOverlapLight,
   PanelLightSoft,
   ButtonLightSoft,
-  PanelOverlap,
 } from '../../layout/LayoutStyles';
 
 export const Container = styled(PanelOverlapLight)`
   height: 80px;
   padding: 0;
   max-width: 1100px;
-  margin: 12px auto;
+  margin: 10px auto;
   width: 97%;
 `;
 

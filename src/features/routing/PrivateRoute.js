@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
-import Routing from './Routing';
+import Routing from './RoutingPaths';
 import { isAuth } from '../DAL/api';
 
 const PrivateRoute = ({ children, ...rest }) => {

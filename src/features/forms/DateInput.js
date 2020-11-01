@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
-import { StyledField } from './FormsStyles';
-import { format } from 'date-fns';
+import React, { useEffect, useRef } from 'react';
+import { Input } from './FormsStyles';
 
-import DatePicker from './DatePickerLocale';
+import DatePicker from 'react-datepicker';
+import { locale } from '../../utils/dateUtils';
+import { useSelector } from 'react-redux';
+import { selectIsLaptop } from '../layout/layoutSlice';
 
-const DateInput = React.forwardRef(
-  ({ name, setFieldTouched, setFieldValue, focusOn, initialValue }, ref) => {
+import 'react-datepicker/dist/react-datepicker.css';
 
-    return (
-      <DatePicker
-        onChange={(value) => {
-          const date = format(value, 'yyyy-MM-dd');
-          setFieldTouched(name);
-          setFieldValue(name, date);
-          focusOn();
-        }}
-        minDate={new Date()}
-        customInput={<StyledField ref={ref} />}
-      />
-    );
-  }
-);
+
+const ReadOnlyInput = ({ value, onClick }) => {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.readOnly = true;
+    }
+  });
+  return <Input value={value} onClick={onClick} ref={inputRef} />;
+};
+
+const DateInput = (props) => {
+  const isLaptop = useSelector(selectIsLaptop);
+
+  return (
+    <DatePicker
+      {...props}
+      customInput={isLaptop ? <Input /> : <ReadOnlyInput />}
+      locale={locale}
+      withPortal={!isLaptop}
+    />
+  );
+};
 
 export default DateInput;

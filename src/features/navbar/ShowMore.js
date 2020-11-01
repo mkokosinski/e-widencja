@@ -7,7 +7,6 @@ import { useDropdown } from '../hooks/useDropdown';
 import {
   ItemMenuIco,
   ItemMenuTitle,
-  ListItem,
   ListItemMenu,
 } from '../profile/ProfilebarStyles';
 import { A } from '../layout/LayoutStyles';

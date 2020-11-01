@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { device, PanelBordered } from '../layout/LayoutStyles';
-import Logo from '../layout/Logo';
 
 export const AuthContainer = styled.div`
   display: flex;

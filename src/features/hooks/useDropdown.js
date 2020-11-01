@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+import useDetectOutsideClick from './useDetectOutsideClick';
 
 const root = document.getElementById('root');
 
@@ -42,26 +44,15 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
 
   const dropdownRef = useRef();
 
-  const detectPosition = () => {
+  const detectPosition = useCallback(() => {
     if (buttonRef.current) {
-      //pos = {bottom, height, left, right, top, width, x, y}
       const pos = buttonRef.current.getBoundingClientRect();
       const { offsetWidth: dropdownWidth } = dropdownRef.current;
-      // const {
-      //   offsetHeight: height,
-      //   offsetWidth: width,
-      //   offsetLeft,
-      //   offsetTop
-      // } = buttonRef.current;
 
       let top, bottom, left, right;
 
       const x = Math.floor(pos.x);
       const y = Math.floor(pos.y);
-
-      console.log(dropdownRef);
-
-      //
 
       if (x + dropdownWidth > window.innerWidth) {
         right = window.innerWidth >= 768 ? '10' : undefined;
@@ -83,39 +74,28 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
 
       setPosition({ top, bottom, left, right });
     }
-  };
-
-  const detectExit = (e) => {
-    if (
-      !dropdownRef.current ||
-      dropdownRef.current.contains(e.target) ||
-      buttonRef.current.contains(e.target)
-    ) {
-      return;
-    }
-
-    setIsOpen(false);
-  };
+  }, [buttonRef, direction]);
 
   const openDropdown = () => {
     setIsOpen(true);
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', detectExit);
     buttonRef.current.addEventListener('mousedown', openDropdown);
 
-    return () => {
-      document.removeEventListener('mousedown', detectExit);
-      buttonRef.current.removeEventListener('mousedown', openDropdown);
-    };
-  }, []);
+    // return () => {
+    //   buttonRef.current.removeEventListener('mousedown', openDropdown);
+
+    // };
+  }, [buttonRef]);
 
   useEffect(() => {
     detectPosition();
-  }, [isOpen]);
+  }, [detectPosition, isOpen]);
 
   const List = ({ children }) => {
+  useDetectOutsideClick(dropdownRef, () => setIsOpen(false));
+
     return createPortal(
       <StyledDropdown pos={position} ref={dropdownRef} isOpen={isOpen}>
         {children}

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 
 import Chart from 'chart.js';
 import { useState } from 'react';
-import { Button } from '../layout/LayoutStyles';
 import { Buttons, StyledChart, ButtonPagintation, Title, Canvas } from './ChartsStyles';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
@@ -29,18 +28,10 @@ Chart.controllers.lineAlt = custom;
 
 const LineChart = ({ title='', data, dataOffset }) => {
   const [chart, setChart] = useState(null);
-  const [limitedData, setLimitedData] = useState({});
+  // const [limitedData, setLimitedData] = useState({});
   // const [paginationIndex, setPaginationIndex] = useState(0)
   const [currentOffset, setCurrentOffset] = useState(0);
   const chartRef = useRef(null);
-
-  useEffect(() => {
-    limitData(dataOffset);
-  }, [chart, currentOffset]);
-
-  useEffect(() => {
-    buildChart();
-  }, []);
 
   const buildChart = () => {
     const ctx = chartRef.current.getContext('2d');
@@ -89,7 +80,7 @@ const LineChart = ({ title='', data, dataOffset }) => {
     setChart(chartLine);
   };
 
-  const limitData = (offset) => {
+  const limitData = useCallback((offset) => {
     if (chart && data) {
       const { labels, datasets } = data;
       const limitedLabels = labels.slice(currentOffset, currentOffset + offset);
@@ -107,7 +98,7 @@ const LineChart = ({ title='', data, dataOffset }) => {
       chart.data.datasets = limitedDatasets;
       chart.update();
     }
-  }; 
+  },[chart, currentOffset, data]); 
 
   const nextStep = () => {
     if (currentOffset + dataOffset < data.labels.length)
@@ -118,6 +109,15 @@ const LineChart = ({ title='', data, dataOffset }) => {
     if (currentOffset - dataOffset >= 0)
       setCurrentOffset(currentOffset - dataOffset);
   };
+
+  useEffect(() => {
+    limitData(dataOffset);
+  }, [chart, currentOffset, dataOffset, limitData]);
+
+  useEffect(() => {
+    buildChart();
+  }, []);
+
 
   return (
     <StyledChart>

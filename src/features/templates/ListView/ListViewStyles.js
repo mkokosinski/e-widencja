@@ -7,7 +7,6 @@ import {
   device,
   ButtonMain,
   size,
-  Button,
   ButtonBorderedMain
 } from '../../layout/LayoutStyles';
 
@@ -37,7 +36,8 @@ const MobileButton = css`
     height: 60px;
     width: 60px;
     border-radius: 50%;
-    box-shadow: 0 1px 12px -4px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.5),
+      0 4px 8px -2px rgba(0, 0, 0, 0.2);
     margin-top: 8px;
   }
 `;
@@ -71,13 +71,9 @@ export const ShowFilterLabel = styled.span`
 `;
 
 export const FilterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-right: 10px;
   background-color: white;
-  height: 100%;
-  width: 100%;
+  border-radius: 6px;
+  padding: 26px;
 `;
 
 export const FilterButton = styled(ButtonBorderedMain)`
@@ -114,6 +110,7 @@ export const FilterButtonLabel = styled.div`
 `;
 
 export const SelectContainer = styled.div`
+  width: 100%;
   @media screen and ${device.laptop} {
     width: 300px;
   }
@@ -158,7 +155,12 @@ export const ItemsList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-bottom: 140px;
   width: 100%;
+
+  @media screen and ${device.tablet} {
+    padding: 16px;
+  }
 `;
 
 export const filterItemsStyles = {

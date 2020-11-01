@@ -2,7 +2,7 @@ import React from "react";
 import { StyledCheckbox, Label, StyledError } from "./FormsStyles";
 import { Field, ErrorMessage } from "formik";
 
-const FieldWithErrors = ({ label, name }) => {
+const Checkbox = ({ label, name }) => {
   return (
     <StyledCheckbox>
       <Label>
@@ -17,4 +17,4 @@ const FieldWithErrors = ({ label, name }) => {
   );
 };
 
-export default FieldWithErrors;
+export default Checkbox;

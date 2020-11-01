@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const size = {
@@ -25,7 +25,10 @@ export const device = {
 };
 
 export const StyledLayout = styled.div`
+  background: ${({ theme }) => theme.mainSoft};
+  box-sizing: content-box;
   display: grid;
+  flex-direction: column-reverse;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 50px 1fr 50px;
   grid-template-areas:
@@ -33,9 +36,6 @@ export const StyledLayout = styled.div`
     'body body'
     'menu menu';
   min-height: 100vh;
-  flex-direction: column-reverse;
-  background: ${({ theme }) => theme.mainSoft};
-  box-sizing: content-box;
   @media screen and ${device.mobileM} {
     grid-template-rows: 60px 1fr 50px;
   }

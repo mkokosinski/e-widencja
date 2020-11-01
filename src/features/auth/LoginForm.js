@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import Routing from '../routing/Routing';
+import Routing from '../routing/RoutingPaths';
 import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
 import { ButtonsContainer, StyledField, Row, StyledForm } from '../forms/FormsStyles';
