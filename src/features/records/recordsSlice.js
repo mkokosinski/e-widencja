@@ -6,7 +6,7 @@ import {
 import { months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
-import firestore from '../../app/firebase/firebase';
+import {firestore} from '../../app/firebase/firebase';
 
 
 export const fetchRecords = createAsyncThunk(

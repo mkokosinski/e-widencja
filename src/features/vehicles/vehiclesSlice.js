@@ -4,7 +4,7 @@ import {
   createSelector
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import firestore from '../../app/firebase/firebase';
+import { firestore } from '../../app/firebase/firebase';
 
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
@@ -13,7 +13,7 @@ export const fetchVehicles = createAsyncThunk(
     const coll = await firestore.collection('Vehicles').get();
 
     coll.forEach((doc) => {
-      vehicles.push({...doc.data(), id: doc.id});
+      vehicles.push({ ...doc.data(), id: doc.id });
     });
 
     return vehicles;

@@ -4,7 +4,7 @@ import {
   createSelector
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import firestore from '../../app/firebase/firebase';
+import { firestore } from '../../app/firebase/firebase';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
