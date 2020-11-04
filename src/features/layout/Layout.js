@@ -21,6 +21,7 @@ import Profilebar from '../profile/Profilebar';
 
 import { StyledLayout, Menu, Body, StyledLogo } from './LayoutStyles';
 import Router from '../routing/Router';
+import { fetchSettings } from '../settings/settingsSlice';
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Layout = () => {
     } = document;
     dispatch(setSiteSize({ height: clientHeight, width: clientWidth }));
 
+    dispatch(fetchSettings());
     dispatch(fetchRecords());
     dispatch(fetchVehicles());
     dispatch(fetchUsers());

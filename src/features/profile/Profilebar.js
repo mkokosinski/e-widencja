@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAuth, selectUser } from '../auth/authSlice';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../auth/authSlice';
 import Notification from './Notification';
 import Profile from './Profile';
 import {
@@ -12,13 +12,6 @@ import {
 
 const Profilebar = () => {
   const user = useSelector(selectUser);
-  const status = useSelector((state) => state.auth.status);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchAuth());
-    }
-  }, [status, dispatch]);
 
   return (
     <StyledBar>

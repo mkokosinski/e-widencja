@@ -1,38 +1,35 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { auth, firestore } from '../../app/firebase/firebase';
 
-export const fetchAuth = createAsyncThunk(
-  'auth/fetchAuth',
-  async (arg = 1, thunkAPI) => {
-    const resp = await fetch(
-      `https://run.mocky.io/v3/7578b0e6-25d8-4b7d-936c-547f891fd35f`
-    );
-
-    return await resp.json();
+export const authorize = createAsyncThunk(
+  'auth/authorize',
+  async (arg, thunkAPI) => {
+    if (arg && arg.user) {
+      return await getFirebaseUser(arg.user.uid);
+    } else return thunkAPI.rejectWithValue('user not exists');
   }
 );
 
-// auth.onAuthStateChanged((user) => {
-//   console.log('user', user);
-//   if (user) {
-//      setUser(user);
-//   } else {
-//     setUser(null);
-//   }
-// });
-
 export const signIn = createAsyncThunk('auth/signIn', async (arg, thunkAPI) => {
-  const { login, password } = arg;
+  try {
+    const { email, password } = arg;
 
-  // auth.onAuthStateChanged(function (user) {
-  //   console.log('user', user);
-  //   if (user) {
-  //     // User is signed in.
-  //   } else {
-  //     // No user is signed in.
-  //   }
-  // });
-  return await auth.signInWithEmailAndPassword(login, password);
+    const isAuth = await auth.signInWithEmailAndPassword(email, password);
+
+    if (isAuth) {
+      const user = await getFirebaseUser(isAuth.user.uid);
+      return user;
+    }
+  } catch (err) {
+    console.log(err);
+    if (err.code === 'auth/internal-error') {
+      return thunkAPI.rejectWithValue(
+        'Przepraszamy, serwis chwilowo niedostępny. Pracujemy nad tym. Spróbuj ponownie za chwilę.'
+      );
+    } else {
+      return thunkAPI.rejectWithValue('Niepoprawne dane logowania!');
+    }
+  }
 });
 
 export const signOut = createAsyncThunk(
@@ -44,10 +41,13 @@ export const signOut = createAsyncThunk(
   }
 );
 
-const getUser = async (userId) => {
-  const user = await firestore.collection('Users').doc(userId).get();
- 
-  return user.data();
+export const getFirebaseUser = async (userId) => {
+  try {
+    const user = await firestore.collection('Users').doc(userId).get();
+    return user.data();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const authSlice = createSlice({
@@ -61,57 +61,52 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
       const { payload } = action;
       console.log('setUSer', payload);
-      state.user = payload.user;
+      state.user = payload;
     }
   },
   extraReducers: {
-    [fetchAuth.pending]: (state, action) => {
-      state.status = 'loading';
-    },
-
-    [fetchAuth.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
-      state.user = { ...action.payload.user };
-    },
-
-    [fetchAuth.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
-    },
-
     [signIn.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = 'pending';
     },
 
     [signIn.fulfilled]: (state, action) => {
       const { payload } = action;
-      const user = getUser(payload.user.uid);
-
-      state.status = 'succeeded';
-      state.user = user;
+      state.status = 'fulfilled';
+      state.user = action.payload;
       state.error = null;
     },
 
     [signIn.rejected]: (state, action) => {
       state.status = 'failed';
-      state.error = action.error.message;
+      state.error = action.payload;
     },
 
     [signOut.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = 'pending';
     },
 
     [signOut.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = 'fulfilled';
       state.user = null;
     },
 
     [signOut.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
+    },
+
+    [authorize.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
+      state.user = action.payload;
+    },
+
+    [authorize.rejected]: (state, action) => {
+      state.status = 'failed';
     }
   }
 });
+
+export const selectAuth = (state) => state.auth;
 
 export const selectUser = (state) => state.auth.user;
 

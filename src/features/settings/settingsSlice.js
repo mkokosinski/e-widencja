@@ -11,23 +11,28 @@ import { auth, firestore } from '../../app/firebase/firebase';
 export const fetchSettings = createAsyncThunk(
   'settings/fetchsettings',
   async (arg = 1, thunkAPI) => {
-    const settings = [];
-    const user = thunkAPI.getState().auth.user;
+    try {
+      const settings = [];
 
-    const coll = await firestore
-      .collection('Settings')
-      .where('permissions', 'array-contains', user.role)
-      .get()
-      .catch((err) => {
-        console.log('err', err);
-      });
+      const user = thunkAPI.getState().auth.user;
+      if (user) {
+        const coll = await firestore
+          .collection('Settings')
+          .where('permissions', 'array-contains', user.role)
+          .get();
 
-    coll.forEach((doc) => {
-      console.log('doc', doc.data());
-      settings.push(doc.data());
-    });
+        coll.forEach((doc) => {
+          console.log(doc.data());
+          settings.push(doc.data());
+        });
 
-    return settings;
+        console.log('ssss', settings);
+      }
+
+      return settings;
+    } catch (err) {
+      console.log(err);
+    }
   }
 );
 
@@ -46,15 +51,7 @@ export const settingsSlice = createSlice({
 
     [fetchSettings.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      action.payload.forEach((sett) => {
-        console.log(sett);
-        state.items.push({
-          ...sett,
-          get name() {
-            return `${months[this.month]} ${this.year}`;
-          }
-        });
-      });
+      state.items = action.payload;
     },
 
     [fetchSettings.rejected]: (state, action) => {

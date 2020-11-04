@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import { useDropdown } from '../hooks/useDropdown';
-import { signOut } from '../DAL/api';
+import { signOut } from '../auth/authSlice';
 
 import { ProfileButton, ItemTitle, ListItem } from './ProfilebarStyles';
 
@@ -13,23 +13,22 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Routing from '../routing/RoutingPaths';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const button = useRef(null);
 
   const { List, isOpen } = useDropdown(button);
 
   const handleSignOut = () => {
-    signOut('Admin').then((res) => history.push(Routing.Login.path));
+    dispatch(signOut());
   };
 
   return (
     <>
-      <ProfileButton
-        ref={button}
-        active={isOpen}
-      >
+      <ProfileButton ref={button} active={isOpen}>
         <FontAwesomeIcon icon={faUserCircle} />
       </ProfileButton>
 

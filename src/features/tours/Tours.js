@@ -78,15 +78,24 @@ const Users = () => {
           dispatch(signIn({ login: 'user@demo.pl', password: 'Demo123' }))
         }
       >
-        sign
+        demo
       </button>
       <button
         onClick={() =>
           dispatch(signIn({ login: 'Admin@demo.pl', password: 'Demo123' }))
         }
       >
-        sign
+        admin
       </button>
+      <button
+        onClick={() =>
+          dispatch(signIn({ login: 'Admin@demo.pl', password: 'Demo1' }))
+        }
+      >
+        Bad 
+      </button>
+
+
       <button onClick={() => {
         console.log('fired');
         dispatch(signOut());

@@ -21,13 +21,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { A } from '../../layout/LayoutStyles';
 
 const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
+  console.log('item', item);
   return (
     <Container key={item.id}>
       <Body>
-        <Ico>
-          <FontAwesomeIcon icon={ico} />
-        </Ico>
-
+        {ico && (
+          <Ico>
+            <FontAwesomeIcon icon={ico} />
+          </Ico>
+        )}
+        
         <Title>
           <Name>{item.name}</Name>
           <Subname>{item.subname}</Subname>
@@ -45,18 +48,19 @@ const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
         </Journeys>
 
         <Buttons>
-          {buttons.map((button, index) => (
-            <Button key={index}>
-              <A to={{ pathname: button.action, item }}>
-                <ButtonBody>
-                  <ButtonIco>
-                    <FontAwesomeIcon icon={button.ico} />
-                  </ButtonIco>
-                  <span>{button.label}</span>
-                </ButtonBody>
-              </A>
-            </Button>
-          ))}
+          {buttons &&
+            buttons.map((button, index) => (
+              <Button key={index}>
+                <A to={{ pathname: button.action, item }}>
+                  <ButtonBody>
+                    <ButtonIco>
+                      <FontAwesomeIcon icon={button.ico} />
+                    </ButtonIco>
+                    <span>{button.label}</span>
+                  </ButtonBody>
+                </A>
+              </Button>
+            ))}
         </Buttons>
       </Body>
     </Container>
