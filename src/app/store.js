@@ -3,6 +3,7 @@ import authReducer from '../features/auth/authSlice';
 import filtersReducer from '../features/templates/filterSlice';
 import layoutReducer from '../features/layout/layoutSlice';
 import recordsReducer from '../features/records/recordsSlice';
+import settingsReducer from '../features/settings/settingsSlice';
 import vehicleReducer from '../features/vehicles/vehiclesSlice';
 import usersReducer from '../features/users/usersSlice';
 
@@ -12,7 +13,8 @@ export default configureStore({
     filters: filtersReducer,
     layout: layoutReducer,
     records: recordsReducer,
+    settings: settingsReducer,
     vehicles: vehicleReducer,
     users: usersReducer
-  },
+  }
 });

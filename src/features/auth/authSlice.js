@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { auth } from '../../app/firebase/firebase';
+import { auth, firestore } from '../../app/firebase/firebase';
 
 export const fetchAuth = createAsyncThunk(
   'auth/fetchAuth',
@@ -12,14 +12,14 @@ export const fetchAuth = createAsyncThunk(
   }
 );
 
-auth.onAuthStateChanged(function (user) {
-  console.log('user', user);
-  if (user) {
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
+// auth.onAuthStateChanged((user) => {
+//   console.log('user', user);
+//   if (user) {
+//      setUser(user);
+//   } else {
+//     setUser(null);
+//   }
+// });
 
 export const signIn = createAsyncThunk('auth/signIn', async (arg, thunkAPI) => {
   const { login, password } = arg;
@@ -34,22 +34,21 @@ export const signIn = createAsyncThunk('auth/signIn', async (arg, thunkAPI) => {
   // });
   return await auth.signInWithEmailAndPassword(login, password);
 });
+
 export const signOut = createAsyncThunk(
   'auth/signOut',
   async (arg, thunkAPI) => {
-    const { login, password } = arg;
-
-    // auth.onAuthStateChanged(function (user) {
-    //   console.log('user', user);
-    //   if (user) {
-    //     // User is signed in.
-    //   } else {
-    //     // No user is signed in.
-    //   }
-    // });
-    return await auth.signOut();
+    const res = await auth.signOut();
+    console.log('sign', res);
+    return res;
   }
 );
+
+const getUser = async (userId) => {
+  const user = await firestore.collection('Users').doc(userId).get();
+ 
+  return user.data();
+};
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -59,9 +58,10 @@ export const authSlice = createSlice({
     error: null
   },
   reducers: {
-    setUser: (state, payload) => {
-      console.log(payload);
-      state.user = payload.payload;
+    setUser: (state, action) => {
+      const { payload } = action;
+      console.log('setUSer', payload);
+      state.user = payload.user;
     }
   },
   extraReducers: {
@@ -84,7 +84,11 @@ export const authSlice = createSlice({
     },
 
     [signIn.fulfilled]: (state, action) => {
+      const { payload } = action;
+      const user = getUser(payload.user.uid);
+
       state.status = 'succeeded';
+      state.user = user;
       state.error = null;
     },
 

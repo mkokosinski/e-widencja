@@ -75,7 +75,7 @@ const Users = () => {
 
       <button
         onClick={() =>
-          dispatch(signIn({ login: 'Admin@demo.pl', password: 'Demo' }))
+          dispatch(signIn({ login: 'user@demo.pl', password: 'Demo123' }))
         }
       >
         sign
@@ -87,7 +87,11 @@ const Users = () => {
       >
         sign
       </button>
-      <button onClick={() => dispatch(signOut)}>signOut</button>
+      <button onClick={() => {
+        console.log('fired');
+        dispatch(signOut());
+        }
+        }>signOut</button>
 
       {users.map((user) => (
         <ListViewItem

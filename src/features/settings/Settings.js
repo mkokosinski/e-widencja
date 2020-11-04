@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchSettings } from './settingsSlice';
 
 const Settings = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  const dispatch = useDispatch();
 
-export default Settings
+  useEffect(() => {
+    dispatch(fetchSettings());
+  }, [dispatch]);
+  return <div></div>;
+};
+
+export default Settings;
