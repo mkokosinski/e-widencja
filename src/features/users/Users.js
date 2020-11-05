@@ -9,8 +9,8 @@ import {
   TopPanel,
   AddItem,
   ItemsList,
-  ShowFilterButton,
-  ShowFilterIco,
+  FilterButton,
+  TopButtonIco,
   ShowFilterLabel
 } from '../templates/ListView/ListViewStyles';
 
@@ -58,12 +58,12 @@ function Users() {
             <span>Nowy kierowca</span>
           </AddItem>
         </ButtonAdd>
-        <ShowFilterButton onClick={openModal}>
-          <ShowFilterIco>
+        <FilterButton onClick={openModal}>
+          <TopButtonIco>
             <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </ShowFilterIco>
+          </TopButtonIco>
           <ShowFilterLabel>Filtry</ShowFilterLabel>
-        </ShowFilterButton>
+        </FilterButton>
         <Modal>
           <UserFiltersModal closeModal={closeModal} />
         </Modal>

@@ -8,7 +8,7 @@ export const Details = styled.div`
   width: 100%;
   background-color: #f2f3f5;
   font-size: 1em;
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
@@ -29,7 +29,7 @@ export const DetailsSection = styled.section`
   box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   font-size: 0.9em;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     border: none;
     box-shadow: 0px 2px 10px -6px rgba(0, 0, 0, 0.3);
   }
@@ -57,7 +57,7 @@ export const DetailsTopPanel = styled.div`
   color: ${({ theme }) => theme.main};
   font-size: 1.2em;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     border-radius: none;
     font-size: 1.3em;
     height: 60px;
@@ -67,7 +67,7 @@ export const DetailsTopPanel = styled.div`
 export const DetailsGoBack = styled(Button)`
   height: 50%;
   flex-basis: 10%;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     height: 40px;
   }
 `;
@@ -77,7 +77,7 @@ export const DetailsTitle = styled(H2)`
   margin: 0 10px;
   padding: 10px;
   flex-basis: 70%;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     font-size: 1em;
   }
 `;
@@ -88,7 +88,7 @@ export const DetailsEdit = styled(Button)`
   height: 100%;
   margin-right: 10px;
   flex-basis: 10%;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     font-size: 0.8em;
   }
 `;
@@ -96,7 +96,7 @@ export const DetailsEdit = styled(Button)`
 export const DetailsDelete = styled(Button)`
   height: 100%;
   flex-basis: 10%;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     font-size: 0.8em;
   }
 `;

@@ -22,11 +22,8 @@ export const fetchSettings = createAsyncThunk(
           .get();
 
         coll.forEach((doc) => {
-          console.log(doc.data());
           settings.push(doc.data());
         });
-
-        console.log('ssss', settings);
       }
 
       return settings;

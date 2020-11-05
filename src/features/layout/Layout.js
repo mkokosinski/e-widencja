@@ -50,12 +50,11 @@ const Layout = () => {
         <StyledLogo>
           <Logo />
         </StyledLogo>
-        {!IsLaptop && <Profilebar />}
         <Menu>
           <Navbar />
         </Menu>
         <Body>
-          {IsLaptop && <Profilebar />}
+          <Profilebar />
           <Router />
         </Body>
       </StyledLayout>

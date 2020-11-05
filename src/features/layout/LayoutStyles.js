@@ -13,15 +13,15 @@ export const size = {
 };
 
 export const device = {
-  mobileS: `(min-width: ${size.mobileS}px)`,
-  mobileM: `(min-width: ${size.mobileM}px)`,
-  mobileL: `(min-width: ${size.mobileL}px)`,
-  mobileXL: `(min-width: ${size.mobileXL}px)`,
-  tablet: `(min-width: ${size.tablet}px)`,
-  laptop: `(min-width: ${size.laptop}px)`,
-  laptopL: `(min-width: ${size.laptopL}px)`,
-  desktop: `(min-width: ${size.desktop}px)`,
-  desktopL: `(min-width: ${size.desktop}px)`
+  mobileS: `min-width: ${size.mobileS}px`,
+  mobileM: `min-width: ${size.mobileM}px`,
+  mobileL: `min-width: ${size.mobileL}px`,
+  mobileXL: `min-width: ${size.mobileXL}px`,
+  tablet: `min-width: ${size.tablet}px`,
+  laptop: `min-width: ${size.laptop}px`,
+  laptopL: `min-width: ${size.laptopL}px`,
+  desktop: `min-width: ${size.desktop}px`,
+  desktopL: `min-width: ${size.desktop}px`
 };
 
 export const StyledLayout = styled.div`
@@ -36,10 +36,10 @@ export const StyledLayout = styled.div`
     'body body'
     'menu menu';
   min-height: 100vh;
-  @media screen and ${device.mobileM} {
+  @media screen and (${device.mobileM}) {
     grid-template-rows: 60px 1fr 50px;
   }
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     grid-template-columns: 18% 82%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
@@ -49,7 +49,7 @@ export const StyledLayout = styled.div`
     flex-direction: row;
     font-size: ${({ theme }) => theme.font.size};
   }
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     grid-template-columns: 14% 86%;
     grid-template-rows: 200px 1fr;
   }
@@ -66,7 +66,7 @@ export const Menu = styled.div`
   width: 100%;
   z-index: 998;
   background: inherit;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     position: relative;
     height: auto;
     width: auto;
@@ -88,14 +88,14 @@ export const Body = styled.div`
   justify-content: center;
   padding: 0px;
   background: ${(props) => props.theme.body.background};
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     padding: 6px;
     align-items: flex-start;
   }
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     display: block;
     font-size: 0.9em;
-    padding: 0 20px;
+    padding: 30px;
     background: linear-gradient(
       90deg,
       white 5%,
@@ -104,9 +104,9 @@ export const Body = styled.div`
       white 95%
     );
   }
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     font-size: 1em;
-    padding: 30px;
+    padding: 40px;
   }
 `;
 
@@ -116,7 +116,7 @@ export const H2 = styled.h2`
   margin: 0;
   padding: 0;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     font-size: 18px;
   }
 `;
@@ -144,7 +144,7 @@ export const PanelBordered = styled(Panel)`
   background: #ffffff;
   border: none;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     border: 1px solid rgba(88, 64, 187, 0.1);
     box-shadow: 0 2px 12px -8px rgba(0, 0, 0, 0.5);
   }

@@ -59,8 +59,6 @@ export const selectFilteredUsers = createSelector(
   (users, filters) => {
     const { userFilter, userDriverFilter } = filters;
 
-    console.log(filters);
-
     const filtered = users.items
       .filter((user) =>
         userFilter.enable ? user.id === userFilter.filter.value : user

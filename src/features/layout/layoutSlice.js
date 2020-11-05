@@ -14,8 +14,6 @@ export const layoutSlice = createSlice({
     },
     setIsMobile: (state, payload) => {
       state.isMobile = payload.payload;
-      console.log('asdasdasd');
-
     },
     setIsLaptop: (state, payload) => {
       state.IsLaptop = payload.payload;

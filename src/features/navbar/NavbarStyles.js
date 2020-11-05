@@ -7,7 +7,7 @@ export const Menu = styled.nav`
   display: flex;
   width: 84%;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     align-items: flex-end;
     width: 100%;
   }
@@ -20,7 +20,7 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0px;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     align-items: flex-end;
     justify-content: center;
     flex-direction: column;
@@ -36,15 +36,15 @@ export const Li = styled.li`
 
     color: white;
 
-    @media screen and ${device.tablet} {
+    @media screen and (${device.tablet}) {
     }
 
-    @media screen and ${device.laptop} {
+    @media screen and (${device.laptop}) {
       margin: 2px 0;
 
       width: 180px;
     }
-    @media screen and ${device.laptopL} {
+    @media screen and (${device.laptopL}) {
       margin: 6px 0;
 
       width: 220px;
@@ -84,7 +84,7 @@ export const A = styled(NavLink)`
       outline: none;
     }
 
-    @media screen and ${device.laptop} {
+    @media screen and (${device.laptop}) {
       flex-direction: row;
       justify-content: flex-start;
 
@@ -129,7 +129,7 @@ export const A = styled(NavLink)`
         }
       }
     }
-    @media screen and ${device.laptopL} {
+    @media screen and (${device.laptopL}) {
       height: 70px;
       padding: 20px 40px;
     }
@@ -160,7 +160,7 @@ export const Icon = styled.div`
 export const Label = styled.div`
   display: none;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     display: block;
     font-size: 1rem;
     margin-left: 20px;

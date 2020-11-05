@@ -36,7 +36,6 @@ export const signOut = createAsyncThunk(
   'auth/signOut',
   async (arg, thunkAPI) => {
     const res = await auth.signOut();
-    console.log('sign', res);
     return res;
   }
 );
@@ -60,7 +59,6 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const { payload } = action;
-      console.log('setUSer', payload);
       state.user = payload;
     }
   },

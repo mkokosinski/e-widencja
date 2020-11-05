@@ -11,7 +11,7 @@ import {
 } from '../templates/filterSlice';
 import FieldWithErrors from '../forms/fieldWithErrors';
 
-import { FilterContainer } from '../templates/ListView/ListViewStyles';
+import { ModalContent } from '../templates/ListView/ListViewStyles';
 
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
@@ -25,8 +25,6 @@ const UserFiltersModal = ({ closeModal }) => {
   const dispatch = useDispatch();
   const { userFilter, userDriverFilter } = useSelector(selectFilters);
   const { items: users } = useSelector(selectUsers);
-
-  console.log(userFilter, userDriverFilter);
 
   const usernameItems = [
     filterDefaults.userFilter,
@@ -44,7 +42,7 @@ const UserFiltersModal = ({ closeModal }) => {
   };
 
   return (
-    <FilterContainer>
+    <ModalContent>
       <Formik onSubmit={handleSubmit} initialValues={initValues}>
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <>
@@ -75,7 +73,7 @@ const UserFiltersModal = ({ closeModal }) => {
           </>
         )}
       </Formik>
-    </FilterContainer>
+    </ModalContent>
   );
 };
 

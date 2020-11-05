@@ -30,7 +30,7 @@ export const FormContainer = styled(PanelBordered)`
 
   z-index: 1;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     height: 440px;
   }
 `;

@@ -8,7 +8,7 @@ export const StyledBar = styled.div`
   justify-content: flex-end;
   padding: 0 16px;
   width: 100%;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     justify-content: space-between;
     padding: 8px 24px;
     height: 60px;
@@ -19,7 +19,7 @@ export const Greeting = styled.div`
   display: none;
   font-size: 1.4em;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     display: block;
   }
 `;
@@ -33,7 +33,7 @@ export const Username = styled.span`
 export const ButtonsContainer = styled.div`
   display: flex;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     transform: translateX(40px);
   }
 `;
@@ -48,7 +48,7 @@ const ButtonStyles = styled(ButtonLightSoft)`
   color: ${(props) =>
     props.active ? props.theme.mainSoft : props.theme.lightSoft};
   font-size: 1.4em;
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     height: 50px;
     width: 50px;
     margin: 0 6px;
@@ -92,7 +92,7 @@ export const ListItem = styled.div`
     background: ${(props) => props.theme.light};
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     max-width: 400px;
   }
 `;

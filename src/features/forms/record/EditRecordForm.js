@@ -10,8 +10,6 @@ const EditRecordForm = () => {
 
   const record = useSelector((state) => selectRecordById(state, id));
 
-  console.log(record);
-
   return record ? <RecordForm record={record} /> : null;
 };
 

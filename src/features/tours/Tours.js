@@ -17,8 +17,8 @@ import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  ShowFilterButton,
-  ShowFilterIco,
+  FilterButton,
+  TopButtonIco,
   ShowFilterLabel,
   TopPanel
 } from '../templates/ListView/ListViewStyles';
@@ -62,45 +62,16 @@ const Users = () => {
           </AddItem>
         </ButtonAdd>
 
-        <ShowFilterButton onClick={openModal}>
-          <ShowFilterIco>
+        <FilterButton onClick={openModal}>
+          <TopButtonIco>
             <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </ShowFilterIco>
+          </TopButtonIco>
           <ShowFilterLabel>Filtry</ShowFilterLabel>
-        </ShowFilterButton>
+        </FilterButton>
         <Modal>
           <ToursFilters closeModal={closeModal} />
         </Modal>
       </TopPanel>
-
-      <button
-        onClick={() =>
-          dispatch(signIn({ login: 'user@demo.pl', password: 'Demo123' }))
-        }
-      >
-        demo
-      </button>
-      <button
-        onClick={() =>
-          dispatch(signIn({ login: 'Admin@demo.pl', password: 'Demo123' }))
-        }
-      >
-        admin
-      </button>
-      <button
-        onClick={() =>
-          dispatch(signIn({ login: 'Admin@demo.pl', password: 'Demo1' }))
-        }
-      >
-        Bad 
-      </button>
-
-
-      <button onClick={() => {
-        console.log('fired');
-        dispatch(signOut());
-        }
-        }>signOut</button>
 
       {users.map((user) => (
         <ListViewItem

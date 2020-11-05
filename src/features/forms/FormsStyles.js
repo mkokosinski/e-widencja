@@ -13,20 +13,20 @@ export const Container = styled(PanelBordered)`
   align-self: center;
   margin-bottom: 20px;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     margin: 20px 10px;
     padding: 32px 54px;
 
     width: 70%;
   }
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     max-width: 600px;
     width: auto;
     margin: 10px auto;
   }
 
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     max-width: 700px;
     width: auto;
     padding: 40px 60px;
@@ -43,13 +43,13 @@ export const Row = styled.div`
     padding: 6px;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     flex-direction: row;
     justify-content: space-between;
     margin: 4px 0;
   }
 
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     & > * {
       padding: 8px;
     }
@@ -166,14 +166,14 @@ export const ButtonsContainer = styled.div`
     width: 100px;
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     & > div {
       height: 50px;
       width: 120px;
     }
   }
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     padding: 20px;
 
     & > div {
@@ -192,7 +192,7 @@ export const FieldsGroup = styled.div`
   grid-gap: 10px;
   align-items: flex-end;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     width: 100%;
   }
 `;
@@ -216,3 +216,4 @@ export const RemoveItemButton = styled(ItemButton)`
   height: 32px;
   width: 32px;
 `;
+

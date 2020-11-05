@@ -56,8 +56,6 @@ export const selectFilteredVehicles = createSelector(
   (vehicles, filters) => {
     const { vehicleFilter, carBrandFilter } = filters;
 
-    console.log(carBrandFilter);
-
     const filtered = vehicles.items
       .filter((veh) =>
         vehicleFilter.enable ? veh.id === vehicleFilter.filter.value : veh

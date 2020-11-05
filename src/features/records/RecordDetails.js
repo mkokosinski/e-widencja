@@ -77,8 +77,6 @@ const VehileDetails = () => {
 
   const record = useSelector((state) => selectRecordById(state, id));
 
-  console.log(record);
-
   return record ? (
     <Details>
       <SectionDesc>

@@ -13,7 +13,7 @@ import {
 import { selectVehicles } from '../vehicles/vehiclesSlice';
 
 import {
-  FilterContainer,
+  ModalContent,
 } from '../templates/ListView/ListViewStyles';
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
@@ -59,7 +59,7 @@ const FilterModal = ({ closeModal }) => {
   };
 
   return (
-    <FilterContainer>
+    <ModalContent>
       <Formik onSubmit={handleSubmit} initialValues={initValues}>
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <>
@@ -117,7 +117,7 @@ const FilterModal = ({ closeModal }) => {
           </>
         )}
       </Formik>
-    </FilterContainer>
+    </ModalContent>
   );
 };
 

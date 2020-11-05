@@ -14,12 +14,6 @@ const DatePickerRange = (props) => {
 
   const isLaptop = useSelector(selectIsLaptop);
 
-  console.log('render', startDate);
-
-  useEffect(() => {
-    console.log('effect', startDate);
-  });
-
   return (
     <>
       <DatePicker

@@ -9,23 +9,24 @@ import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  ShowFilterButton,
-  ShowFilterIco,
+  FilterButton,
+  TopButtonIco,
   ShowFilterLabel,
-  TopPanel
+  TopPanel,
+  SortButton
 } from '../templates/ListView/ListViewStyles';
 import RecordsFilterModal from './RecordsFilterModal';
-import {
-  selectFiteredRecords,
-} from './recordsSlice';
+import { selectFiteredRecords } from './recordsSlice';
 import {
   faEdit,
   faFileAlt,
+  faFilter,
   faPlus,
   faPlusSquare,
   faSortAmountUpAlt,
   faUser
 } from '@fortawesome/free-solid-svg-icons';
+import SortModalContent from '../templates/SortModal';
 
 const buttons = (id) => [
   {
@@ -50,7 +51,8 @@ const Records = () => {
 
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
-  const { Modal, openModal, closeModal } = useModal();
+  const FilterModal = useModal();
+  const SortModal = useModal();
 
   return (
     <ItemsList>
@@ -62,15 +64,26 @@ const Records = () => {
           </AddItem>
         </ButtonAdd>
 
-        <ShowFilterButton onClick={openModal}>
-          <ShowFilterIco>
+        <FilterButton onClick={FilterModal.openModal}>
+          <TopButtonIco>
+            <FontAwesomeIcon icon={faFilter} />
+          </TopButtonIco>
+          <ShowFilterLabel>Filtruj</ShowFilterLabel>
+        </FilterButton>
+        <SortButton onClick={SortModal.openModal}>
+          <TopButtonIco>
             <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </ShowFilterIco>
-          <ShowFilterLabel>Filtry</ShowFilterLabel>
-        </ShowFilterButton>
-        <Modal>
-          <RecordsFilterModal closeModal={closeModal} />
-        </Modal>
+          </TopButtonIco>
+          <ShowFilterLabel>Sortuj</ShowFilterLabel>
+        </SortButton>
+
+        <FilterModal.Modal>
+          <RecordsFilterModal closeModal={FilterModal.closeModal} />
+        </FilterModal.Modal>
+
+        <SortModal.Modal>
+          <SortModalContent />
+        </SortModal.Modal>
       </TopPanel>
 
       {records.map((record) => {

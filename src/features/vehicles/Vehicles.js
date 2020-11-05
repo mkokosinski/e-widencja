@@ -20,8 +20,8 @@ import {
   TopPanel,
   AddItem,
   ItemsList,
-  ShowFilterButton,
-  ShowFilterIco,
+  FilterButton,
+  TopButtonIco,
   ShowFilterLabel
 } from '../templates/ListView/ListViewStyles';
 import VehiclesFiltersModal from './VehiclesFiltersModal';
@@ -59,12 +59,12 @@ function Vehicles() {
             <span>Nowy pojazd</span>
           </AddItem>
         </ButtonAdd>
-        <ShowFilterButton onClick={openModal}>
-          <ShowFilterIco>
+        <FilterButton onClick={openModal}>
+          <TopButtonIco>
             <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </ShowFilterIco>
+          </TopButtonIco>
           <ShowFilterLabel>Filtry</ShowFilterLabel>
-        </ShowFilterButton>
+        </FilterButton>
         <Modal>
           <VehiclesFiltersModal closeModal={closeModal} />
         </Modal>

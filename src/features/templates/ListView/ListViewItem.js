@@ -21,7 +21,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { A } from '../../layout/LayoutStyles';
 
 const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
-  console.log('item', item);
   return (
     <Container key={item.id}>
       <Body>

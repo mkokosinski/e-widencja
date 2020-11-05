@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router';
-import { selectAuth, isAuth } from '../auth/authSlice';
+import { selectAuth } from '../auth/authSlice';
 import Routing from './RoutingPaths';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { user } = useSelector(selectAuth);
-
-  console.log(user);
 
   return (
     <Route

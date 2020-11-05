@@ -27,7 +27,7 @@ export const Body = styled.div`
   align-items: center;
   overflow: hidden;
 
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
     grid-template-columns: 60px 2fr 1fr;
     grid-template-areas: 'ico name buttons';
 
@@ -39,16 +39,16 @@ export const Body = styled.div`
     }
   }
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     grid-template-columns: 60px 2fr 3fr 1fr;
     grid-template-areas: 'ico name journeys buttons';
     justify-content: space-between;
   }
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     font-size: 18px;
   }
-  @media screen and ${device.desktopL} {
+  @media screen and (${device.desktopL}) {
     font-size: 22px;
   }
 `;
@@ -58,10 +58,10 @@ export const Ico = styled(PanelLightSoft)`
   display: none;
   height: 50px;
 
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
     display: flex;
   }
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
   }
 `;
 
@@ -79,10 +79,10 @@ export const Title = styled.div`
 export const Name = styled(H2)`
   font-size: 0.9em;
 
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
     font-size: 1em;
   }
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
   }
 `;
 
@@ -95,7 +95,7 @@ export const Journeys = styled.div`
   display: none;
   justify-content: space-around;
 
-  @media screen and ${device.tablet} {
+  @media screen and (${device.tablet}) {
     display: flex;
     font-size: 0.9em;
   }
@@ -104,14 +104,14 @@ export const Journey = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
   }
 `;
 
 export const InfoMain = styled.div`
   font-size: 0.9em;
   font-weight: bold;
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     font-size: 1em;
   }
 `;
@@ -131,7 +131,7 @@ export const Buttons = styled.div`
     margin: 0 6px;
   }
 
-  @media screen and ${device.mobileXL} {
+  @media screen and (${device.mobileXL}) {
     width: auto;
   }
 `;
@@ -143,12 +143,12 @@ export const Button = styled(ButtonLightSoft)`
     display: none;
   }
 
-  @media screen and ${device.mobileL} {
+  @media screen and (${device.mobileL}) {
     :nth-child(2) {
       display: flex;
     }
   }
-  @media screen and ${device.laptopL} {
+  @media screen and (${device.laptopL}) {
     width: 70px;
   }
 `;
@@ -161,7 +161,7 @@ export const ButtonBody = styled.div`
   font-size: 0.7em;
   padding: 5px;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     font-size: 0.6em;
   }
 `;

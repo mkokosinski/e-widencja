@@ -39,7 +39,6 @@ export const recordsSlice = createSlice({
     [fetchRecords.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       action.payload.forEach((rec) => {
-        console.log(rec);
         state.items.push({
           ...rec,
           get name() {

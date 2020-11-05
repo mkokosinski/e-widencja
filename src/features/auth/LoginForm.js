@@ -43,12 +43,10 @@ const LoginForm = ({ redirectPath = Routing.Dashboard.path }) => {
 
 
   const handleSubmit = ({ email, password }) => {
-    console.log('sbu', email, password);
     dispatch(signIn({ email, password }));
   };
 
   if (user) {
-    console.log('user', user);
     return <Redirect to={redirectPath} />;
   }
 

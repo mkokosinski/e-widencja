@@ -57,7 +57,6 @@ const VehicleForm = ({ vehicle }) => {
   const typeRef = useRef(null);
 
   const focusOn = (ref) => {
-    console.log(ref);
     ref.current.focus();
   };
 
