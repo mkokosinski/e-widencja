@@ -54,6 +54,17 @@ const Records = () => {
   const FilterModal = useModal();
   const SortModal = useModal();
 
+  const sortItems = [
+    {
+      title: 'Data',
+      items: ['Najnowsze', 'Najstarsze']
+    },
+    {
+      title: 'Przejechane km',
+      items: ['Rosnąco', 'Malejąco']
+    }
+  ];
+
   return (
     <ItemsList>
       <TopPanel isMobileKeyboard={isMobileKeyboard}>
@@ -82,7 +93,7 @@ const Records = () => {
         </FilterModal.Modal>
 
         <SortModal.Modal>
-          <SortModalContent />
+          <SortModalContent sortItems={sortItems} closeModal={SortModal.closeModal} />
         </SortModal.Modal>
       </TopPanel>
 

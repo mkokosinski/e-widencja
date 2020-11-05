@@ -11,7 +11,6 @@ import {
 export const Container = styled(PanelOverlapLight)`
   height: 80px;
   padding: 0;
-  max-width: 1100px;
   margin: 10px auto;
   width: 97%;
 `;

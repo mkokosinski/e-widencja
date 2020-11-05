@@ -1,47 +1,38 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  filterDefaults,
-  selectFilters,
-  setFilter
-} from '../templates/filterSlice';
+import { Group, GroupTitle } from '../forms/FormsStyles';
+import { Formik } from 'formik';
+import { ModalContent, ModalContentSort } from './ListView/ListViewStyles';
+import RadioGroup from '../forms/RadioGroup';
 
-import { ButtonsContainer, Input, Row } from '../forms/FormsStyles';
-import { Field, Formik } from 'formik';
-import {
-  ButtonBorderedSeconderySoft,
-  ButtonMain
-} from '../layout/LayoutStyles';
-import FieldWithErrors from '../forms/fieldWithErrors';
-import { ModalContent } from './ListView/ListViewStyles';
-
-const SortModalContent = ({ closeModal }) => {
-  const dispatch = useDispatch();
+const SortModalContent = ({ closeModal, sortItems = [] }) => {
   // const minDate = useSelector(selectEldestDate);
 
   const handleSubmit = (values) => {
     console.log(values);
-    // closeModal();
+    closeModal();
   };
 
-  const initValues = {
-    date: 'elo'
-  };
+  const initValues = sortItems.map((item) => {
+    return { [item.title]: '' };
+  });
+  console.log(initValues);
 
   return (
-    <ModalContent>
+    <ModalContentSort>
       <Formik onSubmit={handleSubmit} initialValues={initValues}>
-        {({ values, submitForm, setFieldTouched, setFieldValue }) => (
+        {() => (
           <>
-            <Row>
-                <Field type='radio' value='yes' name='date' />
-                <Field type='radio' value='no' name='date'/>
-            </Row>
+            {sortItems.map((item) => (
+              <Group key={item.title}>
+                <GroupTitle>{item.title}</GroupTitle>
+                <RadioGroup items={item.items} name={item.title} />
+              </Group>
+            ))}
           </>
         )}
       </Formik>
-    </ModalContent>
+    </ModalContentSort>
   );
 };
 

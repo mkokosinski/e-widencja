@@ -36,9 +36,6 @@ export const StyledLayout = styled.div`
     'body body'
     'menu menu';
   min-height: 100vh;
-  @media screen and (${device.mobileM}) {
-    grid-template-rows: 60px 1fr 50px;
-  }
   @media screen and (${device.laptop}) {
     grid-template-columns: 18% 82%;
     grid-template-rows: 200px 1fr;
@@ -230,7 +227,7 @@ export const ButtonLightSoft = styled(Button)`
   color: ${({ theme }) => theme.main};
 
   :hover {
-    background: ${({ theme }) => theme.hover.lightSoft};
+    filter: brightness(1.1);
   }
 `;
 

@@ -10,7 +10,7 @@ import RecentList from '../templates/detailsView/RecentTours';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  ButtonDelete
 } from '../templates/detailsView/DetailsComponents';
 import {
   DetailsTopPanel,
@@ -22,13 +22,14 @@ import {
   Details,
   SectionDesc,
   SectionChart,
-  SectionRecent,
+  SectionRecent
 } from '../templates/detailsView/DetailsStyles';
 
 import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
 import { ReactComponent as YearIco } from '../../assets/year.svg';
 import { ReactComponent as MonthIco } from '../../assets/month.svg';
 import { ReactComponent as CarIco } from '../../assets/car.svg';
+import { months } from '../../utils/dateUtils';
 
 const sampleData = {
   labels: [
@@ -43,7 +44,7 @@ const sampleData = {
     'Wrz',
     'Paź',
     'Lis',
-    'Gru',
+    'Gru'
   ],
   datasets: [
     {
@@ -55,9 +56,9 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
+      pointBorderWidth: 3
+    }
+  ]
 };
 
 const sampletours = [
@@ -69,7 +70,7 @@ const sampletours = [
   { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
   { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
   { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' },
+  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
 ];
 
 const VehileDetails = () => {
@@ -109,7 +110,7 @@ const VehileDetails = () => {
           <DetailsIco>
             <MonthIco />
           </DetailsIco>
-          <DetailsData>{record.month}</DetailsData>
+          <DetailsData>{months[record.month]}</DetailsData>
           <DetailsLabel>Miesiąc</DetailsLabel>
         </DetailsInfo>
 

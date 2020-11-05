@@ -37,11 +37,10 @@ const useModal = () => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-    }
-    else{
+    } else {
       document.body.style.overflow = '';
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   const Modal = ({ children }) => {
     useDetectOutsideClick(contentRef, closeModal);

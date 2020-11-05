@@ -17,7 +17,7 @@ const Profilebar = () => {
     <StyledBar>
       <Greeting>
         Witaj,
-        <Username>{user && ` ${user.login}!`}</Username>
+        <Username>{user && ` ${user.name}!`}</Username>
       </Greeting>
 
       <ButtonsContainer>

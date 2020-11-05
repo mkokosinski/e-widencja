@@ -23,10 +23,11 @@ export const Container = styled(PanelBordered)`
   @media screen and (${device.laptop}) {
     max-width: 600px;
     width: auto;
-    margin: 10px auto;
+    margin: 30px auto;
   }
 
   @media screen and (${device.laptopL}) {
+    margin: 70px auto;
     max-width: 700px;
     width: auto;
     padding: 40px 60px;
@@ -217,3 +218,62 @@ export const RemoveItemButton = styled(ItemButton)`
   width: 32px;
 `;
 
+export const Group = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
+export const GroupTitle = styled.div`
+  background: ${(props) => props.theme.sort.title.bg};
+  color: ${(props) => props.theme.sort.title.color};
+  flex: 1 1 100%;
+  font-size: 0.8em;
+  padding: 20px 20px 6px;
+`;
+
+export const GroupItem = styled.div`
+  background: ${(props) => props.theme.sort.item.bg};
+  color: ${(props) => props.theme.sort.item.color};
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  flex: 1 1 100%;
+  padding: 6px 36px;
+
+  &:hover {
+    background-color:${(props) => props.theme.sort.item.hover.bg};
+    cursor: pointer;
+  }
+`;
+
+export const RadioButton = styled.label`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  input {
+    display: none;
+  }
+`;
+
+export const RadioControl = styled.span`
+  width: 24px;
+  height: 24px;
+
+  svg {
+    fill: none;
+    stroke: ${(props) => props.theme.mainSoft};
+    stroke-width: 4px;
+
+    pointer-events: none;
+    transition: transform 0.1s ease-in;
+    transform: scale(0);
+    transform-origin: bottom left;
+  }
+
+  input:checked + & {
+    svg {
+      transform: scale(1);
+    }
+  }
+`;

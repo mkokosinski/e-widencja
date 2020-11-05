@@ -14,42 +14,46 @@ export const TopPanel = styled.div`
   display: ${(props) => (props.isMobileKeyboard ? `none` : `flex`)};
   flex-direction: column;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin: 10px auto 0;
   padding: 0px 8px;
   flex-direction: row;
   width: 100%;
 `;
 
 const TopPanelButton = styled(ButtonBorderedMain)`
+  color: ${(props) => props.theme.secondary};
   flex: 1 1 60px;
+  height: 50px;
   justify-content: center;
   margin: 10px;
-  padding: 8px;
-
-  
+  padding: 10px 8px;
 
   @media screen and (${device.mobileXL}) {
     flex: 0 1 100px;
   }
 
   @media screen and (${device.tablet}) {
-    height: 50px;
   }
 `;
 
 export const TopButtonIco = styled.i`
-  font-size: 1.1em;
+  font-size: 1em;
+  margin: 0 4px;
 
   transition: transform 200ms ease-out;
   transform-origin: center;
+`;
+
+export const ShowFilterLabel = styled.span`
+  font-size: 0.9em;
 `;
 
 export const ButtonAdd = styled(TopPanelButton)`
   background: ${(props) => props.theme.secondary};
   color: white;
 
-  &:hover{
-    background-color: ${props=>props.theme.secondarySoft}
+  &:hover {
+    background-color: ${(props) => props.theme.secondarySoft};
   }
 
   @media screen and (max-width: ${size.mobileXL}px) {
@@ -83,14 +87,19 @@ export const SortButton = styled(TopPanelButton)`
   }
 `;
 
-export const ShowFilterLabel = styled.span`
-  font-size: 0.8em;
-`;
-
 export const ModalContent = styled.div`
   background-color: white;
   border-radius: 6px;
+  box-shadow: 0 1px 12px -4px rgba(0, 0, 0, 0.5),
+      0 4px 24px -4px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  max-width: 92%;
+  overflow: hidden;
   padding: 26px;
+`;
+
+export const ModalContentSort = styled(ModalContent)`
+  padding: 0;
 `;
 
 export const FilterButtonLabel = styled.div`
@@ -144,6 +153,8 @@ export const ItemsList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 1300px;
   padding-bottom: 80px;
   width: 100%;
 

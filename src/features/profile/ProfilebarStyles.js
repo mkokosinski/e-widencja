@@ -6,12 +6,18 @@ export const StyledBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin: 0 auto;
+  max-width: 1360px;
   padding: 0 16px;
+  position: absolute;
+  top: -44px;
   width: 100%;
   @media screen and (${device.laptop}) {
     justify-content: space-between;
-    padding: 8px 24px;
     height: 60px;
+    padding: 8px 24px;
+    position: static;
+    top: 0;
   }
 `;
 
@@ -34,7 +40,6 @@ export const ButtonsContainer = styled.div`
   display: flex;
 
   @media screen and (${device.laptop}) {
-    transform: translateX(40px);
   }
 `;
 
@@ -48,6 +53,7 @@ const ButtonStyles = styled(ButtonLightSoft)`
   color: ${(props) =>
     props.active ? props.theme.mainSoft : props.theme.lightSoft};
   font-size: 1.4em;
+
   @media screen and (${device.laptop}) {
     height: 50px;
     width: 50px;
