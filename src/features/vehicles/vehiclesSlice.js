@@ -20,16 +20,59 @@ export const fetchVehicles = createAsyncThunk(
   }
 );
 
+const sortMethods = {
+  Nazwa: {
+    asc: (a, b) => a.name.localeCompare(b.name),
+    desc: (a, b) => b.name.localeCompare(a.name)
+  },
+  Producent: {
+    asc: (a, b) => a.brand.localeCompare(b.brand),
+    desc: (a, b) => b.brand.localeCompare(a.brand)
+  },
+  Przebieg: {
+    asc: (a, b) => b.mileage - a.mileage,
+    desc: (a, b) => a.mileage - b.mileage
+  }
+};
+
 export const vehicleSlice = createSlice({
   name: 'vehicles',
   initialState: {
     status: 'idle',
     items: [],
-    error: null
+    error: null,
+    sortFunc: { name: 'Nazwa', condition: 'asc' },
+    sortCases: [
+      {
+        title: 'Nazwa',
+        items: [
+          { label: 'a-z', condition: 'asc' },
+          { label: 'z-a', condition: 'desc' }
+        ]
+      },
+      {
+        title: 'Producent',
+        items: [
+          { label: 'a-z', condition: 'asc' },
+          { label: 'z-a', condition: 'desc' }
+        ]
+      },
+      {
+        title: 'Przebieg',
+        items: [
+          { label: 'malejąco', condition: 'asc' },
+          { label: 'rosnąco', condition: 'desc' }
+        ]
+      }
+    ]
   },
   reducers: {
-    func: (state) => {
-      //function body
+    setSortFunc: (state, action) => {
+      console.log(action);
+      const { payload } = action;
+      const entry = Object.entries(payload)[0];
+
+      state.sortFunc = { name: entry[0], condition: entry[1] };
     }
   },
   extraReducers: {
@@ -49,7 +92,14 @@ export const vehicleSlice = createSlice({
   }
 });
 
-export const selectVehicles = (state) => state.vehicles;
+export const selectVehicles = (state) => {
+  const { vehicles } = state;
+  const { sortFunc } = vehicles;
+  const sorted = [...vehicles.items].sort(
+    sortMethods[sortFunc.name][sortFunc.condition]
+  );
+  return { ...vehicles, items: sorted };
+};
 
 export const selectFilteredVehicles = createSelector(
   [selectVehicles, selectFilters],
@@ -75,6 +125,8 @@ export const selectCarBrands = (state) => [
   ...new Set(state.vehicles.items.map((veh) => veh.brand))
 ];
 
-export const { next } = vehicleSlice.actions;
+export const selectVehicleSort = (state) => state.vehicles.sortCases;
+
+export const { setSortFunc } = vehicleSlice.actions;
 
 export default vehicleSlice.reducer;

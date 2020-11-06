@@ -2,14 +2,20 @@ import { Field } from 'formik';
 import React from 'react';
 import { GroupItem, RadioButton, RadioControl } from './FormsStyles';
 
-const RadioGroup = ({ items, name }) => {
+const RadioGroup = ({ items, name, onChange }) => {
   return (
     <>
       {items.map((item, index) => (
         <GroupItem key={item + index}>
-          <RadioButton htmlFor={item + index}>
-            {item}
-            <Field type='radio' name={name} value={item} id={item + index} />
+          <RadioButton htmlFor={name + item + index}>
+            {item.label}
+            <Field
+              type='radio'
+              name={name}
+              value={item.condition}
+              id={name + item + index}
+              onClick={onChange}
+            />
 
             <RadioControl>
               <svg

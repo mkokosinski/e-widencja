@@ -20,7 +20,7 @@ export const TopPanel = styled.div`
   width: 100%;
 `;
 
-const TopPanelButton = styled(ButtonBorderedMain)`
+export const TopPanelButton = styled(ButtonBorderedMain)`
   color: ${(props) => props.theme.secondary};
   flex: 1 1 60px;
   height: 50px;
@@ -69,20 +69,6 @@ export const ButtonAdd = styled(TopPanelButton)`
 
   @media screen and (${device.mobileXL}) {
     margin-right: auto;
-  }
-`;
-
-export const FilterButton = styled(TopPanelButton)`
-  @media screen and (${device.mobileXL}) {
-  }
-`;
-
-export const SortButton = styled(TopPanelButton)`
-  &:active {
-    ${TopButtonIco} {
-    }
-  }
-  @media screen and (${device.mobileXL}) {
   }
 `;
 

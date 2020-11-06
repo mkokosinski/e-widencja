@@ -9,9 +9,6 @@ import {
   TopPanel,
   AddItem,
   ItemsList,
-  FilterButton,
-  TopButtonIco,
-  ShowFilterLabel
 } from '../templates/ListView/ListViewStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,6 +22,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import useModal from '../hooks/useModal';
 import UserFiltersModal from './UserFiltersModal';
+import FilterButton from '../../app/components/FilterButton';
+import FilterModal from '../records/FilterModal';
 
 const buttons = (id) => [
   {
@@ -47,8 +46,6 @@ const buttons = (id) => [
 function Users() {
   const { items: users } = useSelector(selectFilteredUsers);
 
-  const { Modal, openModal, closeModal } = useModal();
-
   return (
     <ItemsList>
       <TopPanel>
@@ -58,15 +55,8 @@ function Users() {
             <span>Nowy kierowca</span>
           </AddItem>
         </ButtonAdd>
-        <FilterButton onClick={openModal}>
-          <TopButtonIco>
-            <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </TopButtonIco>
-          <ShowFilterLabel>Filtry</ShowFilterLabel>
-        </FilterButton>
-        <Modal>
-          <UserFiltersModal closeModal={closeModal} />
-        </Modal>
+        <FilterButton modalComponent={FilterModal} />
+       
       </TopPanel>
 
       {users.map((user) => (

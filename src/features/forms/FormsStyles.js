@@ -229,16 +229,19 @@ export const GroupTitle = styled.div`
   color: ${(props) => props.theme.sort.title.color};
   flex: 1 1 100%;
   font-size: 0.8em;
-  padding: 20px 20px 6px;
+  padding: 20px 10px 6px;
 `;
 
 export const GroupItem = styled.div`
   background: ${(props) => props.theme.sort.item.bg};
   color: ${(props) => props.theme.sort.item.color};
   cursor: pointer;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   flex: 1 1 100%;
-  padding: 6px 36px;
+  padding: 0 26px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
 
   &:hover {
     background-color: ${(props) => props.theme.sort.item.hover.bg};
@@ -250,7 +253,7 @@ export const RadioButton = styled.label`
   cursor: inherit;
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 0px;
 
   input {
     display: none;

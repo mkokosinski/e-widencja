@@ -6,8 +6,7 @@ import {
 import { months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
-import {firestore} from '../../app/firebase/firebase';
-
+import { firestore } from '../../app/firebase/firebase';
 
 export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',
@@ -23,14 +22,39 @@ export const fetchRecords = createAsyncThunk(
   }
 );
 
+const sortMethods = {
+  Data: {
+    asc: (a, b) => a.year - b.year || a.month - b.month,
+    desc: (a, b) => b.year - a.year || b.month - a.month
+  }
+};
+
 export const recordsSlice = createSlice({
   name: 'records',
   initialState: {
     status: 'idle',
     items: [],
-    error: null
+    error: null,
+    sortFunc: { name: 'Data', condition: 'asc' },
+    sortCases: [
+      {
+        title: 'Data',
+        items: [
+          { label: 'od najnowszych', condition: 'asc' },
+          { label: 'od najstarszych', condition: 'desc' }
+        ]
+      },
+     
+    ]
   },
-  reducers: {},
+  reducers: {
+    setSortFunc: (state, action) => {
+      const { payload } = action;
+      const entry = Object.entries(payload)[0];
+
+      state.sortFunc = { name: entry[0], condition: entry[1] };
+    }
+  },
   extraReducers: {
     [fetchRecords.pending]: (state, action) => {
       state.status = 'loading';
@@ -55,10 +79,9 @@ export const recordsSlice = createSlice({
   }
 });
 
-const sortRecords = (a, b) => a.year - b.year || a.month - b.month;
-
 export const selectRecords = (state) => {
   const { records } = state;
+  const { sortFunc } = records;
   const withVehicles = [];
 
   records.items.forEach((rec) => {
@@ -66,7 +89,9 @@ export const selectRecords = (state) => {
     withVehicles.push({ ...rec, vehicle });
   });
 
-  withVehicles.sort(sortRecords);
+  console.log(withVehicles);
+
+  withVehicles.sort(sortMethods[sortFunc.name][sortFunc.condition]);
 
   return { ...records, items: withVehicles };
 };
@@ -102,7 +127,7 @@ export const selectFiteredRecords = createSelector(
         } else {
           return rec;
         }
-      })
+      });
 
     return { ...records, items: filtered };
   }
@@ -129,6 +154,12 @@ const searchMinDate = (arr) => {
 
 export const selectEldestDate = (state) => searchMinDate(state.records.items);
 
-export const { setDateFilter, setVehicleFilter } = recordsSlice.actions;
+export const selectSortCases = (state) => state.records.sortCases;
+
+export const {
+  setDateFilter,
+  setVehicleFilter,
+  setSortFunc
+} = recordsSlice.actions;
 
 export default recordsSlice.reducer;

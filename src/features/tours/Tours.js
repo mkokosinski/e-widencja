@@ -7,25 +7,21 @@ import {
   faFileAlt,
   faPlus,
   faPlusSquare,
-  faSortAmountUpAlt,
   faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredUsers } from '../users/usersSlice';
-import useModal from '../hooks/useModal';
 import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  FilterButton,
-  TopButtonIco,
-  ShowFilterLabel,
   TopPanel
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ToursFilters from './ToursFilters';
 import ListViewItem from '../templates/ListView/ListViewItem';
-import { signIn, signOut } from '../auth/authSlice';
+import FilterButton from '../../app/components/FilterButton';
+import FilterModal from './ToursFilters';
 
 const buttons = (id) => [
   {
@@ -48,10 +44,6 @@ const buttons = (id) => [
 const Users = () => {
   const { items: users } = useSelector(selectFilteredUsers);
 
-  const dispatch = useDispatch();
-
-  const { Modal, openModal, closeModal } = useModal();
-
   return (
     <ItemsList>
       <TopPanel>
@@ -62,15 +54,7 @@ const Users = () => {
           </AddItem>
         </ButtonAdd>
 
-        <FilterButton onClick={openModal}>
-          <TopButtonIco>
-            <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </TopButtonIco>
-          <ShowFilterLabel>Filtry</ShowFilterLabel>
-        </FilterButton>
-        <Modal>
-          <ToursFilters closeModal={closeModal} />
-        </Modal>
+        <FilterButton modalComponent={FilterModal}/>
       </TopPanel>
 
       {users.map((user) => (

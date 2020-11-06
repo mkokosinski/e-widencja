@@ -63,7 +63,7 @@ const TourForm = ({record}) => {
 
   const initValues = record || {
     record: '',
-    date: () => new Date(),
+    date: new Date(),
     tourTemplate: '',
     stops: [
       { label: 'Start', place: '', mileage: '' },

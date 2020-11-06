@@ -1,32 +1,32 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
-import useModal from '../hooks/useModal';
 import { selectIsMobileKeyboard } from '../layout/layoutSlice';
 import Routing from '../routing/RoutingPaths';
+
+import {
+  selectFiteredRecords,
+  selectSortCases,
+  setSortFunc
+} from './recordsSlice';
 import ListViewItem from '../templates/ListView/ListViewItem';
+import SortButton from '../../app/components/SortButton';
+import FilterModal from './FilterModal';
+
 import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  FilterButton,
-  TopButtonIco,
-  ShowFilterLabel,
-  TopPanel,
-  SortButton
+  TopPanel
 } from '../templates/ListView/ListViewStyles';
-import RecordsFilterModal from './RecordsFilterModal';
-import { selectFiteredRecords } from './recordsSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEdit,
   faFileAlt,
-  faFilter,
   faPlus,
   faPlusSquare,
-  faSortAmountUpAlt,
   faUser
 } from '@fortawesome/free-solid-svg-icons';
-import SortModalContent from '../templates/SortModal';
+import FilterButton from '../../app/components/FilterButton';
 
 const buttons = (id) => [
   {
@@ -45,53 +45,10 @@ const buttons = (id) => [
     action: 'details'
   }
 ];
-
-const Buttons = () => {
-  const FilterModal = useModal();
-  const SortModal = useModal();
-  const sortItems = [
-    {
-      title: 'Data',
-      items: ['Najnowsze', 'Najstarsze']
-    },
-    {
-      title: 'Przejechane km',
-      items: ['Rosnąco', 'Malejąco']
-    }
-  ];
-  return (
-    <>
-      <FilterButton onClick={FilterModal.openModal}>
-        <TopButtonIco>
-          <FontAwesomeIcon icon={faFilter} />
-        </TopButtonIco>
-        <ShowFilterLabel>Filtruj</ShowFilterLabel>
-      </FilterButton>
-      <SortButton onClick={SortModal.openModal}>
-        <TopButtonIco>
-          <FontAwesomeIcon icon={faSortAmountUpAlt} />
-        </TopButtonIco>
-        <ShowFilterLabel>Sortuj</ShowFilterLabel>
-      </SortButton>
-      <FilterModal.Modal>
-        <RecordsFilterModal closeModal={FilterModal.closeModal} />
-      </FilterModal.Modal>
-
-      <SortModal.Modal>
-        <SortModalContent
-          sortItems={sortItems}
-          closeModal={SortModal.closeModal}
-        />
-      </SortModal.Modal>
-    </>
-  );
-};
-
 const Records = () => {
   const { items: records } = useSelector(selectFiteredRecords);
-
+  const sortItems = useSelector(selectSortCases);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
-
   return (
     <ItemsList>
       <TopPanel isMobileKeyboard={isMobileKeyboard}>
@@ -101,7 +58,8 @@ const Records = () => {
             <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
-        <Buttons />
+        <FilterButton modalComponent={FilterModal} />
+        <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
       </TopPanel>
 
       {records.map((record) => {
