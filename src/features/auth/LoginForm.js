@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 import { Redirect, useHistory } from 'react-router';
-import { ErrorMessage, Formik } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import Routing from '../routing/RoutingPaths';
@@ -14,7 +14,7 @@ import {
   StyledError
 } from '../forms/FormsStyles';
 
-import { selectAuth, setUser, signIn } from './authSlice';
+import { selectAuth, signIn } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const validationSchema = Yup.object({
@@ -37,9 +37,8 @@ const initValues = {
 
 const LoginForm = ({ redirectPath = Routing.Dashboard.path }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  const { user, status, error } = useSelector(selectAuth);
+  const { user, error } = useSelector(selectAuth);
 
 
   const handleSubmit = ({ email, password }) => {
@@ -56,7 +55,7 @@ const LoginForm = ({ redirectPath = Routing.Dashboard.path }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, submitForm }) => (
+      {({ submitForm }) => (
         <StyledForm>
           <Row>
             <FieldWithErrors label='E-mail' name='email'>

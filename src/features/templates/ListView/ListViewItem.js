@@ -66,4 +66,4 @@ const ListViewItem = ({ ico, item, path = '/', buttons = [] }) => {
   );
 };
 
-export default ListViewItem;
+export default React.memo(ListViewItem);

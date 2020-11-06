@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Group, GroupTitle } from '../forms/FormsStyles';
 import { Formik } from 'formik';
-import { ModalContent, ModalContentSort } from './ListView/ListViewStyles';
+import {  ModalContentSort } from './ListView/ListViewStyles';
 import RadioGroup from '../forms/RadioGroup';
 
 const SortModalContent = ({ closeModal, sortItems = [] }) => {

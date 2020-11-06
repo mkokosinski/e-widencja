@@ -46,14 +46,9 @@ const buttons = (id) => [
   }
 ];
 
-const Records = () => {
-  const { items: records } = useSelector(selectFiteredRecords);
-
-  const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
-
+const Buttons = () => {
   const FilterModal = useModal();
   const SortModal = useModal();
-
   const sortItems = [
     {
       title: 'Data',
@@ -64,6 +59,38 @@ const Records = () => {
       items: ['Rosnąco', 'Malejąco']
     }
   ];
+  return (
+    <>
+      <FilterButton onClick={FilterModal.openModal}>
+        <TopButtonIco>
+          <FontAwesomeIcon icon={faFilter} />
+        </TopButtonIco>
+        <ShowFilterLabel>Filtruj</ShowFilterLabel>
+      </FilterButton>
+      <SortButton onClick={SortModal.openModal}>
+        <TopButtonIco>
+          <FontAwesomeIcon icon={faSortAmountUpAlt} />
+        </TopButtonIco>
+        <ShowFilterLabel>Sortuj</ShowFilterLabel>
+      </SortButton>
+      <FilterModal.Modal>
+        <RecordsFilterModal closeModal={FilterModal.closeModal} />
+      </FilterModal.Modal>
+
+      <SortModal.Modal>
+        <SortModalContent
+          sortItems={sortItems}
+          closeModal={SortModal.closeModal}
+        />
+      </SortModal.Modal>
+    </>
+  );
+};
+
+const Records = () => {
+  const { items: records } = useSelector(selectFiteredRecords);
+
+  const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
 
   return (
     <ItemsList>
@@ -74,27 +101,7 @@ const Records = () => {
             <span> Nowa ewidencja</span>
           </AddItem>
         </ButtonAdd>
-
-        <FilterButton onClick={FilterModal.openModal}>
-          <TopButtonIco>
-            <FontAwesomeIcon icon={faFilter} />
-          </TopButtonIco>
-          <ShowFilterLabel>Filtruj</ShowFilterLabel>
-        </FilterButton>
-        <SortButton onClick={SortModal.openModal}>
-          <TopButtonIco>
-            <FontAwesomeIcon icon={faSortAmountUpAlt} />
-          </TopButtonIco>
-          <ShowFilterLabel>Sortuj</ShowFilterLabel>
-        </SortButton>
-
-        <FilterModal.Modal>
-          <RecordsFilterModal closeModal={FilterModal.closeModal} />
-        </FilterModal.Modal>
-
-        <SortModal.Modal>
-          <SortModalContent sortItems={sortItems} closeModal={SortModal.closeModal} />
-        </SortModal.Modal>
+        <Buttons />
       </TopPanel>
 
       {records.map((record) => {

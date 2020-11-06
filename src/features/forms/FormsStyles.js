@@ -235,18 +235,19 @@ export const GroupTitle = styled.div`
 export const GroupItem = styled.div`
   background: ${(props) => props.theme.sort.item.bg};
   color: ${(props) => props.theme.sort.item.color};
+  cursor: pointer;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   flex: 1 1 100%;
   padding: 6px 36px;
 
   &:hover {
-    background-color:${(props) => props.theme.sort.item.hover.bg};
-    cursor: pointer;
+    background-color: ${(props) => props.theme.sort.item.hover.bg};
   }
 `;
 
 export const RadioButton = styled.label`
   align-items: center;
+  cursor: inherit;
   display: flex;
   justify-content: space-between;
   padding: 10px 0;

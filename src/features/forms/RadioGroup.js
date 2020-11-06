@@ -6,7 +6,7 @@ const RadioGroup = ({ items, name }) => {
   return (
     <>
       {items.map((item, index) => (
-        <GroupItem>
+        <GroupItem key={item + index}>
           <RadioButton htmlFor={item + index}>
             {item}
             <Field type='radio' name={name} value={item} id={item + index} />

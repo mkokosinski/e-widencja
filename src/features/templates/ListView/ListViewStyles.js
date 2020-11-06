@@ -80,7 +80,6 @@ export const FilterButton = styled(TopPanelButton)`
 export const SortButton = styled(TopPanelButton)`
   &:active {
     ${TopButtonIco} {
-      transform: rotate(180deg);
     }
   }
   @media screen and (${device.mobileXL}) {

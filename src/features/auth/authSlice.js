@@ -68,7 +68,6 @@ export const authSlice = createSlice({
     },
 
     [signIn.fulfilled]: (state, action) => {
-      const { payload } = action;
       state.status = 'fulfilled';
       state.user = action.payload;
       state.error = null;

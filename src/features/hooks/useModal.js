@@ -1,25 +1,47 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import useDetectOutsideClick from './useDetectOutsideClick';
 
 export const ModalBackground = styled.div`
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: 100%;
+  left: 0;
   position: fixed;
   top: 0;
-  left: 0;
-  height: 100%;
+  transition: 2s;
   width: 100%;
   z-index: 999;
-  background: rgba(0, 0, 0, 0.5);
 
-  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
+  animation: fade 150ms linear both;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const ModalContent = styled.div`
   display: flex;
+  animation: content 150ms ease-out 100ms both;
+
+  @keyframes content {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
 `;
 
 const useModal = () => {
@@ -45,12 +67,14 @@ const useModal = () => {
   const Modal = ({ children }) => {
     useDetectOutsideClick(contentRef, closeModal);
 
-    return ReactDOM.createPortal(
-      <ModalBackground isOpen={isOpen}>
-        <ModalContent ref={contentRef}>{children}</ModalContent>
-      </ModalBackground>,
-      document.getElementById('root')
-    );
+    return isOpen
+      ? ReactDOM.createPortal(
+          <ModalBackground isOpen={isOpen}>
+            <ModalContent ref={contentRef}>{children}</ModalContent>
+          </ModalBackground>,
+          document.getElementById('root')
+        )
+      : null;
   };
 
   return { Modal, openModal, closeModal };
