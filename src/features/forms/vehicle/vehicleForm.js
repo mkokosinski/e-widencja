@@ -125,10 +125,13 @@ const VehicleForm = ({ vehicle }) => {
 
               <FieldWithErrors name='checkupDate' label='Data przeglądu'>
                 <DateInput
-                  focusOn={() => focusOn(typeRef)}
-                  setFieldTouched={setFieldTouched}
-                  setFieldValue={setFieldValue}
-                  initialValue={initValues.checkupDate}
+                    onChange={(value) => {
+                      console.log(value);
+                      setFieldTouched('checkupDate');
+                      setFieldValue('checkupDate', value);
+                      // focusOn(typeRef);
+                    }}
+                    // defaultValue={initValues.checkupDate}
                 />
               </FieldWithErrors>
             </Row>

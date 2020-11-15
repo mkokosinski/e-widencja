@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 export const filterDefaults = {
   dateFilter: {
     from: format(new Date(new Date().getFullYear(), 0, 1), 'yyyy-MM-dd'),
-    to: format(new Date(), 'yyyy-MM-dd')
+    to: format(new Date(new Date().getFullYear(), new Date().getMonth(), 1), 'yyyy-MM-dd')
   },
   vehicleFilter: { label: 'Wszystkie', value: '0' },
   userFilter: { label: 'Wszyscy', value: '0' },

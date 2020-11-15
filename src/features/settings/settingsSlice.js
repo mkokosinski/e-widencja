@@ -3,10 +3,9 @@ import {
   createAsyncThunk,
   createSelector
 } from '@reduxjs/toolkit';
-import { months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
-import { auth, firestore } from '../../app/firebase/firebase';
+import {  firestore } from '../../app/firebase/firebase';
 
 export const fetchSettings = createAsyncThunk(
   'settings/fetchsettings',

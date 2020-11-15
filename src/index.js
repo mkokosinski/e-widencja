@@ -8,9 +8,7 @@ import { Provider } from 'react-redux';
 // import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme } from './features/layout/Theme';
-
 import './index.css';
-
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,6 +19,7 @@ ReactDOM.render(
         </Router>
       </ThemeProvider>
     </Provider>
+    <div id='portals'></div>
   </React.StrictMode>,
   document.getElementById('root')
 );

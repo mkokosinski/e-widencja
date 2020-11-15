@@ -27,7 +27,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const IsLaptop = useSelector(selectIsLaptop);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
-
+  
   const initSize = useCallback(() => {
     const {
       documentElement: { clientHeight, clientWidth }

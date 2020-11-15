@@ -12,13 +12,40 @@ export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',
   async (arg = 1, thunkAPI) => {
     const records = [];
-    const coll = await firestore.collection('Records').get();
+    const user = thunkAPI.getState().auth.user;
+
+    const coll = await firestore
+      .collection('Records')
+      .where('companyId', '==', user.companyId)
+      .get();
 
     coll.forEach((doc) => {
-      records.push(doc.data());
+      records.push({ ...doc.data(), id: doc.id });
     });
 
     return records;
+  }
+);
+
+export const addRecord = createAsyncThunk(
+  'records/addRecord',
+  async (arg, thunkAPI) => {
+    const date = new Date(arg.date);
+    const record = {
+      company: 'KAMSOFT S.A.',
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      vehicleId: arg.vehicle
+    };
+
+    const test = await firestore
+      .collection('Records')
+      .add(record)
+      .catch((err) => console.log(err));
+
+    console.log(test.data());
+
+    // return test.data();
   }
 );
 
@@ -43,8 +70,7 @@ export const recordsSlice = createSlice({
           { label: 'od najnowszych', condition: 'asc' },
           { label: 'od najstarszych', condition: 'desc' }
         ]
-      },
-     
+      }
     ]
   },
   reducers: {
@@ -66,13 +92,26 @@ export const recordsSlice = createSlice({
         state.items.push({
           ...rec,
           get name() {
-            return `${months[this.month]} ${this.year}`;
+            return `${months[this.month - 1]} ${this.year}`;
           }
         });
       });
     },
 
     [fetchRecords.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    [addRecord.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+
+    [addRecord.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      state.items.push(action.payload);
+    },
+
+    [addRecord.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
     }
@@ -88,8 +127,6 @@ export const selectRecords = (state) => {
     const vehicle = selectVehicleById(state, rec.vehicleId);
     withVehicles.push({ ...rec, vehicle });
   });
-
-  console.log(withVehicles);
 
   withVehicles.sort(sortMethods[sortFunc.name][sortFunc.condition]);
 
@@ -117,7 +154,7 @@ export const selectFiteredRecords = createSelector(
           const formatedDate = {
             from: new Date(date.from.getFullYear(), date.from.getMonth(), 1),
             to: new Date(date.to.getFullYear(), date.to.getMonth(), 1),
-            rec: new Date(rec.year, rec.month, 1)
+            rec: new Date(rec.year, rec.month - 1, 1)
           };
 
           return (
@@ -135,6 +172,7 @@ export const selectFiteredRecords = createSelector(
 
 export const selectRecordById = (state, recordId) => {
   const record = state.records.items.find((record) => record.id === recordId);
+  console.log('items', record, recordId);
   const vehicle = state.vehicles.items.find(
     (vehicle) => vehicle.id === record.vehicleId
   );

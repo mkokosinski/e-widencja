@@ -7,14 +7,12 @@ import Select from 'react-select';
 import {
   filterDefaults,
   selectFilters,
-  setFilter,
+  setFilter
 } from '../templates/filterSlice';
 
 import { selectVehicles } from '../vehicles/vehiclesSlice';
 
-import {
-  ModalContent,
-} from '../templates/ListView/ListViewStyles';
+import { ModalContent } from '../templates/ListView/ListViewStyles';
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
 import {
@@ -22,12 +20,7 @@ import {
   ButtonMain
 } from '../layout/LayoutStyles';
 import FieldWithErrors from '../forms/fieldWithErrors';
-import DateInput from '../forms/DateInput';
-
-
-
-
-
+import DateInput, { DATEPICKER_TYPES } from '../forms/DateInput';
 
 const FilterModal = ({ closeModal }) => {
   const dispatch = useDispatch();
@@ -80,29 +73,32 @@ const FilterModal = ({ closeModal }) => {
               <FieldWithErrors name='dateFrom' label='Data od'>
                 <DateInput
                   dateFormat='yyyy-MM'
-                  endDate={values.dateTo}
+                  defaultDate={values.dateFrom}
                   onChange={(date) => {
-                    setFieldValue('dateFrom', date);
+                    setFieldValue('dateFrom', new Date(date));
                     setFieldTouched('dateFrom');
+                    console.log(date);
                   }}
-                  selected={values.dateFrom}
-                  selectsStart
-                  showMonthYearPicker
+                  isRange
+                  rangeStart
                   startDate={values.dateFrom}
+                  endDate={values.dateTo}
+                  type={DATEPICKER_TYPES.monthpicker}
                 />
               </FieldWithErrors>
               <FieldWithErrors name='dateTo' label='Data do'>
                 <DateInput
                   dateFormat='yyyy-MM'
-                  endDate={values.dateTo}
                   onChange={(date) => {
-                    setFieldValue('dateTo', date);
+                    setFieldValue('dateTo', new Date(date));
                     setFieldTouched('dateTo');
                   }}
-                  selected={values.dateTo}
-                  selectsEnd
-                  showMonthYearPicker
+                  defaultDate={values.dateTo}
+                  isRange
+                  rangeEnd
                   startDate={values.dateFrom}
+                  endDate={values.dateTo}
+                  type={DATEPICKER_TYPES.monthpicker}
                 />
               </FieldWithErrors>
             </Row>

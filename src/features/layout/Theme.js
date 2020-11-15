@@ -53,5 +53,9 @@ export const darkTheme = {
     light: '#d9f6ff',
     lightSoft: '#fcfdff'
   },
+  disabled: {
+    bg: '#b5b5b5',
+    color: '#8c8c8c',
+  },
   font
 };

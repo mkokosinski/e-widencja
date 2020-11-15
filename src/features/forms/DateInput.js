@@ -1,36 +1,39 @@
 import React, { useEffect, useRef } from 'react';
-import { Input } from './FormsStyles';
+import { Input, inputStyle } from './FormsStyles';
 
-import DatePicker from 'react-datepicker';
-import { locale } from '../../utils/dateUtils';
 import { useSelector } from 'react-redux';
 import { selectIsLaptop } from '../layout/layoutSlice';
 
-import 'react-datepicker/dist/react-datepicker.css';
+import Datepicker from '../../app/components/Datepicker/Datepicker';
+import Monthpicker from '../../app/components/Datepicker/Monthpicker/Monthpicker';
 
-
-const ReadOnlyInput = ({ value, onClick }) => {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (inputRef && inputRef.current) {
-      inputRef.current.readOnly = true;
-    }
-  });
-  return <Input value={value} onClick={onClick} ref={inputRef} />;
+export const DATEPICKER_TYPES = {
+  daypicker: 'daypicker',
+  monthpicker: 'monthpicker'
 };
 
 const DateInput = (props) => {
+  const { type = DATEPICKER_TYPES.daypicker } = props;
   const isLaptop = useSelector(selectIsLaptop);
+  let Component = null;
 
-  return (
-    <DatePicker
-      {...props}
-      customInput={isLaptop ? <Input /> : <ReadOnlyInput />}
-      locale={locale}
-      withPortal={!isLaptop}
-    />
-  );
+  switch (type) {
+    case DATEPICKER_TYPES.daypicker:
+      Component = (
+        <Datepicker {...props} customInput={<Input />} withPortal={true} />
+      );
+      break;
+    case DATEPICKER_TYPES.monthpicker:
+      Component = (
+        <Monthpicker {...props} customInput={<Input />} withPortal={true} />
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  return Component;
 };
 
 export default DateInput;

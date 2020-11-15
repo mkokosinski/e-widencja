@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import useDetectOutsideClick from './useDetectOutsideClick';
 
 export const ModalBackground = styled.div`
@@ -10,7 +10,7 @@ export const ModalBackground = styled.div`
   justify-content: center;
   height: 100%;
   left: 0;
-  position: fixed;
+  position: absolute;
   top: 0;
   transition: 2s;
   width: 100%;
@@ -48,7 +48,7 @@ const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
 
-  const openModal = () => {
+  const openModal = (callback) => {
     setIsOpen(true);
   };
 
@@ -56,23 +56,24 @@ const useModal = () => {
     setIsOpen(false);
   };
 
+
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      // document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = '';
+      // document.body.style.overflow = '';
     }
   }, [isOpen]);
 
   const Modal = ({ children }) => {
-    useDetectOutsideClick(contentRef, closeModal);
+    useDetectOutsideClick(contentRef, closeModal, true);
 
     return isOpen
       ? ReactDOM.createPortal(
           <ModalBackground isOpen={isOpen}>
             <ModalContent ref={contentRef}>{children}</ModalContent>
           </ModalBackground>,
-          document.getElementById('root')
+          document.getElementById('portals')
         )
       : null;
   };

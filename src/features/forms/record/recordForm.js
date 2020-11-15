@@ -12,13 +12,16 @@ import {
   StyledField,
   ButtonsContainer,
   Row,
-  StyledSelect,
+  StyledSelect
 } from '../FormsStyles';
 import {
   ButtonMain,
   ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
-import DateInput from '../DateInput';
+import DateInput, { DATEPICKER_TYPES } from '../DateInput';
+import { addRecord } from '../../records/recordsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVehicles } from '../../vehicles/vehiclesSlice';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
@@ -26,20 +29,35 @@ const validationSchema = Yup.object({
   mileage: Yup.number().min(0, 'Nie mniejszy niż 0').required('Pole wymagane')
 });
 
-const handleSubmit = (values) => {
-  console.log(values);
-};
-
 const RecordForm = ({ record }) => {
   const { goBack } = useHistory();
+  const dispatch = useDispatch();
+  const { items } = useSelector(selectVehicles);
   // const tourTemplateRef = useRef(null);
 
   // const focusOn = (ref) => {
   //   ref.current.focus();
   // };
 
+  const handleSubmit = (values) => {
+    console.log(values);
+    dispatch(addRecord(values));
+  };
+
+  const vehicles = items.map((vehicle) => {
+    return {
+      label: vehicle.name,
+      value: vehicle.id
+    };
+  });
+
+  const minDate = () => {
+    const date = new Date();
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  };
+
   const initValues = false || {
-    date: new Date(),
+    date: minDate(),
     vehicle: '',
     mileage: 0
   };
@@ -57,13 +75,13 @@ const RecordForm = ({ record }) => {
               <FieldWithErrors name='date' label='Data'>
                 <DateInput
                   dateFormat='yyyy-MM'
-                  minDate={new Date()}
+                  minDate={minDate()}
                   onChange={(date) => {
                     setFieldTouched('date');
                     setFieldValue('date', date);
                   }}
-                  selected={values.date}
-                  showMonthYearPicker
+                  defaultDate={values.date}
+                  type={DATEPICKER_TYPES.monthpicker}
                 />
               </FieldWithErrors>
             </Row>
@@ -74,10 +92,7 @@ const RecordForm = ({ record }) => {
                   <Select
                     as='select'
                     isSearchable={true}
-                    options={[
-                      { label: 'test', value: 'test' },
-                      { label: 'test2', value: 'test2' }
-                    ]}
+                    options={vehicles}
                     onChange={({ value }) => {
                       setFieldTouched('vehicle');
                       setFieldValue('vehicle', value);

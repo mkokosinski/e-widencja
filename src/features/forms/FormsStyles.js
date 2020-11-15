@@ -83,16 +83,18 @@ export const Label = styled.label`
   padding: 2px 0;
 `;
 
-const inputStyle = css`
-  padding: 8px 10px;
-  width: 100%;
+export const inputStyle = css`
   border: 1px solid rgba(54, 54, 54, 0.7);
   border-color: #dbdbdb;
+  border-color: ${(props) => props.haserror && 'red'};
   border-radius: 4px;
   color: #363636;
   cursor: pointer;
   font-size: 0.9rem;
-  border-color: ${(props) => props.haserror && 'red'};
+  padding: 8px 10px;
+  width: 100%;
+
+  outline: red;
 
   div[class*='react-datepicker'] {
     height: 200px;
