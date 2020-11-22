@@ -182,7 +182,7 @@ export const PanelBoxShadow = styled(Panel)`
 `;
 
 export const PanelOverlapLight = styled(PanelBoxShadow)`
-  border-left: 10px solid ${({ theme }) => theme.secondary};
+  border-left: 6px solid ${({ theme }) => theme.secondary};
 `;
 
 export const Button = styled.div`

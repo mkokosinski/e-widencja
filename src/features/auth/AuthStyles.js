@@ -10,6 +10,8 @@ export const AuthContainer = styled.div`
   height: 100%;
   width: 100%;
 
+  
+
   background: linear-gradient(
     120deg,
     ${({ theme }) => theme.main} 40%,

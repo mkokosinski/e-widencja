@@ -1,7 +1,25 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import LineChart from '../charts/Chart';
-import { DetailsSection } from '../templates/detailsView/DetailsStyles';
+import {
+  DetailsSection,
+  DetailsTitle
+} from '../templates/detailsView/DetailsStyles';
+import RecentList from '../templates/detailsView/RecentTrips';
+import CheckupList from './CheckupList';
+import {
+  DashboardContainer,
+  DashboardHeader,
+  DashboardLink,
+  DashboardSection,
+  DashboardTitle,
+  Tile,
+  TileIco,
+  TileTitle
+} from './DashboardStyles';
 
 const sampleData = {
   labels: [
@@ -16,7 +34,7 @@ const sampleData = {
     'Wrz',
     'Paź',
     'Lis',
-    'Gru',
+    'Gru'
   ],
   datasets: [
     {
@@ -28,20 +46,45 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
+      pointBorderWidth: 3
+    }
+  ]
 };
+
+const sampletrips = [
+  { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },
+  { from: 'Posum', to: 'Biuro', driver: 'MK', distance: '11km' },
+  { from: 'Biuro', to: 'USI', driver: 'MK', distance: '11km' },
+  { from: 'USI', to: 'Posum', driver: 'MK', distance: '11km' },
+  { from: 'Biuro', to: 'Biuro', driver: 'MK', distance: '11km' },
+  { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
+  { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
+  { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
+  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' },
+];
+
 
 const Dashboard = () => {
   return (
-    <DetailsSection>
-      <LineChart
-        data={sampleData}
-        dataOffset={6}
-        title={'Przejechane kilometry'}
-      />
-    </DetailsSection>
+    <DashboardContainer>
+      {/* <DetailsSection>
+        <LineChart
+          data={sampleData}
+          dataOffset={6}
+          title={'Przejechane kilometry'}
+        />
+      </DetailsSection> */}
+      <DashboardHeader></DashboardHeader>
+
+      <DashboardSection>
+        <DashboardTitle>Najbliższy przegląd</DashboardTitle>
+        <CheckupList />
+      </DashboardSection>
+
+      <DashboardSection>
+        <RecentList title='Ostanie przejazdy'  list={sampletrips} />
+      </DashboardSection>
+    </DashboardContainer>
   );
 };
 

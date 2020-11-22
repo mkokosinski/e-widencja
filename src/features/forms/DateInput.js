@@ -20,12 +20,12 @@ const DateInput = (props) => {
   switch (type) {
     case DATEPICKER_TYPES.daypicker:
       Component = (
-        <Datepicker {...props} customInput={<Input />} withPortal={true} />
+        <Datepicker {...props} customInput={<Input />} withPortal={true} readOnly />
       );
       break;
     case DATEPICKER_TYPES.monthpicker:
       Component = (
-        <Monthpicker {...props} customInput={<Input />} withPortal={true} />
+        <Monthpicker {...props} customInput={<Input />} withPortal={true} readOnly />
       );
       break;
 

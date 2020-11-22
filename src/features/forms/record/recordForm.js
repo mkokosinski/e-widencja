@@ -33,7 +33,7 @@ const RecordForm = ({ record }) => {
   const { goBack } = useHistory();
   const dispatch = useDispatch();
   const { items } = useSelector(selectVehicles);
-  // const tourTemplateRef = useRef(null);
+  // const tripTemplateRef = useRef(null);
 
   // const focusOn = (ref) => {
   //   ref.current.focus();

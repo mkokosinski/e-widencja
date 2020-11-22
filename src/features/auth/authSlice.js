@@ -4,6 +4,7 @@ import { auth, firestore } from '../../app/firebase/firebase';
 export const authorize = createAsyncThunk(
   'auth/authorize',
   async (arg, thunkAPI) => {
+    console.log(arg);
     if (arg && arg.user) {
       return await getFirebaseUser(arg.user.uid);
     } else return thunkAPI.rejectWithValue('user not exists');
@@ -13,7 +14,6 @@ export const authorize = createAsyncThunk(
 export const signIn = createAsyncThunk('auth/signIn', async (arg, thunkAPI) => {
   try {
     const { email, password } = arg;
-
     const isAuth = await auth.signInWithEmailAndPassword(email, password);
 
     if (isAuth) {
@@ -105,7 +105,17 @@ export const authSlice = createSlice({
 
 export const selectAuth = (state) => state.auth;
 
-export const selectUser = (state) => state.auth.user;
+export const selectFbUser = (state) => state.auth.user;
+
+// export const selectUser = (state) =>
+//   createSelector([selectAuth, selectUsers], (auth, users) => {
+//     const fbUser = auth.user;
+//     const appUser = users.items.find((user) => user.id === fbUser.id);
+//     console.log(users.items);
+
+//     return appUser;
+//   });
+
 
 export const { setUser } = authSlice.actions;
 

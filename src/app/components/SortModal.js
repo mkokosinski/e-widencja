@@ -11,7 +11,6 @@ const SortModalContent = ({ sortFunc , closeModal, sortItems = [] }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    console.log(sortFunc);
     setTimeout(() => {
       dispatch(sortFunc(values));
       closeModal();

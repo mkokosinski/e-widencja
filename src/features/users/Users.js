@@ -24,6 +24,7 @@ import useModal from '../hooks/useModal';
 import UserFiltersModal from './UserFiltersModal';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from '../records/FilterModal';
+import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 
 const buttons = (id) => [
   {
@@ -66,7 +67,12 @@ function Users() {
           item={user}
           path={Routing.Users.path}
           buttons={buttons(user.id)}
-        />
+        >
+           <Title>
+            <Name>{`${user.name} ${user.surname}`}</Name>
+            <Subname>{user.label}</Subname>
+          </Title>
+        </ListViewItem>
       ))}
     </ItemsList>
   );

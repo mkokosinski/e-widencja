@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './features/routing/PrivateRoute';
 import Routing from './features/routing/RoutingPaths';
@@ -13,27 +13,71 @@ import {
   selectAuth,
   authorize
 } from './features/auth/authSlice';
-import { STATUS } from './utils/fetchUtils';
+import { FETCH_STATUS } from './utils/fetchUtils';
+import Loading from './features/loading/Loading';
+import { fetchSettings } from './features/settings/settingsSlice';
+import { fetchVehicles } from './features/vehicles/vehiclesSlice';
+import { fetchUsers } from './features/users/usersSlice';
+import { fetchRecords } from './features/records/recordsSlice';
+import { fetchTrips } from './features/trips/tripsSlice';
 
 const App = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
-  const { status, error } = useSelector(selectAuth);
-  const dispach = useDispatch();
+  const [errors, setErrors] = useState(null);
+  const [isDataLoading, setIsDataLoading] = useState(true);
+  const { status, error, user: appUser } = useSelector(selectAuth);
+
+  console.log(appUser);
+
+  const dispatch = useDispatch();
+
+  const fetchAllData = useCallback(() => {
+    Promise.all([
+      dispatch(fetchSettings()),
+      dispatch(fetchVehicles()),
+      dispatch(fetchUsers()),
+      dispatch(fetchRecords()),
+      dispatch(fetchTrips())
+    ])
+      .then((dataEntities) => {
+        console.log(dataEntities);
+        const hasErrors = dataEntities.some((data) => data.error);
+        if (hasErrors) {
+          console.log(dataEntities);
+          const err = dataEntities
+            .filter((de) => de.error)
+            .map((de) => de.error.message);
+          setErrors(err);
+        }
+        setIsDataLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (appUser) {
+      fetchAllData();
+    }
+  }, [fetchAllData, appUser]);
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
-        dispach(authorize({ user }));
+        dispatch(authorize({ user }));
       } else {
         setIsUserLoading(false);
       }
     });
-  }, [dispach]);
+  }, [dispatch]);
+
+  if (!isUserLoading && !appUser) {
+    return <Routing.Login.Component />;
+  }
 
   return (
     <>
-      {isUserLoading && status !== STATUS.SUCCESS ? (
-        <div>Loading...</div>
+      {isDataLoading || errors ? (
+        <Loading errors={errors} />
       ) : (
         <Switch>
           <Route path={Routing.Login.path}>

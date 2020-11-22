@@ -4,10 +4,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import useDetectOutsideClick from '../../../../features/hooks/useDetectOutsideClick';
+import { ModalAnimation } from '../../../../utils/animationUtils';
 import {
   months as monthsNames,
   datesAreEqual,
@@ -66,7 +68,6 @@ const MonthpickerComponent = (props) => {
     currentYear,
     endDate,
     months,
-    isOpen,
     isRange,
     minDate,
     maxDate,
@@ -110,8 +111,8 @@ const MonthpickerComponent = (props) => {
   const datepickerRef = useRef(null);
   useDetectOutsideClick(datepickerRef, closeDatepicker);
 
-  return !isOpen ? null : (
-    <DatepickerContent ref={datepickerRef}>
+  return (
+    <DatepickerContent ref={datepickerRef} {...ModalAnimation.content}>
       <DatepickerHeader>
         <DatepickerPrevious onClick={previousYear}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -164,6 +165,9 @@ export const Monthpicker = (props) => {
     minDate,
     maxDate,
     isRange,
+    rangeStart,
+    rangeEnd,
+    readOnly,
     startDate,
     endDate
   } = props;
@@ -208,6 +212,8 @@ export const Monthpicker = (props) => {
     months,
     isOpen,
     isRange,
+    rangeStart,
+    rangeEnd,
     minDate,
     maxDate,
     endDate,
@@ -226,7 +232,8 @@ export const Monthpicker = (props) => {
     type: 'text',
     autoComplete: 'off',
     value: format(new Date(selectedDate), dateFormat),
-    ref: inputRef
+    ref: inputRef,
+    readOnly
   };
 
   return (
@@ -236,15 +243,22 @@ export const Monthpicker = (props) => {
       ) : (
         <input type='text' {...inputProps} readOnly />
       )}
+
       {withPortal ? (
         ReactDOM.createPortal(
-          <DatepickerContainer isOpen={isOpen}>
-            <MonthpickerComponent {...monthpickerProps} />
-          </DatepickerContainer>,
+          <AnimatePresence>
+            {isOpen && (
+              <DatepickerContainer {...ModalAnimation.bg}>
+                <MonthpickerComponent {...monthpickerProps} />
+              </DatepickerContainer>
+            )}
+          </AnimatePresence>,
           document.getElementById(portalId)
         )
       ) : (
-        <MonthpickerComponent {...monthpickerProps} />
+        <AnimatePresence>
+          {isOpen && <MonthpickerComponent {...monthpickerProps} />}
+        </AnimatePresence>
       )}
     </div>
   );

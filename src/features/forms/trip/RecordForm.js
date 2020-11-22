@@ -37,7 +37,7 @@ const validationSchema = Yup.object({
   date: Yup.string()
     .max(20, 'Must be 20 characters or less')
     .required('Pole wymagane'),
-  tourTemplate: Yup.string().required('Pole wymagane'),
+  tripTemplate: Yup.string().required('Pole wymagane'),
   stops: Yup.array().of(
     Yup.object().shape({
       label: Yup.string().max(28, 'Max 28 chars'),
@@ -53,9 +53,9 @@ const handleSubmit = (values) => {
 
 
 
-const TourForm = ({record}) => {
+const RecordForm = ({record}) => {
   const { goBack } = useHistory();
-  const tourTemplateRef = useRef(null);
+  const tripTemplateRef = useRef(null);
 
   const focusOn = (ref) => {
     ref.current.focus();
@@ -63,8 +63,8 @@ const TourForm = ({record}) => {
 
   const initValues = record || {
     record: '',
-    date: new Date(),
-    tourTemplate: '',
+    date: () => new Date(),
+    tripTemplate: '',
     stops: [
       { label: 'Start', place: '', mileage: '' },
       { label: 'Cel', place: '', mileage: '' }
@@ -89,7 +89,7 @@ const TourForm = ({record}) => {
                     const date = format(value, 'yyyy-MM-dd');
                     setFieldTouched('date');
                     setFieldValue('date', date);
-                    focusOn(tourTemplateRef)
+                    focusOn(tripTemplateRef)
                   }}
                   selected={initValues.date}
                 />
@@ -109,7 +109,7 @@ const TourForm = ({record}) => {
                     onChange={({ value }) => {
                       setFieldTouched('record');
                       setFieldValue('record', value);
-                      focusOn(tourTemplateRef);
+                      focusOn(tripTemplateRef);
                     }}
                     // defaultValue={{ label: values.record, value: values.record }}
                   />
@@ -119,9 +119,9 @@ const TourForm = ({record}) => {
 
             <Row>
               <FieldWithErrors
-                name='tourTemplate'
+                name='tripTemplate'
                 label='Trasa'
-                ref={tourTemplateRef}
+                ref={tripTemplateRef}
               >
                 <StyledSelect>
                   <SelectCreatable
@@ -132,8 +132,8 @@ const TourForm = ({record}) => {
                       { label: 'test2', value: 'test2' }
                     ]}
                     onChange={({ value }) => {
-                      setFieldTouched('tourTemplate');
-                      setFieldValue('tourTemplate', value);
+                      setFieldTouched('tripTemplate');
+                      setFieldValue('tripTemplate', value);
                     }}
                     // defaultValue={{ label: values.record, value: values.record }}
                   />
@@ -185,9 +185,9 @@ const TourForm = ({record}) => {
 
             <Row>
               <FieldWithErrors
-                name='tourTemplate'
+                name='tripTemplate'
                 label='Kierowca'
-                ref={tourTemplateRef}
+                ref={tripTemplateRef}
               >
                 <StyledSelect>
                   <SelectCreatable
@@ -220,4 +220,4 @@ const TourForm = ({record}) => {
   );
 };
 
-export default TourForm;
+export default RecordForm;

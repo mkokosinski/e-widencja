@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Routing from '../routing/RoutingPaths';
 
 import LineChart from '../charts/Chart';
-import RecentList from '../templates/detailsView/RecentTours';
+import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
@@ -22,13 +22,15 @@ import {
   SectionDesc,
   SectionChart,
   SectionRecent,
+  DetailsSection,
 } from '../templates/detailsView/DetailsStyles';
 
 import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
 import { ReactComponent as YearIco } from '../../assets/year.svg';
 import { ReactComponent as MonthIco } from '../../assets/month.svg';
 import { ReactComponent as CarIco } from '../../assets/car.svg';
-import { selectRecordById } from '../records/recordsSlice';
+import { selectTripById } from '../trips/tripsSlice';
+import { selectVehicleById } from '../vehicles/vehiclesSlice';
 
 const sampleData = {
   labels: [
@@ -60,7 +62,7 @@ const sampleData = {
   ],
 };
 
-const sampletours = [
+const sampletrips = [
   { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },
   { from: 'Posum', to: 'Biuro', driver: 'MK', distance: '11km' },
   { from: 'Biuro', to: 'USI', driver: 'MK', distance: '11km' },
@@ -75,63 +77,37 @@ const sampletours = [
 const VehileDetails = () => {
   const { id } = useParams();
 
-  const record = useSelector((state) => selectRecordById(state, id));
+  const trip = useSelector(selectTripById(id));
+  // const record = useSelector(state=>selectVehicleById(state, trip.record))
 
-  return record ? (
+
+  return trip ? (
     <Details>
       <SectionDesc>
         <DetailsTopPanel>
           <ButtonGoBack />
-          <DetailsTitle>{record.name}</DetailsTitle>
+          <DetailsTitle>{trip.date}</DetailsTitle>
           <ButtonEdit
-            actionPath={`${Routing.RecordEdit.action}/${record.id}`}
+            actionPath={`${Routing.TripEdit.action}/${trip.id}`}
           />
-          <ButtonDelete item={record} />
+          <ButtonDelete item={trip} />
         </DetailsTopPanel>
 
-        <DetailsInfo>
+        {/* <DetailsInfo>
           <DetailsIco>
             <CompanyIco />
           </DetailsIco>
-          <DetailsData>{record.company}</DetailsData>
+          <DetailsData>{trip.company}</DetailsData>
           <DetailsLabel>Firma</DetailsLabel>
-        </DetailsInfo>
-
-        <DetailsInfo>
-          <DetailsIco>
-            <YearIco />
-          </DetailsIco>
-          <DetailsData>{record.year}</DetailsData>
-          <DetailsLabel>Rok</DetailsLabel>
-        </DetailsInfo>
-
-        <DetailsInfo>
-          <DetailsIco>
-            <MonthIco />
-          </DetailsIco>
-          <DetailsData>{record.month}</DetailsData>
-          <DetailsLabel>Miesiąc</DetailsLabel>
-        </DetailsInfo>
-
-        <DetailsInfo>
-          <DetailsIco>
-            <CarIco />
-          </DetailsIco>
-          <DetailsData>{record.vehicle.name}</DetailsData>
-          <DetailsLabel>Pojazd</DetailsLabel>
-        </DetailsInfo>
+        </DetailsInfo> */}
       </SectionDesc>
 
-      <SectionChart>
-        <LineChart
-          data={sampleData}
-          dataOffset={6}
-          title={'Przejechane kilometry'}
-        />
-      </SectionChart>
+      <DetailsSection>
+      </DetailsSection>
 
+    
       <SectionRecent>
-        <RecentList title='Ostatnie trasy' list={sampletours} />
+        <RecentList title='Ostatnie trasy' list={sampletrips} />
       </SectionRecent>
     </Details>
   ) : null;

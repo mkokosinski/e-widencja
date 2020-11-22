@@ -54,8 +54,13 @@ export const darkTheme = {
     lightSoft: '#fcfdff'
   },
   disabled: {
-    bg: '#b5b5b5',
-    color: '#8c8c8c',
+    bg: '#eeeeee',
+    color: '#d0d0d0',
+  },
+  status: {
+    error: '#ff0000',
+    warning: '#f0bb00',
+    default: '#009938'
   },
   font
 };

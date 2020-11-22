@@ -17,7 +17,7 @@ import {
   SectionChart,
   SectionRecent,
 } from '../templates/detailsView/DetailsStyles';
-import RecentList from '../templates/detailsView/RecentTours';
+import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
@@ -47,7 +47,7 @@ const sampleData = {
   ],
 };
 
-const sampletours = [
+const sampletrips = [
   { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },
   { from: 'Posum', to: 'Biuro', driver: 'MK', distance: '11km' },
   { from: 'Biuro', to: 'USI', driver: 'MK', distance: '11km' },
@@ -118,7 +118,7 @@ const VehileDetails = () => {
       </SectionChart>
 
       <SectionRecent>
-        <RecentList title='Ostatnie trasy' list={sampletours} />
+        <RecentList title='Ostatnie trasy' list={sampletrips} />
       </SectionRecent>
     </Details>
   ) : null;

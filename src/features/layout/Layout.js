@@ -22,22 +22,18 @@ import Profilebar from '../profile/Profilebar';
 import { StyledLayout, Menu, Body, StyledLogo } from './LayoutStyles';
 import Router from '../routing/Router';
 import { fetchSettings } from '../settings/settingsSlice';
+import { fetchTrips } from '../trips/tripsSlice';
 
 const Layout = () => {
   const dispatch = useDispatch();
   const IsLaptop = useSelector(selectIsLaptop);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
-  
+
   const initSize = useCallback(() => {
     const {
       documentElement: { clientHeight, clientWidth }
     } = document;
     dispatch(setSiteSize({ height: clientHeight, width: clientWidth }));
-
-    dispatch(fetchSettings());
-    dispatch(fetchRecords());
-    dispatch(fetchVehicles());
-    dispatch(fetchUsers());
   }, [dispatch]);
 
   useEffect(() => {

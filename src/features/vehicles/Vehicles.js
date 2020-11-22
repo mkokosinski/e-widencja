@@ -1,7 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectFilteredVehicles, selectVehicleSort, setSortFunc } from './vehiclesSlice';
+import {
+  selectFilteredVehicles,
+  selectVehicleSort,
+  setSortFunc
+} from './vehiclesSlice';
 import Routing from '../routing/RoutingPaths';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +14,7 @@ import {
   faCarAlt,
   faFileAlt,
   faPlusSquare,
-  faEdit,
+  faEdit
 } from '@fortawesome/free-solid-svg-icons';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
@@ -18,11 +22,20 @@ import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  ItemsList,
+  ItemsList
 } from '../templates/ListView/ListViewStyles';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './VehiclesFiltersModal';
 import SortButton from '../../app/components/SortButton';
+import {
+  InfoMain,
+  InfoSecondary,
+  Journey,
+  Journeys,
+  Name,
+  Subname,
+  Title
+} from '../templates/ListView/ListViewItemStyles';
 
 const buttons = (id) => [
   {
@@ -57,17 +70,31 @@ function Vehicles() {
         </ButtonAdd>
         <FilterButton modalComponent={FilterModal} />
         <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
-
       </TopPanel>
 
       {vehicles.map((vehicle) => (
         <ListViewItem
           key={vehicle.id}
           ico={faCarAlt}
-          item={{ ...vehicle, subname: `${vehicle.brand} ${vehicle.model}` }}
           path={Routing.Vehicles.path}
           buttons={buttons(vehicle.id)}
-        />
+        >
+          <Title>
+            <Name>{vehicle.name}</Name>
+            <Subname>{`${vehicle.brand} ${vehicle.model}`}</Subname>
+          </Title>
+
+          <Journeys>
+            <Journey>
+              <InfoMain>359,34km</InfoMain>
+              <InfoSecondary>w tym miesiącu</InfoSecondary>
+            </Journey>
+            <Journey>
+              <InfoMain>29 przejazdów</InfoMain>
+              <InfoSecondary>w tym miesiącu</InfoSecondary>
+            </Journey>
+          </Journeys>
+        </ListViewItem>
       ))}
     </ItemsList>
   );

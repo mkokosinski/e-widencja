@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 const Button = styled.button`
@@ -28,7 +29,7 @@ export const DatepickerPortal = styled.div`
   position: relative;
 `;
 
-export const DatepickerContent = styled.div`
+export const DatepickerContent = styled(motion.div)`
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 1px 12px -4px rgba(0, 0, 0, 0.5),
@@ -37,43 +38,25 @@ export const DatepickerContent = styled.div`
   min-width: 250px;
   max-width: 90%;
   position: absolute;
-
-  animation: show 200ms linear both;
-  @keyframes show {
-    from {
-      opacity: 0;
-      transform: scale(0.9) translate(-10%, -10%);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translate(0, 0);
-    }
-  }
+  z-index: 9999;
 `;
 
-export const DatepickerContainer = styled.div`
-  ${(props) => {
-    return (
-      props.isOpen &&
-      css`
-        top: 0;
-        left: 0;
+export const DatepickerContainer = styled(motion.div)`
+  top: 0;
+  left: 0;
 
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 9998;
 
-        ${DatepickerContent} {
-          top: 32vh;
-        }
-      `
-    );
-  }}
+  ${DatepickerContent} {
+    top: 30vh;
+  }
 `;
 
 export const DatepickerHeader = styled.div`

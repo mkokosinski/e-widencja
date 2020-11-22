@@ -91,19 +91,19 @@ const Router = () => {
         </Switch>
       </PrivateRoute>
 
-      <PrivateRoute path={Routing.Tours.path}>
+      <PrivateRoute path={Routing.Trips.path}>
         <Switch>
-          <Route exact path={Routing.TourAdd.path}>
-            <Routing.TourAdd.Component />
+          <Route exact path={Routing.TripAdd.path}>
+            <Routing.TripAdd.Component />
           </Route>
-          <Route exact path={Routing.TourEdit.path}>
-            <Routing.TourEdit.Component />
+          <Route exact path={Routing.TripEdit.path}>
+            <Routing.TripEdit.Component />
           </Route>
-          <Route exact path={Routing.TourDetails.path}>
-            <Routing.TourDetails.Component />
+          <Route exact path={Routing.TripDetails.path}>
+            <Routing.TripDetails.Component />
           </Route>
-          <Route exact path={Routing.Tours.path}>
-            <Routing.Tours.Component />
+          <Route exact path={Routing.Trips.path}>
+            <Routing.Trips.Component />
           </Route>
           <Route>
             <Error404 />

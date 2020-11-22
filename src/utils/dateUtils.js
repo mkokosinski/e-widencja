@@ -67,9 +67,6 @@ export const datesAreEqual = (dateOne, dateTwo) => {
   date1.setHours(0, 0, 0, 0);
   date2.setHours(0, 0, 0, 0);
 
-  console.log(date1);
-  console.log(date2);
-
   return date1.getTime() === date2.getTime();
 };
 

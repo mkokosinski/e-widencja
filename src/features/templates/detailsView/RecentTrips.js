@@ -9,7 +9,7 @@ import {
   ShowMore,
   TopPanel,
   StyledRecentList,
-} from './RecentToursStyles';
+} from './RecentTripsStyles';
 
 import { v4 } from 'uuid';
 

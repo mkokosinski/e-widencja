@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { FieldArray, Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
@@ -22,13 +22,16 @@ import {
   ButtonMain,
   ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
-import DateInput from '../DateInput';
-import {
-  faMinus,
-  faPlusCircle
-} from '@fortawesome/free-solid-svg-icons';
+import DateInput, { DATEPICKER_TYPES } from '../DateInput';
+import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
+import { selectVehicles } from '../../vehicles/vehiclesSlice';
+import { selectDrivers } from '../../users/usersSlice';
+import { selectRecords } from '../../records/recordsSlice';
+import { selectFbUser } from '../../auth/authSlice';
+import { USER_ROLES } from '../../../utils/authUtils';
 
 const validationSchema = Yup.object({
   record: Yup.string()
@@ -37,25 +40,48 @@ const validationSchema = Yup.object({
   date: Yup.string()
     .max(20, 'Must be 20 characters or less')
     .required('Pole wymagane'),
-  tourTemplate: Yup.string().required('Pole wymagane'),
+  tripTemplate: Yup.string(),
   stops: Yup.array().of(
     Yup.object().shape({
       label: Yup.string().max(28, 'Max 28 chars'),
       stop: Yup.string().max(28, 'Max 28 chars')
     })
   ),
-  driver: Yup.string().required('Pole wymagane')
+  driver: Yup.string()
 });
 
 const handleSubmit = (values) => {
   console.log(values);
 };
 
+const TripForm = ({ record }) => {
+  // const [recordSelectItems, setRecordSelectItems] = useState([])
+  // const [recordSelectItems, setRecordSelectItems] = useState([])
 
+  const { items: records } = useSelector(selectRecords);
+  const drivers = useSelector(selectDrivers);
+  const user = useSelector(selectFbUser);
+  const isAdmin = user.role === USER_ROLES.admin;
 
-const RecordForm = ({record}) => {
   const { goBack } = useHistory();
-  const tourTemplateRef = useRef(null);
+  const tripTemplateRef = useRef(null);
+
+  const recordSelectItems = records.map((rec) => ({
+    label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
+    value: rec.id
+  }));
+
+  const currDriver = {
+    label: user.fullname,
+    value: user.id
+  };
+
+  const driverSelectItems = isAdmin
+    ? drivers.map((driv) => ({
+        label: driv.fullname,
+        value: driv.id
+      }))
+    : currDriver;
 
   const focusOn = (ref) => {
     ref.current.focus();
@@ -63,13 +89,13 @@ const RecordForm = ({record}) => {
 
   const initValues = record || {
     record: '',
-    date: () => new Date(),
-    tourTemplate: '',
+    date: new Date(),
+    tripTemplate: '',
     stops: [
       { label: 'Start', place: '', mileage: '' },
       { label: 'Cel', place: '', mileage: '' }
     ],
-    driver: ''
+    driver: currDriver
   };
 
   return (
@@ -84,15 +110,37 @@ const RecordForm = ({record}) => {
             <Row>
               <FieldWithErrors name='date' label='Data'>
                 <DateInput
-                  minDate={new Date()}
-                  onChange={(value) => {
-                    const date = format(value, 'yyyy-MM-dd');
+                  onChange={(date) => {
                     setFieldTouched('date');
                     setFieldValue('date', date);
-                    focusOn(tourTemplateRef)
+                    // focusOn(tripTemplateRef)
                   }}
-                  selected={initValues.date}
+                  defaultDate={values.date}
+                  type={DATEPICKER_TYPES.daypicker}
                 />
+              </FieldWithErrors>
+            </Row>
+
+            <Row>
+              <FieldWithErrors
+                name='tripTemplate'
+                label='Kierowca'
+                ref={tripTemplateRef}
+              >
+                <StyledSelect>
+                  <Select
+                    as='select'
+                    isSearchable={true}
+                    options={driverSelectItems}
+                    onChange={({ value }) => {
+                      setFieldTouched('driver');
+                      setFieldValue('driver', value);
+                    }}
+                    isDisabled={!isAdmin}
+                    value={values.driver}
+                    // defaultValue={{ label: values.record, value: values.record }}
+                  />
+                </StyledSelect>
               </FieldWithErrors>
             </Row>
 
@@ -102,14 +150,11 @@ const RecordForm = ({record}) => {
                   <Select
                     as='select'
                     isSearchable={true}
-                    options={[
-                      { label: 'test', value: 'test' },
-                      { label: 'test2', value: 'test2' }
-                    ]}
+                    options={recordSelectItems}
                     onChange={({ value }) => {
                       setFieldTouched('record');
                       setFieldValue('record', value);
-                      focusOn(tourTemplateRef);
+                      focusOn(tripTemplateRef);
                     }}
                     // defaultValue={{ label: values.record, value: values.record }}
                   />
@@ -119,21 +164,18 @@ const RecordForm = ({record}) => {
 
             <Row>
               <FieldWithErrors
-                name='tourTemplate'
+                name='tripTemplate'
                 label='Trasa'
-                ref={tourTemplateRef}
+                ref={tripTemplateRef}
               >
                 <StyledSelect>
                   <SelectCreatable
                     as='select'
                     isSearchable={true}
-                    options={[
-                      { label: 'test', value: 'test' },
-                      { label: 'test2', value: 'test2' }
-                    ]}
+                    options={recordSelectItems}
                     onChange={({ value }) => {
-                      setFieldTouched('tourTemplate');
-                      setFieldValue('tourTemplate', value);
+                      setFieldTouched('tripTemplate');
+                      setFieldValue('tripTemplate', value);
                     }}
                     // defaultValue={{ label: values.record, value: values.record }}
                   />
@@ -168,7 +210,7 @@ const RecordForm = ({record}) => {
                         <AddItemButton
                           onClick={() => {
                             insert(values.stops.length - 1, {
-                              label: `Przystanek`,
+                              label: `Przystanek${index}`,
                               stop: ''
                             });
                           }}
@@ -181,30 +223,6 @@ const RecordForm = ({record}) => {
                   ))
                 }
               </FieldArray>
-            </Row>
-
-            <Row>
-              <FieldWithErrors
-                name='tourTemplate'
-                label='Kierowca'
-                ref={tourTemplateRef}
-              >
-                <StyledSelect>
-                  <SelectCreatable
-                    as='select'
-                    isSearchable={true}
-                    options={[
-                      { label: 'test', value: 'test' },
-                      { label: 'test2', value: 'test2' }
-                    ]}
-                    onChange={({ value }) => {
-                      setFieldTouched('driver');
-                      setFieldValue('driver', value);
-                    }}
-                    // defaultValue={{ label: values.record, value: values.record }}
-                  />
-                </StyledSelect>
-              </FieldWithErrors>
             </Row>
 
             <ButtonsContainer>
@@ -220,4 +238,4 @@ const RecordForm = ({record}) => {
   );
 };
 
-export default RecordForm;
+export default TripForm;

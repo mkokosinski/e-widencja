@@ -5,13 +5,14 @@ import {
   H2,
   PanelOverlapLight,
   PanelLightSoft,
-  ButtonLightSoft,
+  ButtonLightSoft
 } from '../../layout/LayoutStyles';
 
 export const Container = styled(PanelOverlapLight)`
+  cursor: default;
   height: 80px;
-  padding: 0;
   margin: 10px auto;
+  padding: 0;
   width: 97%;
 `;
 
@@ -72,11 +73,12 @@ export const Title = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   width: auto;
-
 `;
 
 export const Name = styled(H2)`
   font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media screen and (${device.mobileXL}) {
     font-size: 1em;

@@ -27,6 +27,7 @@ import {
   faUser
 } from '@fortawesome/free-solid-svg-icons';
 import FilterButton from '../../app/components/FilterButton';
+import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 
 const buttons = (id) => [
   {
@@ -42,7 +43,7 @@ const buttons = (id) => [
   {
     ico: faPlusSquare,
     label: 'Przejazd',
-    action: 'details'
+    action: `${Routing.TripAdd.path}`
   }
 ];
 const Records = () => {
@@ -71,7 +72,12 @@ const Records = () => {
             item={{ ...record, subname }}
             path={Routing.Records.path}
             buttons={buttons(record.id)}
-          />
+          >
+            <Title>
+              <Name>{record.name}</Name>
+              <Subname>{subname}</Subname>
+            </Title>
+          </ListViewItem>
         );
       })}
     </ItemsList>

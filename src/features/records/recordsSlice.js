@@ -7,6 +7,9 @@ import { months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
 import { firestore } from '../../app/firebase/firebase';
+import { selectUserById } from '../users/usersSlice';
+
+import { FETCH_STATUS } from '../../utils/fetchUtils';
 
 export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',
@@ -59,16 +62,16 @@ const sortMethods = {
 export const recordsSlice = createSlice({
   name: 'records',
   initialState: {
-    status: 'idle',
+    status: FETCH_STATUS.IDLE,
     items: [],
     error: null,
-    sortFunc: { name: 'Data', condition: 'asc' },
+    sortFunc: { name: 'Data', condition: 'desc' },
     sortCases: [
       {
         title: 'Data',
         items: [
-          { label: 'od najnowszych', condition: 'asc' },
-          { label: 'od najstarszych', condition: 'desc' }
+          { label: 'od najnowszych', condition: 'desc' },
+          { label: 'od najstarszych', condition: 'asc' }
         ]
       }
     ]
@@ -83,23 +86,25 @@ export const recordsSlice = createSlice({
   },
   extraReducers: {
     [fetchRecords.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [fetchRecords.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = FETCH_STATUS.SUCCESS;
+      const items = [];
       action.payload.forEach((rec) => {
-        state.items.push({
+        items.push({
           ...rec,
           get name() {
             return `${months[this.month - 1]} ${this.year}`;
           }
         });
       });
+      state.items = items;
     },
 
     [fetchRecords.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = FETCH_STATUS.ERROR;
       state.error = action.error.message;
     },
     [addRecord.pending]: (state, action) => {
@@ -171,12 +176,17 @@ export const selectFiteredRecords = createSelector(
 );
 
 export const selectRecordById = (state, recordId) => {
-  const record = state.records.items.find((record) => record.id === recordId);
-  console.log('items', record, recordId);
-  const vehicle = state.vehicles.items.find(
-    (vehicle) => vehicle.id === record.vehicleId
-  );
-  return { ...record, vehicle: { ...vehicle } };
+  const { records } = state;
+  if (records.status === FETCH_STATUS.SUCCESS) {
+    const record = state.records.items.find((record) => record.id === recordId);
+    console.log('items', record, recordId);
+    const vehicle = state.vehicles.items.find(
+      (vehicle) => vehicle.id === record.vehicleId
+    );
+    return { ...record, vehicle: { ...vehicle } };
+  }
+
+  return { status: records.status };
 };
 
 export const selectActiveVehicleFilter = (state) =>

@@ -27,6 +27,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Day from './Day';
 import useDetectOutsideClick from '../../../features/hooks/useDetectOutsideClick';
+import { AnimatePresence } from 'framer-motion';
+import { ModalAnimation } from '../../../utils/animationUtils';
 
 const getDaysCount = (year, month) => new Date(year, month + 1, 0).getDate();
 
@@ -132,9 +134,8 @@ const useDatepicker = (date, firstDayOfWeek) => {
 
   const onSelectDate = () => {};
 
-  const selectDate = (selectedDay) => {
-    const newDate = new Date(selectedDay.date);
-    setSelectedDate(newDate);
+  const selectDate = (date) => {
+    setSelectedDate(date);
   };
 
   return {
@@ -196,6 +197,10 @@ const Calendar = (props) => {
     return false;
   };
 
+  const handelSelect = (date) => {
+    selectDate(date);
+    closeDatepicker();
+  };
 
   const monthLabel = `${months[currentMonth]} ${currentYear}`;
   return (
@@ -224,18 +229,23 @@ const Calendar = (props) => {
                 ? datesAreEqual(day.date, startDate) ||
                   datesAreEqual(day.date, endDate)
                 : datesAreEqual(day.date, selectedDate);
+              const isRanged =
+                isRange && dateBetween(day.date, startDate, endDate);
 
-
+              const isDisabled = checkDisable(day.date);
               return (
                 <Day
                   key={day.date + index}
                   selectedDate={selectedDate}
                   day={day}
-                  onSelectedDate={() => {
-                    selectDate(day);
-                    closeDatepicker();
+                  selectDate={() => {
+                    if (!isDisabled) {
+                      handelSelect(day.date);
+                    }
                   }}
                   isSelected={isSelected}
+                  isRanged={isRanged}
+                  isDisabled={isDisabled}
                 />
               );
             })}
@@ -263,6 +273,7 @@ export const Datepicker = (props) => {
     maxDate,
     rangeStart,
     rangeEnd,
+    readOnly,
     endDate,
     startDate
   } = props;
@@ -276,7 +287,7 @@ export const Datepicker = (props) => {
     nextMonth,
     previousMonth,
     selectDate
-  } = useDatepicker(defaultDate, firstDayOfWeek);
+  } = useDatepicker(new Date(defaultDate), firstDayOfWeek);
 
   const dispatchOnClick = useCallback(() => {
     const input = inputRef.current;
@@ -327,9 +338,9 @@ export const Datepicker = (props) => {
     onChange: () => onChange(format(selectedDate, dateFormat)),
     type: 'text',
     autoComplete: 'off',
-    // defaultValue: defaultValue && format(new Date(defaultValue), dateFormat)
     value: format(new Date(selectedDate), dateFormat),
-    ref: inputRef
+    ref: inputRef,
+    readOnly
   };
 
   useEffect(() => {
@@ -345,13 +356,19 @@ export const Datepicker = (props) => {
       )}
       {withPortal ? (
         ReactDOM.createPortal(
-          <DatepickerContainer isOpen={isOpen}>
-            <Calendar {...datepickerProps} />
-          </DatepickerContainer>,
+          <AnimatePresence>
+            {isOpen && (
+              <DatepickerContainer {...ModalAnimation.bg}>
+                <Calendar {...datepickerProps} />
+              </DatepickerContainer>
+            )}
+          </AnimatePresence>,
           document.getElementById(portalId)
         )
       ) : (
-        <Calendar {...datepickerProps} />
+        <AnimatePresence>
+          {isOpen && <Calendar {...datepickerProps} />}
+        </AnimatePresence>
       )}
     </div>
   );

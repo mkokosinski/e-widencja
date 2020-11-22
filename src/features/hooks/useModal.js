@@ -1,47 +1,25 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import { ModalAnimation } from '../../utils/animationUtils';
 import useDetectOutsideClick from './useDetectOutsideClick';
 
-export const ModalBackground = styled.div`
+export const ModalBackground = styled(motion.div)`
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   left: 0;
-  position: absolute;
+  position: fixed;
   top: 0;
-  transition: 2s;
-  width: 100%;
+  width: 100vw;
   z-index: 999;
-
-  animation: fade 150ms linear both;
-
-  @keyframes fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
 `;
 
-export const ModalContent = styled.div`
+export const ModalContent = styled(motion.div)`
   display: flex;
-  animation: content 150ms ease-out 100ms both;
-
-  @keyframes content {
-    from {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-  }
 `;
 
 const useModal = () => {
@@ -56,26 +34,33 @@ const useModal = () => {
     setIsOpen(false);
   };
 
-
   useEffect(() => {
     if (isOpen) {
-      // document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
     } else {
-      // document.body.style.overflow = '';
+      document.body.style.overflow = '';
     }
   }, [isOpen]);
 
   const Modal = ({ children }) => {
     useDetectOutsideClick(contentRef, closeModal, true);
 
-    return isOpen
-      ? ReactDOM.createPortal(
-          <ModalBackground isOpen={isOpen}>
-            <ModalContent ref={contentRef}>{children}</ModalContent>
-          </ModalBackground>,
-          document.getElementById('portals')
-        )
-      : null;
+    // return ReactDOM.createPortal(
+    return ReactDOM.createPortal(
+      <AnimatePresence>
+        {isOpen && (
+          <ModalBackground
+            {...ModalAnimation.bg}
+            transition={{ duration: 0.2 }}
+          >
+            <ModalContent {...ModalAnimation.content} ref={contentRef}>
+              {children}
+            </ModalContent>
+          </ModalBackground>
+        )}
+      </AnimatePresence>,
+      document.getElementById('portals')
+    );
   };
 
   return { Modal, openModal, closeModal };

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 import { useCallback } from 'react';
 import { createPortal } from 'react-dom';
@@ -6,7 +7,7 @@ import useDetectOutsideClick from './useDetectOutsideClick';
 
 const root = document.getElementById('root');
 
-const StyledDropdown = styled.div`
+const StyledDropdown = styled(motion.div)`
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
 
@@ -26,7 +27,8 @@ const StyledDropdown = styled.div`
 
   background: white;
 
-  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.6),
+    0 1px 100px 50px rgba(0, 0, 0, 0.07), 0 1px 300px 70px rgba(0, 0, 0, 0.05);
 
   border-radius: 10px;
 
@@ -37,6 +39,19 @@ const StyledDropdown = styled.div`
     width: fit-content;
   }
 `;
+
+const animation = {
+  initial: {
+    opacity: 0,
+    y: 10
+  },
+  animate: {
+    opacity: 1,
+    y: 0
+  },
+  transition: { duration: 0.2 },
+  exit: { opacity: 0 }
+};
 
 export const useDropdown = (buttonRef, direction = 'bottom') => {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,12 +109,19 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
   }, [detectPosition, isOpen]);
 
   const List = ({ children }) => {
-  useDetectOutsideClick(dropdownRef, () => setIsOpen(false));
+    useDetectOutsideClick(dropdownRef, () => setIsOpen(false));
 
     return createPortal(
-      <StyledDropdown pos={position} ref={dropdownRef} isOpen={isOpen}>
-        {children}
-      </StyledDropdown>,
+      <AnimatePresence>
+        <StyledDropdown
+          pos={position}
+          ref={dropdownRef}
+          isOpen={isOpen}
+          // {...animation}
+        >
+          {children}
+        </StyledDropdown>
+      </AnimatePresence>,
       root
     );
   };
