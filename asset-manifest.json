@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/e-widencja/static/css/main.a4cae8ad.chunk.css",
-    "main.js": "/e-widencja/static/js/main.2199e942.chunk.js",
-    "main.js.map": "/e-widencja/static/js/main.2199e942.chunk.js.map",
+    "main.js": "/e-widencja/static/js/main.f24a8b8c.chunk.js",
+    "main.js.map": "/e-widencja/static/js/main.f24a8b8c.chunk.js.map",
     "runtime-main.js": "/e-widencja/static/js/runtime-main.9fc514ea.js",
     "runtime-main.js.map": "/e-widencja/static/js/runtime-main.9fc514ea.js.map",
     "static/js/2.ce080016.chunk.js": "/e-widencja/static/js/2.ce080016.chunk.js",
     "static/js/2.ce080016.chunk.js.map": "/e-widencja/static/js/2.ce080016.chunk.js.map",
     "index.html": "/e-widencja/index.html",
-    "precache-manifest.769301d9df4adaa9b785b6fb96234875.js": "/e-widencja/precache-manifest.769301d9df4adaa9b785b6fb96234875.js",
+    "precache-manifest.8576d9f5be009a194ff9b2a18c820056.js": "/e-widencja/precache-manifest.8576d9f5be009a194ff9b2a18c820056.js",
     "service-worker.js": "/e-widencja/service-worker.js",
     "static/css/main.a4cae8ad.chunk.css.map": "/e-widencja/static/css/main.a4cae8ad.chunk.css.map",
     "static/js/2.ce080016.chunk.js.LICENSE.txt": "/e-widencja/static/js/2.ce080016.chunk.js.LICENSE.txt",
@@ -28,6 +28,6 @@
     "static/js/runtime-main.9fc514ea.js",
     "static/js/2.ce080016.chunk.js",
     "static/css/main.a4cae8ad.chunk.css",
-    "static/js/main.2199e942.chunk.js"
+    "static/js/main.f24a8b8c.chunk.js"
   ]
 }
