@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
@@ -15,60 +15,95 @@ import {
   StyledField,
   StyledSelect,
   ButtonsContainer,
-  Row,
-} from '../FormsStyles'; 
+  Row
+} from '../FormsStyles';
 import {
   ButtonMain,
-  ButtonBorderedSeconderySoft,
+  ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
+import { useSelector } from 'react-redux';
+import {
+  selectCarBrands} from '../../vehicles/carBrandsSlice';
+import {
+  formSelectCreateLabel,
+  validationMessages
+} from '../../../utils/formUtils';
 
 const validationSchema = Yup.object({
   name: Yup.string()
-    .max(15, 'Must be 15 characters or less')
-    .required('Required'),
-  mark: Yup.string()
-    .max(20, 'Must be 20 characters or less')
-    .required('Required'),
+    .min(3, validationMessages.min(3))
+    .max(50, validationMessages.max(50))
+    .required('Wymagane'),
+  brand: Yup.string()
+    .min(3, validationMessages.min(3))
+    .max(50, validationMessages.max(50))
+    .required('Wymagane'),
   model: Yup.string()
-    .max(15, 'Must be 15 characters or less')
-    .required('Required'),
+    .min(1, validationMessages.min(1))
+    .max(50, validationMessages.max(50))
+    .required('Wymagane'),
   registrationNumber: Yup.string()
-    .max(20, 'Must be 20 characters or less')
-    .required('Required'),
-  mileage: Yup.string()
-    .max(15, 'Must be 15 characters or less')
-    .required('Required'),
-  checkupDate: Yup.string()
-    .max(20, 'Must be 20 characters or less')
-    .required('Required'),
+    .min(3, validationMessages.min(3))
+    .max(7, validationMessages.max(7))
+    .required('Wymagane'),
+  mileage: Yup.number().min(1).required('Wymagane'),
+  checkupDate: Yup.date().required('Wymagane'),
   type: Yup.string()
     .min(5, 'Min 5')
     .max(15, 'Must be 15 characters or less')
-    .required('Required'),
+    .required('Wymagane')
 });
 
 const handleSubmit = (values) => {
   console.log(values);
 };
 
+
 const VehicleForm = ({ vehicle }) => {
+  const [selectedBrand, setSelectedBrand] = useState('');
+
   const { goBack } = useHistory();
   const modelRef = useRef(null);
   const typeRef = useRef(null);
+  const carBrands = useSelector(selectCarBrands);
 
-  const focusOn = (ref) => {
-    ref.current.focus();
+  const carBrandsSelectItems = carBrands.map((cb) => ({
+    label: cb.label,
+    value: cb
+  }));
+
+  // const getModels = React.useMemo(() => {
+  //   return selectedBrand
+  //     ? carBrands.models.map((model) => ({
+  //         label: model.name,
+  //         value: model
+  //       }))
+  //     : '';
+  // }, [selectedBrand, carBrands.models]);
+
+  const getModels = () => {
+    return selectedBrand
+      ? selectedBrand.models.map((model) => ({
+          label: model.model,
+          value: model
+        }))
+      : '';
   };
+
 
   let initValues = vehicle || {
     name: '',
-    mark: '',
+    brand: '',
     model: '',
     registrationNumber: '',
     mileage: '',
     checkupDate: '',
-    type: '',
+    type: ''
   };
+
+  useEffect(() => {
+    vehicle && setSelectedBrand(vehicle.brand);
+  }, [vehicle]);
 
   return (
     <Container>
@@ -85,28 +120,43 @@ const VehicleForm = ({ vehicle }) => {
               </FieldWithErrors>
             </Row>
             <Row>
-              <FieldWithErrors name='mark' label='Marka'>
+              <FieldWithErrors name='brand' label='Marka'>
                 <StyledSelect>
-                  <SelectCreatable
+                  <Select
                     as='select'
                     isSearchable={true}
-                    options={[
-                      { label: 'test', value: 'test' },
-                      { label: 'test2', value: 'test2' },
-                    ]}
+                    id='brand'
+                    options={carBrandsSelectItems}
                     onChange={({ value }) => {
-                      setFieldTouched('mark');
-                      setFieldValue('mark', value);
-                      focusOn(modelRef);
+                      setFieldTouched('brand');
+                      setFieldValue('brand', value);
+                      setSelectedBrand(value);
+                      // focusOn(modelRef);
                     }}
-                    defaultValue={{ label: values.mark, value: values.mark }}
+                    defaultValue={initValues.brand}
                   />
                 </StyledSelect>
               </FieldWithErrors>
             </Row>
             <Row>
               <FieldWithErrors name='model' label='Model'>
-                <StyledField type='text' innerRef={modelRef} />
+                <StyledSelect>
+                  <SelectCreatable
+                    innerRef={modelRef}
+                    as='select'
+                    isSearchable={true}
+                    options={getModels()}
+                    id='model'
+                    onChange={({ value }) => {
+                      setFieldTouched('model');
+                      setFieldValue('model', value);
+                    }}
+                    defaultValue={initValues.model}
+                    noOptionsMessage={() => 'Wybierz markę'}
+                    formatCreateLabel={(label) => formSelectCreateLabel(label)}
+                    isDisabled={!selectedBrand}
+                  />
+                </StyledSelect>
               </FieldWithErrors>
             </Row>
             <Row>
@@ -114,24 +164,32 @@ const VehicleForm = ({ vehicle }) => {
                 name='registrationNumber'
                 label='Numer rejestracyjny'
               >
-                <StyledField type='text' />
+                <StyledField
+                  type='text'
+                  autoComplete='registrationNumber'
+                  value={values.registrationNumber.toUpperCase()}
+                  maxLength={7}
+                />
               </FieldWithErrors>
             </Row>
 
             <Row>
               <FieldWithErrors name='mileage' label='Przebieg'>
-                <StyledField type='number' />
+                <StyledField
+                  type='number'
+                  autoComplete='mileage'
+                />
               </FieldWithErrors>
 
               <FieldWithErrors name='checkupDate' label='Data przeglądu'>
                 <DateInput
-                    onChange={(value) => {
-                      console.log(value);
-                      setFieldTouched('checkupDate');
-                      setFieldValue('checkupDate', value);
-                      // focusOn(typeRef);
-                    }}
-                    // defaultValue={initValues.checkupDate}
+                  onChange={(value) => {
+                    console.log(value);
+                    setFieldTouched('checkupDate');
+                    setFieldValue('checkupDate', value);
+                    // focusOn(typeRef);
+                  }}
+                  // defaultValue={initValues.checkupDate}
                 />
               </FieldWithErrors>
             </Row>
@@ -139,21 +197,18 @@ const VehicleForm = ({ vehicle }) => {
             <Row>
               <FieldWithErrors name='type' label='Typ'>
                 <StyledSelect>
-                  <Select
+                  <SelectCreatable
                     ref={typeRef}
                     as='select'
                     styles={StyledSelect}
                     isSearchable={true}
-                    options={[
-                      { label: 'test', value: 'test' },
-                      { label: 'test2', value: 'test2' },
-                    ]}
                     onChange={({ value }) => {
                       setFieldTouched('type');
                       setFieldValue('type', value);
                     }}
                     openMenuOnFocus={true}
                     defaultValue={{ label: values.type, value: values.type }}
+                    formatCreateLabel={(label) => formSelectCreateLabel(label)}
                   />
                 </StyledSelect>
               </FieldWithErrors>

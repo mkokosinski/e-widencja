@@ -20,14 +20,15 @@ import { fetchVehicles } from './features/vehicles/vehiclesSlice';
 import { fetchUsers } from './features/users/usersSlice';
 import { fetchRecords } from './features/records/recordsSlice';
 import { fetchTrips } from './features/trips/tripsSlice';
+import { fetchTripTemplates } from './features/tripTemplates/tripTemplatesSlice';
+import { fetchCarBrands } from './features/vehicles/carBrandsSlice';
+import { fetchCarModels } from './features/vehicles/carModelsSlice';
 
 const App = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { status, error, user: appUser } = useSelector(selectAuth);
-
-  console.log(appUser);
 
   const dispatch = useDispatch();
 
@@ -37,13 +38,14 @@ const App = () => {
       dispatch(fetchVehicles()),
       dispatch(fetchUsers()),
       dispatch(fetchRecords()),
-      dispatch(fetchTrips())
+      dispatch(fetchTrips()),
+      dispatch(fetchTripTemplates()),
+      dispatch(fetchCarBrands()),
+      dispatch(fetchCarModels())
     ])
       .then((dataEntities) => {
-        console.log(dataEntities);
         const hasErrors = dataEntities.some((data) => data.error);
         if (hasErrors) {
-          console.log(dataEntities);
           const err = dataEntities
             .filter((de) => de.error)
             .map((de) => de.error.message);
@@ -51,7 +53,7 @@ const App = () => {
         }
         setIsDataLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setErrors(err));
   }, [dispatch]);
 
   useEffect(() => {

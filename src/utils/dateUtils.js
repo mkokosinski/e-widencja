@@ -93,3 +93,15 @@ export const dateBetween = (date, from, to) => {
     date1.getTime() >= dateFrom.getTime() && date1.getTime() <= dateTo.getTime()
   );
 };
+
+export const differenceInDays = (dateOne, dateTwo) => {
+  const date1 = new Date(dateOne);
+  const date2 = new Date(dateTwo);
+
+  date1.setHours(0, 0, 0, 0);
+  date2.setHours(0, 0, 0, 0);
+
+  const diff = (date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24);
+
+  return diff;
+};

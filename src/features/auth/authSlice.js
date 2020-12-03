@@ -4,7 +4,6 @@ import { auth, firestore } from '../../app/firebase/firebase';
 export const authorize = createAsyncThunk(
   'auth/authorize',
   async (arg, thunkAPI) => {
-    console.log(arg);
     if (arg && arg.user) {
       return await getFirebaseUser(arg.user.uid);
     } else return thunkAPI.rejectWithValue('user not exists');

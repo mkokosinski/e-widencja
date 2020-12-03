@@ -21,8 +21,9 @@ export const layoutSlice = createSlice({
     setSiteSize: (state, payload) => {
       state.siteSize = payload.payload;
     },
-    setIsMobileKeyboard: (state, payload) => {
-      state.isMobileKeyboard = payload.payload;
+    setIsMobileKeyboard: (state, action) => {
+      console.log(action);
+      state.isMobileKeyboard = action.payload;
     },
   },
 });
@@ -31,7 +32,7 @@ export const selectIsMobile = (state) => state.layout.isMobile;
 
 export const selectIsLaptop = (state) => state.layout.IsLaptop;
 
-export const selectSiteSize = (state) => state.layout.siteSize;
+export const selectInitSize = (state) => state.layout.siteSize;
 
 export const selectIsMobileKeyboard = (state) =>
   state.layout.isMobileKeyboard;

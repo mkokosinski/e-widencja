@@ -1,28 +1,37 @@
-import React from "react";
-import { FormField, Label, StyledError } from "./FormsStyles";
-import { ErrorMessage, useFormikContext, getIn } from "formik";
+import React from 'react';
+import { ErrorContainer, FormField, Label, StyledError } from './FormsStyles';
+import { ErrorMessage, useFormikContext, getIn } from 'formik';
 
-const FieldWithErrors = React.forwardRef(({ children, label, name }, ref) => {
-  const context = useFormikContext();
+const FieldWithErrors = React.forwardRef(
+  ({ children, label, name }, ref) => {
+    const context = useFormikContext();
 
-  const errors = getIn(context.errors, name);
-  const isTouched = getIn(context.touched, name);
+    const errors = getIn(context.errors, name);
+    const isTouched = getIn(context.touched, name);
 
-  const hasError = isTouched && errors;
+    const hasError = isTouched && errors;
 
-  return (
-    <FormField>
-      <Label htmlFor={name}>{label}</Label>
+    return (
+      <FormField>
+        <Label htmlFor={name}>{label}</Label>
 
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, { name, haserror: hasError, ref })
-      )}
+        {React.Children.map(children, (child) =>
+          React.cloneElement(child, {
+            name,
+            id: name,
+            haserror: hasError,
+            ref
+          })
+        )}
 
-      <ErrorMessage name={name}>
-        {(msg) => <StyledError>{msg}</StyledError>}
-      </ErrorMessage>
-    </FormField>
-  );
-});
+        <ErrorContainer>
+          <ErrorMessage name={name}>
+            {(msg) => <StyledError>{msg}</StyledError>}
+          </ErrorMessage>
+        </ErrorContainer>
+      </FormField>
+    );
+  }
+);
 
 export default FieldWithErrors;

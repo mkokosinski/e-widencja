@@ -140,12 +140,12 @@ export const Buttons = styled.div`
 export const Button = styled(ButtonLightSoft)`
   width: 60px;
 
-  :nth-child(2) {
+  :nth-child(3) {
     display: none;
   }
 
   @media screen and (${device.mobileL}) {
-    :nth-child(2) {
+    :nth-child(3) {
       display: flex;
     }
   }

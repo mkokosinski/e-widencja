@@ -2,15 +2,15 @@ import React from 'react';
 
 import TripForm from './TripForm';
 import { useSelector } from 'react-redux';
-import { selectRecordById } from '../../records/recordsSlice';
 import { useParams } from 'react-router';
+import { selectTripById } from '../../trips/tripsSlice';
 
 const EditTripForm = () => {
   const { id } = useParams();
 
-  const record = useSelector((state) => selectRecordById(state, id));
+  const trip = useSelector((state) => selectTripById(state, id));
 
-  return record ? <TripForm record={record} /> : null;
+  return trip ? <TripForm trip={trip} /> : null;
 };
 
 export default EditTripForm;

@@ -179,7 +179,6 @@ export const selectRecordById = (state, recordId) => {
   const { records } = state;
   if (records.status === FETCH_STATUS.SUCCESS) {
     const record = state.records.items.find((record) => record.id === recordId);
-    console.log('items', record, recordId);
     const vehicle = state.vehicles.items.find(
       (vehicle) => vehicle.id === record.vehicleId
     );

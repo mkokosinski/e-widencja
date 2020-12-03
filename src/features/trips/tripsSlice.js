@@ -12,41 +12,45 @@ const data = [
   {
     record: 'h9NLhJSpgYnSROODO6VK',
     date: '2020-11-02',
-    tripTemplate: 'Biuro - Posum',
+    tripTemplate: 'h2xYWFdsf6iqKGz9cbZK',
+    purpose: 'Szkolenie',
     stops: [
-      { label: 'Start', place: 'Biuro' },
-      { label: 'Cel', place: 'Posum', distance: 11 }
+      { label: 'Start', place: 'Biuro', distance: 0 },
+      { label: 'Cel', place: 'Posum', distance: 8 }
     ],
     driver: 'RNOGS5sIeYzrKuMIbsCP'
   },
   {
     record: 'h9NLhJSpgYnSROODO6VK',
     date: '2020-11-03',
-    tripTemplate: 'Biuro - Posum',
+    tripTemplate: '',
+    purpose: 'Serwis',
     stops: [
-      { label: 'Start', place: 'Biuro' },
+      { label: 'Start', place: 'Biuro', distance: 0 },
       { label: 'Przystanek1', place: 'Apteka', distance: 5 },
-      { label: 'Cel', place: 'Posum', distance: 9 }
+      { label: 'Cel', place: 'Posum', distance: 11 }
     ],
     driver: 'RNOGS5sIeYzrKuMIbsCP'
   },
   {
     record: '0xrTyhzI26ykZ9Le5TMC',
     date: '2020-11-06',
-    tripTemplate: 'Biuro - Posum',
+    tripTemplate: 'h2xYWFdsf6iqKGz9cbZK',
+    purpose: 'Prezentacja',
     stops: [
-      { label: 'Start', place: 'Biuro' },
-      { label: 'Cel', place: 'USI-MED', distance: 7 }
+      { label: 'Start', place: 'Biuro', distance: 0 },
+      { label: 'Cel', place: 'USI-MED', distance: 8 }
     ],
     driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43'
   },
   {
     record: '0xrTyhzI26ykZ9Le5TMC',
     date: '2020-11-02',
-    tripTemplate: 'Biuro - Posum',
+    tripTemplate: '',
+    purpose: 'Serwis',
     stops: [
-      { label: 'Start', place: 'Biuro' },
-      { label: 'Cel', place: 'Posum', distance: 11 }
+      { label: 'Start', place: 'Biuro', distance: 0 },
+      { label: 'Cel', place: 'Posum', distance: 10 }
     ],
     driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43'
   }
@@ -57,15 +61,14 @@ export const fetchTrips = createAsyncThunk(
   async (arg = 1, thunkAPI) => {
     const trips = [];
 
-    // data.forEach(d=>{
-    //   firestore.collection('Trips').add(d)
-
-    // })
+    // data.forEach((d) => {
+    //   firestore.collection('Trips').add(d);
+    // });
 
     const coll = await firestore.collection('Trips').get();
 
     coll.forEach((doc) => {
-      trips.push({ ...doc.data(), id: doc.id });
+      trips[doc.id] = { ...doc.data(), id: doc.id };
     });
 
     return trips;
@@ -112,7 +115,7 @@ export const tripSlice = createSlice({
 
     [fetchTrips.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      state.items = [...action.payload];
+      state.items = action.payload;
     },
 
     [fetchTrips.rejected]: (state, action) => {
@@ -122,15 +125,15 @@ export const tripSlice = createSlice({
   }
 });
 
-const tips = (state) => state.trips;
+const trips = (state) => state.trips;
 
 export const selectTrips = createSelector(
-  [tips, selectRecords],
+  [trips, selectRecords],
   (trips, records) => {
     const { sortFunc } = trips;
 
     const items = [];
-    trips.items.forEach((trip) => {
+    Object.values(trips.items).forEach((trip) => {
       const name = trip.stops.map((t) => t.place).join(' - ');
       const record = records.items.find((r) => r.id === trip.record);
       const vehicle = record && record.vehicle && record.vehicle.name;
@@ -165,11 +168,9 @@ export const selectFilteredTrips = createSelector(
   }
 );
 
-export const selectTripById = (tripId) =>
-  createSelector(selectTrips, (trips) => {
-    console.log(trips);
-    return 'sss';
-  });
+export const selectTripById = (state, tripId) => {
+  return state.trips.items[tripId];
+};
 
 // export const selectTripById = (state, tripId) =>
 //   state.trips.items.find((trip) => trip.id === tripId);

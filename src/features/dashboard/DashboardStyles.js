@@ -46,7 +46,7 @@ export const TileTitle = styled.h2`
 export const DashboardList = styled.div``;
 
 export const DashboardListItem = styled(Link)`
-  box-shadow: 0 1px 10px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 6px -5px rgba(0, 0, 0, 0.5);
   border-left: 3px solid ${({ status, theme }) => theme.status[status]};
   border-radius: 3px;
   cursor: pointer;

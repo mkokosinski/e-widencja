@@ -2,17 +2,21 @@ import styled, { css } from 'styled-components';
 import { device, ButtonLightSoft } from '../layout/LayoutStyles';
 
 export const StyledBar = styled.div`
-  grid-area: profile;
-  display: flex;
   align-items: center;
+  background: ${({ theme }) => theme.mainSoft};
+  display: flex;
+  grid-area: profile;
   justify-content: flex-end;
+  height:48px;
   margin: 0 auto;
   max-width: 1360px;
   padding: 0 16px;
   position: absolute;
-  top: -44px;
+  top: -50px;
   width: 100%;
+  z-index:-1;
   @media screen and (${device.laptop}) {
+    background: unset;
     justify-content: space-between;
     height: 60px;
     padding: 8px 24px;

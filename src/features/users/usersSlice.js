@@ -12,8 +12,6 @@ export const fetchUsers = createAsyncThunk(
     const users = [];
     const user = thunkAPI.getState().auth.user;
 
-    console.log(user);
-
     const coll = await firestore.collection('Users').where('companyId', '==', user.companyId).get();
 
     coll.forEach((doc) => {

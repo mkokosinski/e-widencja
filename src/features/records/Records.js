@@ -36,14 +36,14 @@ const buttons = (id) => [
     action: `${Routing.RecordDetails.action}/${id}`
   },
   {
+    ico: faPlusSquare,
+    label: 'Przejazd',
+    action: `${Routing.TripAdd.action}/${id}`
+  },
+  {
     ico: faEdit,
     label: 'Edytuj',
     action: `${Routing.RecordEdit.action}/${id}`
-  },
-  {
-    ico: faPlusSquare,
-    label: 'Przejazd',
-    action: `${Routing.TripAdd.path}`
   }
 ];
 const Records = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { differenceInDays } from 'date-fns';
+import { differenceInDays } from '../../utils/dateUtils';
 import { useSelector } from 'react-redux';
 import { compareDates, dateBetween } from '../../utils/dateUtils';
 import { selectVehicles } from '../vehicles/vehiclesSlice';
@@ -31,11 +31,6 @@ const getRemainDays = (date) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const checkupDate = new Date(date);
-  console.log({
-    checkupDate,
-    today,
-    diff: differenceInDays(checkupDate, today)
-  });
   const diff = differenceInDays(checkupDate, today);
   const dayString = Math.abs(diff) === 1 ? 'dzień' : 'dni';
 
@@ -46,7 +41,7 @@ const getRemainDays = (date) => {
       ? 'jutro'
       : diff < 0
       ? `${Math.abs(diff)} ${dayString} po terminie`
-      : `za ${Math.abs(diff) + 1} ${dayString}`;
+      : `za ${Math.abs(diff)} ${dayString}`;
 
   return reaminText;
 };

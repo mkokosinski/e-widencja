@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { FieldArray, Formik } from 'formik';
-import { useHistory } from 'react-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { Field, FieldArray, Formik } from 'formik';
+import { useHistory, useLocation } from 'react-router';
 import * as Yup from 'yup';
 
 import FieldWithErrors from '../fieldWithErrors';
@@ -16,7 +16,9 @@ import {
   StyledSelect,
   AddItemButton,
   RemoveItemButton,
-  FieldsGroup
+  FieldsGroup,
+  Input,
+  StyledCheckbox
 } from '../FormsStyles';
 import {
   ButtonMain,
@@ -32,70 +34,132 @@ import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
 import { selectFbUser } from '../../auth/authSlice';
 import { USER_ROLES } from '../../../utils/authUtils';
+import {
+  selectTripTemplates,
+  selectTripTemplateSort
+} from '../../tripTemplates/tripTemplatesSlice';
+import { selectSettings } from '../../settings/settingsSlice';
+import MileageInput from './MileageInput';
+import DistanceInput from './DistanceInput';
+import Checkbox from '../checkbox';
 
-const validationSchema = Yup.object({
-  record: Yup.string()
-    .max(30, 'Must be 30 characters or less')
-    .required('Required'),
-  date: Yup.string()
-    .max(20, 'Must be 20 characters or less')
-    .required('Pole wymagane'),
+const validationSchema = Yup.object().shape({
+  date: Yup.date().required('Pole wymagane'),
+  driver: Yup.string().required('Wymagane'),
+  record: Yup.string().required('Wymagane'),
+  purpose: Yup.string().required('Wymagane'),
   tripTemplate: Yup.string(),
   stops: Yup.array().of(
     Yup.object().shape({
-      label: Yup.string().max(28, 'Max 28 chars'),
-      stop: Yup.string().max(28, 'Max 28 chars')
+      label: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
+      place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
+      mileage: Yup.number().min(1, 'Zła wartość').required('Wymagane'),
+      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane')
     })
-  ),
-  driver: Yup.string()
+  )
 });
 
 const handleSubmit = (values) => {
   console.log(values);
 };
 
-const TripForm = ({ record }) => {
-  // const [recordSelectItems, setRecordSelectItems] = useState([])
-  // const [recordSelectItems, setRecordSelectItems] = useState([])
+const emptyRecord = {
+  name: '',
+  vehicle: {
+    name: ''
+  }
+};
+
+const emptyTripTemplate = {
+  label: '',
+  value: '',
+  stops: []
+};
+
+const TripForm = ({ trip }) => {
+  const { goBack } = useHistory();
+  const tripTemplateRef = useRef(null);
 
   const { items: records } = useSelector(selectRecords);
   const drivers = useSelector(selectDrivers);
   const user = useSelector(selectFbUser);
+  const tripTemplates = useSelector(selectTripTemplates);
+  const { Purposes } = useSelector(selectSettings);
+
+  const record = records.find((r) => r.id === trip.record) || emptyRecord;
+  const tripTemplate =
+    tripTemplates.find((t) => t.id === trip.tripTemplate) || emptyTripTemplate;
+
+  const selectedRecord = {
+    label: ` ${record.vehicle.name} - ${record.name}`,
+    value: record.id,
+    mileage: record.vehicle.mileage
+  };
+
+  const selectedPurpose = {
+    label: trip.purpose,
+    value: trip.purpose
+  };
+
   const isAdmin = user.role === USER_ROLES.admin;
 
-  const { goBack } = useHistory();
-  const tripTemplateRef = useRef(null);
-
-  const recordSelectItems = records.map((rec) => ({
-    label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
-    value: rec.id
-  }));
-
-  const currDriver = {
+  const selectedDriver = {
     label: user.fullname,
     value: user.id
   };
+
+  const selectedTemplate = {
+    label: tripTemplate.label,
+    value: tripTemplate.id,
+    stops: tripTemplate.stops
+  };
+
+  const recordSelectItems = records.map((rec) => ({
+    label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
+    value: rec.id,
+    mileage: rec.vehicle.mileage
+  }));
 
   const driverSelectItems = isAdmin
     ? drivers.map((driv) => ({
         label: driv.fullname,
         value: driv.id
       }))
-    : currDriver;
+    : selectedDriver;
+
+  const tripTemplatesSelectItems = tripTemplates.map((template) => ({
+    label: template.label,
+    value: template.id,
+    stops: template.stops
+  }));
+
+  const purposesSelectItems = Purposes.purposes.map((purpose) => ({
+    label: purpose,
+    value: purpose
+  }));
+
+  console.log(trip.initialMileage);
+  console.log(record.vehicle.mileage);
+
+  const initMileage = trip.initialMileage || record.vehicle.mileage;
+
+  const stops = trip.stops.map((stop) => ({
+    ...stop,
+    mileage: initMileage
+  }));
 
   const focusOn = (ref) => {
     ref.current.focus();
   };
 
-  const initValues = record || {
-    record: '',
-    date: new Date(),
-    tripTemplate: '',
-    stops: [
-      { label: 'Start', place: '', mileage: '' },
-      { label: 'Cel', place: '', mileage: '' }
-    ],
-    driver: currDriver
+  const initValues = {
+    date: trip.date,
+    driver: selectedDriver,
+    initMileage: initMileage,
+    record: selectedRecord,
+    purpose: trip.purpose ? selectedPurpose : '',
+    tripTemplate: trip.tripTemplate ? selectedTemplate : '',
+    stops: stops
   };
 
   return (
@@ -105,7 +169,13 @@ const TripForm = ({ record }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, submitForm, setFieldTouched, setFieldValue }) => (
+        {({
+          values,
+          submitForm,
+          setFieldTouched,
+          setFieldValue,
+          handleChange
+        }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -132,13 +202,12 @@ const TripForm = ({ record }) => {
                     as='select'
                     isSearchable={true}
                     options={driverSelectItems}
-                    onChange={({ value }) => {
+                    onChange={(option) => {
                       setFieldTouched('driver');
-                      setFieldValue('driver', value);
+                      setFieldValue('driver', option);
                     }}
                     isDisabled={!isAdmin}
                     value={values.driver}
-                    // defaultValue={{ label: values.record, value: values.record }}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -151,12 +220,43 @@ const TripForm = ({ record }) => {
                     as='select'
                     isSearchable={true}
                     options={recordSelectItems}
-                    onChange={({ value }) => {
+                    onChange={(option) => {
                       setFieldTouched('record');
-                      setFieldValue('record', value);
+                      setFieldValue('record', option);
+                      setFieldValue(
+                        'stops',
+                        values.stops.map((stop) => ({
+                          ...stop,
+                          mileage: option.mileage
+                        }))
+                      );
                       focusOn(tripTemplateRef);
                     }}
-                    // defaultValue={{ label: values.record, value: values.record }}
+                    value={values.record}
+                  />
+                </StyledSelect>
+              </FieldWithErrors>
+            </Row>
+
+            <Row>
+              <FieldWithErrors name='purpose' label='Cel wyjazdu'>
+                <StyledSelect>
+                  <SelectCreatable
+                    as='select'
+                    isSearchable={true}
+                    options={purposesSelectItems}
+                    onChange={(option) => {
+                      setFieldTouched('purpose');
+                      setFieldValue('purpose', option);
+                      focusOn(tripTemplateRef);
+                    }}
+                    onCreateOption={(value) => {
+                      const option = { label: value, value };
+                      setFieldTouched('purpose');
+                      setFieldValue('purpose', option);
+                    }}
+                    placeholder='Wybierz cel'
+                    value={values.purpose}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -165,19 +265,27 @@ const TripForm = ({ record }) => {
             <Row>
               <FieldWithErrors
                 name='tripTemplate'
-                label='Trasa'
+                label='Szablon'
                 ref={tripTemplateRef}
               >
                 <StyledSelect>
                   <SelectCreatable
                     as='select'
                     isSearchable={true}
-                    options={recordSelectItems}
-                    onChange={({ value }) => {
+                    options={tripTemplatesSelectItems}
+                    onChange={(option) => {
                       setFieldTouched('tripTemplate');
-                      setFieldValue('tripTemplate', value);
+                      setFieldValue('tripTemplate', option);
+                      setFieldValue(
+                        'stops',
+                        option.stops.map((stop) => ({
+                          ...stop,
+                          mileage: values.record.mileage + stop.distance
+                        }))
+                      );
                     }}
-                    // defaultValue={{ label: values.record, value: values.record }}
+                    placeholder='Wybierz szablon'
+                    value={values.tripTemplate}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -185,19 +293,30 @@ const TripForm = ({ record }) => {
 
             <Row>
               <FieldArray name='stops'>
-                {({ insert, remove, push }) =>
-                  values.stops.map((stop, index) => (
+                {({ remove, push }) => {
+                  const labels = [
+                    'Początek trasy',
+                    ...values.stops
+                      .map((s, i) => 'Przystanek ' + i)
+                      .slice(1, -1),
+                    'Koniec trasy'
+                  ];
+
+                  return values.stops.map((stop, index) => (
                     <React.Fragment key={stop.label + index}>
                       <FieldsGroup>
                         <FieldWithErrors
                           name={`stops[${index}].place`}
-                          label={stop.label}
+                          label={labels[index]}
                         >
                           <StyledField type='text' placeholder='Miejsce' />
                         </FieldWithErrors>
 
                         <FieldWithErrors name={`stops[${index}].mileage`}>
-                          <StyledField type='number' placeholder='Przebieg' />
+                          <MileageInput index={index} type='number' min='0' />
+                        </FieldWithErrors>
+                        <FieldWithErrors name={`stops[${index}].distance`}>
+                          <DistanceInput index={index} type='number' min='0' />
                         </FieldWithErrors>
 
                         {index >= 1 && index < values.stops.length - 1 && (
@@ -209,9 +328,11 @@ const TripForm = ({ record }) => {
                       {index === values.stops.length - 2 && (
                         <AddItemButton
                           onClick={() => {
-                            insert(values.stops.length - 1, {
-                              label: `Przystanek${index}`,
-                              stop: ''
+                            push(values.stops.length - 1, {
+                              label: `Przystanek ${index + 1}`,
+                              place: ``,
+                              distance: 0,
+                              mileage: values.stops[index].mileage
                             });
                           }}
                         >
@@ -220,9 +341,13 @@ const TripForm = ({ record }) => {
                         </AddItemButton>
                       )}
                     </React.Fragment>
-                  ))
-                }
+                  ));
+                }}
               </FieldArray>
+            </Row>
+
+            <Row>
+              <Checkbox name='saveTemplate' label='zapisz jako szablon' />
             </Row>
 
             <ButtonsContainer>

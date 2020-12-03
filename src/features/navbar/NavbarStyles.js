@@ -4,12 +4,13 @@ import { device } from '../layout/LayoutStyles';
 import Decorator from './itemDecorator.svg';
 
 export const Menu = styled.nav`
-  display: flex;
-  width: 84%;
+  background: ${({ theme }) => theme.mainSoft};
+  display: ${(props) => (props.isMobileKeyboard ? 'none' : 'flex')};
+  ${props=> {console.log(props)}}
+    width: 100%;
 
   @media screen and (${device.laptop}) {
     align-items: flex-end;
-    width: 100%;
   }
 `;
 

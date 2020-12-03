@@ -29,7 +29,7 @@ const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
           {buttons &&
             buttons.map((button, index) => (
               <Button key={index}>
-                <A to={{ pathname: button.action, state: { test: 'test' } }}>
+                <A to={{ pathname: button.action }}>
                   <ButtonBody>
                     <ButtonIco>
                       <FontAwesomeIcon icon={button.ico} />

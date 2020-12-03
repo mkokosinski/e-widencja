@@ -27,12 +27,12 @@ const StyledDropdown = styled(motion.div)`
 
   background: white;
 
+  border-radius: 10px;
   box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.6),
     0 1px 100px 50px rgba(0, 0, 0, 0.07), 0 1px 300px 70px rgba(0, 0, 0, 0.05);
 
-  border-radius: 10px;
-
   @media screen and (min-width: 768px) {
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.6);
     left: ${(props) => props.pos.left}px;
     right: ${(props) => props.pos.right}px;
     height: fit-content;

@@ -50,7 +50,8 @@ const hiddenMobileItems = [
 
 const Navbar = () => {
   const isMobile = useSelector(selectIsMobile);
-  const items = isMobile ? itemsMobile : itemsDesktop;
+  const items = itemsDesktop;
+  // const items = isMobile ? itemsMobile : itemsDesktop;
   return (
     <Styled.Menu>
       <Styled.Ul>
@@ -62,7 +63,7 @@ const Navbar = () => {
             icon={item.icon}
           />
         ))}
-        {isMobile && <ShowMore items={hiddenMobileItems} />}
+        {/* {isMobile && <ShowMore items={hiddenMobileItems} />} */}
       </Styled.Ul>
     </Styled.Menu>
   );

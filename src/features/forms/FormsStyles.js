@@ -38,21 +38,19 @@ export const Row = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 2px 0;
 
   & > * {
-    padding: 6px;
+    padding: 0 6px;
   }
 
   @media screen and (${device.tablet}) {
     flex-direction: row;
     justify-content: space-between;
-    margin: 4px 0;
   }
 
   @media screen and (${device.laptopL}) {
     & > * {
-      padding: 8px;
+      padding: 0 8px;
     }
   }
 `;
@@ -153,6 +151,10 @@ export const Option = styled.option`
   padding: 10px;
 `;
 
+export const ErrorContainer = styled.div`
+  height: 1rem;
+`;
+
 export const StyledError = styled.div`
   color: red;
   font-size: 0.8rem;
@@ -190,7 +192,7 @@ export const ButtonsContainer = styled.div`
 
 export const FieldsGroup = styled.div`
   display: grid;
-  grid-template: 1fr/2fr 1fr auto;
+  grid-template: 1fr/3fr 2fr 1fr auto;
 
   grid-gap: 10px;
   align-items: flex-end;
@@ -216,7 +218,9 @@ export const AddItemButton = styled(ItemButton)`
 
 export const RemoveItemButton = styled(ItemButton)`
   border: 1px solid ${(props) => props.theme.mainSoft};
+  bottom: 1rem;
   height: 32px;
+  position: relative;
   width: 32px;
 `;
 

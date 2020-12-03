@@ -25,7 +25,6 @@ export const device = {
 };
 
 export const StyledLayout = styled.div`
-  background: ${({ theme }) => theme.mainSoft};
   box-sizing: content-box;
   display: grid;
   flex-direction: column-reverse;
@@ -81,16 +80,15 @@ export const Body = styled.div`
   grid-area: body;
   position: relative;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   padding: 0px;
   background: ${(props) => props.theme.body.background};
   @media screen and (${device.tablet}) {
-    padding: 6px;
     align-items: flex-start;
   }
   @media screen and (${device.laptop}) {
-    display: block;
     font-size: 0.9em;
     padding: 30px;
     background: linear-gradient(
@@ -222,12 +220,13 @@ export const ButtonMain = styled(Button)`
 `;
 
 export const ButtonLightSoft = styled(Button)`
-  background: ${({ theme }) => theme.lightSoft};
+  background-color: ${({ theme }) => theme.lightSoft};
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: ${({ theme }) => theme.main};
 
   :hover {
-    filter: brightness(1.1);
+    background-color: ${({ theme }) => theme.hover.lightSoft};
+    color: ${({ theme }) => theme.hover.main};
   }
 `;
 

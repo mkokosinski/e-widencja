@@ -4,50 +4,129 @@ import {
   createSelector
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import { selectVehicleById } from '../vehicles/vehiclesSlice';
-import {  firestore } from '../../app/firebase/firebase';
+import { firestore } from '../../app/firebase/firebase';
+import { selectRecordById, selectRecords } from '../records/recordsSlice';
+import { compareDates } from '../../utils/dateUtils';
+
+const mergeSettings = (docs) => {
+  return docs.length
+    ? docs
+        .map((doc) => ({ [doc.id]: doc.data() }))
+        .reduce((obj, data) => ({ ...obj, ...data }))
+    : [];
+};
+
+/**
+ * Simple object check.
+ * @param item
+ * @returns {boolean}
+ */
+export function isObject(item) {
+  return item && typeof item === 'object' && !Array.isArray(item);
+}
+
+/**
+ * Performs a deep merge of `source` into `target`.
+ * Mutates `target` only but not its objects and arrays.
+ *
+ * @author inspired by [jhildenbiddle](https://stackoverflow.com/a/48218209).
+ */
+function mergeDeep(target, source) {
+  const isObject = (obj) => obj && typeof obj === 'object';
+
+  if (!isObject(target) || !isObject(source)) {
+    return source;
+  }
+
+  Object.keys(source).forEach((key) => {
+    const targetValue = target[key];
+    const sourceValue = source[key];
+
+    if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
+      target[key] = targetValue.concat(sourceValue);
+    } else if (isObject(targetValue) && isObject(sourceValue)) {
+      target[key] = mergeDeep(Object.assign({}, targetValue), sourceValue);
+    } else {
+      target[key] = sourceValue;
+    }
+  });
+
+  return target;
+}
 
 export const fetchSettings = createAsyncThunk(
-  'settings/fetchsettings',
+  'settings/fetchSettings',
   async (arg = 1, thunkAPI) => {
-    try {
-      const settings = [];
+    const user = thunkAPI.getState().auth.user;
 
-      const user = thunkAPI.getState().auth.user;
-      if (user) {
-        const coll = await firestore
-          .collection('Settings')
-          .where('permissions', 'array-contains', user.role)
-          .get();
+    const globalSett = await firestore.collection('Settings').get();
+    const globalData = mergeSettings(globalSett.docs);
 
-        coll.forEach((doc) => {
-          settings.push(doc.data());
-        });
-      }
+    const companySett = await firestore
+      .collection('Companies')
+      .doc(user.companyId)
+      .collection('Settings')
+      .get();
+    const companyData = mergeSettings(companySett.docs);
 
-      return settings;
-    } catch (err) {
-      console.log(err);
-    }
+    const userSett = await firestore
+      .collection('Users')
+      .doc(user.id)
+      .collection('Settings')
+      .get();
+    const userData = mergeSettings(userSett.docs);
+
+    const settings = { ...globalData };
+    mergeDeep(settings, companyData);
+    mergeDeep(settings, userData);
+
+    // return Object.values(settings);
+    return settings;
   }
 );
 
-export const settingsSlice = createSlice({
+const sortMethods = {
+  Data: {
+    asc: (a, b) => compareDates(a.date, b.date),
+    desc: (a, b) => compareDates(b.date, a.date)
+  }
+};
+
+export const settingSlice = createSlice({
   name: 'settings',
   initialState: {
     status: 'idle',
     items: [],
-    error: null
+    error: null,
+    sortFunc: { name: 'Data', condition: 'desc' },
+    sortCases: [
+      {
+        title: 'Data',
+        items: [
+          { label: 'od najnowszych', condition: 'desc' },
+          { label: 'od najstarszych', condition: 'asc' }
+        ]
+      }
+    ]
   },
-  reducers: {},
+  reducers: {
+    setSortFunc: (state, action) => {
+      console.log(action);
+      const { payload } = action;
+      const entry = Object.entries(payload)[0];
+
+      state.sortFunc = { name: entry[0], condition: entry[1] };
+    }
+  },
   extraReducers: {
     [fetchSettings.pending]: (state, action) => {
       state.status = 'loading';
     },
 
     [fetchSettings.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      // console.log(action);
       state.items = action.payload;
+      state.status = 'succeeded';
     },
 
     [fetchSettings.rejected]: (state, action) => {
@@ -57,82 +136,29 @@ export const settingsSlice = createSlice({
   }
 });
 
-const sortSettings = (a, b) => a.year - b.year || a.month - b.month;
+const tips = (state) => state.settings;
 
-export const selectSettings = (state) => {
-  const { settings } = state;
-  const withVehicles = [];
+export const selectSettings = (state) => state.settings.items;
 
-  settings.items.forEach((rec) => {
-    const vehicle = selectVehicleById(state, rec.vehicleId);
-    withVehicles.push({ ...rec, vehicle });
-  });
-
-  withVehicles.sort(sortSettings);
-
-  return { ...settings, items: withVehicles };
-};
-
-export const selectFiteredSettings = createSelector(
+export const selectFilteredSettings = createSelector(
   [selectSettings, selectFilters],
   (settings, filters) => {
-    const { vehicleFilter, dateFilter } = filters;
+    const { settingFilter, carBrandFilter } = filters;
 
     const filtered = settings.items
-      .filter((rec) =>
-        vehicleFilter.enable
-          ? rec.vehicleId === vehicleFilter.filter.value
-          : rec
+      .filter((veh) =>
+        settingFilter.enable ? veh.id === settingFilter.filter.value : veh
       )
-      .filter((rec) => {
-        if (dateFilter.enable) {
-          const date = {
-            from: new Date(dateFilter.filter.from),
-            to: new Date(dateFilter.filter.to)
-          };
-
-          const formatedDate = {
-            from: new Date(date.from.getFullYear(), date.from.getMonth(), 1),
-            to: new Date(date.to.getFullYear(), date.to.getMonth(), 1),
-            rec: new Date(rec.year, rec.month, 1)
-          };
-
-          return (
-            formatedDate.rec >= formatedDate.from &&
-            formatedDate.rec <= formatedDate.to
-          );
-        } else {
-          return rec;
-        }
-      });
+      .filter((veh) =>
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
+      );
 
     return { ...settings, items: filtered };
   }
 );
 
-export const selectSettingById = (state, settingId) => {
-  const setting = state.settings.items.find(
-    (setting) => setting.id === settingId
-  );
-  const vehicle = state.vehicles.items.find(
-    (vehicle) => vehicle.id === setting.vehicleId
-  );
-  return { ...setting, vehicle: { ...vehicle } };
-};
+export const selectSettingSort = (state) => state.settings.sortCases;
 
-export const selectActiveVehicleFilter = (state) =>
-  state.settings.vehicleFilter.filter;
+export const { setSortFunc } = settingSlice.actions;
 
-const searchMinDate = (arr) => {
-  if (arr.length > 0) {
-    const dates = arr.map((item) => item.year);
-    const min = Math.min(...dates);
-    return min;
-  } else return new Date();
-};
-
-export const selectEldestDate = (state) => searchMinDate(state.settings.items);
-
-export const { setDateFilter, setVehicleFilter } = settingsSlice.actions;
-
-export default settingsSlice.reducer;
+export default settingSlice.reducer;

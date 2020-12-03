@@ -44,14 +44,14 @@ const buttons = (id) => [
     action: `${Routing.VehicleDetails.action}/${id}`
   },
   {
-    ico: faEdit,
-    label: 'Edytuj',
-    action: `${Routing.VehicleEdit.action}/${id}`
-  },
-  {
     ico: faPlusSquare,
     label: 'Przejazd',
     action: 'details'
+  },
+  {
+    ico: faEdit,
+    label: 'Edytuj',
+    action: `${Routing.VehicleEdit.action}/${id}`
   }
 ];
 

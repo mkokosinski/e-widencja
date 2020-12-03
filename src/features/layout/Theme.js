@@ -46,8 +46,8 @@ export const darkTheme = {
     }
   },
   hover: {
-    main: '#52527d',
-    mainSoft: '#6156ba',
+    main: '#616191',
+    mainSoft: '#5a4fad',
     secondary: '#8686b3',
     seconderySoft: '#afb5c7',
     light: '#d9f6ff',

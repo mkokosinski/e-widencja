@@ -9,7 +9,7 @@ import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  ButtonDelete
 } from '../templates/detailsView/DetailsComponents';
 import {
   DetailsTopPanel,
@@ -22,7 +22,7 @@ import {
   SectionDesc,
   SectionChart,
   SectionRecent,
-  DetailsSection,
+  DetailsSection
 } from '../templates/detailsView/DetailsStyles';
 
 import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
@@ -45,7 +45,7 @@ const sampleData = {
     'Wrz',
     'Paź',
     'Lis',
-    'Gru',
+    'Gru'
   ],
   datasets: [
     {
@@ -57,9 +57,9 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
+      pointBorderWidth: 3
+    }
+  ]
 };
 
 const sampletrips = [
@@ -71,15 +71,14 @@ const sampletrips = [
   { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
   { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
   { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' },
+  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
 ];
 
 const VehileDetails = () => {
   const { id } = useParams();
 
-  const trip = useSelector(selectTripById(id));
+  const trip = useSelector((state) => selectTripById(state, id));
   // const record = useSelector(state=>selectVehicleById(state, trip.record))
-
 
   return trip ? (
     <Details>
@@ -87,9 +86,7 @@ const VehileDetails = () => {
         <DetailsTopPanel>
           <ButtonGoBack />
           <DetailsTitle>{trip.date}</DetailsTitle>
-          <ButtonEdit
-            actionPath={`${Routing.TripEdit.action}/${trip.id}`}
-          />
+          <ButtonEdit actionPath={`${Routing.TripEdit.action}/${trip.id}`} />
           <ButtonDelete item={trip} />
         </DetailsTopPanel>
 
@@ -102,10 +99,8 @@ const VehileDetails = () => {
         </DetailsInfo> */}
       </SectionDesc>
 
-      <DetailsSection>
-      </DetailsSection>
+      <DetailsSection></DetailsSection>
 
-    
       <SectionRecent>
         <RecentList title='Ostatnie trasy' list={sampletrips} />
       </SectionRecent>
