@@ -28,84 +28,84 @@ import VehicleDetails from '../vehicles/VehicleDetails';
 const Routing = {
   Login: { Component: Login, path: '/login' },
 
-  Trips: { Component: Trips, path: '/app/e-widencjatrips' },
+  Trips: { Component: Trips, path: '/e-widencja/app/e-widencjatrips' },
   TripAdd: {
     Component: AddTripForm,
-    action: '/app/e-widencjatrips/add',
+    action: '/e-widencja/app/e-widencjatrips/add',
     get path() {
       return `${this.action}/:recordId`;
     }
   },
   TripEdit: {
     Component: EditTripForm,
-    action: '/app/e-widencjatrips/edit',
+    action: '/e-widencja/app/e-widencjatrips/edit',
     get path() {
       return `${this.action}/:id`;
     }
   },
   TripDetails: {
     Component: TripDetails,
-    action: '/app/e-widencjatrips/details',
+    action: '/e-widencja/app/e-widencjatrips/details',
     get path() {
       return `${this.action}/:id`;
     }
   },
 
-  Settings: { Component: Settings, path: '/app/e-widencjasettings' },
+  Settings: { Component: Settings, path: '/e-widencja/app/e-widencjasettings' },
 
-  Reports: { Component: Reports, path: '/app/e-widencjareports' },
+  Reports: { Component: Reports, path: '/e-widencja/app/e-widencjareports' },
 
-  Records: { Component: Records, path: '/app/e-widencjarecords' },
-  RecordAdd: { Component: AddRecordForm, path: '/app/e-widencjarecords/add' },
+  Records: { Component: Records, path: '/e-widencja/app/e-widencjarecords' },
+  RecordAdd: { Component: AddRecordForm, path: '/e-widencja/app/e-widencjarecords/add' },
   RecordEdit: {
     Component: EditRecordForm,
-    action: '/app/e-widencjarecords/edit',
+    action: '/e-widencja/app/e-widencjarecords/edit',
     get path() {
       return `${this.action}/:id`;
     }
   },
   RecordDetails: {
     Component: RecordDetails,
-    action: '/app/e-widencjarecords/details',
+    action: '/e-widencja/app/e-widencjarecords/details',
     get path() {
       return `${this.action}/:id`;
     }
   },
 
-  Users: { Component: Users, path: '/app/e-widencjausers', label: 'Użytkownicy' },
-  UserAdd: { Component: AddUserForm, path: '/app/e-widencjausers/add' },
+  Users: { Component: Users, path: '/e-widencja/app/e-widencjausers', label: 'Użytkownicy' },
+  UserAdd: { Component: AddUserForm, path: '/e-widencja/app/e-widencjausers/add' },
   UserEdit: {
     Component: EditUserForm,
-    action: '/app/e-widencjausers/edit',
+    action: '/e-widencja/app/e-widencjausers/edit',
     get path() {
       return `${this.action}/:id`;
     }
   },
   UserDetails: {
     Component: UserDetails,
-    action: '/app/e-widencjausers/details',
+    action: '/e-widencja/app/e-widencjausers/details',
     get path() {
       return `${this.action}/:id`;
     }
   },
 
-  Dashboard: { Component: Dashboard, path: '/app/e-widencjadashboard' },
+  Dashboard: { Component: Dashboard, path: '/e-widencja/app/e-widencjadashboard' },
 
-  Vehicles: { Component: Vehicles, path: '/app/e-widencjavehicles' },
+  Vehicles: { Component: Vehicles, path: '/e-widencja/app/e-widencjavehicles' },
   VehicleAdd: {
     Component: AddVehicleForm,
-    path: '/app/e-widencjavehicles/add'
+    path: '/e-widencja/app/e-widencjavehicles/add'
   },
   VehicleEdit: {
     Component: EditVehicleForm,
-    action: '/app/e-widencjavehicles/edit',
+    action: '/e-widencja/app/e-widencjavehicles/edit',
     get path() {
       return `${this.action}/:id`;
     }
   },
   VehicleDetails: {
     Component: VehicleDetails,
-    action: '/app/e-widencjavehicles/details',
+    action: '/e-widencja/app/e-widencjavehicles/details',
     get path() {
       return `${this.action}/:id`;
     }
