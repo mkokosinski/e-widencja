@@ -36,6 +36,7 @@ export const StyledLayout = styled.div`
     'menu menu';
   min-height: 100vh;
   @media screen and (${device.laptop}) {
+    background-color: ${props=>props.theme.mainSoft};
     grid-template-columns: 18% 82%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
@@ -63,10 +64,10 @@ export const Menu = styled.div`
   z-index: 998;
   background: inherit;
   @media screen and (${device.laptop}) {
-    position: relative;
-    height: auto;
-    width: auto;
     font-size: ${({ theme }) => theme.font.size};
+    height: auto;
+    position: relative;
+    width: auto;
   }
 `;
 

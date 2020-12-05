@@ -12,10 +12,10 @@ const font = {
 };
 
 export const darkTheme = {
-  main: '#42427D',
-  mainSoft: '#5840BB',
-  secondary: '#7979B2',
-  secondarySoft: '#A0AAC8',
+  main: '#5555a5',
+  mainSoft: '#5e48b6',
+  secondary: '#8a8ac7',
+  secondarySoft: '#acb6d3',
   light: '#C7F2FF',
   lightSoft: '#F3F6FF',
   nav: {
@@ -24,7 +24,7 @@ export const darkTheme = {
       background: 'transparent'
     },
     active: {
-      color: '#42427D',
+      color: '#5555a5',
       background: 'white'
     },
     hover: '#614AC2'
@@ -35,13 +35,13 @@ export const darkTheme = {
   sort: {
     title: {
       color: 'white',
-      bg: '#5840BB'
+      bg: '#5e48b6'
     },
     item: {
       bg: 'white',
       color: '#2e2e2e',
-      hover:{
-        bg:'#e4e4e4'
+      hover: {
+        bg: '#e4e4e4'
       }
     }
   },
@@ -51,16 +51,23 @@ export const darkTheme = {
     secondary: '#8686b3',
     seconderySoft: '#afb5c7',
     light: '#d9f6ff',
-    lightSoft: '#fcfdff'
+    lightSoft: '#fcfdff',
+    shadow1: '0px 1px 8px -4px rgba(0, 0, 0, 0.7)',
+    shadow2: '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)'
+
   },
   disabled: {
     bg: '#eeeeee',
-    color: '#d0d0d0',
+    color: '#d0d0d0'
   },
   status: {
     error: '#ff0000',
     warning: '#f0bb00',
     default: '#009938'
   },
-  font
+  font,
+  shadows: {
+    shadow1: '0px 2px 3px 0px rgba(0, 0, 0, 0.2), 0px 2px 6px -3px rgba(0, 0, 0, 0.5)',
+    shadow2: '0px 1px 6px -2px rgba(0, 0, 0, 0.7), 0px 2px 10px -5px rgba(0, 0, 0, 0.4)'
+  }
 };

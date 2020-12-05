@@ -22,8 +22,7 @@ import {
   ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
 import { useSelector } from 'react-redux';
-import {
-  selectCarBrands} from '../../vehicles/carBrandsSlice';
+import { selectCarBrands } from '../../vehicles/carBrandsSlice';
 import {
   formSelectCreateLabel,
   validationMessages
@@ -58,7 +57,6 @@ const handleSubmit = (values) => {
   console.log(values);
 };
 
-
 const VehicleForm = ({ vehicle }) => {
   const [selectedBrand, setSelectedBrand] = useState('');
 
@@ -89,7 +87,6 @@ const VehicleForm = ({ vehicle }) => {
         }))
       : '';
   };
-
 
   let initValues = vehicle || {
     name: '',
@@ -133,6 +130,7 @@ const VehicleForm = ({ vehicle }) => {
                       setSelectedBrand(value);
                       // focusOn(modelRef);
                     }}
+                    placeholder='Wybierz markę'
                     defaultValue={initValues.brand}
                   />
                 </StyledSelect>
@@ -142,19 +140,20 @@ const VehicleForm = ({ vehicle }) => {
               <FieldWithErrors name='model' label='Model'>
                 <StyledSelect>
                   <SelectCreatable
-                    innerRef={modelRef}
                     as='select'
-                    isSearchable={true}
-                    options={getModels()}
+                    defaultValue={initValues.model}
+                    formatCreateLabel={(label) => formSelectCreateLabel(label)}
+                    innerRef={modelRef}
                     id='model'
+                    isDisabled={!selectedBrand}
+                    isSearchable={true}
+                    noOptionsMessage={() => 'Wybierz markę'}
+                    options={getModels()}
                     onChange={({ value }) => {
                       setFieldTouched('model');
                       setFieldValue('model', value);
                     }}
-                    defaultValue={initValues.model}
-                    noOptionsMessage={() => 'Wybierz markę'}
-                    formatCreateLabel={(label) => formSelectCreateLabel(label)}
-                    isDisabled={!selectedBrand}
+                    placeholder={selectedBrand ? 'Wybierz model' : 'Brak wybranej marki...'}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -175,10 +174,7 @@ const VehicleForm = ({ vehicle }) => {
 
             <Row>
               <FieldWithErrors name='mileage' label='Przebieg'>
-                <StyledField
-                  type='number'
-                  autoComplete='mileage'
-                />
+                <StyledField type='number' autoComplete='mileage' />
               </FieldWithErrors>
 
               <FieldWithErrors name='checkupDate' label='Data przeglądu'>

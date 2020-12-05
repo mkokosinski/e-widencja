@@ -21,6 +21,7 @@
     "formik": "^2.1.5",
     "framer-motion": "^2.9.4",
     "gh-pages": "^3.1.0",
+    "glider-js": "^1.7.3",
     "http-proxy-middleware": "^1.0.6",
     "moment": "^2.27.0",
     "react": "^16.14.0",

@@ -7,14 +7,14 @@ export const StyledBar = styled.div`
   display: flex;
   grid-area: profile;
   justify-content: flex-end;
-  height:48px;
+  height: 48px;
   margin: 0 auto;
   max-width: 1360px;
   padding: 0 16px;
   position: absolute;
   top: -50px;
   width: 100%;
-  z-index:-1;
+  z-index: -1;
   @media screen and (${device.laptop}) {
     background: unset;
     justify-content: space-between;
@@ -22,6 +22,7 @@ export const StyledBar = styled.div`
     padding: 8px 24px;
     position: static;
     top: 0;
+    z-index: 0;
   }
 `;
 
