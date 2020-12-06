@@ -112,12 +112,12 @@ const VehicleForm = ({ vehicle }) => {
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name='name' label='Nazwa'>
+              <FieldWithErrors name='name' label='Nazwa' scrollFocused>
                 <StyledField type='text' />
               </FieldWithErrors>
             </Row>
             <Row>
-              <FieldWithErrors name='brand' label='Marka'>
+              <FieldWithErrors name='brand' label='Marka' scrollFocused>
                 <StyledSelect>
                   <Select
                     as='select'
@@ -137,7 +137,7 @@ const VehicleForm = ({ vehicle }) => {
               </FieldWithErrors>
             </Row>
             <Row>
-              <FieldWithErrors name='model' label='Model'>
+              <FieldWithErrors name='model' label='Model' scrollFocused>
                 <StyledSelect>
                   <SelectCreatable
                     as='select'
@@ -162,6 +162,7 @@ const VehicleForm = ({ vehicle }) => {
               <FieldWithErrors
                 name='registrationNumber'
                 label='Numer rejestracyjny'
+                scrollFocused
               >
                 <StyledField
                   type='text'
@@ -173,7 +174,7 @@ const VehicleForm = ({ vehicle }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='mileage' label='Przebieg'>
+              <FieldWithErrors name='mileage' label='Przebieg' scrollFocused>
                 <StyledField type='number' autoComplete='mileage' />
               </FieldWithErrors>
 
@@ -191,7 +192,7 @@ const VehicleForm = ({ vehicle }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='type' label='Typ'>
+              <FieldWithErrors name='type' label='Typ' scrollFocused>
                 <StyledSelect>
                   <SelectCreatable
                     ref={typeRef}

@@ -44,42 +44,6 @@ const Layout = () => {
     }
   }, [dispatch]);
 
-  const scrollFocus = useCallback((e) => {
-    const focused = document.activeElement;
-
-    if (focused.tagName === 'INPUT') {
-      focused.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        alignToTop: true
-      });
-    }
-  }, []);
-
-  const handleResize = useCallback((e) => {
-    const windowHeight = e.target.innerHeight;
-    if (InitSize.height > windowHeight && !isMobileKeyboard) {
-      dispatch(setIsMobileKeyboard(true));
-    } else if (InitSize.height < windowHeight) {
-      dispatch(setIsMobileKeyboard(false));
-    }
-  }, [InitSize.height, dispatch, isMobileKeyboard])
-
-  useEffect(() => {
-    handleInitSize();
-  }, [handleInitSize]);
-
-  useEffect(() => {
-    if (!IsLaptop) {
-      document.addEventListener('focus', scrollFocus, true);
-      window.addEventListener('resize', handleResize, true);
-
-      return () => {
-        document.removeEventListener('focus', scrollFocus);
-        window.removeEventListener('resize', handleResize);
-      };
-    }
-  }, [IsLaptop, handleResize, scrollFocus]);
 
   return (
     <ThemeProvider theme={{ isMobileKeyboard }}>

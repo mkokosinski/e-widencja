@@ -196,6 +196,7 @@ const TripForm = ({ trip }) => {
                 name='tripTemplate'
                 label='Kierowca'
                 ref={tripTemplateRef}
+                scrollFocused
               >
                 <StyledSelect>
                   <Select
@@ -214,7 +215,7 @@ const TripForm = ({ trip }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='record' label='Ewidencja'>
+              <FieldWithErrors name='record' label='Ewidencja' scrollFocused>
                 <StyledSelect>
                   <Select
                     as='select'
@@ -239,7 +240,7 @@ const TripForm = ({ trip }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='purpose' label='Cel wyjazdu'>
+              <FieldWithErrors name='purpose' label='Cel wyjazdu' scrollFocused>
                 <StyledSelect>
                   <SelectCreatable
                     as='select'
@@ -267,6 +268,7 @@ const TripForm = ({ trip }) => {
                 name='tripTemplate'
                 label='Szablon'
                 ref={tripTemplateRef}
+                scrollFocused
               >
                 <StyledSelect>
                   <SelectCreatable
@@ -308,14 +310,15 @@ const TripForm = ({ trip }) => {
                         <FieldWithErrors
                           name={`stops[${index}].place`}
                           label={labels[index]}
+                          scrollFocused
                         >
                           <StyledField type='text' placeholder='Miejsce' />
                         </FieldWithErrors>
 
-                        <FieldWithErrors name={`stops[${index}].mileage`}>
+                        <FieldWithErrors name={`stops[${index}].mileage`} scrollFocused>
                           <MileageInput index={index} type='number' min='0' />
                         </FieldWithErrors>
-                        <FieldWithErrors name={`stops[${index}].distance`}>
+                        <FieldWithErrors name={`stops[${index}].distance`} scrollFocused>
                           <DistanceInput index={index} type='number' min='0' />
                         </FieldWithErrors>
 

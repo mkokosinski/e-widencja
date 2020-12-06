@@ -31,7 +31,7 @@ export const DetailsSection = styled.section`
   font-size: 0.9em;
   @media screen and (${device.laptop}) {
     border: none;
-    box-shadow: 0px 2px 10px -6px rgba(0, 0, 0, 0.3);
+    box-shadow: ${props=>props.theme.shadows.shadow1}
   }
 `;
 

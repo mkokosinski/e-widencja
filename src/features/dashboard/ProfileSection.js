@@ -1,17 +1,29 @@
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCalendar,
+  faCalendarAlt,
+  faCar,
+  faCarAlt,
+  faCommentDots,
+  faEllipsisH,
+  faRoad,
+  faTachometerAlt,
+  faUserAlt
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectFbUser } from '../auth/authSlice';
 import { Button } from '../layout/LayoutStyles';
 import {
-  ProfileSectionButtons,
   RecentUsersSectionInfoWrapper,
   RecentUsersSectionPhoto,
   RecentUsersSectionPhotoWrapper,
   RecentUsersSectionStyled,
-  ProfileSectionUserName,
-  RecentUsersSectionInfo
+  RecentUsersSectionInfo,
+  RecentUsersSectionName,
+  RecentUsersSectionDesc,
+  RecentUsersSectionMoreButton,
+  RecentUsersSectionIco
 } from './DashboardStyles';
 import { ReactComponent as UserIco } from '../../assets/man.svg';
 
@@ -25,12 +37,31 @@ const ProfileSection = () => {
           <UserIco />
         </RecentUsersSectionPhoto>
       </RecentUsersSectionPhotoWrapper>
+      <RecentUsersSectionMoreButton>
+        <FontAwesomeIcon icon={faEllipsisH} />
+      </RecentUsersSectionMoreButton>
       <RecentUsersSectionInfoWrapper>
-        <RecentUsersSectionInfo>{user.fullname}</RecentUsersSectionInfo>
-        <RecentUsersSectionInfo>KIA Ceed</RecentUsersSectionInfo>
-        <RecentUsersSectionInfo>{`Biuro < ... > Posum`}</RecentUsersSectionInfo>
-        <RecentUsersSectionInfo>10km</RecentUsersSectionInfo>
-        <RecentUsersSectionInfo>20.11.2020</RecentUsersSectionInfo>
+        <RecentUsersSectionName>{user.fullname}</RecentUsersSectionName>
+        <RecentUsersSectionDesc>
+          <FontAwesomeIcon icon={faCar} />
+          KIA Ceed
+        </RecentUsersSectionDesc>
+        <RecentUsersSectionInfo>
+          <FontAwesomeIcon icon={faRoad} />
+
+          {`Biuro < ... > Posum`}
+        </RecentUsersSectionInfo>
+        <RecentUsersSectionInfo>
+          <FontAwesomeIcon icon={faTachometerAlt} />
+          10km
+        </RecentUsersSectionInfo>
+        <RecentUsersSectionIco>
+          <FontAwesomeIcon
+            icon={faCalendarAlt}
+            style={{ marginRight: '5px' }}
+          />
+          20.11.2020
+        </RecentUsersSectionIco>
       </RecentUsersSectionInfoWrapper>
     </RecentUsersSectionStyled>
   );

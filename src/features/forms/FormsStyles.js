@@ -9,12 +9,12 @@ import { PanelBordered, device, Button } from '../layout/LayoutStyles';
 // `;
 export const Container = styled(PanelBordered)`
   width: 96%;
-  padding: 10px;
   align-self: center;
-  margin-bottom: 20px;
+  margin: 10px auto 20px;
+  padding: 10px 5px 30px;
 
   @media screen and (${device.tablet}) {
-    margin: 20px 10px;
+    margin: 10px 10px;
     padding: 32px 54px;
 
     width: 70%;
@@ -23,11 +23,11 @@ export const Container = styled(PanelBordered)`
   @media screen and (${device.laptop}) {
     max-width: 600px;
     width: auto;
-    margin: 30px auto;
+    margin: 10px auto;
   }
 
   @media screen and (${device.laptopL}) {
-    margin: 70px auto;
+    margin: 30px auto;
     max-width: 700px;
     width: auto;
     padding: 40px 60px;

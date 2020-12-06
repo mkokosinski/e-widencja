@@ -14,7 +14,7 @@ const StyledGlider = styled.div`
   }
 `;
 
-const Glider = ({ children }) => {
+const Glider = ({ children, itemWidth }) => {
   const [glider, setGlider] = useState(null);
   const gliderRef = useRef(null);
 
@@ -24,12 +24,12 @@ const Glider = ({ children }) => {
         draggable: true,
         dragVelocity: 2.2,
         exactWidth: true,
-        itemWidth: 200,
+        itemWidth: itemWidth,
         slidesToShow: 'auto',
         slidesToScroll: 1
       });
     }
-  }, [gliderRef]);
+  }, [gliderRef, itemWidth]);
 
   return <StyledGlider ref={gliderRef}>{children}</StyledGlider>;
 };

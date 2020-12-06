@@ -111,7 +111,7 @@ export const DashboardHeader = styled.div`
 `;
 
 export const RecentUsersSectionStyled = styled.div`
-  background-color: ${(props) => props.theme.secondarySoft};
+  background-color: ${(props) => props.theme.mainSoft};
   border-radius: 10px;
   box-shadow: ${(props) => props.theme.shadows.shadow1};
   color: white;
@@ -121,14 +121,17 @@ export const RecentUsersSectionStyled = styled.div`
   flex-direction: column;
   font-size: 0.9rem;
   gap: 10px;
+  line-height: 1.5rem;
   margin: 50px 10px 20px;
+  opacity: 0.9;
   padding: 10px;
-  width: 200px;
+  position: relative;
 
   &:hover {
     box-shadow: ${(props) => props.theme.hover.shadow1};
-    transform: scale(1.02);
-    transition: box-shadow 150ms, transform 180ms ;
+    opacity: 0.95;
+    transform: translateY(-2px);
+    transition: box-shadow 250ms, opacity 250ms;
   }
 `;
 
@@ -141,11 +144,13 @@ export const RecentUsersSectionPhotoWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   height: ${photoHeight}px;
-  margin-bottom: -40px;
+  margin-bottom: -50px;
   overflow: hidden;
   position: relative;
   transform: translate(10px, -50px);
   width: ${photoWidth}px;
+
+
 `;
 
 export const RecentUsersSectionPhoto = styled.div`
@@ -171,10 +176,33 @@ export const RecentUsersSectionInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  svg{
+    margin-right: 5px;
+  }
 `;
 
+export const RecentUsersSectionName = styled.div`
+  font-size: 1rem;
+`;
+export const RecentUsersSectionDesc = styled.div`
+  opacity: 0.8;
+`;
 export const RecentUsersSectionInfo = styled.div`
+  opacity: 0.8;
+`;
+export const RecentUsersSectionIco = styled.div`
+  background: ${(props) => props.theme.secondary};
+  border-radius: 5px;
+  bottom: -8px;
+  padding: 6px 4px;
+  position: absolute;
+  right: -8px;
+  transform: rotate(-14deg);
+`;
 
-`
-
-export const ProfileSectionButtons = styled.div``;
+export const RecentUsersSectionMoreButton = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 16px;
+`;

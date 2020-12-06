@@ -34,7 +34,7 @@ const Dashboard = () => {
         />
       </DetailsSection> */}
       <DashboardHeader>
-        <Glider>
+        <Glider itemWidth={250}>
           <ProfileSection />
           <ProfileSection />
           <ProfileSection />
@@ -48,9 +48,7 @@ const Dashboard = () => {
         <CheckupList />
       </DashboardSection>
 
-      <DashboardSection>
-        <RecentList title='Ostanie przejazdy' list={sampletrips} />
-      </DashboardSection>
+      <DashboardSection>Zgłoszone uwagi</DashboardSection>
     </DashboardContainer>
   );
 };

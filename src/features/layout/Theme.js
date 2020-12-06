@@ -14,7 +14,7 @@ const font = {
 export const darkTheme = {
   main: '#5555a5',
   mainSoft: '#5e48b6',
-  secondary: '#8a8ac7',
+  secondary: '#a190c9',
   secondarySoft: '#acb6d3',
   light: '#C7F2FF',
   lightSoft: '#F3F6FF',
@@ -52,7 +52,7 @@ export const darkTheme = {
     seconderySoft: '#afb5c7',
     light: '#d9f6ff',
     lightSoft: '#fcfdff',
-    shadow1: '0px 1px 8px -4px rgba(0, 0, 0, 0.7)',
+    shadow1: '0px 3px 14px -8px rgba(0, 0, 0, 0.7)',
     shadow2: '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)'
 
   },
@@ -67,7 +67,7 @@ export const darkTheme = {
   },
   font,
   shadows: {
-    shadow1: '0px 2px 3px 0px rgba(0, 0, 0, 0.2), 0px 2px 6px -3px rgba(0, 0, 0, 0.5)',
+    shadow1: '0px 2px 10px -6px rgba(0, 0, 0, 0.5)',
     shadow2: '0px 1px 6px -2px rgba(0, 0, 0, 0.7), 0px 2px 10px -5px rgba(0, 0, 0, 0.4)'
   }
 };

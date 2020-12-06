@@ -14,7 +14,6 @@ export const StyledBar = styled.div`
   position: absolute;
   top: -50px;
   width: 100%;
-  z-index: -1;
   @media screen and (${device.laptop}) {
     background: unset;
     justify-content: space-between;
@@ -22,7 +21,6 @@ export const StyledBar = styled.div`
     padding: 8px 24px;
     position: static;
     top: 0;
-    z-index: 0;
   }
 `;
 

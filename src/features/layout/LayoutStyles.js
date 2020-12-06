@@ -36,7 +36,7 @@ export const StyledLayout = styled.div`
     'menu menu';
   min-height: 100vh;
   @media screen and (${device.laptop}) {
-    background-color: ${props=>props.theme.mainSoft};
+    background-color: ${(props) => props.theme.mainSoft};
     grid-template-columns: 18% 82%;
     grid-template-rows: 200px 1fr;
     grid-template-areas:
@@ -75,6 +75,8 @@ export const StyledLogo = styled.div`
   display: flex;
   justify-content: center;
   color: white;
+  position: relative;
+  z-index: 1;
 `;
 
 export const Body = styled.div`
@@ -139,6 +141,7 @@ const Panel = styled.div`
 export const PanelBordered = styled(Panel)`
   background: #ffffff;
   border: none;
+  box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.5);
 
   @media screen and (${device.tablet}) {
     border: 1px solid rgba(88, 64, 187, 0.1);

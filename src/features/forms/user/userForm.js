@@ -66,19 +66,19 @@ const UserForm = ({user}) => {
         {({ submitForm }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name='name' label='Imię'>
+              <FieldWithErrors name='name' label='Imię' scrollFocused>
                 <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <FieldWithErrors name='surname' label='Nazwisko'>
+              <FieldWithErrors name='surname' label='Nazwisko' scrollFocused>
                 <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <FieldWithErrors name='label' label='Skrót'>
+              <FieldWithErrors name='label' label='Skrót' scrollFocused>
                 <StyledField type='text' />
               </FieldWithErrors>
             </Row>
@@ -88,13 +88,13 @@ const UserForm = ({user}) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='eMail' label='E-mail'>
+              <FieldWithErrors name='eMail' label='E-mail' scrollFocused>
                 <StyledField type='email' />
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <FieldWithErrors name='password' label='Hasło'>
+              <FieldWithErrors name='password' label='Hasło' scrollFocused>
                 <StyledField type='password' />
               </FieldWithErrors>
             </Row>

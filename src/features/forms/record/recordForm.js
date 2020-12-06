@@ -72,7 +72,7 @@ const RecordForm = ({ record }) => {
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name='date' label='Data'>
+              <FieldWithErrors name='date' label='Data' >
                 <DateInput
                   dateFormat='yyyy-MM'
                   minDate={minDate()}
@@ -87,7 +87,7 @@ const RecordForm = ({ record }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='vehicle' label='Pojazd'>
+              <FieldWithErrors name='vehicle' label='Pojazd' scrollFocused>
                 <StyledSelect>
                   <Select
                     as='select'
@@ -104,7 +104,7 @@ const RecordForm = ({ record }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='mileage' label='Przebieg'>
+              <FieldWithErrors name='mileage' label='Przebieg' scrollFocused>
                 <StyledField type='number' placeholder='Przebieg' />
               </FieldWithErrors>
             </Row>
