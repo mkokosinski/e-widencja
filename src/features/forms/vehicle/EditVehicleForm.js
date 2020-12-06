@@ -14,15 +14,11 @@ const EditVehicleForm = () => {
     selectCarBrandById(state, vehicle.brand)
   );
 
-
   const initVehicle = {
     ...vehicle,
     brand: { ...carBrand },
-    model: {label: vehicle.model, value: vehicle.model}
+    model: { label: vehicle.model, model: vehicle.model }
   };
-
-  console.log(initVehicle);
-
 
   return vehicle ? <VehicleForm vehicle={initVehicle} /> : null;
 };

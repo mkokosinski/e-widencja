@@ -4,7 +4,7 @@ import {
   createSelector
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import { firestore } from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
@@ -13,10 +13,96 @@ export const fetchVehicles = createAsyncThunk(
     const coll = await firestore.collection('Vehicles').get();
 
     coll.forEach((doc) => {
-      vehicles.push({ ...doc.data(), id: doc.id });
+      const data = doc.data();
+
+      const vehicle = {
+        ...data,
+        id: doc.id
+      };
+
+      if (data.updated) {
+        vehicle.updated = data.updated.toDate().toString();
+      }
+
+      vehicles.push(vehicle);
     });
 
     return vehicles;
+  }
+);
+
+export const addVehicle = createAsyncThunk(
+  'vehicles/addVehicle',
+  async (arg, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
+    const {
+      brand,
+      checkupDate,
+      mileage,
+      model,
+      name,
+      registrationNumber,
+      type
+    } = arg;
+
+    const vehicle = {
+      brand: brand.label,
+      checkupDate,
+      mileage,
+      model: model.model,
+      name,
+      registrationNumber,
+      type,
+      companyId: currUser.companyId,
+      createdBy: currUser.id
+    };
+
+    await firestore
+      .collection('Vehicles')
+      .add(vehicle)
+      .catch((err) => console.log(err));
+  }
+);
+
+export const editVehicle = createAsyncThunk(
+  'vehicles/editVehicle',
+  async (arg, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
+    console.log(arg);
+
+    const {
+      id,
+      brand,
+      checkupDate,
+      mileage,
+      model,
+      name,
+      registrationNumber,
+      type
+    } = arg;
+
+    const vehicle = {
+      brand: brand.label,
+      checkupDate,
+      mileage,
+      model: model.model,
+      name,
+      registrationNumber,
+      type,
+      updatedBy: currUser.id,
+      updated: firestoreFunctions.FieldValue.serverTimestamp()
+    };
+
+    firestore.collection('Vehicles').doc(id).update(vehicle);
+  }
+);
+
+export const deleteVehicle = createAsyncThunk(
+  'vehicles/deleteVehicle',
+  async (arg, thunkAPI) => {
+    firestore.collection('Vehicles').doc(arg).delete();
   }
 );
 
@@ -86,6 +172,42 @@ export const vehicleSlice = createSlice({
     },
 
     [fetchVehicles.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    [addVehicle.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+
+    [addVehicle.fulfilled]: (state, { payload }) => {
+      state.status = 'succeeded';
+    },
+
+    [addVehicle.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    [editVehicle.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+
+    [editVehicle.fulfilled]: (state, { payload }) => {
+      state.status = 'succeeded';
+    },
+
+    [editVehicle.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+    [deleteVehicle.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+
+    [deleteVehicle.fulfilled]: (state, { payload }) => {
+      state.status = 'succeeded';
+    },
+
+    [deleteVehicle.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
     }

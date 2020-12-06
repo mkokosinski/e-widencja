@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from 'react-router';
 
 import {
   DetailsGoBack,
   DetailsEdit,
   DetailsEditButton,
-  DetailsDelete,
+  DetailsDelete
 } from './DetailsStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faPen,
-  faTrash,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons';
+import useModal from '../../hooks/useModal';
+import { useDispatch } from 'react-redux';
+import { deleteVehicle } from '../../vehicles/vehiclesSlice';
+import {
+  Button,
+  ButtonBorderedSeconderySoft,
+  ButtonMain,
+  PanelBoxShadow
+} from '../../layout/LayoutStyles';
+import { Container } from '../../forms/FormsStyles';
+import Routing from '../../routing/RoutingPaths';
 
 export const ButtonGoBack = () => {
   const { goBack } = useHistory();
@@ -36,16 +47,28 @@ export const ButtonEdit = ({ actionPath }) => {
 };
 
 export const ButtonDelete = ({ item }) => {
+  const { replace } = useHistory();
+  const dispatch = useDispatch();
+  const { Modal, openModal, closeModal } = useModal();
+
+  const handleDelete = () => {
+    dispatch(deleteVehicle(item.id));
+    replace(Routing.Vehicles.path);
+  };
+
   return (
-    <DetailsDelete
-      onClick={() => {
-        const isDel = window.confirm(`Na pewno chcesz usunąć ${item.name}`);
-        if (isDel) {
-          alert('Pojazd zostanie usunięty jak będzie api');
-        }
-      }}
-    >
+    <DetailsDelete onClick={openModal}>
       <FontAwesomeIcon icon={faTrash} />
+      <Modal>
+        <Container>
+          {`Czy napewno chcesz usunąć ${item.name} ?`}
+          <ButtonMain onClick={handleDelete}>Tak</ButtonMain>
+          <br />
+          <ButtonBorderedSeconderySoft onClick={closeModal}>
+            Nie
+          </ButtonBorderedSeconderySoft>
+        </Container>
+      </Modal>
     </DetailsDelete>
   );
 };

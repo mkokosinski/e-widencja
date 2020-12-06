@@ -1,7 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  fetchVehicles,
   selectFilteredVehicles,
   selectVehicleSort,
   setSortFunc
@@ -57,7 +58,12 @@ const buttons = (id) => [
 
 function Vehicles() {
   const { items: vehicles } = useSelector(selectFilteredVehicles);
+  const dispach = useDispatch();
   const sortItems = useSelector(selectVehicleSort);
+
+  useEffect(() => {
+    dispach(fetchVehicles());
+  }, [dispach]);
 
   return (
     <ItemsList>
@@ -72,7 +78,7 @@ function Vehicles() {
         <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
       </TopPanel>
 
-      {vehicles.map((vehicle) => (
+      {vehicles.map((vehicle, index) => (
         <ListViewItem
           key={vehicle.id}
           ico={faCarAlt}

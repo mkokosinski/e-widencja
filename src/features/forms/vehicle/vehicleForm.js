@@ -21,12 +21,13 @@ import {
   ButtonMain,
   ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCarBrands } from '../../vehicles/carBrandsSlice';
 import {
   formSelectCreateLabel,
   validationMessages
 } from '../../../utils/formUtils';
+import { addVehicle, editVehicle } from '../../vehicles/vehiclesSlice';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -53,9 +54,7 @@ const validationSchema = Yup.object({
     .required('Wymagane')
 });
 
-const handleSubmit = (values) => {
-  console.log(values);
-};
+
 
 const VehicleForm = ({ vehicle }) => {
   const [selectedBrand, setSelectedBrand] = useState('');
@@ -63,21 +62,13 @@ const VehicleForm = ({ vehicle }) => {
   const { goBack } = useHistory();
   const modelRef = useRef(null);
   const typeRef = useRef(null);
+  const dispatch = useDispatch();
   const carBrands = useSelector(selectCarBrands);
 
   const carBrandsSelectItems = carBrands.map((cb) => ({
     label: cb.label,
     value: cb
   }));
-
-  // const getModels = React.useMemo(() => {
-  //   return selectedBrand
-  //     ? carBrands.models.map((model) => ({
-  //         label: model.name,
-  //         value: model
-  //       }))
-  //     : '';
-  // }, [selectedBrand, carBrands.models]);
 
   const getModels = () => {
     return selectedBrand
@@ -86,6 +77,15 @@ const VehicleForm = ({ vehicle }) => {
           value: model
         }))
       : '';
+  };
+
+  const handleSubmit = (values) => {
+    if (vehicle && vehicle.id) {
+      dispatch(editVehicle(values))
+    }
+    else{
+      dispatch(addVehicle(values))
+    }
   };
 
   let initValues = vehicle || {

@@ -27,10 +27,13 @@ const useModal = () => {
   const contentRef = useRef(null);
 
   const openModal = (callback) => {
+    console.log('openModal');
     setIsOpen(true);
   };
 
   const closeModal = () => {
+    console.log('closeModal');
+
     setIsOpen(false);
   };
 
