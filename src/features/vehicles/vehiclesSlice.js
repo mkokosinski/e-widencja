@@ -20,6 +20,10 @@ export const fetchVehicles = createAsyncThunk(
         id: doc.id
       };
 
+      if (data.created) {
+        vehicle.created = data.created.toDate().toString();
+      }
+
       if (data.updated) {
         vehicle.updated = data.updated.toDate().toString();
       }
@@ -69,9 +73,6 @@ export const editVehicle = createAsyncThunk(
   'vehicles/editVehicle',
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
-
-    console.log(arg);
-
     const {
       id,
       brand,
@@ -95,14 +96,36 @@ export const editVehicle = createAsyncThunk(
       updated: firestoreFunctions.FieldValue.serverTimestamp()
     };
 
-    firestore.collection('Vehicles').doc(id).update(vehicle);
+    const docRef = firestore.collection('Vehicles').doc(id);
+
+    await docRef.update(vehicle);
+
+    const newVehicle = await docRef.get().then((res) => {
+      const data = res.data();
+
+      if (data.created) {
+        data.created = data.created.toDate().toString();
+      }
+
+      if (data.updated) {
+        data.updated = data.updated.toDate().toString();
+      }
+
+      return {...data, id: res.id};
+    });
+
+    return newVehicle;
   }
 );
 
 export const deleteVehicle = createAsyncThunk(
   'vehicles/deleteVehicle',
   async (arg, thunkAPI) => {
-    firestore.collection('Vehicles').doc(arg).delete();
+    const docRef = firestore.collection('Vehicles').doc(arg);
+    const vehicle = docRef.id;
+    await docRef.delete();
+
+    return vehicle;
   }
 );
 
@@ -192,6 +215,10 @@ export const vehicleSlice = createSlice({
     },
 
     [editVehicle.fulfilled]: (state, { payload }) => {
+      state.items = [
+        ...state.items.filter((v) => v.id !== payload.id),
+        payload
+      ];
       state.status = 'succeeded';
     },
 
@@ -204,6 +231,7 @@ export const vehicleSlice = createSlice({
     },
 
     [deleteVehicle.fulfilled]: (state, { payload }) => {
+      state.items = state.items.filter((veh) => veh.id !== payload);
       state.status = 'succeeded';
     },
 

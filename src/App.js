@@ -6,7 +6,7 @@ import Routing from './features/routing/RoutingPaths';
 
 import Layout from './features/layout/Layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from './app/firebase/firebase';
+import { auth, firestore } from './app/firebase/firebase';
 import {
   setUser,
   getFirebaseUser,
@@ -23,6 +23,7 @@ import { fetchTrips } from './features/trips/tripsSlice';
 import { fetchTripTemplates } from './features/tripTemplates/tripTemplatesSlice';
 import { fetchCarBrands } from './features/vehicles/carBrandsSlice';
 import { fetchCarModels } from './features/vehicles/carModelsSlice';
+import { subscribeAll, subscribeVehicles, unsubscribeAll } from './app/firebase/firebaseListeners';
 
 const App = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -70,6 +71,14 @@ const App = () => {
         setIsUserLoading(false);
       }
     });
+  }, [dispatch]);
+
+  useEffect(() => {
+    subscribeAll(dispatch)
+
+    return () => {
+      unsubscribeAll()
+    }
   }, [dispatch]);
 
   if (!isUserLoading && !appUser) {

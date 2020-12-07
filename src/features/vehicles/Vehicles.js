@@ -37,6 +37,7 @@ import {
   Subname,
   Title
 } from '../templates/ListView/ListViewItemStyles';
+import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 
 const buttons = (id) => [
   {
@@ -60,11 +61,7 @@ function Vehicles() {
   const { items: vehicles } = useSelector(selectFilteredVehicles);
   const dispach = useDispatch();
   const sortItems = useSelector(selectVehicleSort);
-
-  useEffect(() => {
-    dispach(fetchVehicles());
-  }, [dispach]);
-
+  
   return (
     <ItemsList>
       <TopPanel>
@@ -78,7 +75,7 @@ function Vehicles() {
         <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
       </TopPanel>
 
-      {vehicles.map((vehicle, index) => (
+      {vehicles.length > 0 ? vehicles.map((vehicle, index) => (
         <ListViewItem
           key={vehicle.id}
           ico={faCarAlt}
@@ -101,7 +98,11 @@ function Vehicles() {
             </Journey>
           </Journeys>
         </ListViewItem>
-      ))}
+      )):
+         <Title>
+            Brak dostępnych pojazdów
+          </Title>
+      }
     </ItemsList>
   );
 }

@@ -87,7 +87,7 @@ export const DashboardHeader = styled.div`
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  max-width: 1000px;
+  max-width: 1250px;
   width: 100%;
   & > * {
     margin: 10px;
