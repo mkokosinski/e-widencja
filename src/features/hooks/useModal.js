@@ -8,6 +8,7 @@ import useDetectOutsideClick from './useDetectOutsideClick';
 export const ModalBackground = styled(motion.div)`
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   height: 100vh;
