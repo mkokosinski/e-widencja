@@ -46,6 +46,7 @@ export const DatepickerContainer = styled(motion.div)`
   left: 0;
 
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -194,7 +194,6 @@ export const recordsSlice = createSlice({
     },
 
     [editRecord.rejected]: (state, action) => {
-      console.log(action);
       state.status = FETCH_STATUS.ERROR;
       state.error = action.payload;
       toast.error(action.payload);
