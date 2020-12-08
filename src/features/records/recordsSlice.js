@@ -47,21 +47,17 @@ export const fetchRecords = createAsyncThunk(
 export const addRecord = createAsyncThunk(
   'records/addRecord',
   async (arg, thunkAPI) => {
-    const date = new Date(arg.date);
     const currUser = thunkAPI.getState().auth.user;
 
     const record = {
+      ...arg,
       companyId: currUser.companyId,
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      vehicleId: arg.vehicle.value,
-      mileage: arg.mileage,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
       active: true
     };
 
-    firestore
+    return await firestore
       .collection('Records')
       .add(record)
       .catch((err) => {
@@ -74,15 +70,10 @@ export const addRecord = createAsyncThunk(
 export const editRecord = createAsyncThunk(
   'records/editRecord',
   async (arg, thunkAPI) => {
-    const date = new Date(arg.date);
     const currUser = thunkAPI.getState().auth.user;
-    console.log(arg);
-    console.log(date);
 
     const record = {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      vehicleId: arg.vehicle.value,
+      ...arg,
       updatedBy: currUser.id,
       updated: firestoreFunctions.FieldValue.serverTimestamp()
     };

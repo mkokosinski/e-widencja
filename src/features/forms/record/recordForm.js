@@ -45,20 +45,27 @@ const RecordForm = ({ record, isEdit }) => {
   // };
 
   const handleSubmit = (values) => {
-    let validate;
     let action;
+    const date = new Date(values.date);
+    const data = {
+      id: values.id || '',
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      vehicleId: values.vehicle.value,
+      mileage: values.mileage
+    };
+    
+    const validate = validation.record(data);
 
     if (isEdit) {
-      validate = validation.editRecord(values);
       action = editRecord;
     } else {
-      validate = validation.addRecord(values);
       action = addRecord;
     }
 
     if (validate.success) {
       setServerErrors(null);
-      dispatch(action(values));
+      dispatch(action(data));
       goBack();
     } else {
       setServerErrors(validate.error);
@@ -73,7 +80,7 @@ const RecordForm = ({ record, isEdit }) => {
     };
   });
 
-  const defaultVehicleOption = record.vehicle || '';
+  const defaultVehicleOption = record && (record.vehicle || '');
 
   const minDate = () => {
     const date = new Date();
@@ -81,9 +88,9 @@ const RecordForm = ({ record, isEdit }) => {
   };
 
   const initValues = record || {
-    date:  minDate(),
+    date: minDate(),
     vehicle: '',
-    mileage:  1
+    mileage: 1
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
 
 export const validationMessages = {
@@ -14,25 +14,26 @@ export const validationMessages = {
 const useValidation = () => {
   const state = useSelector((state) => state);
 
-  const addRecord = (values) => {
+  const record = (values) => {
     const { items: records } = state.records;
     const { items: vehicles } = state.vehicles;
-    const {
-      date,
-      vehicle: { value: vehicleId },
-      mileage
-    } = values;
+    const { month, year, vehicleId, mileage, id } = values;
+    const oldRecord = records
+      .map((rec) => ({
+        month: rec.month,
+        year: rec.year,
+        vehicleId: rec.vehicleId,
+        mileage: rec.mileage,
+        id: rec.id
+      }))
+      .find((rec) => rec.id === id);
 
-    const dateObj = new Date(date);
-    const month = dateObj.getMonth() + 1;
-    const year = dateObj.getFullYear();
-
+    const itemWasChanged = id ? !shallowEqual(values, oldRecord) : true;
     const isDuplicate = records.some(
       (rec) =>
         rec.month === month && rec.year === year && rec.vehicleId === vehicleId
     );
-
-    if (isDuplicate) {
+    if (itemWasChanged && isDuplicate) {
       return {
         error: validationMessages.record.isDuplicate,
         success: false
@@ -52,27 +53,7 @@ const useValidation = () => {
     return { success: true, error: null };
   };
 
-  const editRecord = (values) => {
-    const { items: vehicles } = state.vehicles;
-    const {
-      vehicle: { value: vehicleId },
-      mileage
-    } = values;
-
-    const vehicle = vehicles.find((veh) => veh.id === vehicleId);
-    console.log(vehicle.mileage);
-    console.log(mileage);
-    if (vehicle.mileage !== mileage) {
-      return {
-        error: validationMessages.record.wrongMileage,
-        success: false
-      };
-    }
-
-    return { success: true, error: null };
-  };
-
-  return { addRecord, editRecord };
+  return { record };
 };
 
 export default useValidation;
