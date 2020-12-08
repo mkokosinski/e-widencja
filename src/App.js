@@ -23,7 +23,13 @@ import { fetchTrips } from './features/trips/tripsSlice';
 import { fetchTripTemplates } from './features/tripTemplates/tripTemplatesSlice';
 import { fetchCarBrands } from './features/vehicles/carBrandsSlice';
 import { fetchCarModels } from './features/vehicles/carModelsSlice';
-import { subscribeAll, subscribeVehicles, unsubscribeAll } from './app/firebase/firebaseListeners';
+import {
+  subscribeAll,
+  subscribeVehicles,
+  unsubscribeAll
+} from './app/firebase/firebaseListeners';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -74,11 +80,11 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    subscribeAll(dispatch)
+    subscribeAll(dispatch);
 
     return () => {
-      unsubscribeAll()
-    }
+      unsubscribeAll();
+    };
   }, []);
 
   if (!isUserLoading && !appUser) {
@@ -100,6 +106,17 @@ const App = () => {
           </PrivateRoute>
         </Switch>
       )}
+      <ToastContainer
+        position='top-right'
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+      />
     </>
   );
 };

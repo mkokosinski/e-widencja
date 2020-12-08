@@ -10,6 +10,8 @@ import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 import { selectUserById } from '../users/usersSlice';
 
 import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router';
 
 export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',
@@ -60,6 +62,9 @@ export const addRecord = createAsyncThunk(
     return await firestore
       .collection('Records')
       .add(record)
+      .then((res) => {
+        toast.success('noelo');
+      })
       .catch((err) => {
         console.log(err);
         return thunkAPI.rejectWithValue(err.toString());
@@ -170,11 +175,13 @@ export const recordsSlice = createSlice({
 
     [addRecord.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie dodano nową ewidencję');
     },
 
     [addRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
       state.error = action.payload;
+      toast.error(action.payload);
     },
     [editRecord.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
@@ -182,12 +189,14 @@ export const recordsSlice = createSlice({
 
     [editRecord.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie edytowano ewidencję');
     },
 
     [editRecord.rejected]: (state, action) => {
       console.log(action);
       state.status = FETCH_STATUS.ERROR;
       state.error = action.payload;
+      toast.error(action.payload);
     },
     [deleteRecord.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
@@ -195,10 +204,12 @@ export const recordsSlice = createSlice({
 
     [deleteRecord.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie usunięto ewidencję');
     },
 
     [deleteRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
+      toast.error(action.payload);
     }
   }
 });

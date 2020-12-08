@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectVehicles } from '../../vehicles/vehiclesSlice';
 import useValidation from '../../hooks/useValidation';
 import { DepentetInput } from '../DepentetInput';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
@@ -32,7 +33,6 @@ const validationSchema = Yup.object({
 });
 
 const RecordForm = ({ record, isEdit }) => {
-  const [serverErrors, setServerErrors] = useState(null);
   const { goBack } = useHistory();
   const dispatch = useDispatch();
   const validation = useValidation();
@@ -54,7 +54,7 @@ const RecordForm = ({ record, isEdit }) => {
       vehicleId: values.vehicle.value,
       mileage: values.mileage
     };
-    
+
     const validate = validation.record(data);
 
     if (isEdit) {
@@ -64,11 +64,12 @@ const RecordForm = ({ record, isEdit }) => {
     }
 
     if (validate.success) {
-      setServerErrors(null);
-      dispatch(action(data));
-      goBack();
+      dispatch(action(data)).then((res) => {
+        goBack();
+      });
+      
     } else {
-      setServerErrors(validate.error);
+      toast.error(validate.error);
     }
   };
 
@@ -95,7 +96,6 @@ const RecordForm = ({ record, isEdit }) => {
 
   return (
     <Container>
-      {serverErrors}
       <Formik
         initialValues={initValues}
         validationSchema={validationSchema}

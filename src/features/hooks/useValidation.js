@@ -41,8 +41,6 @@ const useValidation = () => {
     }
 
     const vehicle = vehicles.find((veh) => veh.id === vehicleId);
-    console.log(vehicle.mileage);
-    console.log(mileage);
     if (vehicle.mileage !== mileage) {
       return {
         error: validationMessages.record.wrongMileage,
