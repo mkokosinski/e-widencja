@@ -28,6 +28,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import FilterButton from '../../app/components/FilterButton';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
+import { FETCH_STATUS } from '../../utils/fetchUtils';
 
 const buttons = (id) => [
   {
@@ -47,7 +48,7 @@ const buttons = (id) => [
   }
 ];
 const Records = () => {
-  const { items: records } = useSelector(selectFiteredRecords);
+  const { items: records, status } = useSelector(selectFiteredRecords);
   const sortItems = useSelector(selectSortCases);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
   return (
@@ -63,23 +64,25 @@ const Records = () => {
         <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
       </TopPanel>
 
-      {records.map((record) => {
-        const subname = record.vehicle && record.vehicle.name;
-        return (
-          <ListViewItem
-            key={record.id}
-            ico={faUser}
-            item={{ ...record, subname }}
-            path={Routing.Records.path}
-            buttons={buttons(record.id)}
-          >
-            <Title>
-              <Name>{record.name}</Name>
-              <Subname>{subname}</Subname>
-            </Title>
-          </ListViewItem>
-        );
-      })}
+      {status === FETCH_STATUS.LOADING
+        ? 'loading...'
+        : records.map((record) => {
+            const subname = record.vehicle && record.vehicle.name;
+            return (
+              <ListViewItem
+                key={record.id}
+                ico={faUser}
+                item={{ ...record, subname }}
+                path={Routing.Records.path}
+                buttons={buttons(record.id)}
+              >
+                <Title>
+                  <Name>{record.name}</Name>
+                  <Subname>{subname}</Subname>
+                </Title>
+              </ListViewItem>
+            );
+          })}
     </ItemsList>
   );
 };

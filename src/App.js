@@ -79,7 +79,7 @@ const App = () => {
     return () => {
       unsubscribeAll()
     }
-  }, [dispatch]);
+  }, []);
 
   if (!isUserLoading && !appUser) {
     return <Routing.Login.Component />;

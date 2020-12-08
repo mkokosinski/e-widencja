@@ -10,7 +10,18 @@ const EditRecordForm = () => {
 
   const record = useSelector((state) => selectRecordById(state, id));
 
-  return record ? <RecordForm record={record} /> : null;
+  const initRecord = {
+    id: record.id,
+    date: `${record.year}-${record.month}`,
+    vehicle: record.vehicle && {
+      label: record.vehicle.name,
+      value: record.vehicle.id,
+      mileage: record.vehicle.mileage
+    },
+    mileage: record.mileage
+  };
+
+  return record ? <RecordForm record={initRecord} isEdit={true} /> : null;
 };
 
 export default EditRecordForm;

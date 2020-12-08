@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-import { selectRecordById } from './recordsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteRecord, selectRecordById } from './recordsSlice';
 
 import Routing from '../routing/RoutingPaths';
 
@@ -76,11 +76,9 @@ const sampletrips = [
 
 const VehileDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const record = useSelector((state) => selectRecordById(state, id));
-
-  console.log(record);
-
   return record ? (
     <Details>
       <SectionDesc>
@@ -90,7 +88,11 @@ const VehileDetails = () => {
           <ButtonEdit
             actionPath={`${Routing.RecordEdit.action}/${record.id}`}
           />
-          <ButtonDelete item={record} />
+          <ButtonDelete
+            item={record}
+            onClick={() => dispatch(deleteRecord(record.id))}
+            redirectPath={Routing.Records.path}
+          />
         </DetailsTopPanel>
 
         <DetailsInfo>

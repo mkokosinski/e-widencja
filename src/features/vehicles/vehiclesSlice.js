@@ -99,22 +99,6 @@ export const editVehicle = createAsyncThunk(
     const docRef = firestore.collection('Vehicles').doc(id);
 
     await docRef.update(vehicle);
-
-    const newVehicle = await docRef.get().then((res) => {
-      const data = res.data();
-
-      if (data.created) {
-        data.created = data.created.toDate().toString();
-      }
-
-      if (data.updated) {
-        data.updated = data.updated.toDate().toString();
-      }
-
-      return {...data, id: res.id};
-    });
-
-    return newVehicle;
   }
 );
 

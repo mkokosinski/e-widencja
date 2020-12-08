@@ -6,8 +6,7 @@ import Decorator from './itemDecorator.svg';
 export const Menu = styled.nav`
   background: ${({ theme }) => theme.mainSoft};
   display: ${(props) => (props.isMobileKeyboard ? 'none' : 'flex')};
-  ${props=> {console.log(props)}}
-    width: 100%;
+  width: 100%;
 
   @media screen and (${device.laptop}) {
     align-items: flex-end;

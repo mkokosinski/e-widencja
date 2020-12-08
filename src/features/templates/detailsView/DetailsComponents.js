@@ -46,14 +46,13 @@ export const ButtonEdit = ({ actionPath }) => {
   );
 };
 
-export const ButtonDelete = ({ item }) => {
+export const ButtonDelete = ({ item, onClick, redirectPath }) => {
   const { replace } = useHistory();
-  const dispatch = useDispatch();
   const { Modal, openModal, closeModal } = useModal();
 
   const handleDelete = () => {
-    dispatch(deleteVehicle(item.id));
-    replace(Routing.Vehicles.path);
+    onClick();
+    replace(redirectPath);
   };
 
   return (

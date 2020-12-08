@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
@@ -19,20 +19,25 @@ import {
   ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
-import { addRecord } from '../../records/recordsSlice';
+import { addRecord, editRecord } from '../../records/recordsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectVehicles } from '../../vehicles/vehiclesSlice';
+import useValidation from '../../hooks/useValidation';
+import { DepentetInput } from '../DepentetInput';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
   vehicle: Yup.string().required('Pole wymagane'),
-  mileage: Yup.number().min(0, 'Nie mniejszy niż 0').required('Pole wymagane')
+  mileage: Yup.number().min(1, 'Nie mniejszy niż 1').required('Pole wymagane')
 });
 
-const RecordForm = ({ record }) => {
+const RecordForm = ({ record, isEdit }) => {
+  const [serverErrors, setServerErrors] = useState(null);
   const { goBack } = useHistory();
   const dispatch = useDispatch();
-  const { items } = useSelector(selectVehicles);
+  const validation = useValidation();
+
+  const { items: vehicles } = useSelector(selectVehicles);
   // const tripTemplateRef = useRef(null);
 
   // const focusOn = (ref) => {
@@ -40,30 +45,50 @@ const RecordForm = ({ record }) => {
   // };
 
   const handleSubmit = (values) => {
-    console.log(values);
-    dispatch(addRecord(values));
+    let validate;
+    let action;
+
+    if (isEdit) {
+      validate = validation.editRecord(values);
+      action = editRecord;
+    } else {
+      validate = validation.addRecord(values);
+      action = addRecord;
+    }
+
+    if (validate.success) {
+      setServerErrors(null);
+      dispatch(action(values));
+      goBack();
+    } else {
+      setServerErrors(validate.error);
+    }
   };
 
-  const vehicles = items.map((vehicle) => {
+  const vehicleSelectOptions = vehicles.map((vehicle) => {
     return {
       label: vehicle.name,
-      value: vehicle.id
+      value: vehicle.id,
+      mileage: vehicle.mileage
     };
   });
+
+  const defaultVehicleOption = record.vehicle || '';
 
   const minDate = () => {
     const date = new Date();
     return new Date(date.getFullYear(), date.getMonth(), 1);
   };
 
-  const initValues = false || {
-    date: minDate(),
+  const initValues = record || {
+    date:  minDate(),
     vehicle: '',
-    mileage: 0
+    mileage:  1
   };
 
   return (
     <Container>
+      {serverErrors}
       <Formik
         initialValues={initValues}
         validationSchema={validationSchema}
@@ -72,7 +97,7 @@ const RecordForm = ({ record }) => {
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name='date' label='Data' >
+              <FieldWithErrors name='date' label='Data'>
                 <DateInput
                   dateFormat='yyyy-MM'
                   minDate={minDate()}
@@ -92,11 +117,13 @@ const RecordForm = ({ record }) => {
                   <Select
                     as='select'
                     isSearchable={true}
-                    options={vehicles}
-                    onChange={({ value }) => {
+                    options={vehicleSelectOptions}
+                    onChange={(value) => {
                       setFieldTouched('vehicle');
+                      setFieldTouched('mileage');
                       setFieldValue('vehicle', value);
                     }}
+                    defaultValue={defaultVehicleOption}
                     // defaultValue={{ label: values.record, value: values.record }}
                   />
                 </StyledSelect>
@@ -105,7 +132,13 @@ const RecordForm = ({ record }) => {
 
             <Row>
               <FieldWithErrors name='mileage' label='Przebieg' scrollFocused>
-                <StyledField type='number' placeholder='Przebieg' />
+                <DepentetInput
+                  type='number'
+                  placeholder='Przebieg'
+                  disabled
+                  triggerField='vehicle'
+                  triggerValue='mileage'
+                />
               </FieldWithErrors>
             </Row>
 

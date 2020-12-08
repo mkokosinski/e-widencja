@@ -7,81 +7,60 @@ import { fetchCarBrands } from '../../features/vehicles/carBrandsSlice';
 import { fetchVehicles } from '../../features/vehicles/vehiclesSlice';
 import { firestore } from './firebase';
 
-export const subscribeVehicles = async (dispatch) => {
-  return await firestore.collection('Vehicles').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeVehicles = (dispatch) => {
+  return firestore.collection('Vehicles').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchVehicles());
     }
-  );
+  });
 };
 
-export const subscribeUsers = async (dispatch) => {
-  return await firestore.collection('Users').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeUsers = (dispatch) => {
+  return firestore.collection('Users').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchUsers());
     }
-  );
+  });
 };
 
-export const subscribeCarBrands = async (dispatch) => {
-  return await firestore.collection('CarBrands').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeCarBrands = (dispatch) => {
+  return firestore.collection('CarBrands').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchCarBrands());
     }
-  );
+  });
 };
 
-export const subscribeRecords = async (dispatch) => {
-  return await firestore.collection('Records').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeRecords = (dispatch) => {
+  return firestore.collection('Records').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchRecords());
     }
-  );
+  });
 };
 
-export const subscribeSettings = async (dispatch) => {
-  return await firestore.collection('Settings').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeSettings = (dispatch) => {
+  return firestore.collection('Settings').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchSettings());
     }
-  );
+  });
 };
 
-export const subscribeTripTemplates = async (dispatch) => {
-  return await firestore.collection('TripTemplates').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeTripTemplates = (dispatch) => {
+  return firestore.collection('TripTemplates').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchTripTemplates());
     }
-  );
+  });
 };
 
-export const subscribeTrips = async (dispatch) => {
-  return await firestore.collection('Trips').onSnapshot(
-    {
-      includeMetadataChanges: true
-    },
-    function (doc) {
+export const subscribeTrips = (dispatch) => {
+  return firestore.collection('Trips').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchTrips());
     }
-  );
+  });
 };
 
 let VehiclesSubscription = () => {};

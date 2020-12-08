@@ -2,7 +2,6 @@ import React from 'react';
 import { LoaderContainer, LoaderPage, LoaderSpinner } from './LoadingStyles';
 
 const Loading = ({ errors }) => {
-  console.log(errors);
   return (
     <LoaderPage>
       <LoaderContainer>

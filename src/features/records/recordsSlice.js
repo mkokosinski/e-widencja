@@ -6,7 +6,7 @@ import {
 import { months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/vehiclesSlice';
-import { firestore } from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 import { selectUserById } from '../users/usersSlice';
 
 import { FETCH_STATUS } from '../../utils/fetchUtils';
@@ -20,10 +20,24 @@ export const fetchRecords = createAsyncThunk(
     const coll = await firestore
       .collection('Records')
       .where('companyId', '==', user.companyId)
+      .where('active', '==', true)
       .get();
 
     coll.forEach((doc) => {
-      records.push({ ...doc.data(), id: doc.id });
+      const data = doc.data();
+      if (data.created) {
+        data.created = data.created.toDate().toString();
+      }
+
+      if (data.updated) {
+        data.updated = data.updated.toDate().toString();
+      }
+
+      if (data.deleted) {
+        data.deleted = data.deleted.toDate().toString();
+      }
+
+      records.push({ ...data, id: doc.id });
     });
 
     return records;
@@ -34,21 +48,73 @@ export const addRecord = createAsyncThunk(
   'records/addRecord',
   async (arg, thunkAPI) => {
     const date = new Date(arg.date);
+    const currUser = thunkAPI.getState().auth.user;
+
     const record = {
-      company: 'KAMSOFT S.A.',
+      companyId: currUser.companyId,
       year: date.getFullYear(),
-      month: date.getMonth(),
-      vehicleId: arg.vehicle
+      month: date.getMonth() + 1,
+      vehicleId: arg.vehicle.value,
+      mileage: arg.mileage,
+      createdBy: currUser.id,
+      created: firestoreFunctions.FieldValue.serverTimestamp(),
+      active: true
     };
 
-    const test = await firestore
+    firestore
       .collection('Records')
       .add(record)
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        return thunkAPI.rejectWithValue(err.toString());
+      });
+  }
+);
 
-    console.log(test.data());
+export const editRecord = createAsyncThunk(
+  'records/editRecord',
+  async (arg, thunkAPI) => {
+    const date = new Date(arg.date);
+    const currUser = thunkAPI.getState().auth.user;
+    console.log(arg);
+    console.log(date);
 
-    // return test.data();
+    const record = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      vehicleId: arg.vehicle.value,
+      updatedBy: currUser.id,
+      updated: firestoreFunctions.FieldValue.serverTimestamp()
+    };
+
+    console.log(record);
+
+    firestore
+      .collection('Records')
+      .doc(arg.id)
+      .update(record)
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  }
+);
+
+export const deleteRecord = createAsyncThunk(
+  'records/deleteRecord',
+  async (arg, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
+    firestore
+      .collection('Records')
+      .doc(arg)
+      .update({
+        active: false,
+        deletedBy: currUser.id,
+        deleted: firestoreFunctions.FieldValue.serverTimestamp()
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
   }
 );
 
@@ -108,17 +174,40 @@ export const recordsSlice = createSlice({
       state.error = action.error.message;
     },
     [addRecord.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [addRecord.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
-      state.items.push(action.payload);
+      state.status = FETCH_STATUS.SUCCESS;
     },
 
     [addRecord.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.payload;
+    },
+    [editRecord.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+
+    [editRecord.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+    },
+
+    [editRecord.rejected]: (state, action) => {
+      console.log(action);
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.payload;
+    },
+    [deleteRecord.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+
+    [deleteRecord.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+    },
+
+    [deleteRecord.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
     }
   }
 });
@@ -129,8 +218,10 @@ export const selectRecords = (state) => {
   const withVehicles = [];
 
   records.items.forEach((rec) => {
-    const vehicle = selectVehicleById(state, rec.vehicleId);
-    withVehicles.push({ ...rec, vehicle });
+    if (rec) {
+      const vehicle = selectVehicleById(state, rec.vehicleId);
+      withVehicles.push({ ...rec, vehicle });
+    }
   });
 
   withVehicles.sort(sortMethods[sortFunc.name][sortFunc.condition]);
