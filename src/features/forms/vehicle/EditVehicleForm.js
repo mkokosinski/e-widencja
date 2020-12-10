@@ -20,7 +20,7 @@ const EditVehicleForm = () => {
     model: { label: vehicle.model, model: vehicle.model }
   };
 
-  return vehicle ? <VehicleForm vehicle={initVehicle} /> : null;
+  return vehicle ? <VehicleForm vehicle={initVehicle} isEdit={true} /> : null;
 };
 
 export default EditVehicleForm;

@@ -5,12 +5,24 @@ import {
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
+import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { toast } from 'react-toastify';
 
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
   async (arg = 1, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
     const vehicles = [];
-    const coll = await firestore.collection('Vehicles').get();
+    const coll = await firestore
+      .collection('Vehicles')
+      .where('companyId', '==', currUser.companyId)
+      .where('active', '==', true)
+      .get()
+      .catch((err) => {
+        console.log(err);
+        return thunkAPI.rejectWithValue('Err');
+      });
 
     coll.forEach((doc) => {
       const data = doc.data();
@@ -28,6 +40,10 @@ export const fetchVehicles = createAsyncThunk(
         vehicle.updated = data.updated.toDate().toString();
       }
 
+      if (data.deleted) {
+        data.deleted = data.deleted.toDate().toString();
+      }
+
       vehicles.push(vehicle);
     });
 
@@ -40,32 +56,27 @@ export const addVehicle = createAsyncThunk(
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
-    const {
-      brand,
-      checkupDate,
-      mileage,
-      model,
-      name,
-      registrationNumber,
-      type
-    } = arg;
-
     const vehicle = {
-      brand: brand.label,
-      checkupDate,
-      mileage,
-      model: model.model,
-      name,
-      registrationNumber,
-      type,
+      brand: arg.brand,
+      checkupDate: arg.checkupDate,
+      mileage: arg.mileage,
+      model: arg.model,
+      name: arg.name,
+      registrationNumber: arg.registrationNumber,
+      type: arg.type,
       companyId: currUser.companyId,
-      createdBy: currUser.id
+      createdBy: currUser.id,
+      created: firestoreFunctions.FieldValue.serverTimestamp(),
+      active: true
     };
 
-    await firestore
+    return await firestore
       .collection('Vehicles')
       .add(vehicle)
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        return thunkAPI.rejectWithValue(err.toString());
+      });
   }
 );
 
@@ -73,43 +84,45 @@ export const editVehicle = createAsyncThunk(
   'vehicles/editVehicle',
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
-    const {
-      id,
-      brand,
-      checkupDate,
-      mileage,
-      model,
-      name,
-      registrationNumber,
-      type
-    } = arg;
 
     const vehicle = {
-      brand: brand.label,
-      checkupDate,
-      mileage,
-      model: model.model,
-      name,
-      registrationNumber,
-      type,
+      brand: arg.brand,
+      checkupDate: arg.checkupDate,
+      mileage: arg.mileage,
+      model: arg.model,
+      name: arg.name,
+      registrationNumber: arg.registrationNumber,
+      type: arg.type,
       updatedBy: currUser.id,
       updated: firestoreFunctions.FieldValue.serverTimestamp()
     };
 
-    const docRef = firestore.collection('Vehicles').doc(id);
-
-    await docRef.update(vehicle);
+    return await firestore
+      .collection('Vehicles')
+      .doc(arg.id)
+      .update(vehicle)
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
   }
 );
 
 export const deleteVehicle = createAsyncThunk(
   'vehicles/deleteVehicle',
   async (arg, thunkAPI) => {
-    const docRef = firestore.collection('Vehicles').doc(arg);
-    const vehicle = docRef.id;
-    await docRef.delete();
+    const currUser = thunkAPI.getState().auth.user;
 
-    return vehicle;
+    firestore
+      .collection('Vehicles')
+      .doc(arg)
+      .update({
+        active: false,
+        deletedBy: currUser.id,
+        deleted: firestoreFunctions.FieldValue.serverTimestamp()
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
   }
 );
 
@@ -170,58 +183,60 @@ export const vehicleSlice = createSlice({
   },
   extraReducers: {
     [fetchVehicles.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [fetchVehicles.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = FETCH_STATUS.SUCCESS;
       state.items = [...action.payload];
     },
 
     [fetchVehicles.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.payload;
     },
     [addVehicle.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [addVehicle.fulfilled]: (state, { payload }) => {
-      state.status = 'succeeded';
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie dodano nowy pojazd');
     },
 
     [addVehicle.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.payload;
+      toast.error(action.payload);
     },
     [editVehicle.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [editVehicle.fulfilled]: (state, { payload }) => {
-      state.items = [
-        ...state.items.filter((v) => v.id !== payload.id),
-        payload
-      ];
-      state.status = 'succeeded';
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie zmieniono pojazd');
     },
 
     [editVehicle.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.payload;
+      toast.error(action.payload);
     },
     [deleteVehicle.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [deleteVehicle.fulfilled]: (state, { payload }) => {
       state.items = state.items.filter((veh) => veh.id !== payload);
-      state.status = 'succeeded';
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie usunieto pojazd');
     },
 
     [deleteVehicle.rejected]: (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.payload;
+      toast.error(action.payload);
     }
   }
 });

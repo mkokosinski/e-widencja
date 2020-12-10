@@ -45,7 +45,6 @@ const RecordForm = ({ record, isEdit }) => {
   // };
 
   const handleSubmit = (values) => {
-    let action;
     const date = new Date(values.date);
     const data = {
       id: values.id || '',
@@ -56,18 +55,12 @@ const RecordForm = ({ record, isEdit }) => {
     };
 
     const validate = validation.record(data);
-
-    if (isEdit) {
-      action = editRecord;
-    } else {
-      action = addRecord;
-    }
+    const action = isEdit ? editRecord : addRecord;
 
     if (validate.success) {
       dispatch(action(data)).then((res) => {
         goBack();
       });
-      
     } else {
       toast.error(validate.error);
     }

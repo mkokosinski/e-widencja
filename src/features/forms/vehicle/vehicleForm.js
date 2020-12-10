@@ -28,6 +28,8 @@ import {
   validationMessages
 } from '../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../vehicles/vehiclesSlice';
+import { toast } from 'react-toastify';
+import useValidation from '../../hooks/useValidation';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -54,14 +56,14 @@ const validationSchema = Yup.object({
     .required('Wymagane')
 });
 
-
-
-const VehicleForm = ({ vehicle }) => {
+const VehicleForm = ({ vehicle, isEdit }) => {
   const [selectedBrand, setSelectedBrand] = useState('');
 
-  const { goBack } = useHistory();
   const modelRef = useRef(null);
   const typeRef = useRef(null);
+  const { goBack } = useHistory();
+  const validation = useValidation();
+
   const dispatch = useDispatch();
   const carBrands = useSelector(selectCarBrands);
 
@@ -80,11 +82,26 @@ const VehicleForm = ({ vehicle }) => {
   };
 
   const handleSubmit = (values) => {
-    if (vehicle && vehicle.id) {
-      dispatch(editVehicle(values))
-    }
-    else{
-      dispatch(addVehicle(values))
+    const data = {
+      id: values.id,
+      name: values.name,
+      brand: values.brand.label,
+      model: values.model.model,
+      registrationNumber: values.registrationNumber,
+      mileage: values.mileage,
+      checkupDate: values.checkupDate,
+      type: values.type
+    };
+
+    const validate = validation.vehicle(data);
+    const action = isEdit ? editVehicle : addVehicle;
+
+    if (validate.success) {
+      dispatch(action(data)).then((res) => {
+        goBack();
+      });
+    } else {
+      toast.error(validate.error);
     }
   };
 
@@ -153,7 +170,9 @@ const VehicleForm = ({ vehicle }) => {
                       setFieldTouched('model');
                       setFieldValue('model', value);
                     }}
-                    placeholder={selectedBrand ? 'Wybierz model' : 'Brak wybranej marki...'}
+                    placeholder={
+                      selectedBrand ? 'Wybierz model' : 'Brak wybranej marki...'
+                    }
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -186,6 +205,7 @@ const VehicleForm = ({ vehicle }) => {
                     setFieldValue('checkupDate', value);
                     // focusOn(typeRef);
                   }}
+                  defaultDate={initValues.checkupDate}
                   // defaultValue={initValues.checkupDate}
                 />
               </FieldWithErrors>
