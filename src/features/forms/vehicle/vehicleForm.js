@@ -35,25 +35,25 @@ const validationSchema = Yup.object({
   name: Yup.string()
     .min(3, validationMessages.min(3))
     .max(50, validationMessages.max(50))
-    .required('Wymagane'),
+    .required(validationMessages.required),
   brand: Yup.string()
     .min(3, validationMessages.min(3))
     .max(50, validationMessages.max(50))
-    .required('Wymagane'),
+    .required(validationMessages.required),
   model: Yup.string()
     .min(1, validationMessages.min(1))
     .max(50, validationMessages.max(50))
-    .required('Wymagane'),
+    .required(validationMessages.required),
   registrationNumber: Yup.string()
     .min(3, validationMessages.min(3))
     .max(7, validationMessages.max(7))
-    .required('Wymagane'),
-  mileage: Yup.number().min(1).required('Wymagane'),
-  checkupDate: Yup.date().required('Wymagane'),
+    .required(validationMessages.required),
+  mileage: Yup.number().min(1).required(validationMessages.required),
+  checkupDate: Yup.date().required(validationMessages.required),
   type: Yup.string()
     .min(5, 'Min 5')
     .max(15, 'Must be 15 characters or less')
-    .required('Wymagane')
+    .required(validationMessages.required)
 });
 
 const VehicleForm = ({ vehicle, isEdit }) => {
@@ -111,7 +111,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
     model: '',
     registrationNumber: '',
     mileage: '',
-    checkupDate: '',
+    checkupDate: new Date(),
     type: ''
   };
 

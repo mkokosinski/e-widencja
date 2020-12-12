@@ -6,6 +6,7 @@ import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 export const DashboardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(3, min-content);
   gap: 8px;
   padding: 8px;
   height: 100%;
@@ -13,7 +14,7 @@ export const DashboardContainer = styled.div`
 
   @media screen and (${device.laptop}) {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: max-content 1fr;
+    grid-template-rows: repeat(2, min-content);
 
     & > *:first-child {
       grid-column: 1/3;
@@ -149,8 +150,6 @@ export const RecentUsersSectionPhotoWrapper = styled.div`
   position: relative;
   transform: translate(10px, -50px);
   width: ${photoWidth}px;
-
-
 `;
 
 export const RecentUsersSectionPhoto = styled.div`
@@ -177,7 +176,7 @@ export const RecentUsersSectionInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  svg{
+  svg {
     margin-right: 5px;
   }
 `;

@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { auth, firestore } from '../../app/firebase/firebase';
+import { FETCH_STATUS } from '../../utils/fetchUtils';
 
 export const authorize = createAsyncThunk(
   'auth/authorize',
@@ -7,6 +9,16 @@ export const authorize = createAsyncThunk(
     if (arg && arg.user) {
       return await getFirebaseUser(arg.user.uid);
     } else return thunkAPI.rejectWithValue('user not exists');
+  }
+);
+
+export const signUpEmail = createAsyncThunk(
+  'auth/signUpEmail',
+  async (arg, thunkAPI) => {
+    const { email, password } = arg;
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((res) => console.log(res));
   }
 );
 
@@ -63,22 +75,26 @@ export const authSlice = createSlice({
   },
   extraReducers: {
     [signIn.pending]: (state, action) => {
-      state.status = 'pending';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [signIn.fulfilled]: (state, action) => {
       state.status = 'fulfilled';
+      toast.success('Poprawnie zalogowano');
       state.user = action.payload;
       state.error = null;
     },
 
     [signIn.rejected]: (state, action) => {
       state.status = 'failed';
+      console.log(action);
       state.error = action.payload;
+      toast.error(`Błąd:
+      ${action.payload}`);
     },
 
     [signOut.pending]: (state, action) => {
-      state.status = 'pending';
+      state.status = FETCH_STATUS.LOADING;
     },
 
     [signOut.fulfilled]: (state, action) => {
@@ -114,7 +130,6 @@ export const selectFbUser = (state) => state.auth.user;
 
 //     return appUser;
 //   });
-
 
 export const { setUser } = authSlice.actions;
 

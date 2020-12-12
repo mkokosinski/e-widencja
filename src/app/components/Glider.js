@@ -22,7 +22,7 @@ const Glider = ({ children, itemWidth }) => {
     if (gliderRef.current) {
       new GliderJS(gliderRef.current, {
         draggable: true,
-        dragVelocity: 2.2,
+        dragVelocity: 1.6,
         exactWidth: true,
         itemWidth: itemWidth,
         slidesToShow: 'auto',

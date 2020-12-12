@@ -18,6 +18,10 @@ export const darkTheme = {
   secondarySoft: '#acb6d3',
   light: '#C7F2FF',
   lightSoft: '#F3F6FF',
+  textColor: '#333333',
+  textColorLight: '#888888',
+  textColorLighter: '#aaaaaa',
+  linkColor: '#373cda',
   nav: {
     default: {
       color: 'white',

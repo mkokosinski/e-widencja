@@ -38,6 +38,7 @@ const App = () => {
   const { status, error, user: appUser } = useSelector(selectAuth);
 
   const dispatch = useDispatch();
+  const shouldSignIn = !isUserLoading && !appUser;
 
   const fetchAllData = useCallback(() => {
     Promise.all([
@@ -73,27 +74,30 @@ const App = () => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
         dispatch(authorize({ user }));
+        subscribeAll(dispatch);
       } else {
         setIsUserLoading(false);
+        unsubscribeAll();
       }
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    subscribeAll(dispatch);
-
-    return () => {
-      unsubscribeAll();
-    };
-  }, []);
-
-  if (!isUserLoading && !appUser) {
-    return <Routing.Login.Component />;
-  }
-
   return (
     <>
-      {isDataLoading || errors ? (
+      <ToastContainer
+        position='top-right'
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+      />
+      {shouldSignIn ? (
+        <Routing.Login.Component />
+      ) : isDataLoading || errors ? (
         <Loading errors={errors} />
       ) : (
         <Switch>
@@ -106,17 +110,6 @@ const App = () => {
           </PrivateRoute>
         </Switch>
       )}
-      <ToastContainer
-        position='top-right'
-        autoClose={4000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-      />
     </>
   );
 };

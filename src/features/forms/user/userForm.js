@@ -17,33 +17,56 @@ import {
   ButtonMain,
   ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
+import { validationMessages } from '../../../utils/formUtils';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addUser, editUser } from '../../users/usersSlice';
+import useValidation from '../../hooks/useValidation';
 
 const validationSchema = Yup.object({
   name: Yup.string()
-    .max(30, 'Must be 30 characters or less')
-    .required('Required'),
+    .max(30, validationMessages.max(30))
+    .required(validationMessages.required),
   surname: Yup.string()
-    .max(30, 'Must be 30 characters or less')
-    .required('Required'),
+    .max(30, validationMessages.max(30))
+    .required(validationMessages.required),
   label: Yup.string()
-    .max(15, 'Must be 15 characters or less')
-    .required('Required'),
+    .max(15, validationMessages.max(15))
+    .required(validationMessages.required),
   isDriver: Yup.bool(),
   eMail: Yup.string()
-    .email('Nipoprawny format email')
-    .min(7, 'Must be 7 characters or more')
-    .required('Required'),
-  password: Yup.string()
-    .min(6, 'Must be 6 characters or more')
-    .required('Required'),
+    .email(validationMessages.email)
+    .min(7, validationMessages.min(7))
+    .required(validationMessages.required),
 });
 
-const handleSubmit = (values) => {
-  console.log(values);
-};
 
-const UserForm = ({user}) => {
+const UserForm = ({user, isEdit}) => {
+  const dispatch = useDispatch();
   const { goBack } = useHistory();
+  const validation = useValidation();
+
+  const handleSubmit = (values) => {
+    const data = {
+      id: values.id,
+      name: values.name,
+      surname: values.surname,
+      label: values.label,
+      eMail: values.eMail,
+      isDriver: values.isDriver,
+      isAppUser: values.isAppUser
+    };
+    const validate = validation.user(data);
+    const action = isEdit ? editUser : addUser;
+
+    if (validate.success) {
+      dispatch(action(data)).then((res) => {
+        goBack();
+      });
+    } else {
+      toast.error(validate.error);
+    }
+  };
 
 
   const initValues = user || {
@@ -53,7 +76,7 @@ const UserForm = ({user}) => {
     label: '',
     isDriver: false,
     eMail: '',
-    password: '',
+    isAppUser: false,
   };
 
   return (
@@ -94,9 +117,7 @@ const UserForm = ({user}) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='password' label='Hasło' scrollFocused>
-                <StyledField type='password' />
-              </FieldWithErrors>
+              <Checkbox name='isAppUser' label='Załóż konto w aplikacji' />
             </Row>
 
             <ButtonsContainer>

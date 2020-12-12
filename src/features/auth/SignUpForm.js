@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 import { Redirect, useHistory } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -16,6 +16,15 @@ import {
 
 import { selectAuth, signIn } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  AuthButtonsWrapper,
+  AuthFormFooter,
+  AuthFormHeader,
+  AuthFormSubHeader,
+  AuthLink,
+  SignUpLink
+} from './AuthStyles';
+import { motion } from 'framer-motion';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -35,11 +44,10 @@ const initValues = {
   password: ''
 };
 
-const LoginForm = ({ redirectPath = Routing.Dashboard.path }) => {
+const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
   const dispatch = useDispatch();
 
   const { user, error } = useSelector(selectAuth);
-
 
   const handleSubmit = ({ email, password }) => {
     dispatch(signIn({ email, password }));
@@ -57,6 +65,11 @@ const LoginForm = ({ redirectPath = Routing.Dashboard.path }) => {
     >
       {({ submitForm }) => (
         <StyledForm>
+          <AuthFormHeader>Rejestracja</AuthFormHeader>
+          <AuthFormSubHeader>
+            Pamiętaj, że po rejestracji musisz być zaproszony przez
+            administratora swojej firmy.
+          </AuthFormSubHeader>
           <Row>
             <FieldWithErrors label='E-mail' name='email'>
               <StyledField type='text' autoComplete='e-mail' />
@@ -69,16 +82,22 @@ const LoginForm = ({ redirectPath = Routing.Dashboard.path }) => {
             </FieldWithErrors>
           </Row>
 
-          <ButtonsContainer>
+          <AuthButtonsWrapper>
             <ButtonMain onClick={submitForm}>Zaloguj</ButtonMain>
-          </ButtonsContainer>
+          </AuthButtonsWrapper>
           <Row>
             <StyledError>{error}</StyledError>
           </Row>
+          <AuthFormFooter>
+            <div>
+              {`Masz już konto? `}
+              <AuthLink to={Routing.SignIn.path}>Zaloguj</AuthLink>
+            </div>
+          </AuthFormFooter>
         </StyledForm>
       )}
     </Formik>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

@@ -213,6 +213,7 @@ export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: white;
+  flex: 1 1;
 
   :hover {
     background: ${({ theme }) => theme.hover.mainSoft};

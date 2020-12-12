@@ -112,7 +112,7 @@ export const deleteVehicle = createAsyncThunk(
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
-    firestore
+    return await firestore
       .collection('Vehicles')
       .doc(arg)
       .update({

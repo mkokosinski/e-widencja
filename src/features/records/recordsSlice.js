@@ -86,8 +86,6 @@ export const editRecord = createAsyncThunk(
       updated: firestoreFunctions.FieldValue.serverTimestamp()
     };
 
-    console.log(record);
-
     firestore
       .collection('Records')
       .doc(arg.id)
@@ -223,10 +221,8 @@ export const selectRecords = (state) => {
   const withVehicles = [];
 
   records.items.forEach((rec) => {
-    if (rec) {
       const vehicle = selectVehicleById(state, rec.vehicleId);
       withVehicles.push({ ...rec, vehicle });
-    }
   });
 
   withVehicles.sort(sortMethods[sortFunc.name][sortFunc.condition]);

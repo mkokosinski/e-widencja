@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-import { selectVehicleById } from './vehiclesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteVehicle, selectVehicleById } from './vehiclesSlice';
 import Routing from '../routing/RoutingPaths';
 
 import LineChart from '../charts/Chart';
@@ -15,13 +15,13 @@ import {
   Details,
   SectionDesc,
   SectionChart,
-  SectionRecent,
+  SectionRecent
 } from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  ButtonDelete
 } from '../templates/detailsView/DetailsComponents';
 
 import { ReactComponent as BrandIco } from '../../assets/branding.svg';
@@ -42,9 +42,9 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
+      pointBorderWidth: 3
+    }
+  ]
 };
 
 const sampletrips = [
@@ -56,12 +56,12 @@ const sampletrips = [
   { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
   { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
   { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' },
+  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
 ];
 
 const VehileDetails = () => {
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   const vehicle = useSelector((state) => selectVehicleById(state, id));
 
   return vehicle ? (
@@ -73,7 +73,11 @@ const VehileDetails = () => {
           <ButtonEdit
             actionPath={`${Routing.VehicleEdit.action}/${vehicle.id}`}
           />
-          <ButtonDelete item={vehicle} />
+          <ButtonDelete
+            item={vehicle}
+            redirectPath={Routing.Vehicles.path}
+            onClick={() => dispatch(deleteVehicle(vehicle.id))}
+          />
         </DetailsTopPanel>
 
         <DetailsInfo>
