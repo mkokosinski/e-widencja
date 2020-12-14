@@ -1,35 +1,83 @@
 import React from 'react';
 
-import LoginForm from './LoginForm';
-
 import {
   AuthContainer,
   FormContainer,
   LogoContainer,
-  AnimatedBg,
-  AnimatedSquare,
+  AuthBackgroundImg,
+  AuthBackground,
+  AuthBackgroundTitle,
+  AuthBackgroundText,
+  AuthBackgroundSquares,
+  AuthBackgroundMobile
 } from './AuthStyles';
 import Logo from '../layout/Logo';
+import SignInForm from './SignInForm';
+import { Redirect, Route, Switch, useLocation } from 'react-router';
+import SignUpForm from './SignUpForm';
+import { AnimatePresence, motion } from 'framer-motion';
+import Routing from '../routing/RoutingPaths';
+import { ReactComponent as Earth } from '../../assets/earth.svg';
+import { ReactComponent as Van } from '../../assets/van.svg';
+import { useSelector } from 'react-redux';
+import { selectIsMobile } from '../layout/layoutSlice';
+import { authFormAnimations, MotionRedirect } from '../../utils/animationUtils';
 
 const AuthPage = () => {
+  const location = useLocation();
+  const isMobile = useSelector(selectIsMobile);
+
   return (
     <AuthContainer>
       <FormContainer>
         <LogoContainer>
           <Logo />
         </LogoContainer>
-        <LoginForm />
+        <AnimatePresence exitBeforeEnter>
+          <Switch location={location} key={location.key}>
+            <Route path={Routing.SignIn.path}>
+              <motion.div
+                {...authFormAnimations}
+                style={{ flex: '1 1' }}
+              >
+                <SignInForm />
+              </motion.div>
+            </Route>
+            <Route exact path={Routing.SignUp.path}>
+              <motion.div
+                {...authFormAnimations}
+                style={{ flex: '1 1' }}
+              >
+                <SignUpForm />
+              </motion.div>
+            </Route>
+            <Route>
+              <MotionRedirect to={Routing.SignIn.path} />
+            </Route>
+          </Switch>
+        </AnimatePresence>
       </FormContainer>
-
-      <AnimatedBg>
-        <AnimatedSquare duration={'19s'}/>
-        <AnimatedSquare top={'70%'} left={'10%'} duration={'23s'} />
-        <AnimatedSquare top={'40%'} left={'70%'} duration={'14s'} />
-        <AnimatedSquare top={'10%'} left={'80%'} duration={'18s'} />
-        <AnimatedSquare top={'30%'} left={'50%'} duration={'15s'} />
-        <AnimatedSquare top={'50%'} left={'40%'} duration={'19s'} />
-      </AnimatedBg>
-      
+      {isMobile ? (
+        <AuthBackgroundMobile />
+      ) : (
+        <AuthBackground>
+          <AuthBackgroundImg>
+            <Earth />
+            <Van />
+            <AuthBackgroundSquares />
+            <AuthBackgroundSquares />
+          </AuthBackgroundImg>
+          <AuthBackgroundTitle>Lorem, ipsum dolor sit</AuthBackgroundTitle>
+          <AuthBackgroundText>
+            Molestiae vero ducimus, deserunt id nobis hic repudiandae
+            consequatur! Quaerat necessitatibus modi quam aliquid! Soluta in
+            debitis architecto blanditiis maiores aliquam corporis ut, id
+            explicabo magni veniam minima perferendis incidunt minus ipsum
+            quidem, magnam pariatur commodi laudantium cumque nihil laborum
+            alias at.
+          </AuthBackgroundText>
+        </AuthBackground>
+      )}
     </AuthContainer>
   );
 };

@@ -21,7 +21,10 @@ export const device = {
   laptop: `min-width: ${size.laptop}px`,
   laptopL: `min-width: ${size.laptopL}px`,
   desktop: `min-width: ${size.desktop}px`,
-  desktopL: `min-width: ${size.desktop}px`
+  desktopL: `min-width: ${size.desktop}px`,
+  max:{
+    tablet: `max-width: ${size.tablet}px`,
+  }
 };
 
 export const StyledLayout = styled.div`
@@ -34,7 +37,7 @@ export const StyledLayout = styled.div`
     'logo profile'
     'body body'
     'menu menu';
-  min-height: 100vh;
+  min-height: ${({ theme }) => theme.currSiteSize.y}px;
   @media screen and (${device.laptop}) {
     background-color: ${(props) => props.theme.mainSoft};
     grid-template-columns: 18% 82%;
@@ -213,6 +216,7 @@ export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: white;
+  flex: 1 1;
 
   :hover {
     background: ${({ theme }) => theme.hover.mainSoft};

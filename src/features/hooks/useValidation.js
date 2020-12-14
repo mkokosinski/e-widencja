@@ -1,6 +1,4 @@
-import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectVehicleById } from '../vehicles/vehiclesSlice';
 
 export const validationMessages = {
   isDuplicate: 'Element już istnieje',
@@ -12,6 +10,9 @@ export const validationMessages = {
   vehicle: {
     isDuplicateName: 'Istnieje już pojazd o tej nazwie',
     isDuplicateRegistration: 'Istnieje już pojazd o takiej rejestracji'
+  },
+  user: {
+    isDuplicateEmail: 'Isnieje już użytkownik z tym adresem e-mail'
   }
 };
 
@@ -19,6 +20,7 @@ const useValidation = () => {
   const state = useSelector((state) => state);
   const { items: records } = state.records;
   const { items: vehicles } = state.vehicles;
+  const { items: users } = state.users;
 
   const record = (values) => {
     const { month, year, vehicleId, mileage, id } = values;
@@ -87,10 +89,6 @@ const useValidation = () => {
       ? registrationNumber !== oldVehicle.registrationNumber
       : true;
 
-    console.log(values);
-    console.log(oldVehicle);
-    console.log(itemWasChanged);
-
     if (itemWasChanged) {
       const isDuplicateName = vehicles.some(
         (veh) => veh.name.trim() === name.trim()
@@ -116,7 +114,43 @@ const useValidation = () => {
     return { success: true, error: null };
   };
 
-  return { record, vehicle };
+  const user = (values) => {
+    console.log(values);
+
+    const { id, name, surname, label, eMail, isDriver } = values;
+
+    const oldUser = users
+      .map((user) => ({
+        id: user.id,
+        name: user.name,
+        surname: user.surname,
+        label: user.label,
+        eMail: user.eMail,
+        isDriver: user.isDriver,
+        isAppUser: user.isAppUser
+      }))
+      .find((user) => user.id === id);
+
+    const itemWasChanged = id ? !shallowEqual(values, oldUser) : true;
+    const eMailChanged = id ? oldUser.eMail !== eMail : true;
+
+    if (itemWasChanged) {
+      const isDuplicateMail = users.some(
+        (veh) => veh.eMail.trim() === eMail.trim()
+      );
+
+      if (eMailChanged && isDuplicateMail) {
+        return {
+          error: validationMessages.user.isDuplicateEmail,
+          success: false
+        };
+      }
+    }
+
+    return { success: true, error: null };
+  };
+
+  return { record, vehicle, user };
 };
 
 export default useValidation;

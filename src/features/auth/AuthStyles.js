@@ -1,48 +1,266 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { device, PanelBordered } from '../layout/LayoutStyles';
+import Wave from '../../assets/wave.svg';
+import Squares from '../../assets/chessBoard.svg';
+import { StyledForm } from '../forms/FormsStyles';
+import { motion } from 'framer-motion';
 
 export const AuthContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 100vw;
-  min-height: 100vh;
-  height: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+  height: ${({ theme }) => theme.currSiteSize.y}px;
+  width: ${({ theme }) => theme.currSiteSize.x}px;
 
-  
-
-  background: linear-gradient(
-    120deg,
-    ${({ theme }) => theme.main} 40%,
-    ${({ theme }) => theme.mainSoft} 100%
-  );
+  @media screen and (${device.tablet}) {
+    align-items: stretch;
+    display: grid;
+    grid-template-columns: minmax(300px, 2fr) 3fr;
+    justify-content: stretch;
+    @media screen and (${device.laptop}) {
+    }
+  }
 `;
 
-export const FormContainer = styled(PanelBordered)`
+export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 340px;
-  max-width: 600px;
-  width: 90%;
+  justify-content: stretch;
   margin: 0 auto;
-  padding: 30px;
+  overflow: hidden;
 
-  box-shadow: 0 2px 20px -2px rgba(0, 0, 0, 0.7);
+  @media screen and (${device.tablet}) {
+    display: grid;
+    grid-template-rows: 140px 1fr;
+    max-width: 500px;
+    padding: 0 26px;
+  }
+`;
 
-  z-index: 1;
+export const AuthForm = styled(StyledForm)`
+  display: grid;
+  grid-template-rows: 38% min-content 1fr;
+  justify-content: space-around;
+  height: 100%;
 
-  @media screen and (${device.laptop}) {
-    height: 440px;
+  @media screen and (${device.mobileM}) {
+    grid-template-rows: 40% min-content 1fr;
   }
 `;
 
 export const LogoContainer = styled.div`
-  display: flex;
   align-items: center;
-  justify-content: center;
+  background: ${({ theme }) => theme.mainSoft};
+  color: white;
+  display: flex;
   font-size: 1.4em;
-  color: ${({ theme }) => theme.main};
+
+  @media screen and (${device.tablet}) {
+    background: unset;
+    color: ${({ theme }) => theme.main};
+  }
+`;
+
+export const AuthFormHeader = styled.div`
+  display: flex;
+  color: white;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  position: relative;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    opacity: 0.9;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.4rem;
+    margin: 0.6rem 0 1.6rem;
+    opacity: 0.6;
+  }
+
+  @media screen and (${device.tablet}) {
+    color: ${(props) => props.theme.textColor};
+  }
+`;
+
+export const AuthFormBody = styled(motion.div)`
+  padding: 10px 16px 10px;
+
+  @media screen and (${device.mobileM}) {
+    padding: 40px 16px 10px;
+  }
+`;
+
+export const AuthFormFooter = styled.div`
+  font-size: 0.8rem;
+  line-height: 1.4rem;
+  padding-bottom: 16px;
+  text-align: center;
+`;
+
+export const AuthLink = styled(Link)`
+  color: ${(props) => props.theme.linkColor};
+`;
+
+export const AuthButtonsWrapper = styled.div`
+  display: flex;
+  height: 40px;
+  margin: 20px 0;
+`;
+
+export const AuthBackgroundMobile = styled(motion.div)`
+  @media screen and (${device.max.tablet}) {
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+
+    &::before {
+      content: '';
+      height: 35%;
+      width: 100%;
+      background-color: ${({ theme }) => theme.mainSoft};
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &::after {
+      content: '';
+      height: 50px;
+      width: 100%;
+      background: url(${Wave});
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-color: white;
+      position: absolute;
+      top: 35%;
+      left: 0;
+    }
+
+    @media screen and (${device.mobileM}) {
+      &::before {
+        height: 40%;
+      }
+
+      &::after {
+        top: 40%;
+      }
+    }
+
+    @media screen and (${device.laptop}) {
+    }
+  }
+`;
+
+export const AuthBackground = styled.div`
+  background: ${({ theme }) => theme.mainSoft};
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: -1;
+
+  @media screen and (${device.laptop}) {
+  }
+`;
+
+export const AuthBackgroundImg = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1 1;
+  position: relative;
+
+  & > * {
+    &:nth-child(1) {
+      height: 320px;
+      width: 320px;
+      top: 160px;
+      position: absolute;
+    }
+
+    &:nth-child(2) {
+      top: 320px;
+      height: 220px;
+      width: 220px;
+      position: absolute;
+
+      animation: rotate-center 2000ms linear infinite both;
+
+      @keyframes rotate-center {
+        0% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(6px);
+        }
+
+        100% {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+`;
+
+export const AuthBackgroundSquares = styled.div`
+  background: url(${Squares}) no-repeat;
+  width: 200px;
+  height: 200px;
+  opacity: 0.01;
+  position: absolute;
+  z-index: -1;
+  animation: squares 6000ms linear infinite both;
+
+  &:nth-child(3) {
+    transform: translate(100px, 120px) scale(1.2);
+  }
+  &:nth-child(4) {
+    transform: translate(-120px, 360px);
+  }
+
+  @keyframes squares {
+    0% {
+      opacity: 0.01;
+    }
+
+    50% {
+      opacity: 0.05;
+    }
+
+    100% {
+      opacity: 0.01;
+    }
+  }
+`;
+
+export const AuthBackgroundTitle = styled.h5`
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 40px;
+  text-align: center;
+`;
+
+export const AuthBackgroundText = styled.div`
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin: 16px auto;
+  max-width: 500px;
+  opacity: 0.5;
+  text-align: center;
 `;
 
 export const AnimatedBg = styled.div`
@@ -53,7 +271,6 @@ export const AnimatedBg = styled.div`
   height: 100%;
   overflow: hidden;
 `;
-
 export const AnimatedSquare = styled.div`
   width: 100px;
   height: 100px;

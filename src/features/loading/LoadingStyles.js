@@ -6,8 +6,8 @@ export const LoaderPage = styled.div`
   background-color: ${(props) => props.theme.main};
   display: flex;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
+  height: ${({ theme }) => theme.currSiteSize.y}px;
+  width: ${({ theme }) => theme.currSiteSize.x}px;
 `;
 
 export const LoaderContainer = styled(PanelBordered)`

@@ -1,4 +1,6 @@
 import Login from '../auth/AuthPage';
+import SignIn from '../auth/SignInForm';
+import SignUp from '../auth/SignUpForm';
 
 import Trips from '../trips/Trips';
 import AddTripForm from '../forms/trip/AddTripForm';
@@ -26,7 +28,9 @@ import EditVehicleForm from '../forms/vehicle/EditVehicleForm';
 import VehicleDetails from '../vehicles/VehicleDetails';
 
 const Routing = {
-  Login: { Component: Login, path: '/login' },
+  Login: { Component: Login, path: '/auth' },
+  SignIn: { Component: SignIn, path: '/auth/signIn' },
+  SignUp: { Component: SignUp, path: '/auth/signUp' },
 
   Trips: { Component: Trips, path: '/e-widencja/app/trips' },
   TripAdd: {
@@ -72,7 +76,11 @@ const Routing = {
     }
   },
 
-  Users: { Component: Users, path: '/e-widencja/app/users', label: 'Użytkownicy' },
+  Users: {
+    Component: Users,
+    path: '/e-widencja/app/users',
+    label: 'Użytkownicy'
+  },
   UserAdd: { Component: AddUserForm, path: '/e-widencja/app/users/add' },
   UserEdit: {
     Component: EditUserForm,

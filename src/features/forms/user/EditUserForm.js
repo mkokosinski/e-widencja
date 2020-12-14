@@ -10,7 +10,7 @@ const EditUserForm = () => {
 
   const user = useSelector((state) => selectUserById(state, id));
 
-  return user ? <UserForm user={user} /> : null;
+  return user ? <UserForm user={user} isEdit={true} /> : null;
 };
 
 export default EditUserForm;
