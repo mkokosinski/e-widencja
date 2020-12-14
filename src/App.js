@@ -105,10 +105,10 @@ const App = () => {
 
   useEffect(() => {
     handleCurrSite();
-    window.addEventListener('resize', handleCurrSite);
+    // window.addEventListener('resize', handleCurrSite);
 
     return () => {
-      window.removeEventListener('resize', handleCurrSite);
+      // window.removeEventListener('resize', handleCurrSite);
     };
   }, []);
 
