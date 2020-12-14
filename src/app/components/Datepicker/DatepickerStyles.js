@@ -50,8 +50,8 @@ export const DatepickerContainer = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: ${({ theme }) => theme.currSiteSize.x}px;
+  height: ${({ theme }) => theme.currSiteSize.y}px;
   position: fixed;
   z-index: 9998;
 

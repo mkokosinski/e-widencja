@@ -7,7 +7,9 @@ import {
   AuthBackgroundImg,
   AuthBackground,
   AuthBackgroundTitle,
-  AuthBackgroundText
+  AuthBackgroundText,
+  AuthBackgroundSquares,
+  AuthBackgroundMobile
 } from './AuthStyles';
 import Logo from '../layout/Logo';
 import SignInForm from './SignInForm';
@@ -17,30 +19,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Routing from '../routing/RoutingPaths';
 import { ReactComponent as Earth } from '../../assets/earth.svg';
 import { ReactComponent as Van } from '../../assets/van.svg';
-
-const transition = {
-  duration: 0.2,
-  ease: [0.43, 0.13, 0.23, 0.96]
-};
-
-const pageVariants = {
-  initial: {
-    opacity: 0
-  },
-  in: {
-    opacity: 1,
-    x: '0%',
-    transition
-  },
-  out: {
-    opacity: 0,
-    x: '70%',
-    transition
-  }
-};
+import { useSelector } from 'react-redux';
+import { selectIsMobile } from '../layout/layoutSlice';
+import { authFormAnimations, MotionRedirect } from '../../utils/animationUtils';
 
 const AuthPage = () => {
   const location = useLocation();
+  const isMobile = useSelector(selectIsMobile);
+
   return (
     <AuthContainer>
       <FormContainer>
@@ -48,48 +34,50 @@ const AuthPage = () => {
           <Logo />
         </LogoContainer>
         <AnimatePresence exitBeforeEnter>
-          <Switch key={location.pathname}>
+          <Switch location={location} key={location.key}>
             <Route path={Routing.SignIn.path}>
               <motion.div
-                initial='initial'
-                animate='in'
-                exit='out'
-                variants={pageVariants}
+                {...authFormAnimations}
+                style={{ flex: '1 1' }}
               >
                 <SignInForm />
               </motion.div>
             </Route>
             <Route exact path={Routing.SignUp.path}>
               <motion.div
-                initial='initial'
-                animate='in'
-                exit='out'
-                variants={pageVariants}
+                {...authFormAnimations}
+                style={{ flex: '1 1' }}
               >
                 <SignUpForm />
               </motion.div>
             </Route>
             <Route>
-              <Redirect to={Routing.SignIn.path} />
+              <MotionRedirect to={Routing.SignIn.path} />
             </Route>
           </Switch>
         </AnimatePresence>
       </FormContainer>
-
-      <AuthBackground>
-        <AuthBackgroundImg>
-          <Earth />
-          <Van />
-        </AuthBackgroundImg>
-        <AuthBackgroundTitle>Lorem, ipsum dolor sit</AuthBackgroundTitle>
-        <AuthBackgroundText>
-          Molestiae vero ducimus, deserunt id nobis hic repudiandae consequatur!
-          Quaerat necessitatibus modi quam aliquid! Soluta in debitis architecto
-          blanditiis maiores aliquam corporis ut, id explicabo magni veniam
-          minima perferendis incidunt minus ipsum quidem, magnam pariatur
-          commodi laudantium cumque nihil laborum alias at.
-        </AuthBackgroundText>
-      </AuthBackground>
+      {isMobile ? (
+        <AuthBackgroundMobile />
+      ) : (
+        <AuthBackground>
+          <AuthBackgroundImg>
+            <Earth />
+            <Van />
+            <AuthBackgroundSquares />
+            <AuthBackgroundSquares />
+          </AuthBackgroundImg>
+          <AuthBackgroundTitle>Lorem, ipsum dolor sit</AuthBackgroundTitle>
+          <AuthBackgroundText>
+            Molestiae vero ducimus, deserunt id nobis hic repudiandae
+            consequatur! Quaerat necessitatibus modi quam aliquid! Soluta in
+            debitis architecto blanditiis maiores aliquam corporis ut, id
+            explicabo magni veniam minima perferendis incidunt minus ipsum
+            quidem, magnam pariatur commodi laudantium cumque nihil laborum
+            alias at.
+          </AuthBackgroundText>
+        </AuthBackground>
+      )}
     </AuthContainer>
   );
 };

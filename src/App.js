@@ -1,19 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './features/routing/PrivateRoute';
 import Routing from './features/routing/RoutingPaths';
 
 import Layout from './features/layout/Layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth, firestore } from './app/firebase/firebase';
-import {
-  setUser,
-  getFirebaseUser,
-  selectAuth,
-  authorize
-} from './features/auth/authSlice';
-import { FETCH_STATUS } from './utils/fetchUtils';
+import { auth } from './app/firebase/firebase';
+import { selectAuth, authorize } from './features/auth/authSlice';
 import Loading from './features/loading/Loading';
 import { fetchSettings } from './features/settings/settingsSlice';
 import { fetchVehicles } from './features/vehicles/vehiclesSlice';
@@ -23,19 +17,22 @@ import { fetchTrips } from './features/trips/tripsSlice';
 import { fetchTripTemplates } from './features/tripTemplates/tripTemplatesSlice';
 import { fetchCarBrands } from './features/vehicles/carBrandsSlice';
 import { fetchCarModels } from './features/vehicles/carModelsSlice';
-import {
-  subscribeAll,
-  subscribeVehicles,
-  unsubscribeAll
-} from './app/firebase/firebaseListeners';
+import { subscribeAll, unsubscribeAll } from './app/firebase/firebaseListeners';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+  setIsLaptop,
+  setIsMobile,
+  setInitSiteSize
+} from './features/layout/layoutSlice';
+import { ThemeProvider } from 'styled-components';
 
 const App = () => {
+  const [currSiteSize, setCurrSiteSize] = useState({ x: 0, y: 0 });
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
-  const { status, error, user: appUser } = useSelector(selectAuth);
+  const { user: appUser } = useSelector(selectAuth);
 
   const dispatch = useDispatch();
   const shouldSignIn = !isUserLoading && !appUser;
@@ -82,8 +79,41 @@ const App = () => {
     });
   }, [dispatch]);
 
+  const handleInitSize = useCallback(() => {
+    const {
+      documentElement: { clientHeight, clientWidth }
+    } = document;
+    dispatch(setInitSiteSize({ height: clientHeight, width: clientWidth }));
+
+    if (clientWidth < 768) {
+      dispatch(setIsLaptop(false));
+      dispatch(setIsMobile(true));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    handleInitSize();
+  }, [handleInitSize]);
+
+  const handleCurrSite = () => {
+    const {
+      documentElement: { clientHeight, clientWidth }
+    } = document;
+
+    setCurrSiteSize({ x: clientWidth, y: clientHeight });
+  };
+
+  useEffect(() => {
+    handleCurrSite();
+    window.addEventListener('resize', handleCurrSite);
+
+    return () => {
+      window.removeEventListener('resize', handleCurrSite);
+    };
+  }, []);
+
   return (
-    <>
+    <ThemeProvider theme={{ currSiteSize }}>
       <ToastContainer
         position='top-right'
         autoClose={4000}
@@ -110,7 +140,7 @@ const App = () => {
           </PrivateRoute>
         </Switch>
       )}
-    </>
+    </ThemeProvider>
   );
 };
 

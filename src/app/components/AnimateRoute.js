@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const pageVariants = {
   initial: {
     opacity: 0,
-    x: '-100vw'
+    x: '-${({ theme }) => theme.currSiteSize.y}px'
   },
   in: {
     opacity: 1,
@@ -13,7 +13,7 @@ const pageVariants = {
   },
   out: {
     opacity: 0,
-    x: '100vw',
+    x: '${({ theme }) => theme.currSiteSize.y}px',
     scale: 1.2
   }
 };

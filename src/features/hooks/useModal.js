@@ -11,11 +11,12 @@ export const ModalBackground = styled(motion.div)`
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
-  height: 100vh;
+  height: ${({ theme }) => theme.currSiteSize.y}px; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
   left: 0;
   position: fixed;
   top: 0;
-  width: 100vw;
+  width: ${({ theme }) => theme.currSiteSize.x}px;
   z-index: 999;
 `;
 
@@ -41,6 +42,8 @@ const useModal = () => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
     } else {
       document.body.style.overflow = '';
     }

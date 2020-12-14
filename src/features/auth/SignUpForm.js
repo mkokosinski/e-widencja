@@ -6,18 +6,14 @@ import * as Yup from 'yup';
 import Routing from '../routing/RoutingPaths';
 import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
-import {
-  ButtonsContainer,
-  StyledField,
-  Row,
-  StyledForm,
-  StyledError
-} from '../forms/FormsStyles';
+import { StyledField, Row, StyledError } from '../forms/FormsStyles';
 
 import { selectAuth, signIn } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AuthButtonsWrapper,
+  AuthForm,
+  AuthFormBody,
   AuthFormFooter,
   AuthFormHeader,
   AuthFormSubHeader,
@@ -25,6 +21,7 @@ import {
   SignUpLink
 } from './AuthStyles';
 import { motion } from 'framer-motion';
+import { authFormAnimations } from '../../utils/animationUtils';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -64,37 +61,48 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
       onSubmit={handleSubmit}
     >
       {({ submitForm }) => (
-        <StyledForm>
-          <AuthFormHeader>Rejestracja</AuthFormHeader>
-          <AuthFormSubHeader>
-            Pamiętaj, że po rejestracji musisz być zaproszony przez
-            administratora swojej firmy.
-          </AuthFormSubHeader>
-          <Row>
-            <FieldWithErrors label='E-mail' name='email'>
-              <StyledField type='text' autoComplete='e-mail' />
-            </FieldWithErrors>
-          </Row>
+        <AuthForm>
+          <AuthFormHeader>
+            <motion.h2 {...authFormAnimations}>Rejestracja </motion.h2>
+            <motion.h4 {...authFormAnimations} transition={{ delay: 0.05 }}>
+              Pamiętaj, że po rejestracji musisz być zaproszony przez
+              administratora swojej firmy.
+            </motion.h4>
+          </AuthFormHeader>
 
-          <Row>
-            <FieldWithErrors label='Hasło' name='password'>
-              <StyledField type='password' autoComplete='current-password' />
-            </FieldWithErrors>
-          </Row>
+          <motion.div {...authFormAnimations} transition={{ delay: 0.1 }}>
+            <AuthFormBody>
+              <Row>
+                <FieldWithErrors label='E-mail' name='email'>
+                  <StyledField type='text' autoComplete='e-mail' />
+                </FieldWithErrors>
+              </Row>
 
-          <AuthButtonsWrapper>
-            <ButtonMain onClick={submitForm}>Zaloguj</ButtonMain>
-          </AuthButtonsWrapper>
-          <Row>
-            <StyledError>{error}</StyledError>
-          </Row>
-          <AuthFormFooter>
-            <div>
-              {`Masz już konto? `}
-              <AuthLink to={Routing.SignIn.path}>Zaloguj</AuthLink>
-            </div>
-          </AuthFormFooter>
-        </StyledForm>
+              <Row>
+                <FieldWithErrors label='Hasło' name='password'>
+                  <StyledField
+                    type='password'
+                    autoComplete='current-password'
+                  />
+                </FieldWithErrors>
+              </Row>
+
+              <AuthButtonsWrapper>
+                <ButtonMain onClick={submitForm}>Zaloguj</ButtonMain>
+              </AuthButtonsWrapper>
+              <Row>
+                <StyledError>{error}</StyledError>
+              </Row>
+            </AuthFormBody>
+
+            <AuthFormFooter>
+              <div>
+                {`Masz już konto? `}
+                <AuthLink to={Routing.SignIn.path}>Zaloguj</AuthLink>
+              </div>
+            </AuthFormFooter>
+          </motion.div>
+        </AuthForm>
       )}
     </Formik>
   );

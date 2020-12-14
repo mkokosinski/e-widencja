@@ -1,50 +1,107 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { device, PanelBordered } from '../layout/LayoutStyles';
+import Wave from '../../assets/wave.svg';
+import Squares from '../../assets/chessBoard.svg';
+import { StyledForm } from '../forms/FormsStyles';
+import { motion } from 'framer-motion';
 
 export const AuthContainer = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr max-content;
+  height: ${({ theme }) => theme.currSiteSize.y}px;
+  width: ${({ theme }) => theme.currSiteSize.x}px;
 
   @media screen and (${device.tablet}) {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
     align-items: stretch;
+    display: grid;
+    grid-template-columns: minmax(300px, 2fr) 3fr;
     justify-content: stretch;
+    @media screen and (${device.laptop}) {
+    }
   }
 `;
 
 export const FormContainer = styled.div`
-  background-color: white;
-  display: grid;
-  grid-template-rows: 140px 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  margin: 0 auto;
   overflow: hidden;
-  padding: 0 16px;
 
-  @media screen and (${device.laptop}) {
+  @media screen and (${device.tablet}) {
+    display: grid;
+    grid-template-rows: 140px 1fr;
+    max-width: 500px;
+    padding: 0 26px;
+  }
+`;
+
+export const AuthForm = styled(StyledForm)`
+  display: grid;
+  grid-template-rows: 38% min-content 1fr;
+  justify-content: space-around;
+  height: 100%;
+
+  @media screen and (${device.mobileM}) {
+    grid-template-rows: 40% min-content 1fr;
   }
 `;
 
 export const LogoContainer = styled.div`
-  display: flex;
   align-items: center;
+  background: ${({ theme }) => theme.mainSoft};
+  color: white;
+  display: flex;
   font-size: 1.4em;
-  color: ${({ theme }) => theme.main};
+
+  @media screen and (${device.tablet}) {
+    background: unset;
+    color: ${({ theme }) => theme.main};
+  }
 `;
 
-export const AuthFormHeader = styled.h2`
-  color: ${(props) => props.theme.textColor};
-  font-size: 1.8rem;
-  font-weight: 700;
+export const AuthFormHeader = styled.div`
+  display: flex;
+  color: white;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  position: relative;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    opacity: 0.9;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.4rem;
+    margin: 0.6rem 0 1.6rem;
+    opacity: 0.6;
+  }
+
+  @media screen and (${device.tablet}) {
+    color: ${(props) => props.theme.textColor};
+  }
 `;
 
-export const AuthFormSubHeader = styled.h4`
-  color: ${(props) => props.theme.textColorLighter};
-  font-size: 1rem;
-  font-weight: 300;
+export const AuthFormBody = styled(motion.div)`
+  padding: 10px 16px 10px;
+
+  @media screen and (${device.mobileM}) {
+    padding: 40px 16px 10px;
+  }
+`;
+
+export const AuthFormFooter = styled.div`
+  font-size: 0.8rem;
   line-height: 1.4rem;
-  margin: 0.6rem 0 1.6rem;
+  padding-bottom: 16px;
+  text-align: center;
 `;
 
 export const AuthLink = styled(Link)`
@@ -57,41 +114,85 @@ export const AuthButtonsWrapper = styled.div`
   margin: 20px 0;
 `;
 
-export const AuthFormFooter = styled.div`
-  font-size: 0.8rem;
-  line-height: 1.4rem;
-  text-align: center;
+export const AuthBackgroundMobile = styled(motion.div)`
+  @media screen and (${device.max.tablet}) {
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+
+    &::before {
+      content: '';
+      height: 35%;
+      width: 100%;
+      background-color: ${({ theme }) => theme.mainSoft};
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &::after {
+      content: '';
+      height: 50px;
+      width: 100%;
+      background: url(${Wave});
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-color: white;
+      position: absolute;
+      top: 35%;
+      left: 0;
+    }
+
+    @media screen and (${device.mobileM}) {
+      &::before {
+        height: 40%;
+      }
+
+      &::after {
+        top: 40%;
+      }
+    }
+
+    @media screen and (${device.laptop}) {
+    }
+  }
 `;
 
 export const AuthBackground = styled.div`
-  background: linear-gradient(
-    120deg,
-    ${({ theme }) => theme.main} 40%,
-    ${({ theme }) => theme.mainSoft} 100%
-  );
+  background: ${({ theme }) => theme.mainSoft};
   display: flex;
   flex-direction: column;
-  padding: 20%;
   overflow: hidden;
+  position: relative;
   z-index: -1;
+
+  @media screen and (${device.laptop}) {
+  }
 `;
 
 export const AuthBackgroundImg = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: center;
   flex: 1 1;
+  position: relative;
 
   & > * {
     &:nth-child(1) {
-      height: 100%;
-      width: 100%;
-      top: -20px;
+      height: 320px;
+      width: 320px;
+      top: 160px;
       position: absolute;
     }
 
     &:nth-child(2) {
-      bottom: 10px;
-      height: 60%;
-      width: 60%;
+      top: 320px;
+      height: 220px;
+      width: 220px;
       position: absolute;
 
       animation: rotate-center 2000ms linear infinite both;
@@ -113,10 +214,42 @@ export const AuthBackgroundImg = styled.div`
   }
 `;
 
+export const AuthBackgroundSquares = styled.div`
+  background: url(${Squares}) no-repeat;
+  width: 200px;
+  height: 200px;
+  opacity: 0.01;
+  position: absolute;
+  z-index: -1;
+  animation: squares 6000ms linear infinite both;
+
+  &:nth-child(3) {
+    transform: translate(100px, 120px) scale(1.2);
+  }
+  &:nth-child(4) {
+    transform: translate(-120px, 360px);
+  }
+
+  @keyframes squares {
+    0% {
+      opacity: 0.01;
+    }
+
+    50% {
+      opacity: 0.05;
+    }
+
+    100% {
+      opacity: 0.01;
+    }
+  }
+`;
+
 export const AuthBackgroundTitle = styled.h5`
   color: white;
   font-size: 1.6rem;
   font-weight: 600;
+  margin-top: 40px;
   text-align: center;
 `;
 
@@ -124,7 +257,8 @@ export const AuthBackgroundText = styled.div`
   color: white;
   font-size: 0.9rem;
   font-weight: 300;
-  margin: 16px 0;
+  margin: 16px auto;
+  max-width: 500px;
   opacity: 0.5;
   text-align: center;
 `;

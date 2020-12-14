@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 
 import {
   selectIsLaptop,
-  setSiteSize,
+  setInitSiteSize,
   selectIsMobileKeyboard,
   setIsLaptop,
   setIsMobile,
@@ -27,39 +27,19 @@ import { StyledLayout, Menu, Body, StyledLogo } from './LayoutStyles';
 import Router from '../routing/Router';
 
 const Layout = () => {
-  const dispatch = useDispatch();
-  const IsLaptop = useSelector(selectIsLaptop);
-  const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
-  const InitSize = useSelector(selectInitSize);
-
-  const handleInitSize = useCallback(() => {
-    const {
-      documentElement: { clientHeight, clientWidth }
-    } = document;
-    dispatch(setSiteSize({ height: clientHeight, width: clientWidth }));
-
-    if (clientWidth < 768) {
-      dispatch(setIsLaptop(false));
-      dispatch(setIsMobile(true));
-    }
-  }, [dispatch]);
-
-
   return (
-    <ThemeProvider theme={{ isMobileKeyboard }}>
-      <StyledLayout>
-        <StyledLogo>
-          <Logo />
-        </StyledLogo>
-        <Menu>
-          <Navbar />
-        </Menu>
-        <Body>
-          <Profilebar />
-          <Router />
-        </Body>
-      </StyledLayout>
-    </ThemeProvider>
+    <StyledLayout>
+      <StyledLogo>
+        <Logo />
+      </StyledLogo>
+      <Menu>
+        <Navbar />
+      </Menu>
+      <Body>
+        <Profilebar />
+        <Router />
+      </Body>
+    </StyledLayout>
   );
 };
 
