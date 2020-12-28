@@ -23,7 +23,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   setIsLaptop,
   setIsMobile,
-  setInitSiteSize
+  setInitSiteSize,
+  selectIsLaptop,
+  selectIsMobile
 } from './features/layout/layoutSlice';
 import { ThemeProvider } from 'styled-components';
 
@@ -33,6 +35,7 @@ const App = () => {
   const [errors, setErrors] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { user: appUser } = useSelector(selectAuth);
+  const isMobile = useSelector(selectIsMobile);
 
   const dispatch = useDispatch();
   const shouldSignIn = !isUserLoading && !appUser;
@@ -84,33 +87,39 @@ const App = () => {
       documentElement: { clientHeight, clientWidth }
     } = document;
     dispatch(setInitSiteSize({ height: clientHeight, width: clientWidth }));
-
-    if (clientWidth < 768) {
-      dispatch(setIsLaptop(false));
-      dispatch(setIsMobile(true));
-    }
+    setCurrSiteSize({ x: clientWidth, y: clientHeight });
   }, [dispatch]);
 
   useEffect(() => {
     handleInitSize();
   }, [handleInitSize]);
 
-  const handleCurrSite = () => {
+  const handleCurrSite = useCallback(() => {
     const {
       documentElement: { clientHeight, clientWidth }
     } = document;
 
-    setCurrSiteSize({ x: clientWidth, y: clientHeight });
-  };
+    if (!isMobile && clientWidth < 768) {
+      dispatch(setIsLaptop(false));
+      dispatch(setIsMobile(true));
+    }
+
+    if (isMobile && clientWidth >= 768) {
+      dispatch(setIsLaptop(true));
+      dispatch(setIsMobile(false));
+    }
+
+    // setCurrSiteSize({ x: clientWidth, y: clientHeight });
+  }, [dispatch, isMobile]);
 
   useEffect(() => {
     handleCurrSite();
-    // window.addEventListener('resize', handleCurrSite);
+    window.addEventListener('resize', handleCurrSite);
 
     return () => {
-      // window.removeEventListener('resize', handleCurrSite);
+      window.removeEventListener('resize', handleCurrSite);
     };
-  }, []);
+  }, [handleCurrSite]);
 
   return (
     <ThemeProvider theme={{ currSiteSize }}>

@@ -10,10 +10,13 @@ const config = {
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 firebase.initializeApp(config);
+const secondaryApp = firebase.initializeApp(config, 'secondary');
+
 export const auth = firebase.auth();
+export const authOtherUser = secondaryApp.auth();
 export const firestore = firebase.firestore();
 export const firestoreFunctions = firebase.firestore;

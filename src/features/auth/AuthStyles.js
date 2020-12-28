@@ -11,7 +11,7 @@ export const AuthContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr max-content;
   height: ${({ theme }) => theme.currSiteSize.y}px;
-  width: ${({ theme }) => theme.currSiteSize.x}px;
+  width: 100vw;
 
   @media screen and (${device.tablet}) {
     align-items: stretch;
@@ -33,7 +33,7 @@ export const FormContainer = styled.div`
   @media screen and (${device.tablet}) {
     display: grid;
     grid-template-rows: 140px 1fr;
-    max-width: 500px;
+    max-width: 600px;
     padding: 0 26px;
   }
 `;
@@ -46,6 +46,10 @@ export const AuthForm = styled(StyledForm)`
 
   @media screen and (${device.mobileM}) {
     grid-template-rows: 40% min-content 1fr;
+  }
+
+  @media screen and (${device.tablet}) {
+    grid-template-rows: repeat(3, min-content);
   }
 `;
 
@@ -178,7 +182,7 @@ export const AuthBackground = styled.div`
 export const AuthBackgroundImg = styled.div`
   display: flex;
   justify-content: center;
-  flex: 1 1;
+  height: 70%;
   position: relative;
 
   & > * {
@@ -249,7 +253,6 @@ export const AuthBackgroundTitle = styled.h5`
   color: white;
   font-size: 1.6rem;
   font-weight: 600;
-  margin-top: 40px;
   text-align: center;
 `;
 

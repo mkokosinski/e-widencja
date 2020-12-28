@@ -40,7 +40,7 @@ export const Body = styled.div`
   }
 
   @media screen and (${device.tablet}) {
-    grid-template-columns: 60px 2fr 3fr 1fr;
+    grid-template-columns: 60px 1fr max-content 1fr;
     grid-template-areas: 'ico name journeys buttons';
     justify-content: space-between;
   }
@@ -89,6 +89,8 @@ export const Name = styled(H2)`
 
 export const Subname = styled.div`
   font-size: 0.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Journeys = styled.div`
@@ -104,6 +106,7 @@ export const Journeys = styled.div`
 export const Journey = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 10px;
 
   @media screen and (${device.mobileXL}) {
   }

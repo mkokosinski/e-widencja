@@ -8,7 +8,7 @@ import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
 import { StyledField, Row, StyledError } from '../forms/FormsStyles';
 
-import { selectAuth, signIn } from './authSlice';
+import { selectAuth, signIn, signUpEmail } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AuthButtonsWrapper,
@@ -30,15 +30,22 @@ const validationSchema = Yup.object({
     .email('Niepoprawny format')
     .required('Pole wymagane'),
   password: Yup.string()
-    .min(6, 'Minimum 6 znaków')
+    .min(8, 'Minimum 8 znaków')
     .max(30, 'Maksymalnie 30 znaków')
-    .matches(/[a-zA-Z]/, 'Niedozwolone znaki w haśle')
+    .matches(/\d/, 'Przynajmniej 1 liczba')
+    .matches(/[a-z]/,'Przynajmniej 1 litera')
+    .matches(/[A-Z]/, 'Przynajmniej 1 wielka litera')
+    .matches(/[@$!%*#?&]/, 'Przynajmniej 1 znak specjalny')
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Niedozwolone znaki w haśle')
+    .required('Pole wymagane'),
+    passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Hasła różną się od siebie')
     .required('Pole wymagane')
 });
 
 const initValues = {
   email: '',
-  password: ''
+  password: '',
+  passwordConfirmation: ''
 };
 
 const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
@@ -47,7 +54,7 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
   const { user, error } = useSelector(selectAuth);
 
   const handleSubmit = ({ email, password }) => {
-    dispatch(signIn({ email, password }));
+    dispatch(signUpEmail({ email, password }));
   };
 
   if (user) {
@@ -87,8 +94,17 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
                 </FieldWithErrors>
               </Row>
 
+              <Row>
+                <FieldWithErrors label='Potwierdź hasło' name='passwordConfirmation'>
+                  <StyledField
+                    type='password'
+                    autoComplete='current-passwordConfirmation'
+                  />
+                </FieldWithErrors>
+              </Row>
+
               <AuthButtonsWrapper>
-                <ButtonMain onClick={submitForm}>Zaloguj</ButtonMain>
+                <ButtonMain onClick={submitForm}>Zarejestruj</ButtonMain>
               </AuthButtonsWrapper>
               <Row>
                 <StyledError>{error}</StyledError>

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { auth, firestore } from '../../app/firebase/firebase';
+import { auth, authOtherUser, firestore } from '../../app/firebase/firebase';
 import { FETCH_STATUS } from '../../utils/fetchUtils';
 
 export const authorize = createAsyncThunk(
@@ -16,7 +16,7 @@ export const signUpEmail = createAsyncThunk(
   'auth/signUpEmail',
   async (arg, thunkAPI) => {
     const { email, password } = arg;
-    auth
+    authOtherUser
       .createUserWithEmailAndPassword(email, password)
       .then((res) => console.log(res));
   }
@@ -89,8 +89,24 @@ export const authSlice = createSlice({
       state.status = 'failed';
       console.log(action);
       state.error = action.payload;
-      toast.error(`Błąd:
-      ${action.payload}`);
+      toast.error(`Błąd: ${action.payload}`);
+    },
+
+    [signUpEmail.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+
+    [signUpEmail.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
+      toast.success('Poprawnie zarejestrowano');
+      state.error = null;
+    },
+
+    [signUpEmail.rejected]: (state, action) => {
+      state.status = 'failed';
+      console.log(action);
+      state.error = action.payload;
+      toast.error(`Błąd: ${action.payload}`);
     },
 
     [signOut.pending]: (state, action) => {

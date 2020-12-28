@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -15,9 +15,7 @@ import {
   AuthButtonsWrapper,
   AuthFormFooter,
   AuthFormHeader,
-  AuthFormSubHeader,
   AuthLink,
-  SignUpLink,
   AuthFormBody
 } from './AuthStyles';
 import { motion } from 'framer-motion';
@@ -30,9 +28,8 @@ const validationSchema = Yup.object({
     .email('Niepoprawny format')
     .required('Pole wymagane'),
   password: Yup.string()
-    .min(6, 'Minimum 6 znaków')
     .max(30, 'Maksymalnie 30 znaków')
-    .matches(/[a-zA-Z]/, 'Niedozwolone znaki w haśle')
+    .matches(/^[A-Za-z\d@$!%*#?&]{1,}$/, 'Niedozwolone znaki w haśle')
     .required('Pole wymagane')
 });
 

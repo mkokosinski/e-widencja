@@ -73,8 +73,7 @@ const AuthPage = () => {
             consequatur! Quaerat necessitatibus modi quam aliquid! Soluta in
             debitis architecto blanditiis maiores aliquam corporis ut, id
             explicabo magni veniam minima perferendis incidunt minus ipsum
-            quidem, magnam pariatur commodi laudantium cumque nihil laborum
-            alias at.
+            quidem, magnam pariatur commodi laudantium cumque nihil.
           </AuthBackgroundText>
         </AuthBackground>
       )}
