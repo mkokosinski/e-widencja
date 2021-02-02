@@ -4,9 +4,15 @@ import {
   createSelector
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
+import {
+  auth,
+  authOtherUser,
+  firestore,
+  firestoreFunctions
+} from '../../app/firebase/firebase';
 import { FETCH_STATUS } from '../../utils/fetchUtils';
 import { toast } from 'react-toastify';
+import { signUpEmail } from '../auth/authSlice';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
@@ -34,7 +40,7 @@ export const fetchUsers = createAsyncThunk(
       if (data.deleted) {
         data.deleted = data.deleted.toDate().toString();
       }
-      users.push({...data, id: doc.id});
+      users.push({ ...data, id: doc.id });
     });
 
     return users;
@@ -46,6 +52,8 @@ export const addUser = createAsyncThunk(
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
+    console.log(currUser);
+
     const newUser = {
       name: arg.name,
       surname: arg.surname,
@@ -53,16 +61,28 @@ export const addUser = createAsyncThunk(
       eMail: arg.eMail,
       isDriver: arg.isDriver,
       isAppUser: arg.isAppUser,
+      isConnectedUser: arg.isAppUser,
+      password: arg.isAppUser,
       companyId: currUser.companyId,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
       active: true
     };
 
-    if (arg.isAppUser) {
-      //TODO: SignUp
-    }
-    
+    // if (arg.isAppUser) {
+    //   //TODO: SignUp
+
+    //   authOtherUser
+    //     .createUserWithEmailAndPassword(newUser.eMail, 'Asd1233##')
+    //     .then((res) => {
+    //       console.log('res', res);
+    //     })
+    //     .catch((err) => {
+    //       if (err.code === 'auth/email-already-in-use') {
+    //         console.log(err);
+    //       }
+    //     });
+    // }
 
     return await firestore
       .collection('Users')
@@ -71,7 +91,6 @@ export const addUser = createAsyncThunk(
         console.log(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
-
   }
 );
 
@@ -123,7 +142,6 @@ export const deleteUser = createAsyncThunk(
       });
   }
 );
-
 
 export const usersSlice = createSlice({
   name: 'users',

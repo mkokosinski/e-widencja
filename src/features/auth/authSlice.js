@@ -7,7 +7,19 @@ export const authorize = createAsyncThunk(
   'auth/authorize',
   async (arg, thunkAPI) => {
     if (arg && arg.user) {
-      return await getFirebaseUser(arg.user.uid);
+      const data = await getFirebaseUser(arg.user.uid);
+      if (data.created) {
+        data.created = data.created.toDate().toString();
+      }
+
+      if (data.updated) {
+        data.updated = data.updated.toDate().toString();
+      }
+
+      if (data.deleted) {
+        data.deleted = data.deleted.toDate().toString();
+      }
+      return { ...data, id: arg.user.uid };
     } else return thunkAPI.rejectWithValue('user not exists');
   }
 );
@@ -16,9 +28,14 @@ export const signUpEmail = createAsyncThunk(
   'auth/signUpEmail',
   async (arg, thunkAPI) => {
     const { email, password } = arg;
-    authOtherUser
+    return await authOtherUser
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => console.log(res));
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 );
 

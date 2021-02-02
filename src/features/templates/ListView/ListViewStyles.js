@@ -76,10 +76,9 @@ export const ModalContent = styled.div`
   background-color: white;
   border-radius: 6px;
   box-shadow: 0 1px 12px -4px rgba(0, 0, 0, 0.5),
-      0 4px 24px -4px rgba(0, 0, 0, 0.2);
+    0 4px 24px -4px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
   max-width: 92%;
-  overflow: hidden;
   padding: 26px;
 `;
 
