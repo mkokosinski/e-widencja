@@ -7,6 +7,11 @@ import AddTripForm from '../forms/trip/AddTripForm';
 import EditTripForm from '../forms/trip/EditTripForm';
 import TripDetails from '../trips/TripDetails';
 
+import TripTemplates from '../tripTemplates/TripTemplates';
+import AddTripTemplateForm from '../forms/tripTemplates/AddTripTemplateForm';
+import EditTripTemplateForm from '../forms/tripTemplates/EditTripTemplateForm';
+import TripTemplateDetails from '../tripTemplates/TripTemplateDetails';
+
 import Settings from '../settings/Settings';
 import Reports from '../reports/Reports';
 
@@ -50,6 +55,32 @@ const Routing = {
   TripDetails: {
     Component: TripDetails,
     action: '/e-widencja/app/trips/details',
+    get path() {
+      return `${this.action}/:id`;
+    }
+  },
+
+  TripTemplates: {
+    Component: TripTemplates,
+    path: '/e-widencja/app/tripTemplates'
+  },
+  TripTemplateAdd: {
+    Component: AddTripTemplateForm,
+    action: '/e-widencja/app/tripTemplates/add',
+    get path() {
+      return `${this.action}/:recordId`;
+    }
+  },
+  TripTemplateEdit: {
+    Component: EditTripTemplateForm,
+    action: '/e-widencja/app/tripTemplates/edit',
+    get path() {
+      return `${this.action}/:id`;
+    }
+  },
+  TripTemplateDetails: {
+    Component: TripTemplateDetails,
+    action: '/e-widencja/app/tripTemplates/details',
     get path() {
       return `${this.action}/:id`;
     }

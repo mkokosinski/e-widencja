@@ -23,7 +23,7 @@ import TripsFilters from './TripFilters';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './TripFilters';
-import { selectTrips } from './tripsSlice';
+import { selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 
 const buttons = (id) => [
@@ -40,7 +40,7 @@ const buttons = (id) => [
 ];
 
 const Users = () => {
-  const trips = useSelector(selectTrips);
+  const trips = useSelector(selectTripTemplates);
 
   console.log(trips);
 
@@ -70,9 +70,8 @@ const Users = () => {
               <Name title={trip.name}>{trip.name}</Name>
               <Subname>
                 <span>{trip.date}</span>
-                &nbsp;
-                &nbsp;
-                <span style={{ opacity: 0.7 }}>{trip.vehicle}</span>
+                &nbsp; &nbsp;
+                <span style={{ opacity: 0.6 }}>{trip.vehicle}</span>
               </Subname>
             </Title>
           </ListViewItem>
