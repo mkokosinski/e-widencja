@@ -3,21 +3,28 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { ModalAnimation } from '../../utils/animationUtils';
+import { device } from '../layout/LayoutStyles';
 import useDetectOutsideClick from './useDetectOutsideClick';
 
 export const ModalBackground = styled(motion.div)`
-  align-items: center;
+  align-items: flex-start;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
-  height: ${({ theme }) => theme.currSiteSize.y}px; /* Fallback for browsers that do not support Custom Properties */
-  height: calc(var(--vh, 1vh) * 100);
   left: 0;
+  padding-top: 10vh;
   position: fixed;
   top: 0;
-  width: ${({ theme }) => theme.currSiteSize.x}px;
   z-index: 999;
+  height: ${({ theme }) => theme.currSiteSize.y}px;
+  /* height: calc(var(--vh, 1vh) * 100); */
+  width: ${({ theme }) => theme.currSiteSize.x}px;
+
+  @media screen and (${device.mobileXL}) {
+    align-items: center;
+    padding: unset;
+  }
 `;
 
 export const ModalContent = styled(motion.div)`
@@ -29,13 +36,10 @@ const useModal = () => {
   const contentRef = useRef(null);
 
   const openModal = (callback) => {
-    console.log('openModal');
     setIsOpen(true);
   };
 
   const closeModal = () => {
-    console.log('closeModal');
-
     setIsOpen(false);
   };
 

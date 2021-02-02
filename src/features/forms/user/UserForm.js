@@ -11,11 +11,11 @@ import {
   Container,
   StyledField,
   ButtonsContainer,
-  Row,
+  Row
 } from '../FormsStyles';
-import { 
+import {
   ButtonMain,
-  ButtonBorderedSeconderySoft,
+  ButtonBorderedSeconderySoft
 } from '../../layout/LayoutStyles';
 import { validationMessages } from '../../../utils/formUtils';
 import { toast } from 'react-toastify';
@@ -33,15 +33,14 @@ const validationSchema = Yup.object({
   label: Yup.string()
     .max(15, validationMessages.max(15))
     .required(validationMessages.required),
-  isDriver: Yup.bool(),
-  eMail: Yup.string()
-    .email(validationMessages.email)
-    .min(7, validationMessages.min(7))
-    .required(validationMessages.required),
+  isDriver: Yup.bool()
+  // eMail: Yup.string()
+  //   .email(validationMessages.email)
+  //   .min(7, validationMessages.min(7))
+  //   .required(validationMessages.required)
 });
 
-
-const UserForm = ({user, isEdit}) => {
+const UserForm = ({ user, isEdit }) => {
   const dispatch = useDispatch();
   const { goBack } = useHistory();
   const validation = useValidation();
@@ -68,15 +67,14 @@ const UserForm = ({user, isEdit}) => {
     }
   };
 
-
   const initValues = user || {
     id: '',
     name: '',
     surname: '',
     label: '',
-    isDriver: false,
-    eMail: '',
-    isAppUser: false,
+    isDriver: false
+    // eMail: '',
+    // isAppUser: false
   };
 
   return (
@@ -86,7 +84,7 @@ const UserForm = ({user, isEdit}) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ submitForm }) => (
+        {({ values, submitForm }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Imię' scrollFocused>
@@ -116,9 +114,17 @@ const UserForm = ({user, isEdit}) => {
               </FieldWithErrors>
             </Row>
 
-            <Row>
+            {/* <Row>
               <Checkbox name='isAppUser' label='Załóż konto w aplikacji' />
             </Row>
+
+            {values.isAppUser && (
+              <Row>
+                <FieldWithErrors name='password' label='Hasło' scrollFocused>
+                  <StyledField type='password' />
+                </FieldWithErrors>
+              </Row>
+            )} */}
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>

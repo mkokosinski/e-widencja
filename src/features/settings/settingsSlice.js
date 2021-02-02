@@ -59,29 +59,29 @@ export const fetchSettings = createAsyncThunk(
   async (arg = 1, thunkAPI) => {
     const user = thunkAPI.getState().auth.user;
 
-    const globalSett = await firestore.collection('Settings').get();
-    const globalData = mergeSettings(globalSett.docs);
+    // const globalSett = await firestore.collection('Settings').get();
+    // const globalData = mergeSettings(globalSett.docs);
 
-    const companySett = await firestore
-      .collection('Companies')
-      .doc(user.companyId)
-      .collection('Settings')
-      .get();
-    const companyData = mergeSettings(companySett.docs);
+    // const companySett = await firestore
+    //   .collection('Companies')
+    //   .doc(user.companyId)
+    //   .collection('Settings')
+    //   .get();
+    // const companyData = mergeSettings(companySett.docs);
 
-    const userSett = await firestore
-      .collection('Users')
-      .doc(user.id)
-      .collection('Settings')
-      .get();
-    const userData = mergeSettings(userSett.docs);
+    // const userSett = await firestore
+    //   .collection('Users')
+    //   .doc(user.id)
+    //   .collection('Settings')
+    //   .get();
+    // const userData = mergeSettings(userSett.docs);
 
-    const settings = { ...globalData };
-    mergeDeep(settings, companyData);
-    mergeDeep(settings, userData);
+    // const settings = { ...globalData };
+    // mergeDeep(settings, companyData);
+    // mergeDeep(settings, userData);
 
     // return Object.values(settings);
-    return settings;
+    // return settings;
   }
 );
 

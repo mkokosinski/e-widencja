@@ -17,30 +17,32 @@ export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',
   async (arg = 1, thunkAPI) => {
     const records = [];
-    const user = thunkAPI.getState().auth.user;
+    const user = await thunkAPI.getState().auth.user;
 
-    const coll = await firestore
-      .collection('Records')
-      .where('companyId', '==', user.companyId)
-      .where('active', '==', true)
-      .get();
+    if (user) {
+      const coll = await firestore
+        .collection('Records')
+        .where('companyId', '==', user.companyId)
+        .where('active', '==', true)
+        .get();
 
-    coll.forEach((doc) => {
-      const data = doc.data();
-      if (data.created) {
-        data.created = data.created.toDate().toString();
-      }
+      coll.forEach((doc) => {
+        const data = doc.data();
+        if (data.created) {
+          data.created = data.created.toDate().toString();
+        }
 
-      if (data.updated) {
-        data.updated = data.updated.toDate().toString();
-      }
+        if (data.updated) {
+          data.updated = data.updated.toDate().toString();
+        }
 
-      if (data.deleted) {
-        data.deleted = data.deleted.toDate().toString();
-      }
+        if (data.deleted) {
+          data.deleted = data.deleted.toDate().toString();
+        }
 
-      records.push({ ...data, id: doc.id });
-    });
+        records.push({ ...data, id: doc.id });
+      });
+    }
 
     return records;
   }
@@ -169,6 +171,7 @@ export const recordsSlice = createSlice({
     [fetchRecords.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
       state.error = action.error.message;
+      toast.error(action.error.message);
     },
     [addRecord.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
@@ -181,7 +184,8 @@ export const recordsSlice = createSlice({
 
     [addRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.payload;
+      console.log('err', action);
+      state.error = action.error.message;
       toast.error(action.payload);
     },
     [editRecord.pending]: (state, action) => {
@@ -220,8 +224,8 @@ export const selectRecords = (state) => {
   const withVehicles = [];
 
   records.items.forEach((rec) => {
-      const vehicle = selectVehicleById(state, rec.vehicleId);
-      withVehicles.push({ ...rec, vehicle });
+    const vehicle = selectVehicleById(state, rec.vehicleId);
+    withVehicles.push({ ...rec, vehicle });
   });
 
   withVehicles.sort(sortMethods[sortFunc.name][sortFunc.condition]);
