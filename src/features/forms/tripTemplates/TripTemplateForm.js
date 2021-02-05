@@ -38,7 +38,11 @@ import {
   selectTripTemplates,
   selectTripTemplateSort
 } from '../../tripTemplates/tripTemplatesSlice';
+<<<<<<< HEAD
 import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
+=======
+import { selectSettings } from '../../settings/settingsSlice';
+>>>>>>> f7e93a79760ed7da8bff93b962643a44305195fe
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
