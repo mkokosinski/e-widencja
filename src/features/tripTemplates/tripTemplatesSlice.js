@@ -15,10 +15,73 @@ export const fetchTripTemplates = createAsyncThunk(
     const coll = await firestore.collection('TripTemplates').get();
 
     coll.forEach((doc) => {
-      tripTemplates.push({ ...doc.data(), id: doc.id });
+      const data = doc.data();
+      tripTemplates.push({ ...data, id: doc.id });
     });
 
     return tripTemplates;
+  }
+);
+
+export const addUser = createAsyncThunk(
+  'records/addUser',
+  async (arg, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
+    console.log(currUser);
+
+    const newUser = {
+      name: arg.name,
+      surname: arg.surname,
+      label: arg.label,
+      eMail: arg.eMail,
+      isDriver: arg.isDriver,
+      isAppUser: arg.isAppUser,
+      isConnectedUser: arg.isAppUser,
+      password: arg.isAppUser,
+      companyId: currUser.companyId,
+      createdBy: currUser.id,
+      created: firestoreFunctions.FieldValue.serverTimestamp(),
+      active: true
+    };
+
+    return await firestore
+      .collection('Users')
+      .add(newUser)
+      .catch((err) => {
+        console.log(err);
+        return thunkAPI.rejectWithValue(err.toString());
+      });
+  }
+);
+
+export const editTripTemplate = createAsyncThunk(
+  'records/editUser',
+  async (arg, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
+    const editedUser = {
+      name: arg.name,
+      surname: arg.surname,
+      label: arg.label,
+      eMail: arg.eMail,
+      isDriver: arg.isDriver,
+      isAppUser: arg.isAppUser,
+      updatedBy: currUser.id,
+      updated: firestoreFunctions.FieldValue.serverTimestamp()
+    };
+
+    if (arg.isAppUser) {
+      //TODO: SignUp
+    }
+
+    firestore
+      .collection('Users')
+      .doc(arg.id)
+      .update(editedUser)
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
   }
 );
 
@@ -61,11 +124,7 @@ export const tripTemplateSlice = createSlice({
     },
 
     [fetchTripTemplates.fulfilled]: (state, action) => {
-      const templates = action.payload.map((template) => ({
-        ...template,
-        label: template.stops.map((s) => s.place).join(' - ')
-      }));
-      state.items = templates;
+      state.items = action.payload;
       state.status = 'succeeded';
     },
 

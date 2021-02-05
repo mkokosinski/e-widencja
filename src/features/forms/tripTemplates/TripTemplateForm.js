@@ -38,7 +38,7 @@ import {
   selectTripTemplates,
   selectTripTemplateSort
 } from '../../tripTemplates/tripTemplatesSlice';
-import { selectSettings } from '../../settings/settingsSlice';
+import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
@@ -63,102 +63,30 @@ const handleSubmit = (values) => {
   console.log(values);
 };
 
-const emptyRecord = {
-  name: '',
-  vehicle: {
-    name: ''
-  }
-};
-
-const emptyTripTemplate = {
-  label: '',
-  value: '',
-  stops: []
-};
-
-const TripTemplateForm = ({ trip }) => {
+const TripTemplateForm = ({ tripTemplate }) => {
   const { goBack } = useHistory();
-  const tripTemplateRef = useRef(null);
 
-  const { items: records } = useSelector(selectRecords);
-  const drivers = useSelector(selectDrivers);
-  const user = useSelector(selectFbUser);
   const tripTemplates = useSelector(selectTripTemplates);
-  const { Purposes } = useSelector(selectSettings);
-
-  const record = records.find((r) => r.id === trip.record) || emptyRecord;
-  const tripTemplate =
-    tripTemplates.find((t) => t.id === trip.tripTemplate) || emptyTripTemplate;
-
-  const selectedRecord = {
-    label: ` ${record.vehicle.name} - ${record.name}`,
-    value: record.id,
-    mileage: record.vehicle.mileage
-  };
+  const purposes = useSelector(selectPurposes);
 
   const selectedPurpose = {
-    label: trip.purpose,
-    value: trip.purpose
+    label: tripTemplate.purpose,
+    value: tripTemplate.purpose
   };
 
-  const isAdmin = user.role === USER_ROLES.admin;
-
-  const selectedDriver = {
-    label: user.fullname,
-    value: user.id
-  };
-
-  const selectedTemplate = {
-    label: tripTemplate.label,
-    value: tripTemplate.id,
-    stops: tripTemplate.stops
-  };
-
-  const recordSelectItems = records.map((rec) => ({
-    label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
-    value: rec.id,
-    mileage: rec.vehicle.mileage
-  }));
-
-  const driverSelectItems = isAdmin
-    ? drivers.map((driv) => ({
-        label: driv.fullname,
-        value: driv.id
-      }))
-    : selectedDriver;
-
-  const tripTemplatesSelectItems = tripTemplates.map((template) => ({
-    label: template.label,
-    value: template.id,
-    stops: template.stops
-  }));
-
-  const purposesSelectItems = Purposes.purposes.map((purpose) => ({
+  const purposesSelectItems = purposes.map((purpose) => ({
     label: purpose,
     value: purpose
   }));
 
-  console.log(trip.initialMileage);
-  console.log(record.vehicle.mileage);
-
-  const initMileage = trip.initialMileage || record.vehicle.mileage;
-
-  const stops = trip.stops.map((stop) => ({
+  const stops = tripTemplate.stops.map((stop) => ({
     ...stop,
-    mileage: initMileage
+    mileage: 0
   }));
 
-  const focusOn = (ref) => {
-    ref.current.focus();
-  };
-
   const initValues = {
-    date: trip.date,
-    driver: selectedDriver,
-    initMileage: initMileage,
-    record: selectedRecord,
-    purpose: trip.purpose ? selectedPurpose : '',
-    tripTemplate: trip.tripTemplate ? selectedTemplate : '',
+    name: tripTemplate.name,
+    purpose: tripTemplate.purpose ? selectedPurpose : '',
     stops: stops
   };
 
@@ -178,64 +106,8 @@ const TripTemplateForm = ({ trip }) => {
         }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name='date' label='Data'>
-                <DateInput
-                  onChange={(date) => {
-                    setFieldTouched('date');
-                    setFieldValue('date', date);
-                    // focusOn(tripTemplateRef)
-                  }}
-                  defaultDate={values.date}
-                  type={DATEPICKER_TYPES.daypicker}
-                />
-              </FieldWithErrors>
-            </Row>
-
-            <Row>
-              <FieldWithErrors
-                name='tripTemplate'
-                label='Kierowca'
-                ref={tripTemplateRef}
-                scrollFocused
-              >
-                <StyledSelect>
-                  <Select
-                    as='select'
-                    isSearchable={true}
-                    options={driverSelectItems}
-                    onChange={(option) => {
-                      setFieldTouched('driver');
-                      setFieldValue('driver', option);
-                    }}
-                    isDisabled={!isAdmin}
-                    value={values.driver}
-                  />
-                </StyledSelect>
-              </FieldWithErrors>
-            </Row>
-
-            <Row>
-              <FieldWithErrors name='record' label='Ewidencja' scrollFocused>
-                <StyledSelect>
-                  <Select
-                    as='select'
-                    isSearchable={true}
-                    options={recordSelectItems}
-                    onChange={(option) => {
-                      setFieldTouched('record');
-                      setFieldValue('record', option);
-                      setFieldValue(
-                        'stops',
-                        values.stops.map((stop) => ({
-                          ...stop,
-                          mileage: option.mileage
-                        }))
-                      );
-                      focusOn(tripTemplateRef);
-                    }}
-                    value={values.record}
-                  />
-                </StyledSelect>
+              <FieldWithErrors name='name' label='Nazwa' scrollFocused>
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
@@ -249,7 +121,6 @@ const TripTemplateForm = ({ trip }) => {
                     onChange={(option) => {
                       setFieldTouched('purpose');
                       setFieldValue('purpose', option);
-                      focusOn(tripTemplateRef);
                     }}
                     onCreateOption={(value) => {
                       const option = { label: value, value };
@@ -258,36 +129,6 @@ const TripTemplateForm = ({ trip }) => {
                     }}
                     placeholder='Wybierz cel'
                     value={values.purpose}
-                  />
-                </StyledSelect>
-              </FieldWithErrors>
-            </Row>
-
-            <Row>
-              <FieldWithErrors
-                name='tripTemplate'
-                label='Szablon'
-                ref={tripTemplateRef}
-                scrollFocused
-              >
-                <StyledSelect>
-                  <SelectCreatable
-                    as='select'
-                    isSearchable={true}
-                    options={tripTemplatesSelectItems}
-                    onChange={(option) => {
-                      setFieldTouched('tripTemplate');
-                      setFieldValue('tripTemplate', option);
-                      setFieldValue(
-                        'stops',
-                        option.stops.map((stop) => ({
-                          ...stop,
-                          mileage: values.record.mileage + stop.distance
-                        }))
-                      );
-                    }}
-                    placeholder='Wybierz szablon'
-                    value={values.tripTemplate}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -353,10 +194,6 @@ const TripTemplateForm = ({ trip }) => {
                   ));
                 }}
               </FieldArray>
-            </Row>
-
-            <Row>
-              <Checkbox name='saveTemplate' label='zapisz jako szablon' />
             </Row>
 
             <ButtonsContainer>

@@ -7,22 +7,16 @@ import { selectTripById } from '../../trips/tripsSlice';
 import TripTemplateForm from './TripTemplateForm';
 
 const AddTripTemplateForm = () => {
-  const { recordId } = useParams();
-
-  const trip = {
-    date: new Date(),
-    driver: '',
-    initialMileage: 0,
+  const tripTemplate = {
+    label: '',
     purpose: '',
-    record: recordId,
     stops: [
       { label: 'Start', place: '', mileage: '', distance: 0 },
       { label: 'Cel', place: '', mileage: '', distance: 0 }
-    ],
-    tripTemplate: ''
+    ]
   };
 
-  return <TripTemplateForm trip={trip} />;
+  return <TripTemplateForm tripTemplate={tripTemplate} />;
 };
 
 export default AddTripTemplateForm;

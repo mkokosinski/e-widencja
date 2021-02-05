@@ -121,11 +121,8 @@ const Router = () => {
           <Route exact path={Routing.TripTemplateEdit.path}>
             <Routing.TripTemplateEdit.Component />
           </Route>
-          <Route exact path={Routing.TripTemplateDetails.path}>
-            <Routing.TripTemplateDetails.Component />
-          </Route>
           <Route exact path={Routing.TripTemplates.path}>
-            <Routing.Trips.Component />
+            <Routing.TripTemplates.Component />
           </Route>
           <Route>
             <Error404 />

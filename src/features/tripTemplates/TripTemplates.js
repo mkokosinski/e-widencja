@@ -1,12 +1,11 @@
 import React from 'react';
 
-import Routing from '../routing/RoutingPaths';
-
 import {
   faEdit,
   faFileAlt,
   faPlus,
   faPlusSquare,
+  faTrash,
   faTruckPickup,
   faUser
 } from '@fortawesome/free-solid-svg-icons';
@@ -25,53 +24,54 @@ import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './TripFilters';
 import { selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
+import { EndLabel, StartLabel, StopsLabel } from './TripTemplatesStyles';
+import Routing from '../routing/RoutingPaths';
 
 const buttons = (id) => [
   {
-    ico: faFileAlt,
-    label: 'Szczegóły',
-    action: `${Routing.TripDetails.action}/${id}`
-  },
-  {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.TripEdit.action}/${id}`
+    action: `${Routing.TripTemplateEdit.action}/${id}`
+  },
+  {
+    ico: faTrash,
+    label: 'Usuń',
+    action: `${Routing.TripTemplateEdit.action}/${id}`
   }
 ];
 
-const Users = () => {
-  const trips = useSelector(selectTripTemplates);
-
-  console.log(trips);
-
+const TripTemplates = () => {
+  const templates = useSelector(selectTripTemplates);
   return (
     <ItemsList>
       <TopPanel>
         <ButtonAdd>
-          <AddItem to={`${Routing.TripAdd.path}`}>
+          <AddItem to={`${Routing.TripTemplateAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
-            <span> Nowa trasa</span>
+            <span>Nowy szablon</span>
           </AddItem>
         </ButtonAdd>
 
         <FilterButton modalComponent={FilterModal} />
       </TopPanel>
 
-      {trips.map((trip) => {
+      {templates.map((template) => {
         return (
           <ListViewItem
-            key={trip.id}
+            key={template.id}
             ico={faTruckPickup}
-            item={trip}
+            item={template}
             path={Routing.Trips.path}
-            buttons={buttons(trip.id)}
+            buttons={buttons(template.id)}
           >
             <Title>
-              <Name title={trip.name}>{trip.name}</Name>
+              <Name>{template.label}</Name>
               <Subname>
-                <span>{trip.date}</span>
-                &nbsp; &nbsp;
-                <span style={{ opacity: 0.6 }}>{trip.vehicle}</span>
+                <StopsLabel>
+                  {template.stops.map((stop) => (
+                    <span key={stop.place + stop.label}>{stop.place}</span>
+                  ))}
+                </StopsLabel>
               </Subname>
             </Title>
           </ListViewItem>
@@ -81,4 +81,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default TripTemplates;

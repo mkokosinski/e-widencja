@@ -127,7 +127,7 @@ export const InfoSecondary = styled.div`
 export const Buttons = styled.div`
   grid-area: buttons;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 
   height: 90%;
 

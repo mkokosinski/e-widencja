@@ -66,21 +66,11 @@ const Routing = {
   },
   TripTemplateAdd: {
     Component: AddTripTemplateForm,
-    action: '/e-widencja/app/tripTemplates/add',
-    get path() {
-      return `${this.action}/:recordId`;
-    }
+    path: '/e-widencja/app/tripTemplates/add'
   },
   TripTemplateEdit: {
     Component: EditTripTemplateForm,
     action: '/e-widencja/app/tripTemplates/edit',
-    get path() {
-      return `${this.action}/:id`;
-    }
-  },
-  TripTemplateDetails: {
-    Component: TripTemplateDetails,
-    action: '/e-widencja/app/tripTemplates/details',
     get path() {
       return `${this.action}/:id`;
     }
