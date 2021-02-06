@@ -1,6 +1,8 @@
-import firebase from 'firebase';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+
+console.log(process.env);
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,7 +16,7 @@ const config = {
 };
 
 firebase.initializeApp(config);
-const secondaryApp = firebase.initializeApp(config, 'secondary');
+const secondaryApp = firebase.initializeApp(config, "secondary");
 
 export const auth = firebase.auth();
 export const authOtherUser = secondaryApp.auth();

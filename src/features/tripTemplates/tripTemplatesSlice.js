@@ -2,17 +2,19 @@ import {
   createSlice,
   createAsyncThunk,
   createSelector
-} from '@reduxjs/toolkit';
-import { selectFilters } from '../templates/filterSlice';
-import { firestore } from '../../app/firebase/firebase';
-import { selectRecordById, selectRecords } from '../records/recordsSlice';
-import { compareDates } from '../../utils/dateUtils';
+} from "@reduxjs/toolkit";
+import { selectFilters } from "../templates/filterSlice";
+import { firestore, firestoreFunctions } from "../../app/firebase/firebase";
+import { selectRecordById, selectRecords } from "../records/recordsSlice";
+import { compareDates } from "../../utils/dateUtils";
+import { FETCH_STATUS } from "../../utils/fetchUtils";
+import { toast } from "react-toastify";
 
 export const fetchTripTemplates = createAsyncThunk(
-  'tripTemplates/fetchTripTemplates',
+  "tripTemplates/fetchTripTemplates",
   async (arg = 1, thunkAPI) => {
     const tripTemplates = [];
-    const coll = await firestore.collection('TripTemplates').get();
+    const coll = await firestore.collection("TripTemplates").get();
 
     coll.forEach((doc) => {
       const data = doc.data();
@@ -23,22 +25,15 @@ export const fetchTripTemplates = createAsyncThunk(
   }
 );
 
-export const addUser = createAsyncThunk(
-  'records/addUser',
+export const addTripTemplate = createAsyncThunk(
+  "records/addTripTemplate",
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
-    console.log(currUser);
-
-    const newUser = {
-      name: arg.name,
-      surname: arg.surname,
+    const newTemplate = {
       label: arg.label,
-      eMail: arg.eMail,
-      isDriver: arg.isDriver,
-      isAppUser: arg.isAppUser,
-      isConnectedUser: arg.isAppUser,
-      password: arg.isAppUser,
+      purpose: arg.purpose,
+      stops: arg.stops,
       companyId: currUser.companyId,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
@@ -46,8 +41,8 @@ export const addUser = createAsyncThunk(
     };
 
     return await firestore
-      .collection('Users')
-      .add(newUser)
+      .collection("TripTemplates")
+      .add(newTemplate)
       .catch((err) => {
         console.log(err);
         return thunkAPI.rejectWithValue(err.toString());
@@ -56,29 +51,22 @@ export const addUser = createAsyncThunk(
 );
 
 export const editTripTemplate = createAsyncThunk(
-  'records/editUser',
+  "records/editTripTemplate",
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
-    const editedUser = {
-      name: arg.name,
-      surname: arg.surname,
+    const editedTemplate = {
       label: arg.label,
-      eMail: arg.eMail,
-      isDriver: arg.isDriver,
-      isAppUser: arg.isAppUser,
+      purpose: arg.purpose,
+      stops: arg.stops,
       updatedBy: currUser.id,
       updated: firestoreFunctions.FieldValue.serverTimestamp()
     };
 
-    if (arg.isAppUser) {
-      //TODO: SignUp
-    }
-
     firestore
-      .collection('Users')
+      .collection("TripTemplates")
       .doc(arg.id)
-      .update(editedUser)
+      .update(editedTemplate)
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
@@ -93,18 +81,18 @@ const sortMethods = {
 };
 
 export const tripTemplateSlice = createSlice({
-  name: 'tripTemplates',
+  name: "tripTemplates",
   initialState: {
-    status: 'idle',
+    status: "idle",
     items: [],
     error: null,
-    sortFunc: { name: 'Data', condition: 'desc' },
+    sortFunc: { name: "Data", condition: "desc" },
     sortCases: [
       {
-        title: 'Data',
+        title: "Data",
         items: [
-          { label: 'od najnowszych', condition: 'desc' },
-          { label: 'od najstarszych', condition: 'asc' }
+          { label: "od najnowszych", condition: "desc" },
+          { label: "od najstarszych", condition: "asc" }
         ]
       }
     ]
@@ -120,17 +108,43 @@ export const tripTemplateSlice = createSlice({
   },
   extraReducers: {
     [fetchTripTemplates.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
-
     [fetchTripTemplates.fulfilled]: (state, action) => {
       state.items = action.payload;
-      state.status = 'succeeded';
+      state.status = "succeeded";
+    },
+    [fetchTripTemplates.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
     },
 
-    [fetchTripTemplates.rejected]: (state, action) => {
-      state.status = 'failed';
+    [addTripTemplate.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [addTripTemplate.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success("Poprawnie dodano nową ewidencję");
+    },
+    [addTripTemplate.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      console.log("err", action);
       state.error = action.error.message;
+      toast.error(action.payload);
+    },
+
+    [editTripTemplate.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [editTripTemplate.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success("Poprawnie dodano nową ewidencję");
+    },
+    [editTripTemplate.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      console.log("err", action);
+      state.error = action.error.message;
+      toast.error(action.payload);
     }
   }
 });

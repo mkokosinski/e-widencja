@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { Form, Field } from 'formik';
-import { PanelBordered, device, Button } from '../layout/LayoutStyles';
+import styled, { css } from "styled-components";
+import { Form, Field } from "formik";
+import { PanelBordered, device, Button } from "../layout/LayoutStyles";
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -84,7 +84,7 @@ export const Label = styled.label`
 export const inputStyle = css`
   border: 1px solid rgba(54, 54, 54, 0.7);
   border-color: #dbdbdb;
-  border-color: ${(props) => props.haserror && 'red'};
+  border-color: ${(props) => props.haserror && "red"};
   border-radius: 4px;
   color: #363636;
   cursor: pointer;
@@ -94,7 +94,7 @@ export const inputStyle = css`
 
   outline: red;
 
-  div[class*='react-datepicker'] {
+  div[class*="react-datepicker"] {
     height: 200px;
   }
 
@@ -136,7 +136,7 @@ export const StyledField = styled(Field)`
 `;
 
 export const StyledSelect = styled.div`
-  div[class*='control'] {
+  div[class*="control"] {
     min-height: 0;
     ${inputStyle}
     padding: 4px 6px;
@@ -190,15 +190,26 @@ export const ButtonsContainer = styled.div`
   }
 `;
 
-export const FieldsGroup = styled.div`
-  display: grid;
-  grid-template: 1fr/3fr 2fr 1fr auto;
-
-  grid-gap: 10px;
+export const MileageFieldsGroup = styled.div`
   align-items: flex-end;
+  display: flex;
+  position: relative;
 
   @media screen and (${device.tablet}) {
     width: 100%;
+  }
+
+  & > * {
+    flex-basis: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+    &:first-child {
+      flex-basis: 100%;
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
   }
 `;
 
@@ -217,11 +228,12 @@ export const AddItemButton = styled(ItemButton)`
 `;
 
 export const RemoveItemButton = styled(ItemButton)`
-  border: 1px solid ${(props) => props.theme.mainSoft};
-  bottom: 1rem;
-  height: 32px;
-  position: relative;
-  width: 32px;
+  bottom: 24px;
+  color: ${(props) => props.theme.textColorLight};
+  height: 22px;
+  position: absolute;
+  right: -20px;
+  width: 22px;
 `;
 
 export const Group = styled.div`

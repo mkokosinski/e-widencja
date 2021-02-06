@@ -16,9 +16,7 @@ import {
   StyledSelect,
   AddItemButton,
   RemoveItemButton,
-  FieldsGroup,
-  Input,
-  StyledCheckbox
+  MileageFieldsGroup,
 } from '../FormsStyles';
 import {
   ButtonMain,
@@ -303,7 +301,7 @@ const TripForm = ({ trip }) => {
 
                   return values.stops.map((stop, index) => (
                     <React.Fragment key={stop.label + index}>
-                      <FieldsGroup>
+                      <MileageFieldsGroup>
                         <FieldWithErrors
                           name={`stops[${index}].place`}
                           label={labels[index]}
@@ -330,7 +328,7 @@ const TripForm = ({ trip }) => {
                             <FontAwesomeIcon icon={faMinus} />
                           </RemoveItemButton>
                         )}
-                      </FieldsGroup>
+                      </MileageFieldsGroup>
                       {index === values.stops.length - 2 && (
                         <AddItemButton
                           onClick={() => {

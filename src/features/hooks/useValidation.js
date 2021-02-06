@@ -1,18 +1,22 @@
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { shallowEqual, deepEqual } from "../../utils/objectUtils";
 
 export const validationMessages = {
-  isDuplicate: 'Element już istnieje',
+  isDuplicate: "Element już istnieje",
   record: {
-    isDuplicate: 'Istnieje już ewidencja dla tego pojazdu w podanym okresie',
+    isDuplicate: "Istnieje już ewidencja dla tego pojazdu w podanym okresie",
     wrongMileage:
-      'Podany przebieg nie zgadza się z przebiegiem wybranego pojazdu'
+      "Podany przebieg nie zgadza się z przebiegiem wybranego pojazdu"
   },
   vehicle: {
-    isDuplicateName: 'Istnieje już pojazd o tej nazwie',
-    isDuplicateRegistration: 'Istnieje już pojazd o takiej rejestracji'
+    isDuplicateName: "Istnieje już pojazd o tej nazwie",
+    isDuplicateRegistration: "Istnieje już pojazd o takiej rejestracji"
   },
   user: {
-    isDuplicateEmail: 'Isnieje już użytkownik z tym adresem e-mail'
+    isDuplicateEmail: "Isnieje już użytkownik z tym adresem e-mail"
+  },
+  tripTemplate: {
+    isDuplicateLabel: "Istnieje już szablon z taką nazwą"
   }
 };
 
@@ -21,6 +25,7 @@ const useValidation = () => {
   const { items: records } = state.records;
   const { items: vehicles } = state.vehicles;
   const { items: users } = state.users;
+  const { items: tripTemplates } = state.tripTemplates;
 
   const record = (values) => {
     const { month, year, vehicleId, mileage, id } = values;
@@ -150,7 +155,37 @@ const useValidation = () => {
     return { success: true, error: null };
   };
 
-  return { record, vehicle, user };
+  const tripTemplate = (values) => {
+    console.log(values);
+    const { id, label, purpose, stops } = values;
+
+    const isDuplicateLabel = tripTemplates.some(
+      (template) => template.label.trim() === label.trim()
+    );
+
+    const oldTemplate = tripTemplates
+      .map((t) => {
+        const { id, label, purpose, stops } = t;
+        return { id, label, purpose, stops };
+      })
+      .find((template) => template.id === id);
+
+    const nameWasChanged = id ? label !== oldTemplate.label : true;
+    const itemWasChanged = id ? !deepEqual(values, oldTemplate) : true;
+
+    if (itemWasChanged) {
+      if (nameWasChanged && isDuplicateLabel) {
+        return {
+          error: validationMessages.tripTemplate.isDuplicateLabel,
+          success: false
+        };
+      }
+    }
+
+    return { error: null, success: true };
+  };
+
+  return { record, vehicle, user, tripTemplate };
 };
 
 export default useValidation;
