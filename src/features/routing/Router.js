@@ -10,10 +10,12 @@ const ErrorMessage = styled.div`
   font-weight: bold;
   margin: auto;
   padding: 20px;
-`
+`;
 
 const Error404 = () => {
-  return <ErrorMessage>Skręciłeś w złą ścieżkę i znalazłeś Error 404!</ErrorMessage>;
+  return (
+    <ErrorMessage>Skręciłeś w złą ścieżkę i znalazłeś Error 404!</ErrorMessage>
+  );
 };
 
 const Router = () => {
@@ -104,6 +106,23 @@ const Router = () => {
           </Route>
           <Route exact path={Routing.Trips.path}>
             <Routing.Trips.Component />
+          </Route>
+          <Route>
+            <Error404 />
+          </Route>
+        </Switch>
+      </PrivateRoute>
+
+      <PrivateRoute path={Routing.TripTemplates.path}>
+        <Switch>
+          <Route exact path={Routing.TripTemplateAdd.path}>
+            <Routing.TripTemplateAdd.Component />
+          </Route>
+          <Route exact path={Routing.TripTemplateEdit.path}>
+            <Routing.TripTemplateEdit.Component />
+          </Route>
+          <Route exact path={Routing.TripTemplates.path}>
+            <Routing.TripTemplates.Component />
           </Route>
           <Route>
             <Error404 />

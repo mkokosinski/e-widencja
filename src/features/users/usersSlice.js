@@ -69,21 +69,6 @@ export const addUser = createAsyncThunk(
       active: true
     };
 
-    // if (arg.isAppUser) {
-    //   //TODO: SignUp
-
-    //   authOtherUser
-    //     .createUserWithEmailAndPassword(newUser.eMail, 'Asd1233##')
-    //     .then((res) => {
-    //       console.log('res', res);
-    //     })
-    //     .catch((err) => {
-    //       if (err.code === 'auth/email-already-in-use') {
-    //         console.log(err);
-    //       }
-    //     });
-    // }
-
     return await firestore
       .collection('Users')
       .add(newUser)

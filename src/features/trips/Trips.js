@@ -65,11 +65,10 @@ const Users = () => {
             buttons={buttons(trip.id)}
           >
             <Title>
-              <Name title={trip.name}>{trip.name}</Name>
+              <Name>{trip.name}</Name>
               <Subname>
                 <span>{trip.date}</span>
-                &nbsp;
-                &nbsp;
+                &nbsp; &nbsp;
                 <span style={{ opacity: 0.7 }}>{trip.vehicle}</span>
               </Subname>
             </Title>

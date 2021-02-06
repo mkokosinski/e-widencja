@@ -33,12 +33,16 @@ const validationSchema = Yup.object({
     .min(8, 'Minimum 8 znaków')
     .max(30, 'Maksymalnie 30 znaków')
     .matches(/\d/, 'Przynajmniej 1 liczba')
-    .matches(/[a-z]/,'Przynajmniej 1 litera')
+    .matches(/[a-z]/, 'Przynajmniej 1 litera')
     .matches(/[A-Z]/, 'Przynajmniej 1 wielka litera')
     .matches(/[@$!%*#?&]/, 'Przynajmniej 1 znak specjalny')
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Niedozwolone znaki w haśle')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      'Niedozwolone znaki w haśle'
+    )
     .required('Pole wymagane'),
-    passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Hasła różną się od siebie')
+  passwordConfirmation: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Hasła różną się od siebie')
     .required('Pole wymagane')
 });
 
@@ -95,7 +99,10 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
               </Row>
 
               <Row>
-                <FieldWithErrors label='Potwierdź hasło' name='passwordConfirmation'>
+                <FieldWithErrors
+                  label='Potwierdź hasło'
+                  name='passwordConfirmation'
+                >
                   <StyledField
                     type='password'
                     autoComplete='current-passwordConfirmation'

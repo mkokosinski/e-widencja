@@ -16,9 +16,7 @@ import {
   StyledSelect,
   AddItemButton,
   RemoveItemButton,
-  FieldsGroup,
-  Input,
-  StyledCheckbox
+  MileageFieldsGroup,
 } from '../FormsStyles';
 import {
   ButtonMain,
@@ -38,7 +36,7 @@ import {
   selectTripTemplates,
   selectTripTemplateSort
 } from '../../tripTemplates/tripTemplatesSlice';
-import { selectSettings } from '../../settings/settingsSlice';
+import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
@@ -84,7 +82,7 @@ const TripForm = ({ trip }) => {
   const drivers = useSelector(selectDrivers);
   const user = useSelector(selectFbUser);
   const tripTemplates = useSelector(selectTripTemplates);
-  const { Purposes } = useSelector(selectSettings);
+  const purposes = useSelector(selectPurposes);
 
   const record = records.find((r) => r.id === trip.record) || emptyRecord;
   const tripTemplate =
@@ -133,13 +131,10 @@ const TripForm = ({ trip }) => {
     stops: template.stops
   }));
 
-  const purposesSelectItems = Purposes.purposes.map((purpose) => ({
+  const purposesSelectItems = purposes.map((purpose) => ({
     label: purpose,
     value: purpose
   }));
-
-  console.log(trip.initialMileage);
-  console.log(record.vehicle.mileage);
 
   const initMileage = trip.initialMileage || record.vehicle.mileage;
 
@@ -157,8 +152,8 @@ const TripForm = ({ trip }) => {
     driver: selectedDriver,
     initMileage: initMileage,
     record: selectedRecord,
-    purpose: trip.purpose ? selectedPurpose : '',
     tripTemplate: trip.tripTemplate ? selectedTemplate : '',
+    purpose: trip.purpose ? selectedPurpose : '',
     stops: stops
   };
 
@@ -240,30 +235,6 @@ const TripForm = ({ trip }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='purpose' label='Cel wyjazdu' scrollFocused>
-                <StyledSelect>
-                  <SelectCreatable
-                    as='select'
-                    isSearchable={true}
-                    options={purposesSelectItems}
-                    onChange={(option) => {
-                      setFieldTouched('purpose');
-                      setFieldValue('purpose', option);
-                      focusOn(tripTemplateRef);
-                    }}
-                    onCreateOption={(value) => {
-                      const option = { label: value, value };
-                      setFieldTouched('purpose');
-                      setFieldValue('purpose', option);
-                    }}
-                    placeholder='Wybierz cel'
-                    value={values.purpose}
-                  />
-                </StyledSelect>
-              </FieldWithErrors>
-            </Row>
-
-            <Row>
               <FieldWithErrors
                 name='tripTemplate'
                 label='Szablon'
@@ -294,6 +265,30 @@ const TripForm = ({ trip }) => {
             </Row>
 
             <Row>
+              <FieldWithErrors name='purpose' label='Cel wyjazdu' scrollFocused>
+                <StyledSelect>
+                  <SelectCreatable
+                    as='select'
+                    isSearchable={true}
+                    options={purposesSelectItems}
+                    onChange={(option) => {
+                      setFieldTouched('purpose');
+                      setFieldValue('purpose', option);
+                      focusOn(tripTemplateRef);
+                    }}
+                    onCreateOption={(value) => {
+                      const option = { label: value, value };
+                      setFieldTouched('purpose');
+                      setFieldValue('purpose', option);
+                    }}
+                    placeholder='Wybierz cel'
+                    value={values.purpose}
+                  />
+                </StyledSelect>
+              </FieldWithErrors>
+            </Row>
+
+            <Row>
               <FieldArray name='stops'>
                 {({ remove, push }) => {
                   const labels = [
@@ -306,7 +301,7 @@ const TripForm = ({ trip }) => {
 
                   return values.stops.map((stop, index) => (
                     <React.Fragment key={stop.label + index}>
-                      <FieldsGroup>
+                      <MileageFieldsGroup>
                         <FieldWithErrors
                           name={`stops[${index}].place`}
                           label={labels[index]}
@@ -315,10 +310,16 @@ const TripForm = ({ trip }) => {
                           <StyledField type='text' placeholder='Miejsce' />
                         </FieldWithErrors>
 
-                        <FieldWithErrors name={`stops[${index}].mileage`} scrollFocused>
+                        <FieldWithErrors
+                          name={`stops[${index}].mileage`}
+                          scrollFocused
+                        >
                           <MileageInput index={index} type='number' min='0' />
                         </FieldWithErrors>
-                        <FieldWithErrors name={`stops[${index}].distance`} scrollFocused>
+                        <FieldWithErrors
+                          name={`stops[${index}].distance`}
+                          scrollFocused
+                        >
                           <DistanceInput index={index} type='number' min='0' />
                         </FieldWithErrors>
 
@@ -327,7 +328,7 @@ const TripForm = ({ trip }) => {
                             <FontAwesomeIcon icon={faMinus} />
                           </RemoveItemButton>
                         )}
-                      </FieldsGroup>
+                      </MileageFieldsGroup>
                       {index === values.stops.length - 2 && (
                         <AddItemButton
                           onClick={() => {

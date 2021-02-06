@@ -36,18 +36,12 @@ const AuthPage = () => {
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.key}>
             <Route path={Routing.SignIn.path}>
-              <motion.div
-                {...authFormAnimations}
-                style={{ flex: '1 1' }}
-              >
+              <motion.div {...authFormAnimations} style={{ flex: '1 1' }}>
                 <SignInForm />
               </motion.div>
             </Route>
             <Route exact path={Routing.SignUp.path}>
-              <motion.div
-                {...authFormAnimations}
-                style={{ flex: '1 1' }}
-              >
+              <motion.div {...authFormAnimations} style={{ flex: '1 1' }}>
                 <SignUpForm />
               </motion.div>
             </Route>

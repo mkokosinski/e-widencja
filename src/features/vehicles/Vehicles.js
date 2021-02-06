@@ -61,7 +61,7 @@ function Vehicles() {
   const { items: vehicles } = useSelector(selectFilteredVehicles);
   const dispach = useDispatch();
   const sortItems = useSelector(selectVehicleSort);
-  
+
   return (
     <ItemsList>
       <TopPanel>
@@ -75,34 +75,34 @@ function Vehicles() {
         <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
       </TopPanel>
 
-      {vehicles.length > 0 ? vehicles.map((vehicle, index) => (
-        <ListViewItem
-          key={vehicle.id}
-          ico={faCarAlt}
-          path={Routing.Vehicles.path}
-          buttons={buttons(vehicle.id)}
-        >
-          <Title>
-            <Name>{vehicle.name}</Name>
-            <Subname>{`${vehicle.brand} ${vehicle.model}`}</Subname>
-          </Title>
+      {vehicles.length > 0 ? (
+        vehicles.map((vehicle, index) => (
+          <ListViewItem
+            key={vehicle.id}
+            ico={faCarAlt}
+            path={Routing.Vehicles.path}
+            buttons={buttons(vehicle.id)}
+          >
+            <Title>
+              <Name>{vehicle.name}</Name>
+              <Subname>{`${vehicle.brand} ${vehicle.model}`}</Subname>
+            </Title>
 
-          <Journeys>
-            <Journey>
-              <InfoMain>359,34km</InfoMain>
-              <InfoSecondary>w tym miesiącu</InfoSecondary>
-            </Journey>
-            <Journey>
-              <InfoMain>29 przejazdów</InfoMain>
-              <InfoSecondary>w tym miesiącu</InfoSecondary>
-            </Journey>
-          </Journeys>
-        </ListViewItem>
-      )):
-         <Title>
-            Brak dostępnych pojazdów
-          </Title>
-      }
+            <Journeys>
+              <Journey>
+                <InfoMain>359,34km</InfoMain>
+                <InfoSecondary>w tym miesiącu</InfoSecondary>
+              </Journey>
+              <Journey>
+                <InfoMain>29 przejazdów</InfoMain>
+                <InfoSecondary>w tym miesiącu</InfoSecondary>
+              </Journey>
+            </Journeys>
+          </ListViewItem>
+        ))
+      ) : (
+        <Title>Brak dostępnych pojazdów</Title>
+      )}
     </ItemsList>
   );
 }

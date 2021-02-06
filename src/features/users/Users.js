@@ -8,7 +8,7 @@ import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  ItemsList,
+  ItemsList
 } from '../templates/ListView/ListViewStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,7 +57,6 @@ function Users() {
           </AddItem>
         </ButtonAdd>
         <FilterButton modalComponent={FilterModal} />
-       
       </TopPanel>
 
       {users.map((user) => (
@@ -68,7 +67,7 @@ function Users() {
           path={Routing.Users.path}
           buttons={buttons(user.id)}
         >
-           <Title>
+          <Title>
             <Name>{`${user.name} ${user.surname}`}</Name>
             <Subname>{user.label}</Subname>
           </Title>
