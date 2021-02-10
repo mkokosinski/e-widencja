@@ -140,9 +140,7 @@ const tips = (state) => state.settings;
 export const selectSettings = (state) => state.settings.items;
 
 export const selectPurposes = (state) =>
-  state.settings.items
-    .filter((i) => i.name === 'Cele wyjazdu')
-    .map((i) => i.purposes);
+  state.settings.items.find((i) => i.name === 'Cele wyjazdu');
 
 export const selectFilteredSettings = createSelector(
   [selectSettings, selectFilters],
