@@ -22,6 +22,8 @@ export const darkTheme = {
   textColorLight: '#888888',
   textColorLighter: '#aaaaaa',
   linkColor: '#373cda',
+  gray: '#8f8f8f',
+  grayLight: '#f0f0f0',
   nav: {
     default: {
       color: 'white',
@@ -57,8 +59,8 @@ export const darkTheme = {
     light: '#d9f6ff',
     lightSoft: '#fcfdff',
     shadow1: '0px 3px 14px -8px rgba(0, 0, 0, 0.7)',
-    shadow2: '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)'
-
+    shadow2:
+      '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)'
   },
   disabled: {
     bg: '#eeeeee',
@@ -72,6 +74,7 @@ export const darkTheme = {
   font,
   shadows: {
     shadow1: '0px 2px 10px -6px rgba(0, 0, 0, 0.5)',
-    shadow2: '0px 1px 6px -2px rgba(0, 0, 0, 0.7), 0px 2px 10px -5px rgba(0, 0, 0, 0.4)'
+    shadow2:
+      '0px 1px 6px -2px rgba(0, 0, 0, 0.7), 0px 2px 10px -5px rgba(0, 0, 0, 0.4)'
   }
 };

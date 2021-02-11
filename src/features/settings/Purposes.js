@@ -24,6 +24,8 @@ const Purposes = ({ items }) => {
     setSelected(item);
   };
 
+  const purposes = [...items];
+
   return (
     <PurposesContainer>
       {items.map((item) => (
@@ -33,7 +35,7 @@ const Purposes = ({ items }) => {
           isSelected={selected === item}
         />
       ))}
-      <StyledPurposeItem isAdd={true}>
+      <StyledPurposeItem isAdd={true} onClick={() => handleSelect('newItem')}>
         <PurposeTitle>Dodaj</PurposeTitle>
 
         <PurposeButton>

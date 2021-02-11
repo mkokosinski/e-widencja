@@ -7,6 +7,8 @@ import { selectFilters } from '../templates/filterSlice';
 import { firestore } from '../../app/firebase/firebase';
 import { selectRecordById, selectRecords } from '../records/recordsSlice';
 import { compareDates } from '../../utils/dateUtils';
+import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { toast } from 'react-toastify';
 
 const mergeSettings = (docs) => {
   return docs.length
@@ -84,6 +86,29 @@ export const fetchSettings = createAsyncThunk(
   }
 );
 
+export const editPurpose = createAsyncThunk(
+  'settings/editPurpose',
+  async (arg, thunkAPI) => {
+    const user = thunkAPI.getState().auth.user;
+    const purposes = thunkAPI
+      .getState()
+      .settings.items.find((s) => s.name === 'Cele wyjazdu');
+
+    firestore
+      .collection('Companies')
+      .doc(user.companyId)
+      .collection('Settings')
+      .doc('Purposes')
+      .update({
+        ...purposes,
+        items: [...purposes.items, arg]
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  }
+);
+
 const sortMethods = {
   Data: {
     asc: (a, b) => compareDates(a.date, b.date),
@@ -121,16 +146,28 @@ export const settingSlice = createSlice({
     [fetchSettings.pending]: (state, action) => {
       state.status = 'loading';
     },
-
     [fetchSettings.fulfilled]: (state, action) => {
       // console.log(action);
       state.items = action.payload;
       state.status = 'succeeded';
     },
-
     [fetchSettings.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
+    },
+
+    [editPurpose.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [editPurpose.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie edytowano opcje');
+    },
+    [editPurpose.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      console.log('err', action);
+      state.error = action.error.message;
+      toast.error(action.payload);
     }
   }
 });

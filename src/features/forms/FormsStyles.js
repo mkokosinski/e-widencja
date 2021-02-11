@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
-import { Form, Field } from "formik";
-import { PanelBordered, device, Button } from "../layout/LayoutStyles";
+import styled, { css } from 'styled-components';
+import { Form, Field } from 'formik';
+import { PanelBordered, device, Button } from '../layout/LayoutStyles';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -84,7 +84,7 @@ export const Label = styled.label`
 export const inputStyle = css`
   border: 1px solid rgba(54, 54, 54, 0.7);
   border-color: #dbdbdb;
-  border-color: ${(props) => props.haserror && "red"};
+  border-color: ${(props) => props.haserror && 'red'};
   border-radius: 4px;
   color: #363636;
   cursor: pointer;
@@ -94,7 +94,7 @@ export const inputStyle = css`
 
   outline: red;
 
-  div[class*="react-datepicker"] {
+  div[class*='react-datepicker'] {
     height: 200px;
   }
 
@@ -136,7 +136,7 @@ export const StyledField = styled(Field)`
 `;
 
 export const StyledSelect = styled.div`
-  div[class*="control"] {
+  div[class*='control'] {
     min-height: 0;
     ${inputStyle}
     padding: 4px 6px;

@@ -1,9 +1,12 @@
-import { motion } from 'framer-motion';
-import styled, { css } from 'styled-components';
 import { device } from '../layout/LayoutStyles';
+import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
+import { Field } from 'formik';
 
-export const StyledSettings = styled(DetailsSection)``;
+export const StyledSettings = styled(DetailsSection)`
+  padding: 30px;
+`;
 
 export const SettingsTitle = styled.h4``;
 
@@ -17,18 +20,22 @@ export const SettingItem = styled.div`
 `;
 
 export const PurposesContainer = styled.div`
+  background: ${(props) => props.theme.grayLight};
+  /* border: 1px dashed ${(props) => props.theme.gray}; */
+  box-shadow: 0 0 4px -2px rgba(0, 0, 0, 0.4) inset;
   display: grid;
   gap: 10px;
+  padding: 10px;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   position: relative;
   width: 100%;
 
   @media screen and (${device.tablet}) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200, 1fr));
   }
 
   @media screen and (${device.laptop}) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200, 1fr));
   }
 `;
 
@@ -58,10 +65,28 @@ export const ExpandedPurposeItem = styled(motion.div)`
   align-items: center;
   display: flex;
   justify-content: center;
+  height: 75px;
+  left: 0;
+  position: absolute;
+  top: 10%;
+  width: 100%;
   z-index: 2;
-  top: calc(50vh - 100px);
-  left: calc(50vw - 200px);
-  position: fixed;
+
+  @media screen and (${device.tablet}) {
+    width: 380px;
+    left: calc(50vw - 370px);
+  }
+`;
+
+export const ExpandedItemOverlay = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 1;
 `;
 
 export const ExpandedPurposeItemContent = styled(motion.div)`
@@ -70,9 +95,9 @@ export const ExpandedPurposeItemContent = styled(motion.div)`
   background: white;
   display: flex;
   justify-content: center;
+  height: 75px;
   padding: 10px;
-  height: 200px;
-  width: 400px;
+  width: 100%;
 `;
 
 export const ExpandedPurposeItemInput = styled(motion.div)``;
@@ -94,5 +119,50 @@ export const PurposeButton = styled.div`
   transition: 200ms;
   &:hover {
     opacity: 0.5;
+  }
+  @media screen and (${device.tablet}) {
+    cursor: pointer;
+  }
+`;
+
+export const PurposeButtonClose = styled(PurposeButton)`
+  align-items: center;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+`;
+
+export const PurposeInput = styled(Field)`
+  border: none;
+  border-bottom: 1px solid ${(props) => props.theme.main};
+  padding: 5px;
+  transition: 300ms;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+  &:hover {
+    border-color: #b5b5b5;
+  }
+  &:focus {
+    border-bottom: 1px solid ${(props) => props.theme.mainSoft};
+    padding: 7px;
+  }
+
+  &::placeholder {
+    color: rgba(54, 54, 54, 0.3);
+  }
+
+  &:disabled {
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+    box-shadow: none;
+    color: #7a7a7a;
+    cursor: not-allowed;
   }
 `;

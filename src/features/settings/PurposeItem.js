@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import EditPurposeItem from './EditPurposeItem';
 
 const PurposeItem = ({ item, handleSelect, isSelected }) => {
   return (
@@ -20,15 +21,11 @@ const PurposeItem = ({ item, handleSelect, isSelected }) => {
       <AnimateSharedLayout type='crossfade'>
         <AnimatePresence>
           {isSelected ? (
-            <ExpandedPurposeItem
-              key={item + 'expand'}
-              layoutId={item}
-              // onClick={() => handleSelect(null)}
-            >
-              <ExpandedPurposeItemContent>
-                <input type='text' value={item} />
-              </ExpandedPurposeItemContent>
-            </ExpandedPurposeItem>
+            <EditPurposeItem
+              key={item}
+              item={item}
+              closeItem={() => handleSelect(null)}
+            />
           ) : (
             <>
               <StyledPurposeItem
