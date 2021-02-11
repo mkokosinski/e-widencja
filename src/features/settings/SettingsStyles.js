@@ -94,7 +94,6 @@ export const ExpandedPurposeItemContent = styled(motion.div)`
   box-shadow: ${(props) => props.theme.shadows.shadow1};
   background: white;
   display: flex;
-  justify-content: center;
   height: 75px;
   padding: 10px;
   width: 100%;
@@ -114,9 +113,11 @@ export const PurposeButtonsContainer = styled(motion.div)`
 `;
 
 export const PurposeButton = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
   margin: 0 5px;
   opacity: 0.2;
-  transition: 200ms;
   &:hover {
     opacity: 0.5;
   }
@@ -136,11 +137,13 @@ export const PurposeButtonClose = styled(PurposeButton)`
   width: 30px;
 `;
 
-export const PurposeInput = styled(Field)`
+export const PurposeInput = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.main};
+  margin: 0 8px;
   padding: 5px;
   transition: 300ms;
+  flex: 1 1 90%;
 
   &:focus,
   &:active {
@@ -151,7 +154,7 @@ export const PurposeInput = styled(Field)`
   }
   &:focus {
     border-bottom: 1px solid ${(props) => props.theme.mainSoft};
-    padding: 7px;
+    padding: 7px 0;
   }
 
   &::placeholder {

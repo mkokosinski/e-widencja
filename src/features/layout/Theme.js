@@ -24,6 +24,7 @@ export const darkTheme = {
   linkColor: '#373cda',
   gray: '#8f8f8f',
   grayLight: '#f0f0f0',
+  grayLighter: '#f7f7f7',
   nav: {
     default: {
       color: 'white',

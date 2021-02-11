@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   ExpandedItemOverlay,
@@ -9,7 +9,7 @@ import {
   PurposeButtonsContainer,
   PurposeInput
 } from './SettingsStyles';
-import { Formik } from 'formik';
+import { Formik, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import { validationMessages } from '../../utils/formUtils';
 import FieldWithErrors from '../forms/fieldWithErrors';
@@ -29,15 +29,9 @@ const validation = Yup.object({
   name: Yup.string().min(3, validationMessages.min(3)).required()
 });
 
-const EditPurposeItem = ({ item, closeItem }) => {
+const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
+  const [value, setValue] = useState(defaultValue || '');
   const inputref = useRef(null);
-  const dispatch = useDispatch();
-
-  const handleSavePurpose = ({ name }) => {};
-
-  const initValues = {
-    name: item || ''
-  };
 
   useEffect(() => {
     if (inputref?.current) {
@@ -50,35 +44,31 @@ const EditPurposeItem = ({ item, closeItem }) => {
       <ExpandedItemOverlay
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{ delay: 0.1 }}
       />
       <ExpandedPurposeItem key={item + 'expand'} layoutId={item}>
         <ExpandedPurposeItemContent>
-          <Formik
-            initialValues={initValues}
-            onSubmit={handleSavePurpose}
-            validationSchema={validation}
-          >
-            {({ values, submitForm }) => (
-              <StyledForm>
-                <PurposeButtonsContainer
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <FieldWithErrors name='name'>
-                    <PurposeInput innerRef={inputref} />
-                  </FieldWithErrors>
-                  <PurposeButton onClick={submitForm}>
-                    <FontAwesomeIcon icon={faSave} />
-                  </PurposeButton>
-                  <PurposeButton onClick={closeItem}>
-                    <FontAwesomeIcon icon={faTimes} />
-                  </PurposeButton>
-                </PurposeButtonsContainer>
-              </StyledForm>
-            )}
-          </Formik>
+          <StyledForm>
+            <PurposeButtonsContainer
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <PurposeInput
+                innerRef={inputref}
+                ref={inputref}
+                value={value}
+                placeholder='Podaj cel wyjazdu'
+                onChange={(e) => setValue(e.target.value)}
+              />
+              <PurposeButton onClick={() => saveItem(value)}>
+                <FontAwesomeIcon icon={faSave} />
+              </PurposeButton>
+              <PurposeButton onClick={closeItem}>
+                <FontAwesomeIcon icon={faTimes} />
+              </PurposeButton>
+            </PurposeButtonsContainer>
+          </StyledForm>
         </ExpandedPurposeItemContent>
       </ExpandedPurposeItem>
     </>
@@ -87,6 +77,7 @@ const EditPurposeItem = ({ item, closeItem }) => {
 
 EditPurposeItem.propTypes = {
   item: PropTypes.string,
+  defaultValue: PropTypes.string,
   closeItem: PropTypes.func
 };
 

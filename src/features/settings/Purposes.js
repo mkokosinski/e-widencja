@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimateSharedLayout } from 'framer-motion';
 import { Centered } from '../../AppStyles';
 import { StyledField } from '../forms/FormsStyles';
+import AddPurposeItem from './AddPurposeItem';
 
 const Purposes = ({ items }) => {
   const [selected, setSelected] = useState(null);
@@ -24,25 +25,39 @@ const Purposes = ({ items }) => {
     setSelected(item);
   };
 
-  const purposes = [...items];
+  const handleSavePurpose = (values) => {
+    console.log(values);
+  };
+
+  const purposes = items.reduce(
+    (acc, cur, i) => ({
+      ...acc,
+      [cur]: cur
+    }),
+    {}
+  );
 
   return (
-    <PurposesContainer>
-      {items.map((item) => (
-        <PurposeItem
-          item={item}
-          handleSelect={handleSelect}
-          isSelected={selected === item}
-        />
-      ))}
-      <StyledPurposeItem isAdd={true} onClick={() => handleSelect('newItem')}>
-        <PurposeTitle>Dodaj</PurposeTitle>
-
-        <PurposeButton>
-          <FontAwesomeIcon icon={faPlus} />
-        </PurposeButton>
-      </StyledPurposeItem>
-    </PurposesContainer>
+    <Formik
+      initialValues={{
+        purposes: [...items]
+      }}
+      onSubmit={handleSavePurpose}
+    >
+      {({ values }) => (
+        <PurposesContainer>
+          {values.purposes.map((item, index) => (
+            <PurposeItem
+              item={values.purposes[index]}
+              index={index}
+              handleSelect={handleSelect}
+              isSelected={selected === item}
+            />
+          ))}
+          <AddPurposeItem />
+        </PurposesContainer>
+      )}
+    </Formik>
   );
 };
 
