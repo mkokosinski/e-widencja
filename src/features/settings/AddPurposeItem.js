@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ExpandedPurposeItem,
-  ExpandedPurposeItemContent,
   PurposeButton,
   PurposeButtonsContainer,
   PurposeItemContainer,
@@ -14,11 +12,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import EditPurposeItem from './EditPurposeItem';
-import { useFormikContext } from 'formik';
+import { v4 as uid } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { addPurpose, editPurpose } from './settingsSlice';
 
 const AddPurposeItem = (props) => {
   const [isSelected, setIsSelected] = useState(false);
-  const { setValues, values } = useFormikContext();
+
+  const dispatch = useDispatch();
 
   const handleSelect = (value) => {
     setIsSelected(value);
@@ -29,28 +30,27 @@ const AddPurposeItem = (props) => {
   };
 
   const handleSave = (value) => {
-    const { purposes } = values;
-    closeItem();
-    setValues({ purposes: [...purposes, value] });
+    const { name } = value;
+    dispatch(addPurpose({ id: uid(), name }));
   };
 
-  const item = 'Nowy';
+  const item = { id: 'new', name: 'Nowy' };
   return (
     <PurposeItemContainer>
       <AnimateSharedLayout type='crossfade'>
         <AnimatePresence exitBeforeEnter>
           {isSelected ? (
             <EditPurposeItem
-              key={item}
+              key={item.id}
               item={item}
               saveItem={handleSave}
               closeItem={closeItem}
             />
           ) : (
             <>
-              <StyledPurposeItem key={item} layoutId={item} isAdd={true}>
+              <StyledPurposeItem key={item.id} layoutId={item.id} isAdd={true}>
                 <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  {item}
+                  {item.name}
                 </PurposeTitle>
 
                 <PurposeButtonsContainer

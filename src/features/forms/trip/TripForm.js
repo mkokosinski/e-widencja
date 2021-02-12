@@ -16,7 +16,7 @@ import {
   StyledSelect,
   AddItemButton,
   RemoveItemButton,
-  MileageFieldsGroup,
+  MileageFieldsGroup
 } from '../FormsStyles';
 import {
   ButtonMain,
@@ -128,12 +128,13 @@ const TripForm = ({ trip }) => {
   const tripTemplatesSelectItems = tripTemplates.map((template) => ({
     label: template.label,
     value: template.id,
-    stops: template.stops
+    stops: template.stops,
+    purpose: template.purpose
   }));
 
-  const purposesSelectItems = purposes.map((purpose) => ({
-    label: purpose,
-    value: purpose
+  const purposesSelectItems = purposes.items.map((purpose) => ({
+    label: purpose.name,
+    value: purpose.name
   }));
 
   const initMileage = trip.initialMileage || record.vehicle.mileage;
@@ -249,6 +250,11 @@ const TripForm = ({ trip }) => {
                     onChange={(option) => {
                       setFieldTouched('tripTemplate');
                       setFieldValue('tripTemplate', option);
+                      console.log(option);
+                      setFieldValue('purpose', {
+                        label: option.purpose,
+                        value: option.purpose
+                      });
                       setFieldValue(
                         'stops',
                         option.stops.map((stop) => ({

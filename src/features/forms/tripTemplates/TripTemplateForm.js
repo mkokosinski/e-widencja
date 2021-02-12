@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Field, FieldArray, Formik } from "formik";
-import { useHistory, useLocation } from "react-router";
-import * as Yup from "yup";
+import React, { useEffect, useRef, useState } from 'react';
+import { Field, FieldArray, Formik } from 'formik';
+import { useHistory, useLocation } from 'react-router';
+import * as Yup from 'yup';
 
-import FieldWithErrors from "../fieldWithErrors";
-import Select from "react-select";
-import SelectCreatable from "react-select/creatable";
+import FieldWithErrors from '../fieldWithErrors';
+import Select from 'react-select';
+import SelectCreatable from 'react-select/creatable';
 
 import {
   StyledForm,
@@ -19,42 +19,42 @@ import {
   MileageFieldsGroup,
   Input,
   StyledCheckbox
-} from "../FormsStyles";
+} from '../FormsStyles';
 import {
   ButtonMain,
   ButtonBorderedSeconderySoft
-} from "../../layout/LayoutStyles";
-import DateInput, { DATEPICKER_TYPES } from "../DateInput";
-import { faMinus, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { format } from "date-fns";
-import { useDispatch, useSelector } from "react-redux";
-import { selectVehicles } from "../../vehicles/vehiclesSlice";
-import { selectDrivers } from "../../users/usersSlice";
-import { selectRecords } from "../../records/recordsSlice";
-import { selectFbUser } from "../../auth/authSlice";
-import { USER_ROLES } from "../../../utils/authUtils";
+} from '../../layout/LayoutStyles';
+import DateInput, { DATEPICKER_TYPES } from '../DateInput';
+import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { format } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVehicles } from '../../vehicles/vehiclesSlice';
+import { selectDrivers } from '../../users/usersSlice';
+import { selectRecords } from '../../records/recordsSlice';
+import { selectFbUser } from '../../auth/authSlice';
+import { USER_ROLES } from '../../../utils/authUtils';
 import {
   addTripTemplate,
   editTripTemplate,
   selectTripTemplates,
   selectTripTemplateSort
-} from "../../tripTemplates/tripTemplatesSlice";
-import { selectPurposes, selectSettings } from "../../settings/settingsSlice";
-import MileageInput from "./MileageInput";
-import DistanceInput from "./DistanceInput";
-import Checkbox from "../checkbox";
-import useValidation from "../../hooks/useValidation";
-import { toast } from "react-toastify";
+} from '../../tripTemplates/tripTemplatesSlice';
+import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
+import MileageInput from './MileageInput';
+import DistanceInput from './DistanceInput';
+import Checkbox from '../checkbox';
+import useValidation from '../../hooks/useValidation';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object().shape({
-  label: Yup.string().required("Wymagane"),
-  purpose: Yup.string().required("Wymagane"),
+  label: Yup.string().required('Wymagane'),
+  purpose: Yup.string().required('Wymagane'),
   tripTemplate: Yup.string(),
   stops: Yup.array().of(
     Yup.object().shape({
-      place: Yup.string().max(28, "Max 28 chars").required("Wymagane"),
-      distance: Yup.number().min(0, "Zła wartość").required("Wymagane")
+      place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
+      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane')
     })
   )
 });
@@ -71,9 +71,9 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
     value: tripTemplate.purpose
   };
 
-  const purposesSelectItems = purposes.map((purpose) => ({
-    label: purpose,
-    value: purpose
+  const purposesSelectItems = purposes.items.map((purpose) => ({
+    label: purpose.name,
+    value: purpose.name
   }));
 
   const stops = tripTemplate.stops.map((stop) => ({
@@ -83,13 +83,13 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
 
   const initValues = {
     label: tripTemplate.label,
-    purpose: tripTemplate.purpose ? selectedPurpose : "",
+    purpose: tripTemplate.purpose ? selectedPurpose : '',
     stops: stops
   };
 
   const handleSubmit = (values) => {
     const data = {
-      id: tripTemplate?.id || "",
+      id: tripTemplate?.id || '',
       label: values.label,
       purpose: values.purpose.value,
       stops: values.stops
@@ -123,28 +123,28 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
         }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name="label" label="Nazwa" scrollFocused>
-                <StyledField type="text" />
+              <FieldWithErrors name='label' label='Nazwa' scrollFocused>
+                <StyledField type='text' />
               </FieldWithErrors>
             </Row>
 
             <Row>
-              <FieldWithErrors name="purpose" label="Cel wyjazdu" scrollFocused>
+              <FieldWithErrors name='purpose' label='Cel wyjazdu' scrollFocused>
                 <StyledSelect>
                   <SelectCreatable
-                    as="select"
+                    as='select'
                     isSearchable={true}
                     options={purposesSelectItems}
                     onChange={(option) => {
-                      setFieldTouched("purpose");
-                      setFieldValue("purpose", option);
+                      setFieldTouched('purpose');
+                      setFieldValue('purpose', option);
                     }}
                     onCreateOption={(value) => {
                       const option = { label: value, value };
-                      setFieldTouched("purpose");
-                      setFieldValue("purpose", option);
+                      setFieldTouched('purpose');
+                      setFieldValue('purpose', option);
                     }}
-                    placeholder="Wybierz cel"
+                    placeholder='Wybierz cel'
                     value={values.purpose}
                   />
                 </StyledSelect>
@@ -152,14 +152,14 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
             </Row>
 
             <Row>
-              <FieldArray name="stops">
+              <FieldArray name='stops'>
                 {({ remove, push }) => {
                   const labels = [
-                    "Początek trasy",
+                    'Początek trasy',
                     ...values.stops
-                      .map((s, i) => "Przystanek " + i)
+                      .map((s, i) => 'Przystanek ' + i)
                       .slice(1, -1),
-                    "Koniec trasy"
+                    'Koniec trasy'
                   ];
 
                   return values.stops.map((stop, index) => (
@@ -170,7 +170,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
                           label={labels[index]}
                           scrollFocused
                         >
-                          <StyledField type="text" placeholder="Miejsce" />
+                          <StyledField type='text' placeholder='Miejsce' />
                         </FieldWithErrors>
 
                         <FieldWithErrors
@@ -179,9 +179,9 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
                         >
                           <StyledField
                             index={index}
-                            type="number"
-                            min="0"
-                            placeholder="km"
+                            type='number'
+                            min='0'
+                            placeholder='km'
                           />
                         </FieldWithErrors>
 

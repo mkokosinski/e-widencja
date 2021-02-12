@@ -31,11 +31,11 @@ export const PurposesContainer = styled.div`
   width: 100%;
 
   @media screen and (${device.tablet}) {
-    grid-template-columns: repeat(auto-fill, minmax(200, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
   @media screen and (${device.laptop}) {
-    grid-template-columns: repeat(auto-fill, minmax(200, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 `;
 
@@ -61,6 +61,35 @@ export const StyledPurposeItem = styled(motion.div)`
   }
 `;
 
+export const PurposeTitle = styled(motion.div)`
+  flex: 1 1 90%;
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  opacity: 1;
+`;
+
+export const PurposeButtonsContainer = styled(motion.div)`
+  display: flex;
+  flex: 1 1 10%;
+`;
+
+export const PurposeButton = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 5px;
+  opacity: 0.2;
+
+  &:hover {
+    opacity: 0.5;
+    transition: opacity 200ms;
+  }
+  @media screen and (${device.tablet}) {
+    cursor: pointer;
+  }
+`;
+
 export const ExpandedPurposeItem = styled(motion.div)`
   align-items: center;
   display: flex;
@@ -75,6 +104,12 @@ export const ExpandedPurposeItem = styled(motion.div)`
   @media screen and (${device.tablet}) {
     width: 380px;
     left: calc(50vw - 370px);
+  }
+
+  ${PurposeButton} {
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
   }
 `;
 
@@ -101,42 +136,6 @@ export const ExpandedPurposeItemContent = styled(motion.div)`
 
 export const ExpandedPurposeItemInput = styled(motion.div)``;
 
-export const PurposeTitle = styled(motion.div)`
-  overflow: hidden;
-  font-size: 14px;
-  text-overflow: ellipsis;
-  opacity: 1;
-`;
-
-export const PurposeButtonsContainer = styled(motion.div)`
-  display: flex;
-`;
-
-export const PurposeButton = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 5px;
-  opacity: 0.2;
-  &:hover {
-    opacity: 0.5;
-  }
-  @media screen and (${device.tablet}) {
-    cursor: pointer;
-  }
-`;
-
-export const PurposeButtonClose = styled(PurposeButton)`
-  align-items: center;
-  display: flex;
-  height: 30px;
-  justify-content: center;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 30px;
-`;
-
 export const PurposeInput = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.main};
@@ -154,7 +153,6 @@ export const PurposeInput = styled.input`
   }
   &:focus {
     border-bottom: 1px solid ${(props) => props.theme.mainSoft};
-    padding: 7px 0;
   }
 
   &::placeholder {

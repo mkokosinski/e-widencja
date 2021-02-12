@@ -1,68 +1,52 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
 import PurposeItem from './PurposeItem';
 
-import {
-  ExpandedPurposeItem,
-  ExpandedPurposeItemContent,
-  PurposeButton,
-  PurposesContainer,
-  PurposeTitle,
-  StyledPurposeItem
-} from './SettingsStyles';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AnimateSharedLayout } from 'framer-motion';
-import { Centered } from '../../AppStyles';
-import { StyledField } from '../forms/FormsStyles';
+import { PurposesContainer } from './SettingsStyles';
 import AddPurposeItem from './AddPurposeItem';
+import { deletePurpose, editPurpose } from './settingsSlice';
+import { useDispatch } from 'react-redux';
 
 const Purposes = ({ items }) => {
   const [selected, setSelected] = useState(null);
+  const dispatch = useDispatch();
 
   const handleSelect = (item) => {
     setSelected(item);
   };
 
-  const handleSavePurpose = (values) => {
-    console.log(values);
+  const saveItem = (item) => {
+    dispatch(editPurpose(item));
   };
 
-  const purposes = items.reduce(
-    (acc, cur, i) => ({
-      ...acc,
-      [cur]: cur
-    }),
-    {}
-  );
+  const deleteItem = (item) => {
+    dispatch(deletePurpose(item));
+  };
 
   return (
-    <Formik
-      initialValues={{
-        purposes: [...items]
-      }}
-      onSubmit={handleSavePurpose}
-    >
-      {({ values }) => (
-        <PurposesContainer>
-          {values.purposes.map((item, index) => (
-            <PurposeItem
-              item={values.purposes[index]}
-              index={index}
-              handleSelect={handleSelect}
-              isSelected={selected === item}
-            />
-          ))}
-          <AddPurposeItem />
-        </PurposesContainer>
-      )}
-    </Formik>
+    <PurposesContainer>
+      {items.map((item) => (
+        <PurposeItem
+          key={item.id}
+          item={item}
+          handleSelect={handleSelect}
+          saveItem={saveItem}
+          deleteItem={deleteItem}
+          isSelected={selected === item.id}
+        />
+      ))}
+      <AddPurposeItem />
+    </PurposesContainer>
   );
 };
 
 Purposes.propTypes = {
-  items: PropTypes.arrayOf({})
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string
+    })
+  )
 };
 
 export default Purposes;
