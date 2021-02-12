@@ -35,6 +35,8 @@ const AddPurposeItem = (props) => {
   };
 
   const item = { id: 'new', name: 'Nowy' };
+  console.log('add item', item);
+
   return (
     <PurposeItemContainer>
       <AnimateSharedLayout type='crossfade'>

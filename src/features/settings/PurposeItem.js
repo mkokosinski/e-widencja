@@ -26,6 +26,7 @@ const PurposeItem = ({
   isSelected
 }) => {
   const [changed, setChanged] = useState(false);
+  console.log('item', item);
 
   const closeItem = () => {
     handleSelect(null);
