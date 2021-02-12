@@ -7,6 +7,8 @@ import { selectFilters } from '../templates/filterSlice';
 import { firestore } from '../../app/firebase/firebase';
 import { selectRecordById, selectRecords } from '../records/recordsSlice';
 import { compareDates } from '../../utils/dateUtils';
+import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { toast } from 'react-toastify';
 
 const mergeSettings = (docs) => {
   return docs.length
@@ -84,6 +86,92 @@ export const fetchSettings = createAsyncThunk(
   }
 );
 
+export const addPurpose = createAsyncThunk(
+  'settings/addPurpose',
+  async (arg, thunkAPI) => {
+    const user = thunkAPI.getState().auth.user;
+    const purposes = thunkAPI
+      .getState()
+      .settings.items.find((s) => s.id === 'purposes');
+
+    const newItems = [...purposes.items, arg];
+    const newPurposes = {
+      ...purposes,
+      items: newItems
+    };
+
+    return firestore
+      .collection('Companies')
+      .doc(user.companyId)
+      .collection('Settings')
+      .doc('Purposes')
+      .update(newPurposes)
+      .then((res) => {
+        return newPurposes;
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  }
+);
+
+export const editPurpose = createAsyncThunk(
+  'settings/editPurpose',
+  async (arg, thunkAPI) => {
+    const user = thunkAPI.getState().auth.user;
+    const purposes = thunkAPI
+      .getState()
+      .settings.items.find((s) => s.id === 'purposes');
+
+    const newItems = purposes.items.map((p) => (p.id === arg.id ? arg : p));
+    const newPurposes = {
+      ...purposes,
+      items: newItems
+    };
+
+    return firestore
+      .collection('Companies')
+      .doc(user.companyId)
+      .collection('Settings')
+      .doc('Purposes')
+      .update(newPurposes)
+      .then((res) => {
+        return newPurposes;
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  }
+);
+export const deletePurpose = createAsyncThunk(
+  'settings/deletePurpose',
+  async (arg, thunkAPI) => {
+    const user = thunkAPI.getState().auth.user;
+    const purposes = thunkAPI
+      .getState()
+      .settings.items.find((s) => s.id === 'purposes');
+
+    const newItems = purposes.items.filter((p) => p.id !== arg.id);
+    const newPurposes = {
+      ...purposes,
+      items: newItems
+    };
+
+    return firestore
+      .collection('Companies')
+      .doc(user.companyId)
+      .collection('Settings')
+      .doc('Purposes')
+      .update(newPurposes)
+      .then((res) => {
+        return newPurposes;
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue(err);
+      });
+  }
+);
+
 const sortMethods = {
   Data: {
     asc: (a, b) => compareDates(a.date, b.date),
@@ -121,16 +209,65 @@ export const settingSlice = createSlice({
     [fetchSettings.pending]: (state, action) => {
       state.status = 'loading';
     },
-
     [fetchSettings.fulfilled]: (state, action) => {
       // console.log(action);
       state.items = action.payload;
       state.status = 'succeeded';
     },
-
     [fetchSettings.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
+    },
+
+    [addPurpose.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [addPurpose.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((i) =>
+        i.id === 'purposes' ? action.payload : i
+      );
+      toast.success('Poprawnie dodano opcje');
+    },
+    [addPurpose.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      console.log('err', action);
+      state.error = action.error.message;
+      toast.error(action.payload);
+    },
+
+    [editPurpose.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [editPurpose.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((i) =>
+        i.id === 'purposes' ? action.payload : i
+      );
+      toast.success('Poprawnie edytowano opcje');
+    },
+    [editPurpose.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      console.log('err', action);
+      state.error = action.error.message;
+      toast.error(action.payload);
+    },
+
+    [deletePurpose.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [deletePurpose.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((i) =>
+        i.id === 'purposes' ? action.payload : i
+      );
+      toast.success('Poprawnie usunięto opcje');
+    },
+    [deletePurpose.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      console.log('err', action);
+      state.error = action.error.message;
+      toast.error(action.payload);
     }
   }
 });
@@ -140,9 +277,7 @@ const tips = (state) => state.settings;
 export const selectSettings = (state) => state.settings.items;
 
 export const selectPurposes = (state) =>
-  state.settings.items
-    .filter((i) => i.name === 'Cele wyjazdu')
-    .map((i) => i.purposes);
+  state.settings.items.find((i) => i.id === 'purposes');
 
 export const selectFilteredSettings = createSelector(
   [selectSettings, selectFilters],

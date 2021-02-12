@@ -2,22 +2,35 @@ import {
   createSlice,
   createAsyncThunk,
   createSelector
-} from "@reduxjs/toolkit";
-import { selectFilters } from "../templates/filterSlice";
-import { firestore, firestoreFunctions } from "../../app/firebase/firebase";
-import { selectRecordById, selectRecords } from "../records/recordsSlice";
-import { compareDates } from "../../utils/dateUtils";
-import { FETCH_STATUS } from "../../utils/fetchUtils";
-import { toast } from "react-toastify";
+} from '@reduxjs/toolkit';
+import { selectFilters } from '../templates/filterSlice';
+import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
+import { selectRecordById, selectRecords } from '../records/recordsSlice';
+import { compareDates } from '../../utils/dateUtils';
+import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { toast } from 'react-toastify';
 
 export const fetchTripTemplates = createAsyncThunk(
-  "tripTemplates/fetchTripTemplates",
+  'tripTemplates/fetchTripTemplates',
   async (arg = 1, thunkAPI) => {
     const tripTemplates = [];
-    const coll = await firestore.collection("TripTemplates").get();
+    const coll = await firestore.collection('TripTemplates').get();
 
     coll.forEach((doc) => {
       const data = doc.data();
+
+      if (data.created) {
+        data.created = data.created.toDate().toString();
+      }
+
+      if (data.updated) {
+        data.updated = data.updated.toDate().toString();
+      }
+
+      if (data.deleted) {
+        data.deleted = data.deleted.toDate().toString();
+      }
+
       tripTemplates.push({ ...data, id: doc.id });
     });
 
@@ -26,7 +39,7 @@ export const fetchTripTemplates = createAsyncThunk(
 );
 
 export const addTripTemplate = createAsyncThunk(
-  "records/addTripTemplate",
+  'records/addTripTemplate',
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
@@ -41,7 +54,7 @@ export const addTripTemplate = createAsyncThunk(
     };
 
     return await firestore
-      .collection("TripTemplates")
+      .collection('TripTemplates')
       .add(newTemplate)
       .catch((err) => {
         console.log(err);
@@ -51,7 +64,7 @@ export const addTripTemplate = createAsyncThunk(
 );
 
 export const editTripTemplate = createAsyncThunk(
-  "records/editTripTemplate",
+  'records/editTripTemplate',
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
@@ -64,7 +77,7 @@ export const editTripTemplate = createAsyncThunk(
     };
 
     firestore
-      .collection("TripTemplates")
+      .collection('TripTemplates')
       .doc(arg.id)
       .update(editedTemplate)
       .catch((err) => {
@@ -81,18 +94,18 @@ const sortMethods = {
 };
 
 export const tripTemplateSlice = createSlice({
-  name: "tripTemplates",
+  name: 'tripTemplates',
   initialState: {
-    status: "idle",
+    status: 'idle',
     items: [],
     error: null,
-    sortFunc: { name: "Data", condition: "desc" },
+    sortFunc: { name: 'Data', condition: 'desc' },
     sortCases: [
       {
-        title: "Data",
+        title: 'Data',
         items: [
-          { label: "od najnowszych", condition: "desc" },
-          { label: "od najstarszych", condition: "asc" }
+          { label: 'od najnowszych', condition: 'desc' },
+          { label: 'od najstarszych', condition: 'asc' }
         ]
       }
     ]
@@ -108,14 +121,14 @@ export const tripTemplateSlice = createSlice({
   },
   extraReducers: {
     [fetchTripTemplates.pending]: (state, action) => {
-      state.status = "loading";
+      state.status = 'loading';
     },
     [fetchTripTemplates.fulfilled]: (state, action) => {
       state.items = action.payload;
-      state.status = "succeeded";
+      state.status = 'succeeded';
     },
     [fetchTripTemplates.rejected]: (state, action) => {
-      state.status = "failed";
+      state.status = 'failed';
       state.error = action.error.message;
     },
 
@@ -124,11 +137,11 @@ export const tripTemplateSlice = createSlice({
     },
     [addTripTemplate.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
-      toast.success("Poprawnie dodano nową ewidencję");
+      toast.success('Poprawnie dodano nową ewidencję');
     },
     [addTripTemplate.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log("err", action);
+      console.log('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     },
@@ -138,11 +151,11 @@ export const tripTemplateSlice = createSlice({
     },
     [editTripTemplate.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
-      toast.success("Poprawnie dodano nową ewidencję");
+      toast.success('Poprawnie dodano nową ewidencję');
     },
     [editTripTemplate.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log("err", action);
+      console.log('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     }
