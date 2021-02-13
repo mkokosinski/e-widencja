@@ -24,6 +24,17 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
     closeItem();
   };
 
+  const keysBinding = ({ keyCode }) => {
+    switch (keyCode) {
+      case 13:
+        handleSave();
+        break;
+
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
     if (inputref?.current) {
       inputref.current.focus();
@@ -50,8 +61,13 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
               value={value}
               placeholder='Podaj cel wyjazdu'
               onChange={(e) => setValue(e.target.value)}
+              onKeyDown={keysBinding}
             />
-            <PurposeButton title='Zapisz' onClick={handleSave}>
+            <PurposeButton
+              title='Zapisz'
+              onClick={handleSave}
+              color={'mainSoft'}
+            >
               <FontAwesomeIcon icon={faSave} />
             </PurposeButton>
             <PurposeButton title='Zamknij' onClick={closeItem}>

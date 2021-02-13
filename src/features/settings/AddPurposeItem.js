@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   PurposeButton,
@@ -15,6 +15,7 @@ import EditPurposeItem from './EditPurposeItem';
 import { v4 as uid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { addPurpose, editPurpose } from './settingsSlice';
+import { ThemeContext } from 'styled-components';
 
 const AddPurposeItem = (props) => {
   const [isSelected, setIsSelected] = useState(false);
@@ -39,33 +40,33 @@ const AddPurposeItem = (props) => {
     <PurposeItemContainer>
       <AnimateSharedLayout type='crossfade'>
         <AnimatePresence exitBeforeEnter>
-          {isSelected ? (
+          {isSelected && (
             <EditPurposeItem
               key={item.id}
               item={item}
               saveItem={handleSave}
               closeItem={closeItem}
             />
-          ) : (
-            <>
-              <StyledPurposeItem key={item.id} layoutId={item.id} isAdd={true}>
-                <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  {item.name}
-                </PurposeTitle>
-
-                <PurposeButtonsContainer
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <PurposeButton onClick={() => handleSelect(true)}>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </PurposeButton>
-                </PurposeButtonsContainer>
-              </StyledPurposeItem>
-            </>
           )}
         </AnimatePresence>
+
+        <>
+          <StyledPurposeItem key={item.id} layoutId={item.id} isAdd={true}>
+            <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              {item.name}
+            </PurposeTitle>
+
+            <PurposeButtonsContainer
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+            >
+              <PurposeButton onClick={() => handleSelect(true)}>
+                <FontAwesomeIcon icon={faPlus} />
+              </PurposeButton>
+            </PurposeButtonsContainer>
+          </StyledPurposeItem>
+        </>
       </AnimateSharedLayout>
     </PurposeItemContainer>
   );
