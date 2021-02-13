@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PurposeItem from './PurposeItem';
 
-import { PurposesContainer } from './SettingsStyles';
+import { PurposesContainer, VerticalSpan } from './SettingsStyles';
 import AddPurposeItem from './AddPurposeItem';
 import { deletePurpose, editPurpose } from './settingsSlice';
 import { useDispatch } from 'react-redux';
