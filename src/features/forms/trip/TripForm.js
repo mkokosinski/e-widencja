@@ -189,7 +189,7 @@ const TripForm = ({ trip }) => {
 
             <Row>
               <FieldWithErrors
-                name='tripTemplate'
+                name='driver'
                 label='Kierowca'
                 ref={tripTemplateRef}
                 scrollFocused
