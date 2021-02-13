@@ -26,17 +26,10 @@ export const PurposesContainer = styled.div`
   display: grid;
   gap: 10px;
   padding: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   position: relative;
   width: 100%;
 
-  @media screen and (${device.tablet}) {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-
-  @media screen and (${device.laptop}) {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 `;
 
 export const PurposeItemContainer = styled.div``;
@@ -47,6 +40,7 @@ export const StyledPurposeItem = styled(motion.div)`
   box-shadow: ${(props) => props.theme.shadows.shadow1};
   display: flex;
   justify-content: space-between;
+  height: 50px;
   overflow: hidden;
   padding: 10px 20px;
   white-space: nowrap;
@@ -76,10 +70,11 @@ export const PurposeButtonsContainer = styled(motion.div)`
 
 export const PurposeButton = styled.div`
   align-items: center;
+
   display: flex;
   justify-content: center;
   margin: 0 5px;
-  opacity: 0.2;
+  opacity: 0.3;
 
   &:hover {
     opacity: 0.5;
@@ -88,6 +83,14 @@ export const PurposeButton = styled.div`
   @media screen and (${device.tablet}) {
     cursor: pointer;
   }
+
+  ${(props) =>
+    props.color &&
+    css`
+      svg {
+        color: ${(props) => props.theme[props.color]};
+      }
+    `}
 `;
 
 export const ExpandedPurposeItem = styled(motion.div)`
@@ -102,6 +105,10 @@ export const ExpandedPurposeItem = styled(motion.div)`
   z-index: 2;
 
   @media screen and (${device.tablet}) {
+    width: 380px;
+    left: calc(50vw - 230px);
+  }
+  @media screen and (${device.laptop}) {
     width: 380px;
     left: calc(50vw - 370px);
   }
@@ -131,7 +138,11 @@ export const ExpandedPurposeItemContent = styled(motion.div)`
   display: flex;
   height: 75px;
   padding: 10px;
-  width: 100%;
+  width: 100vh;
+
+  @media screen and (${device.tablet}) {
+    width: 100%;
+  }
 `;
 
 export const ExpandedPurposeItemInput = styled(motion.div)``;
