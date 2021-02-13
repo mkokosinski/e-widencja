@@ -1,23 +1,23 @@
-import { useSelector } from "react-redux";
-import { shallowEqual, deepEqual } from "../../utils/objectUtils";
+import { useSelector } from 'react-redux';
+import { shallowEqual, deepEqual } from '../../utils/objectUtils';
 
 export const validationMessages = {
-  isDuplicate: "Element już istnieje",
+  isDuplicate: 'Element już istnieje',
   record: {
-    isDuplicate: "Istnieje już ewidencja dla tego pojazdu w podanym okresie",
+    isDuplicate: 'Istnieje już ewidencja dla tego pojazdu w podanym okresie',
     wrongMileage:
-      "Podany przebieg nie zgadza się z przebiegiem wybranego pojazdu"
+      'Podany przebieg nie zgadza się z przebiegiem wybranego pojazdu',
   },
   vehicle: {
-    isDuplicateName: "Istnieje już pojazd o tej nazwie",
-    isDuplicateRegistration: "Istnieje już pojazd o takiej rejestracji"
+    isDuplicateName: 'Istnieje już pojazd o tej nazwie',
+    isDuplicateRegistration: 'Istnieje już pojazd o takiej rejestracji',
   },
   user: {
-    isDuplicateEmail: "Isnieje już użytkownik z tym adresem e-mail"
+    isDuplicateEmail: 'Isnieje już użytkownik z tym adresem e-mail',
   },
   tripTemplate: {
-    isDuplicateLabel: "Istnieje już szablon z taką nazwą"
-  }
+    isDuplicateLabel: 'Istnieje już szablon z taką nazwą',
+  },
 };
 
 const useValidation = () => {
@@ -35,20 +35,20 @@ const useValidation = () => {
         year: rec.year,
         vehicleId: rec.vehicleId,
         mileage: rec.mileage,
-        id: rec.id
+        id: rec.id,
       }))
       .find((rec) => rec.id === id);
 
     const itemWasChanged = id ? !shallowEqual(values, oldRecord) : true;
     const isDuplicate = records.some(
       (rec) =>
-        rec.month === month && rec.year === year && rec.vehicleId === vehicleId
+        rec.month === month && rec.year === year && rec.vehicleId === vehicleId,
     );
 
     if (itemWasChanged && isDuplicate) {
       return {
         error: validationMessages.record.isDuplicate,
-        success: false
+        success: false,
       };
     }
 
@@ -56,7 +56,7 @@ const useValidation = () => {
     if (vehicle.mileage !== mileage) {
       return {
         error: validationMessages.record.wrongMileage,
-        success: false
+        success: false,
       };
     }
 
@@ -72,7 +72,7 @@ const useValidation = () => {
       registrationNumber,
       mileage,
       checkupDate,
-      type
+      type,
     } = values;
 
     const oldVehicle = vehicles
@@ -84,7 +84,7 @@ const useValidation = () => {
         registrationNumber: rec.registrationNumber,
         mileage: rec.mileage,
         checkupDate: rec.checkupDate,
-        type: rec.type
+        type: rec.type,
       }))
       .find((veh) => veh.id === id);
 
@@ -96,22 +96,22 @@ const useValidation = () => {
 
     if (itemWasChanged) {
       const isDuplicateName = vehicles.some(
-        (veh) => veh.name.trim() === name.trim()
+        (veh) => veh.name.trim() === name.trim(),
       );
       if (nameWasChanged && isDuplicateName) {
         return {
           error: validationMessages.vehicle.isDuplicateName,
-          success: false
+          success: false,
         };
       }
 
       const isDuplicateRegistration = vehicles.some(
-        (veh) => veh.registrationNumber.trim() === registrationNumber.trim()
+        (veh) => veh.registrationNumber.trim() === registrationNumber.trim(),
       );
       if (regNumberWasChanged && isDuplicateRegistration) {
         return {
           error: validationMessages.vehicle.isDuplicateRegistration,
-          success: false
+          success: false,
         };
       }
     }
@@ -120,8 +120,6 @@ const useValidation = () => {
   };
 
   const user = (values) => {
-    console.log(values);
-
     const { id, name, surname, label, eMail, isDriver } = values;
 
     const oldUser = users
@@ -132,7 +130,7 @@ const useValidation = () => {
         label: user.label,
         eMail: user.eMail,
         isDriver: user.isDriver,
-        isAppUser: user.isAppUser
+        isAppUser: user.isAppUser,
       }))
       .find((user) => user.id === id);
 
@@ -141,13 +139,13 @@ const useValidation = () => {
 
     if (itemWasChanged) {
       const isDuplicateMail = users.some(
-        (veh) => veh.eMail.trim() === eMail.trim()
+        (veh) => veh.eMail.trim() === eMail.trim(),
       );
 
       if (eMailChanged && isDuplicateMail) {
         return {
           error: validationMessages.user.isDuplicateEmail,
-          success: false
+          success: false,
         };
       }
     }
@@ -156,11 +154,10 @@ const useValidation = () => {
   };
 
   const tripTemplate = (values) => {
-    console.log(values);
     const { id, label, purpose, stops } = values;
 
     const isDuplicateLabel = tripTemplates.some(
-      (template) => template.label.trim() === label.trim()
+      (template) => template.label.trim() === label.trim(),
     );
 
     const oldTemplate = tripTemplates
@@ -177,7 +174,7 @@ const useValidation = () => {
       if (nameWasChanged && isDuplicateLabel) {
         return {
           error: validationMessages.tripTemplate.isDuplicateLabel,
-          success: false
+          success: false,
         };
       }
     }

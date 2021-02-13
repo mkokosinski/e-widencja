@@ -31,8 +31,6 @@ export const deepEqual = (object1, object2) => {
       (areObjects && !deepEqual(val1, val2)) ||
       (!areObjects && val1 !== val2)
     ) {
-      console.log(val1);
-      console.log(val2);
       return false;
     }
   }
@@ -41,5 +39,5 @@ export const deepEqual = (object1, object2) => {
 };
 
 function isObject(object) {
-  return object != null && typeof object === "object";
+  return object != null && typeof object === 'object';
 }

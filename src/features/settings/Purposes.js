@@ -23,8 +23,6 @@ const Purposes = ({ items }) => {
     dispatch(deletePurpose(item));
   };
 
-  console.log('Purposes', items);
-
   return (
     <PurposesContainer>
       {items.map((item) => (
@@ -46,9 +44,9 @@ Purposes.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      name: PropTypes.string
-    })
-  )
+      name: PropTypes.string,
+    }),
+  ),
 };
 
 export default Purposes;

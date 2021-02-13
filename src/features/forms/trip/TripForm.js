@@ -16,11 +16,11 @@ import {
   StyledSelect,
   AddItemButton,
   RemoveItemButton,
-  MileageFieldsGroup
+  MileageFieldsGroup,
 } from '../FormsStyles';
 import {
   ButtonMain,
-  ButtonBorderedSeconderySoft
+  ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -34,7 +34,7 @@ import { selectFbUser } from '../../auth/authSlice';
 import { USER_ROLES } from '../../../utils/authUtils';
 import {
   selectTripTemplates,
-  selectTripTemplateSort
+  selectTripTemplateSort,
 } from '../../tripTemplates/tripTemplatesSlice';
 import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
 import MileageInput from './MileageInput';
@@ -52,26 +52,26 @@ const validationSchema = Yup.object().shape({
       label: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       mileage: Yup.number().min(1, 'Zła wartość').required('Wymagane'),
-      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane')
-    })
-  )
+      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
+    }),
+  ),
 });
 
 const handleSubmit = (values) => {
-  console.log(values);
+  // console.error(values);
 };
 
 const emptyRecord = {
   name: '',
   vehicle: {
-    name: ''
-  }
+    name: '',
+  },
 };
 
 const emptyTripTemplate = {
   label: '',
   value: '',
-  stops: []
+  stops: [],
 };
 
 const TripForm = ({ trip }) => {
@@ -91,37 +91,37 @@ const TripForm = ({ trip }) => {
   const selectedRecord = {
     label: ` ${record.vehicle.name} - ${record.name}`,
     value: record.id,
-    mileage: record.vehicle.mileage
+    mileage: record.vehicle.mileage,
   };
 
   const selectedPurpose = {
     label: trip.purpose,
-    value: trip.purpose
+    value: trip.purpose,
   };
 
   const isAdmin = user.role === USER_ROLES.admin;
 
   const selectedDriver = {
     label: user.fullname,
-    value: user.id
+    value: user.id,
   };
 
   const selectedTemplate = {
     label: tripTemplate.label,
     value: tripTemplate.id,
-    stops: tripTemplate.stops
+    stops: tripTemplate.stops,
   };
 
   const recordSelectItems = records.map((rec) => ({
     label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
     value: rec.id,
-    mileage: rec.vehicle.mileage
+    mileage: rec.vehicle.mileage,
   }));
 
   const driverSelectItems = isAdmin
     ? drivers.map((driv) => ({
         label: driv.fullname,
-        value: driv.id
+        value: driv.id,
       }))
     : selectedDriver;
 
@@ -129,19 +129,19 @@ const TripForm = ({ trip }) => {
     label: template.label,
     value: template.id,
     stops: template.stops,
-    purpose: template.purpose
+    purpose: template.purpose,
   }));
 
   const purposesSelectItems = purposes.items.map((purpose) => ({
     label: purpose.name,
-    value: purpose.name
+    value: purpose.name,
   }));
 
   const initMileage = trip.initialMileage || record.vehicle.mileage;
 
   const stops = trip.stops.map((stop) => ({
     ...stop,
-    mileage: initMileage
+    mileage: initMileage,
   }));
 
   const focusOn = (ref) => {
@@ -155,7 +155,7 @@ const TripForm = ({ trip }) => {
     record: selectedRecord,
     tripTemplate: trip.tripTemplate ? selectedTemplate : '',
     purpose: trip.purpose ? selectedPurpose : '',
-    stops: stops
+    stops: stops,
   };
 
   return (
@@ -170,7 +170,7 @@ const TripForm = ({ trip }) => {
           submitForm,
           setFieldTouched,
           setFieldValue,
-          handleChange
+          handleChange,
         }) => (
           <StyledForm>
             <Row>
@@ -224,8 +224,8 @@ const TripForm = ({ trip }) => {
                         'stops',
                         values.stops.map((stop) => ({
                           ...stop,
-                          mileage: option.mileage
-                        }))
+                          mileage: option.mileage,
+                        })),
                       );
                       focusOn(tripTemplateRef);
                     }}
@@ -250,17 +250,17 @@ const TripForm = ({ trip }) => {
                     onChange={(option) => {
                       setFieldTouched('tripTemplate');
                       setFieldValue('tripTemplate', option);
-                      console.log(option);
+                      console.error(option);
                       setFieldValue('purpose', {
                         label: option.purpose,
-                        value: option.purpose
+                        value: option.purpose,
                       });
                       setFieldValue(
                         'stops',
                         option.stops.map((stop) => ({
                           ...stop,
-                          mileage: values.record.mileage + stop.distance
-                        }))
+                          mileage: values.record.mileage + stop.distance,
+                        })),
                       );
                     }}
                     placeholder='Wybierz szablon'
@@ -302,7 +302,7 @@ const TripForm = ({ trip }) => {
                     ...values.stops
                       .map((s, i) => 'Przystanek ' + i)
                       .slice(1, -1),
-                    'Koniec trasy'
+                    'Koniec trasy',
                   ];
 
                   return values.stops.map((stop, index) => (
@@ -342,7 +342,7 @@ const TripForm = ({ trip }) => {
                               label: `Przystanek ${index + 1}`,
                               place: ``,
                               distance: 0,
-                              mileage: values.stops[index].mileage
+                              mileage: values.stops[index].mileage,
                             });
                           }}
                         >

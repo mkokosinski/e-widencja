@@ -1,7 +1,7 @@
 import {
   createSlice,
   createAsyncThunk,
-  createSelector
+  createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import { firestore } from '../../app/firebase/firebase';
@@ -83,7 +83,7 @@ export const fetchSettings = createAsyncThunk(
     mergeDeep(settings, userData);
 
     return Object.values(settings);
-  }
+  },
 );
 
 export const addPurpose = createAsyncThunk(
@@ -97,7 +97,7 @@ export const addPurpose = createAsyncThunk(
     const newItems = [...purposes.items, arg];
     const newPurposes = {
       ...purposes,
-      items: newItems
+      items: newItems,
     };
 
     return firestore
@@ -112,7 +112,7 @@ export const addPurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 export const editPurpose = createAsyncThunk(
@@ -126,7 +126,7 @@ export const editPurpose = createAsyncThunk(
     const newItems = purposes.items.map((p) => (p.id === arg.id ? arg : p));
     const newPurposes = {
       ...purposes,
-      items: newItems
+      items: newItems,
     };
 
     return firestore
@@ -141,7 +141,7 @@ export const editPurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 export const deletePurpose = createAsyncThunk(
   'settings/deletePurpose',
@@ -154,7 +154,7 @@ export const deletePurpose = createAsyncThunk(
     const newItems = purposes.items.filter((p) => p.id !== arg.id);
     const newPurposes = {
       ...purposes,
-      items: newItems
+      items: newItems,
     };
 
     return firestore
@@ -169,14 +169,14 @@ export const deletePurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 const sortMethods = {
   Data: {
     asc: (a, b) => compareDates(a.date, b.date),
-    desc: (a, b) => compareDates(b.date, a.date)
-  }
+    desc: (a, b) => compareDates(b.date, a.date),
+  },
 };
 
 export const settingSlice = createSlice({
@@ -191,26 +191,24 @@ export const settingSlice = createSlice({
         title: 'Data',
         items: [
           { label: 'od najnowszych', condition: 'desc' },
-          { label: 'od najstarszych', condition: 'asc' }
-        ]
-      }
-    ]
+          { label: 'od najstarszych', condition: 'asc' },
+        ],
+      },
+    ],
   },
   reducers: {
     setSortFunc: (state, action) => {
-      console.log(action);
       const { payload } = action;
       const entry = Object.entries(payload)[0];
 
       state.sortFunc = { name: entry[0], condition: entry[1] };
-    }
+    },
   },
   extraReducers: {
     [fetchSettings.pending]: (state, action) => {
       state.status = 'loading';
     },
     [fetchSettings.fulfilled]: (state, action) => {
-      // console.log(action);
       state.items = action.payload;
       state.status = 'succeeded';
     },
@@ -225,13 +223,13 @@ export const settingSlice = createSlice({
     [addPurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === 'purposes' ? action.payload : i
+        i.id === 'purposes' ? action.payload : i,
       );
       toast.success('Poprawnie dodano opcje');
     },
     [addPurpose.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log('err', action);
+      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     },
@@ -242,13 +240,13 @@ export const settingSlice = createSlice({
     [editPurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === 'purposes' ? action.payload : i
+        i.id === 'purposes' ? action.payload : i,
       );
       toast.success('Poprawnie edytowano opcje');
     },
     [editPurpose.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log('err', action);
+      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     },
@@ -259,17 +257,17 @@ export const settingSlice = createSlice({
     [deletePurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === 'purposes' ? action.payload : i
+        i.id === 'purposes' ? action.payload : i,
       );
       toast.success('Poprawnie usunięto opcje');
     },
     [deletePurpose.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log('err', action);
+      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
-    }
-  }
+    },
+  },
 });
 
 const tips = (state) => state.settings;
@@ -286,14 +284,14 @@ export const selectFilteredSettings = createSelector(
 
     const filtered = settings.items
       .filter((veh) =>
-        settingFilter.enable ? veh.id === settingFilter.filter.value : veh
+        settingFilter.enable ? veh.id === settingFilter.filter.value : veh,
       )
       .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
       );
 
     return { ...settings, items: filtered };
-  }
+  },
 );
 
 export const selectSettingSort = (state) => state.settings.sortCases;

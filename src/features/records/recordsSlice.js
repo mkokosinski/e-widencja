@@ -68,7 +68,7 @@ export const addRecord = createAsyncThunk(
       .collection('Records')
       .add(record)
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
   }
@@ -184,7 +184,7 @@ export const recordsSlice = createSlice({
 
     [addRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log('err', action);
+      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     },

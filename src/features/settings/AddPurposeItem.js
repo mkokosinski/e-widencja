@@ -5,7 +5,7 @@ import {
   PurposeButtonsContainer,
   PurposeItemContainer,
   PurposeTitle,
-  StyledPurposeItem
+  StyledPurposeItem,
 } from './SettingsStyles';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,8 +36,6 @@ const AddPurposeItem = (props) => {
   };
 
   const item = { id: 'new', name: 'Nowy' };
-  console.log('add item', item);
-
   return (
     <PurposeItemContainer>
       <AnimateSharedLayout type='crossfade'>
@@ -76,7 +74,7 @@ const AddPurposeItem = (props) => {
 
 AddPurposeItem.propTypes = {
   isSelected: PropTypes.bool,
-  handleSelect: PropTypes.func
+  handleSelect: PropTypes.func,
 };
 
 export default AddPurposeItem;

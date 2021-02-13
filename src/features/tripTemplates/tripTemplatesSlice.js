@@ -1,7 +1,7 @@
 import {
   createSlice,
   createAsyncThunk,
-  createSelector
+  createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
@@ -35,7 +35,7 @@ export const fetchTripTemplates = createAsyncThunk(
     });
 
     return tripTemplates;
-  }
+  },
 );
 
 export const addTripTemplate = createAsyncThunk(
@@ -50,17 +50,17 @@ export const addTripTemplate = createAsyncThunk(
       companyId: currUser.companyId,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
-      active: true
+      active: true,
     };
 
     return await firestore
       .collection('TripTemplates')
       .add(newTemplate)
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
-  }
+  },
 );
 
 export const editTripTemplate = createAsyncThunk(
@@ -73,7 +73,7 @@ export const editTripTemplate = createAsyncThunk(
       purpose: arg.purpose,
       stops: arg.stops,
       updatedBy: currUser.id,
-      updated: firestoreFunctions.FieldValue.serverTimestamp()
+      updated: firestoreFunctions.FieldValue.serverTimestamp(),
     };
 
     firestore
@@ -83,14 +83,14 @@ export const editTripTemplate = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 const sortMethods = {
   Data: {
     asc: (a, b) => compareDates(a.date, b.date),
-    desc: (a, b) => compareDates(b.date, a.date)
-  }
+    desc: (a, b) => compareDates(b.date, a.date),
+  },
 };
 
 export const tripTemplateSlice = createSlice({
@@ -105,19 +105,18 @@ export const tripTemplateSlice = createSlice({
         title: 'Data',
         items: [
           { label: 'od najnowszych', condition: 'desc' },
-          { label: 'od najstarszych', condition: 'asc' }
-        ]
-      }
-    ]
+          { label: 'od najstarszych', condition: 'asc' },
+        ],
+      },
+    ],
   },
   reducers: {
     setSortFunc: (state, action) => {
-      console.log(action);
       const { payload } = action;
       const entry = Object.entries(payload)[0];
 
       state.sortFunc = { name: entry[0], condition: entry[1] };
-    }
+    },
   },
   extraReducers: {
     [fetchTripTemplates.pending]: (state, action) => {
@@ -141,7 +140,7 @@ export const tripTemplateSlice = createSlice({
     },
     [addTripTemplate.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log('err', action);
+      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     },
@@ -155,11 +154,11 @@ export const tripTemplateSlice = createSlice({
     },
     [editTripTemplate.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log('err', action);
+      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
-    }
-  }
+    },
+  },
 });
 
 const tips = (state) => state.tripTemplates;
@@ -175,14 +174,14 @@ export const selectFilteredTripTemplates = createSelector(
       .filter((veh) =>
         tripTemplateFilter.enable
           ? veh.id === tripTemplateFilter.filter.value
-          : veh
+          : veh,
       )
       .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
       );
 
     return { ...tripTemplates, items: filtered };
-  }
+  },
 );
 
 export const selectTripTemplateSort = (state) => state.tripTemplates.sortCases;

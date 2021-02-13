@@ -5,14 +5,14 @@ import {
   PurposeButtonsContainer,
   PurposeItemContainer,
   PurposeTitle,
-  StyledPurposeItem
+  StyledPurposeItem,
 } from './SettingsStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEdit,
   faTimes,
   faTrash,
-  faTrashAlt
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import EditPurposeItem from './EditPurposeItem';
@@ -23,10 +23,9 @@ const PurposeItem = ({
   handleSelect,
   saveItem,
   deleteItem,
-  isSelected
+  isSelected,
 }) => {
   const [changed, setChanged] = useState(false);
-  console.log('item', item);
 
   const closeItem = () => {
     handleSelect(null);
@@ -61,9 +60,6 @@ const PurposeItem = ({
             layoutId={item.id}
             isSelected={isSelected}
             // onClick={() => handleSelect(item)}
-            onLayoutAnimationComplete={() => {
-              console.log('anim end', changed);
-            }}
           >
             <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               {item.name}
@@ -95,10 +91,10 @@ PurposeItem.propTypes = {
   handleSelect: PropTypes.func,
   item: PropTypes.shape({
     id: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
   }),
   saveItem: PropTypes.func,
-  deleteItem: PropTypes.func
+  deleteItem: PropTypes.func,
 };
 
 export default PurposeItem;

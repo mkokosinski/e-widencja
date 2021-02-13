@@ -25,9 +25,9 @@ const Router = () => {
         <Redirect to={Routing.Dashboard.path} />
       </Route>
 
-      <Route exact path='/e-widencja'>
+      {/* <Route exact path='/e-widencja'>
         <Redirect to={Routing.Dashboard.path} />
-      </Route>
+      </Route> */}
 
       <PrivateRoute exact path={Routing.Dashboard.path}>
         <Routing.Dashboard.Component />

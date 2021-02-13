@@ -21,7 +21,7 @@ export const authorize = createAsyncThunk(
       }
       return { ...data, id: arg.user.uid };
     } else return thunkAPI.rejectWithValue('user not exists');
-  }
+  },
 );
 
 export const signUpEmail = createAsyncThunk(
@@ -36,7 +36,7 @@ export const signUpEmail = createAsyncThunk(
       .catch((err) => {
         return err;
       });
-  }
+  },
 );
 
 export const signIn = createAsyncThunk('auth/signIn', async (arg, thunkAPI) => {
@@ -49,10 +49,10 @@ export const signIn = createAsyncThunk('auth/signIn', async (arg, thunkAPI) => {
       return user;
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
     if (err.code === 'auth/internal-error') {
       return thunkAPI.rejectWithValue(
-        'Przepraszamy, serwis chwilowo niedostępny. Pracujemy nad tym. Spróbuj ponownie za chwilę.'
+        'Przepraszamy, serwis chwilowo niedostępny. Pracujemy nad tym. Spróbuj ponownie za chwilę.',
       );
     } else {
       return thunkAPI.rejectWithValue('Niepoprawne dane logowania!');
@@ -65,7 +65,7 @@ export const signOut = createAsyncThunk(
   async (arg, thunkAPI) => {
     const res = await auth.signOut();
     return res;
-  }
+  },
 );
 
 export const getFirebaseUser = async (userId) => {
@@ -73,7 +73,7 @@ export const getFirebaseUser = async (userId) => {
     const user = await firestore.collection('Users').doc(userId).get();
     return user.data();
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
@@ -82,13 +82,13 @@ export const authSlice = createSlice({
   initialState: {
     user: null,
     status: 'idle',
-    error: null
+    error: null,
   },
   reducers: {
     setUser: (state, action) => {
       const { payload } = action;
       state.user = payload;
-    }
+    },
   },
   extraReducers: {
     [signIn.pending]: (state, action) => {
@@ -104,7 +104,6 @@ export const authSlice = createSlice({
 
     [signIn.rejected]: (state, action) => {
       state.status = 'failed';
-      console.log(action);
       state.error = action.payload;
       toast.error(`Błąd: ${action.payload}`);
     },
@@ -121,7 +120,6 @@ export const authSlice = createSlice({
 
     [signUpEmail.rejected]: (state, action) => {
       state.status = 'failed';
-      console.log(action);
       state.error = action.payload;
       toast.error(`Błąd: ${action.payload}`);
     },
@@ -147,8 +145,8 @@ export const authSlice = createSlice({
 
     [authorize.rejected]: (state, action) => {
       state.status = 'failed';
-    }
-  }
+    },
+  },
 });
 
 export const selectAuth = (state) => state.auth;
@@ -159,7 +157,7 @@ export const selectFbUser = (state) => state.auth.user;
 //   createSelector([selectAuth, selectUsers], (auth, users) => {
 //     const fbUser = auth.user;
 //     const appUser = users.items.find((user) => user.id === fbUser.id);
-//     console.log(users.items);
+//     console.error(users.items);
 
 //     return appUser;
 //   });

@@ -1,14 +1,14 @@
 import {
   createSlice,
   createAsyncThunk,
-  createSelector
+  createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import {
   auth,
   authOtherUser,
   firestore,
-  firestoreFunctions
+  firestoreFunctions,
 } from '../../app/firebase/firebase';
 import { FETCH_STATUS } from '../../utils/fetchUtils';
 import { toast } from 'react-toastify';
@@ -44,15 +44,13 @@ export const fetchUsers = createAsyncThunk(
     });
 
     return users;
-  }
+  },
 );
 
 export const addUser = createAsyncThunk(
   'records/addUser',
   async (arg, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
-
-    console.log(currUser);
 
     const newUser = {
       name: arg.name,
@@ -66,17 +64,17 @@ export const addUser = createAsyncThunk(
       companyId: currUser.companyId,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
-      active: true
+      active: true,
     };
 
     return await firestore
       .collection('Users')
       .add(newUser)
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
-  }
+  },
 );
 
 export const editUser = createAsyncThunk(
@@ -92,7 +90,7 @@ export const editUser = createAsyncThunk(
       isDriver: arg.isDriver,
       isAppUser: arg.isAppUser,
       updatedBy: currUser.id,
-      updated: firestoreFunctions.FieldValue.serverTimestamp()
+      updated: firestoreFunctions.FieldValue.serverTimestamp(),
     };
 
     if (arg.isAppUser) {
@@ -106,7 +104,7 @@ export const editUser = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 export const deleteUser = createAsyncThunk(
@@ -120,12 +118,12 @@ export const deleteUser = createAsyncThunk(
       .update({
         active: false,
         deletedBy: currUser.id,
-        deleted: firestoreFunctions.FieldValue.serverTimestamp()
+        deleted: firestoreFunctions.FieldValue.serverTimestamp(),
       })
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 export const usersSlice = createSlice({
@@ -134,7 +132,7 @@ export const usersSlice = createSlice({
   reducers: {
     func: (state) => {
       //function body
-    }
+    },
   },
   extraReducers: {
     [fetchUsers.pending]: (state, action) => {
@@ -148,8 +146,8 @@ export const usersSlice = createSlice({
           ...user,
           get fullName() {
             return `${this.name} ${this.surname}`;
-          }
-        }))
+          },
+        })),
       ];
     },
 
@@ -197,8 +195,8 @@ export const usersSlice = createSlice({
     [deleteUser.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
       toast.error(action.payload);
-    }
-  }
+    },
+  },
 });
 
 export const selectUsers = (state) => state.users;
@@ -210,16 +208,16 @@ export const selectFilteredUsers = createSelector(
 
     const filtered = users.items
       .filter((user) =>
-        userFilter.enable ? user.id === userFilter.filter.value : user
+        userFilter.enable ? user.id === userFilter.filter.value : user,
       )
       .filter((user) =>
         userDriverFilter.enable
           ? user.isDriver === userDriverFilter.filter
-          : user
+          : user,
       );
 
     return { ...users, items: filtered };
-  }
+  },
 );
 
 export const selectDrivers = (state) => {

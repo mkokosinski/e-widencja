@@ -37,108 +37,108 @@ const Routing = {
   SignIn: { Component: SignIn, path: '/auth/signIn' },
   SignUp: { Component: SignUp, path: '/auth/signUp' },
 
-  Trips: { Component: Trips, path: '/e-widencja/app/trips' },
+  Trips: { Component: Trips, path: '/app/trips' },
   TripAdd: {
     Component: AddTripForm,
-    action: '/e-widencja/app/trips/add',
+    action: '/app/trips/add',
     get path() {
       return `${this.action}/:recordId`;
-    }
+    },
   },
   TripEdit: {
     Component: EditTripForm,
-    action: '/e-widencja/app/trips/edit',
+    action: '/app/trips/edit',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
   TripDetails: {
     Component: TripDetails,
-    action: '/e-widencja/app/trips/details',
+    action: '/app/trips/details',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
 
   TripTemplates: {
     Component: TripTemplates,
-    path: '/e-widencja/app/tripTemplates'
+    path: '/app/tripTemplates',
   },
   TripTemplateAdd: {
     Component: AddTripTemplateForm,
-    path: '/e-widencja/app/tripTemplates/add'
+    path: '/app/tripTemplates/add',
   },
   TripTemplateEdit: {
     Component: EditTripTemplateForm,
-    action: '/e-widencja/app/tripTemplates/edit',
+    action: '/app/tripTemplates/edit',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
 
-  Settings: { Component: Settings, path: '/e-widencja/app/settings' },
+  Settings: { Component: Settings, path: '/app/settings' },
 
-  Reports: { Component: Reports, path: '/e-widencja/app/reports' },
+  Reports: { Component: Reports, path: '/app/reports' },
 
-  Records: { Component: Records, path: '/e-widencja/app/records' },
-  RecordAdd: { Component: AddRecordForm, path: '/e-widencja/app/records/add' },
+  Records: { Component: Records, path: '/app/records' },
+  RecordAdd: { Component: AddRecordForm, path: '/app/records/add' },
   RecordEdit: {
     Component: EditRecordForm,
-    action: '/e-widencja/app/records/edit',
+    action: '/app/records/edit',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
   RecordDetails: {
     Component: RecordDetails,
-    action: '/e-widencja/app/records/details',
+    action: '/app/records/details',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
 
   Users: {
     Component: Users,
-    path: '/e-widencja/app/users',
-    label: 'Użytkownicy'
+    path: '/app/users',
+    label: 'Użytkownicy',
   },
-  UserAdd: { Component: AddUserForm, path: '/e-widencja/app/users/add' },
+  UserAdd: { Component: AddUserForm, path: '/app/users/add' },
   UserEdit: {
     Component: EditUserForm,
-    action: '/e-widencja/app/users/edit',
+    action: '/app/users/edit',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
   UserDetails: {
     Component: UserDetails,
-    action: '/e-widencja/app/users/details',
+    action: '/app/users/details',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
 
-  Dashboard: { Component: Dashboard, path: '/e-widencja/app/dashboard' },
+  Dashboard: { Component: Dashboard, path: '/app/dashboard' },
 
-  Vehicles: { Component: Vehicles, path: '/e-widencja/app/vehicles' },
+  Vehicles: { Component: Vehicles, path: '/app/vehicles' },
   VehicleAdd: {
     Component: AddVehicleForm,
-    path: '/e-widencja/app/vehicles/add'
+    path: '/app/vehicles/add',
   },
   VehicleEdit: {
     Component: EditVehicleForm,
-    action: '/e-widencja/app/vehicles/edit',
+    action: '/app/vehicles/edit',
     get path() {
       return `${this.action}/:id`;
-    }
+    },
   },
   VehicleDetails: {
     Component: VehicleDetails,
-    action: '/e-widencja/app/vehicles/details',
+    action: '/app/vehicles/details',
     get path() {
       return `${this.action}/:id`;
-    }
-  }
+    },
+  },
 };
 
 export default Routing;

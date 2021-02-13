@@ -7,7 +7,7 @@ import Select from 'react-select';
 import {
   filterDefaults,
   selectFilters,
-  setFilter
+  setFilter,
 } from '../templates/filterSlice';
 
 import { selectVehicles } from '../vehicles/vehiclesSlice';
@@ -17,7 +17,7 @@ import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
 import {
   ButtonBorderedSeconderySoft,
-  ButtonMain
+  ButtonMain,
 } from '../layout/LayoutStyles';
 import FieldWithErrors from '../forms/fieldWithErrors';
 import DateInput, { DATEPICKER_TYPES } from '../forms/DateInput';
@@ -30,7 +30,7 @@ const FilterModal = ({ closeModal }) => {
 
   const sortedItems = [
     filterDefaults.vehicleFilter,
-    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
+    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id })),
   ];
 
   const handleSubmit = (values) => {
@@ -38,8 +38,8 @@ const FilterModal = ({ closeModal }) => {
       vehicleFilter: values.vehicleFilter,
       dateFilter: {
         from: format(values.dateFrom, 'yyyy-MM-dd'),
-        to: format(values.dateTo, 'yyyy-MM-dd')
-      }
+        to: format(values.dateTo, 'yyyy-MM-dd'),
+      },
     };
     dispatch(setFilter(formatedValue));
     closeModal();
@@ -48,7 +48,7 @@ const FilterModal = ({ closeModal }) => {
   const initValues = {
     vehicleFilter: vehicleFilter.filter,
     dateFrom: new Date(dateFilter.filter.from),
-    dateTo: new Date(dateFilter.filter.to)
+    dateTo: new Date(dateFilter.filter.to),
   };
 
   return (
@@ -77,7 +77,6 @@ const FilterModal = ({ closeModal }) => {
                   onChange={(date) => {
                     setFieldValue('dateFrom', new Date(date));
                     setFieldTouched('dateFrom');
-                    console.log(date);
                   }}
                   isRange
                   rangeStart

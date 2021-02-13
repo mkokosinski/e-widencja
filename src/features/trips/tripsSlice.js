@@ -1,7 +1,7 @@
 import {
   createSlice,
   createAsyncThunk,
-  createSelector
+  createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import { firestore } from '../../app/firebase/firebase';
@@ -16,9 +16,9 @@ const data = [
     purpose: 'Szkolenie',
     stops: [
       { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Cel', place: 'Posum', distance: 8 }
+      { label: 'Cel', place: 'Posum', distance: 8 },
     ],
-    driver: 'RNOGS5sIeYzrKuMIbsCP'
+    driver: 'RNOGS5sIeYzrKuMIbsCP',
   },
   {
     record: 'h9NLhJSpgYnSROODO6VK',
@@ -28,9 +28,9 @@ const data = [
     stops: [
       { label: 'Start', place: 'Biuro', distance: 0 },
       { label: 'Przystanek1', place: 'Apteka', distance: 5 },
-      { label: 'Cel', place: 'Posum', distance: 11 }
+      { label: 'Cel', place: 'Posum', distance: 11 },
     ],
-    driver: 'RNOGS5sIeYzrKuMIbsCP'
+    driver: 'RNOGS5sIeYzrKuMIbsCP',
   },
   {
     record: '0xrTyhzI26ykZ9Le5TMC',
@@ -39,9 +39,9 @@ const data = [
     purpose: 'Prezentacja',
     stops: [
       { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Cel', place: 'USI-MED', distance: 8 }
+      { label: 'Cel', place: 'USI-MED', distance: 8 },
     ],
-    driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43'
+    driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43',
   },
   {
     record: '0xrTyhzI26ykZ9Le5TMC',
@@ -50,10 +50,10 @@ const data = [
     purpose: 'Serwis',
     stops: [
       { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Cel', place: 'Posum', distance: 10 }
+      { label: 'Cel', place: 'Posum', distance: 10 },
     ],
-    driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43'
-  }
+    driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43',
+  },
 ];
 
 export const fetchTrips = createAsyncThunk(
@@ -72,14 +72,14 @@ export const fetchTrips = createAsyncThunk(
     });
 
     return trips;
-  }
+  },
 );
 
 const sortMethods = {
   Data: {
     asc: (a, b) => compareDates(a.date, b.date),
-    desc: (a, b) => compareDates(b.date, a.date)
-  }
+    desc: (a, b) => compareDates(b.date, a.date),
+  },
 };
 
 export const tripSlice = createSlice({
@@ -94,19 +94,19 @@ export const tripSlice = createSlice({
         title: 'Data',
         items: [
           { label: 'od najnowszych', condition: 'desc' },
-          { label: 'od najstarszych', condition: 'asc' }
-        ]
-      }
-    ]
+          { label: 'od najstarszych', condition: 'asc' },
+        ],
+      },
+    ],
   },
   reducers: {
     setSortFunc: (state, action) => {
-      console.log(action);
+      console.error(action);
       const { payload } = action;
       const entry = Object.entries(payload)[0];
 
       state.sortFunc = { name: entry[0], condition: entry[1] };
-    }
+    },
   },
   extraReducers: {
     [fetchTrips.pending]: (state, action) => {
@@ -121,8 +121,8 @@ export const tripSlice = createSlice({
     [fetchTrips.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
-    }
-  }
+    },
+  },
 });
 
 const trips = (state) => state.trips;
@@ -141,14 +141,14 @@ export const selectTrips = createSelector(
       items.push({
         ...trip,
         name,
-        vehicle
+        vehicle,
       });
     });
 
     items.sort(sortMethods[sortFunc.name][sortFunc.condition]);
 
     return items;
-  }
+  },
 );
 
 export const selectFilteredTrips = createSelector(
@@ -158,14 +158,14 @@ export const selectFilteredTrips = createSelector(
 
     const filtered = trips.items
       .filter((veh) =>
-        tripFilter.enable ? veh.id === tripFilter.filter.value : veh
+        tripFilter.enable ? veh.id === tripFilter.filter.value : veh,
       )
       .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
       );
 
     return { ...trips, items: filtered };
-  }
+  },
 );
 
 export const selectTripById = (state, tripId) => {

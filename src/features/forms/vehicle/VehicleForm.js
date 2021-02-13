@@ -15,17 +15,17 @@ import {
   StyledField,
   StyledSelect,
   ButtonsContainer,
-  Row
+  Row,
 } from '../FormsStyles';
 import {
   ButtonMain,
-  ButtonBorderedSeconderySoft
+  ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCarBrands } from '../../vehicles/carBrandsSlice';
 import {
   formSelectCreateLabel,
-  validationMessages
+  validationMessages,
 } from '../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../vehicles/vehiclesSlice';
 import { toast } from 'react-toastify';
@@ -53,7 +53,7 @@ const validationSchema = Yup.object({
   type: Yup.string()
     .min(5, 'Min 5')
     .max(15, 'Must be 15 characters or less')
-    .required(validationMessages.required)
+    .required(validationMessages.required),
 });
 
 const VehicleForm = ({ vehicle, isEdit }) => {
@@ -69,14 +69,14 @@ const VehicleForm = ({ vehicle, isEdit }) => {
 
   const carBrandsSelectItems = carBrands.map((cb) => ({
     label: cb.label,
-    value: cb
+    value: cb,
   }));
 
   const getModels = () => {
     return selectedBrand
       ? selectedBrand.models.map((model) => ({
           label: model.model,
-          value: model
+          value: model,
         }))
       : '';
   };
@@ -90,7 +90,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
       registrationNumber: values.registrationNumber,
       mileage: values.mileage,
       checkupDate: values.checkupDate,
-      type: values.type
+      type: values.type,
     };
 
     const validate = validation.vehicle(data);
@@ -112,7 +112,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
     registrationNumber: '',
     mileage: '',
     checkupDate: new Date(),
-    type: ''
+    type: '',
   };
 
   useEffect(() => {
@@ -200,7 +200,6 @@ const VehicleForm = ({ vehicle, isEdit }) => {
               <FieldWithErrors name='checkupDate' label='Data przeglądu'>
                 <DateInput
                   onChange={(value) => {
-                    console.log(value);
                     setFieldTouched('checkupDate');
                     setFieldValue('checkupDate', value);
                     // focusOn(typeRef);
