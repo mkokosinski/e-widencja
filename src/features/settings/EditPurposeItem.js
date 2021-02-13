@@ -6,7 +6,8 @@ import {
   ExpandedPurposeItemContent,
   PurposeButton,
   PurposeButtonsContainer,
-  PurposeInput
+  PurposeInput,
+  PurposeInputContainer,
 } from './SettingsStyles';
 import { StyledForm } from '../forms/FormsStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -51,10 +52,7 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
       />
       <ExpandedPurposeItem key={item.id} layoutId={item.id}>
         <ExpandedPurposeItemContent>
-          <PurposeButtonsContainer
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          <PurposeInputContainer>
             <PurposeInput
               innerRef={inputref}
               ref={inputref}
@@ -63,6 +61,11 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={keysBinding}
             />
+          </PurposeInputContainer>
+          <PurposeButtonsContainer
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             <PurposeButton
               title='Zapisz'
               onClick={handleSave}
@@ -83,10 +86,10 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
 EditPurposeItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
   }).isRequired,
   defaultValue: PropTypes.string,
-  closeItem: PropTypes.func.isRequired
+  closeItem: PropTypes.func.isRequired,
 };
 
 export default EditPurposeItem;

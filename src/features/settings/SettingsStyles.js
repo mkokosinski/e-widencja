@@ -98,10 +98,10 @@ export const ExpandedPurposeItem = styled(motion.div)`
   display: flex;
   justify-content: center;
   height: 75px;
-  left: 0;
+  left: -20px;
   position: absolute;
   top: 10%;
-  width: 100%;
+  width: calc(100% + 40px);
   z-index: 2;
 
   @media screen and (${device.tablet}) {
@@ -116,6 +116,7 @@ export const ExpandedPurposeItem = styled(motion.div)`
   ${PurposeButton} {
     font-size: 20px;
     height: 30px;
+    margin: 0;
     width: 30px;
   }
 `;
@@ -138,23 +139,20 @@ export const ExpandedPurposeItemContent = styled(motion.div)`
   display: flex;
   height: 75px;
   padding: 10px;
-  width: 100vh;
-
-  @media screen and (${device.tablet}) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
-export const ExpandedPurposeItemInput = styled(motion.div)``;
+export const PurposeInputContainer = styled.div`
+  flex: 1 1 90%;
+  margin: 0 8px;
+`;
 
 export const PurposeInput = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.main};
-  margin: 0 8px;
   padding: 5px;
   transition: 300ms;
-  flex: 1 1 90%;
-
+  width: 100%;
   &:focus,
   &:active {
     outline: none;
