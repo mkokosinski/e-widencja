@@ -3,12 +3,12 @@ const font = {
   size: '18px',
   nav: {
     default: {
-      weight: '400'
+      weight: '400',
     },
     active: {
-      weight: 'bold'
-    }
-  }
+      weight: 'bold',
+    },
+  },
 };
 
 export const darkTheme = {
@@ -25,33 +25,36 @@ export const darkTheme = {
   gray: '#8f8f8f',
   grayLight: '#f0f0f0',
   grayLighter: '#f7f7f7',
+  green: '#009938',
+  greenLight: '#3fa063',
   red: '#ff0000',
+  white: '#ffffff',
   nav: {
     default: {
       color: 'white',
-      background: 'transparent'
+      background: 'transparent',
     },
     active: {
       color: '#5555a5',
-      background: 'white'
+      background: 'white',
     },
-    hover: '#614AC2'
+    hover: '#614AC2',
   },
   body: {
-    background: '#f9f9f9'
+    background: '#f9f9f9',
   },
   sort: {
     title: {
       color: 'white',
-      bg: '#5e48b6'
+      bg: '#5e48b6',
     },
     item: {
       bg: 'white',
       color: '#2e2e2e',
       hover: {
-        bg: '#e4e4e4'
-      }
-    }
+        bg: '#e4e4e4',
+      },
+    },
   },
   hover: {
     main: '#616191',
@@ -62,21 +65,21 @@ export const darkTheme = {
     lightSoft: '#fcfdff',
     shadow1: '0px 3px 14px -8px rgba(0, 0, 0, 0.7)',
     shadow2:
-      '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)'
+      '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)',
   },
   disabled: {
     bg: '#eeeeee',
-    color: '#d0d0d0'
+    color: '#d0d0d0',
   },
   status: {
     error: '#ff0000',
     warning: '#f0bb00',
-    default: '#009938'
+    default: '#009938',
   },
   font,
   shadows: {
     shadow1: '0px 2px 10px -6px rgba(0, 0, 0, 0.5)',
     shadow2:
-      '0px 1px 6px -2px rgba(0, 0, 0, 0.7), 0px 2px 10px -5px rgba(0, 0, 0, 0.4)'
-  }
+      '0px 1px 6px -2px rgba(0, 0, 0, 0.7), 0px 2px 10px -5px rgba(0, 0, 0, 0.4)',
+  },
 };

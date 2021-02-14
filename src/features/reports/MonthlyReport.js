@@ -1,31 +1,34 @@
-import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-export const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4',
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
+export const downloadReportVatPdf = (data) => {
+  const doc = new jsPDF();
 
-const MonthlyReport = () => {
-  return (
-    <Document>
-      <Page size='A4' style={styles.page}>
-        <View style={styles.section}>
-          <Text>Section #1</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Section #2</Text>
-        </View>
-      </Page>
-    </Document>
-  );
+  doc.autoTable({ html: '#my-table' });
+
+  // Or use javascript directly:
+  doc.autoTable({
+    head: [
+      [
+        'Nr kolejny wpisu',
+        'Data wyjazdu/udostępnienia pojazdu',
+        'Opis trasy wyjazdu (skąd-dokąd)',
+        'Cel wyjazdu/udostępnienia pojazdu',
+        'Liczba faktyczna przejechanych kilometrów',
+        'Imię i nazwisko osoby kierującej pojazdem/osoby, której udostępniony został pojazd',
+        'Stan licznika na dzień udostępnienia pojazdu',
+      ],
+    ],
+    body: [
+      ['David', 'david@example.com', 'Sweden'],
+      ['Castille', 'castille@example.com', 'Spain'],
+      // ...
+    ],
+  });
+
+  console.log(doc);
+
+  const test = doc.save('table.pdf');
+  console.log(doc);
+  console.log(test);
 };
-
-export default MonthlyReport;
