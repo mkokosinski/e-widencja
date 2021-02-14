@@ -8,6 +8,12 @@ export const StyledApp = styled.div`
   width: 100%;
 `;
 
+export const FlexCenter = css`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`;
+
 export const gapHorizontal = (gap) => css`
   & > * {
     margin-right: ${gap};
