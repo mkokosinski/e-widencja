@@ -23,12 +23,22 @@ export const StyledDropdownPanel = styled(motion.div)`
 export const DropdownPanelHeader = styled(motion.div)`
   align-items: center;
   background: #ffffff;
+  border-bottom: 1px solid ${(props) => props.theme.grayLight};
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   padding: 20px;
   padding-right: 40px;
   position: relative;
   z-index: 1;
+
+  &:hover {
+    background: ${(props) => props.theme.grayLighter};
+  }
+
+  &:active {
+    background: ${(props) => props.theme.grayLight};
+  }
 `;
 
 export const DropdownPanelTitle = styled.h4``;
