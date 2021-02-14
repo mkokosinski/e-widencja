@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 import MonthlyReport from './MonthlyReport';
-import { monthlyReportStyles } from './ReportsStyles';
+import {
+  monthlyReportStyles,
+  ReportLabel,
+  ReportVatContent,
+} from './ReportsStyles';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import ReportsGrid from './ReportsGrid';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
 import { selectRecords } from '../records/recordsSlice';
+import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
+import { ButtonMain } from '../layout/LayoutStyles';
 
 const Reports = () => {
   const { items: records } = useSelector(selectRecords);
@@ -16,10 +21,11 @@ const Reports = () => {
     value: rec.id,
   }));
   return (
-    <DetailsSection>
-      Raporty:
-      <div>
-        Wybierz ewidencje:
+    <DropdownPanel title='Raport VAT'>
+      <ReportVatContent>
+        <ReportLabel>
+          Wybierz ewidencję, dla których chcesz wygenerować raport
+        </ReportLabel>
         <Select
           as='select'
           closeMenuOnSelect={false}
@@ -40,13 +46,17 @@ const Reports = () => {
           }}
           // value={values.record}
         />
-      </div>
-      {/* <PDFDownloadLink document={<MonthlyReport />} fileName='somename.pdf'>
-        {({ blob, url, loading, error }) =>
-          loading ? 'Loading document...' : 'Download now!'
-        }
-      </PDFDownloadLink> */}
-    </DetailsSection>
+        <PDFDownloadLink document={<MonthlyReport />} fileName='somename.pdf'>
+          {({ blob, url, loading, error }) =>
+            loading ? (
+              'Loading document...'
+            ) : (
+              <ButtonMain>Pobierz raport</ButtonMain>
+            )
+          }
+        </PDFDownloadLink>
+      </ReportVatContent>
+    </DropdownPanel>
   );
 };
 
