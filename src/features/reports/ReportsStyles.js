@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { FlexCenter, gap } from '../../AppStyles';
+import { FlexCenter, gap, gapHorizontal } from '../../AppStyles';
+import { Button } from '../layout/LayoutStyles';
 
 export const StyledReportGrid = styled.div`
   background: black;
@@ -19,6 +20,21 @@ export const Cell = styled.div`
 `;
 
 export const ReportLabel = styled.label``;
+
+export const ReportDownloadButton = styled(Button)`
+  background: ${({ theme }) => theme.greenLight};
+  color: ${({ theme }) => theme.white};
+  ${gapHorizontal('6px')}
+  font-size: 22px;
+  padding: 12px 24px;
+  transition: opacity 200ms;
+  span {
+    font-size: 16px;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
 export const ReportVatContent = styled.div`
   display: flex;
