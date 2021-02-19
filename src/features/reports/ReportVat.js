@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import ReactPDF, { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
@@ -15,15 +15,23 @@ import {
   ReportLabel,
   ReportVatContent,
 } from './ReportsStyles';
+import { LoaderSpinner } from '../loading/LoadingStyles';
 
 const ReportVat = (props) => {
   const { items: records } = useSelector(selectRecords);
 
+  const [selectedRecords, setSelectedRecords] = useState([]);
+  const [isGenerated, setIsGenerated] = useState(false);
+
+  const isDisabled = !selectedRecords?.length;
+
   const handleDownload = () => {
-    downloadReportVatPdf();
+    if (!isDisabled) {
+      setIsGenerated(true);
+    }
   };
 
-  const recordSelectItems = records.map((rec) => ({
+  const recordsOptions = records.map((rec) => ({
     label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
     value: rec.id,
   }));
@@ -39,39 +47,40 @@ const ReportVat = (props) => {
         closeMenuOnSelect={false}
         isMulti
         isSearchable={true}
-        options={recordSelectItems}
+        options={recordsOptions}
         placeholder='Nie wybrano żadnej ewidencji'
-        onChange={(option) => {
-          // setFieldTouched('record');
-          // setFieldValue('record', option);
-          // setFieldValue(
-          //   'stops',
-          //   values.stops.map((stop) => ({
-          //     ...stop,
-          //     mileage: option.mileage,
-          //   })),
-          // );
-          // focusOn(tripTemplateRef);
+        onChange={(itmes) => {
+          setIsGenerated(false);
+          setSelectedRecords(itmes);
         }}
-        // value={values.record}
       />
-      {/* <PDFDownloadLink document={<MonthlyReport />} fileName='somename.pdf'>
-        {({ blob, url, loading, error }) => (
-          <ReportDownloadButton>
-            {loading ? (
-              'Loading document...'
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faFilePdf} />
-                <span>Pobierz raport</span>
-              </>
-            )}
-          </ReportDownloadButton>
+      <ReportDownloadButton
+        isGenerated={isGenerated}
+        isDisabled={isDisabled}
+        onClick={handleDownload}
+      >
+        {!isGenerated ? (
+          <>
+            <FontAwesomeIcon icon={faFilePdf} />
+            <span>Generuj PDF</span>
+          </>
+        ) : (
+          <PDFDownloadLink
+            document={<MonthlyReport data={selectedRecords} />}
+            fileName='somename.pdf'
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? (
+                <LoaderSpinner height='20px' width='20px' color='white' />
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faFilePdf} />
+                  <span>Pobierz PDF</span>
+                </>
+              )
+            }
+          </PDFDownloadLink>
         )}
-      </PDFDownloadLink> */}
-      <ReportDownloadButton onClick={handleDownload}>
-        <FontAwesomeIcon icon={faFilePdf} />
-        <span>Pobierz raport</span>
       </ReportDownloadButton>
     </ReportVatContent>
   );
