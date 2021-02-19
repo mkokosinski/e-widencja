@@ -18,19 +18,19 @@ import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 const contentAnimation = {
   enter: {
     opacity: 1,
-    y: 0,
+    height: 'auto',
     transition: {
       duration: 0.5,
-      opacity: {
-        duration: 1,
-      },
     },
   },
   exit: {
     opacity: 0,
-    y: -100,
+    height: '0',
     transition: {
-      duration: 0.1,
+      duration: 0.5,
+    },
+    transitionEnd: {
+      display: 'none',
     },
   },
 };
@@ -61,18 +61,14 @@ const DropdownPanel = ({ children, title, onOpen, onClose }) => {
             <FontAwesomeIcon icon={faAngleDown} />
           </DropdownPanelArrow>
         </DropdownPanelHeader>
-        <AnimatePresence>
-          {isOpen && (
-            <DoropdownContent
-              layout
-              initial={contentAnimation.exit}
-              animate={contentAnimation.enter}
-              exit={contentAnimation.exit}
-            >
-              {children}
-            </DoropdownContent>
-          )}
-        </AnimatePresence>
+
+        <DoropdownContent
+          layout
+          animate={!isOpen ? 'enter' : 'exit'}
+          variants={contentAnimation}
+        >
+          {children}
+        </DoropdownContent>
       </StyledDropdownPanel>
     </AnimateSharedLayout>
   );

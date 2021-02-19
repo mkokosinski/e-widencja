@@ -24,10 +24,10 @@ export const LoaderContainer = styled(PanelBordered)`
 
 export const LoaderSpinner = styled.div`
   animation: spinner 1s linear infinite;
-  width: 6rem;
-  height: 6rem;
+  width: ${(props) => props.width || '6rem'};
+  height: ${(props) => props.height || '6rem'};
   border-radius: 50%;
-  box-shadow: 0 4px 0 0 #42427d;
+  box-shadow: 0 4px 0 0 ${(props) => props.color || '#42427d'};
   transform-origin: center;
 
   @keyframes spinner {

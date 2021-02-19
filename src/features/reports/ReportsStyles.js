@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FlexCenter, gap, gapHorizontal } from '../../AppStyles';
 import { Button } from '../layout/LayoutStyles';
 
@@ -22,14 +22,25 @@ export const Cell = styled.div`
 export const ReportLabel = styled.label``;
 
 export const ReportDownloadButton = styled(Button)`
-  background: ${({ theme }) => theme.greenLight};
+  background: ${(props) =>
+    props.isGenerated ? props.theme.greenLight : props.theme.mainSoft};
   color: ${({ theme }) => theme.white};
-  ${gapHorizontal('6px')}
   font-size: 22px;
+  height: 50px;
   padding: 12px 24px;
   transition: opacity 200ms;
+
+  ${(props) =>
+    props.isDisabled &&
+    css`
+      cursor: not-allowed;
+      background: ${({ theme }) => theme.grayLight};
+      color: ${({ theme }) => theme.gray};
+    `}
+
   span {
     font-size: 16px;
+    margin-left: 6px;
   }
   &:hover {
     opacity: 0.8;
