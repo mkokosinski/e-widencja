@@ -41,47 +41,42 @@ const PurposeItem = ({
 
   return (
     <PurposeItemContainer>
-      <AnimateSharedLayout type='crossfade'>
-        <AnimatePresence>
-          {isSelected && (
-            <EditPurposeItem
-              key={item.id}
-              item={item}
-              defaultValue={item.name}
-              saveItem={handleSave}
-              closeItem={closeItem}
-            />
-          )}
-        </AnimatePresence>
-
-        <>
-          <StyledPurposeItem
+      <AnimatePresence>
+        {isSelected && (
+          <EditPurposeItem
             key={item.id}
-            layoutId={item.id}
-            isSelected={isSelected}
-            // onClick={() => handleSelect(item)}
+            item={item}
+            defaultValue={item.name}
+            saveItem={handleSave}
+            closeItem={closeItem}
+          />
+        )}
+      </AnimatePresence>
+
+      <>
+        <StyledPurposeItem
+          key={item.id}
+          layoutId={item.id}
+          isSelected={isSelected}
+          // onClick={() => handleSelect(item)}
+        >
+          <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            {item.name}
+          </PurposeTitle>
+          <PurposeButtonsContainer
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
           >
-            <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              {item.name}
-            </PurposeTitle>
-            <PurposeButtonsContainer
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
-              <PurposeButton
-                title='Edytuj'
-                onClick={() => handleSelect(item.id)}
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </PurposeButton>
-              <PurposeButton onClick={handleDelete}>
-                <FontAwesomeIcon title='Usuń' icon={faTrash} />
-              </PurposeButton>
-            </PurposeButtonsContainer>
-          </StyledPurposeItem>
-        </>
-      </AnimateSharedLayout>
+            <PurposeButton title='Edytuj' onClick={() => handleSelect(item.id)}>
+              <FontAwesomeIcon icon={faEdit} />
+            </PurposeButton>
+            <PurposeButton onClick={handleDelete}>
+              <FontAwesomeIcon title='Usuń' icon={faTrash} />
+            </PurposeButton>
+          </PurposeButtonsContainer>
+        </StyledPurposeItem>
+      </>
     </PurposeItemContainer>
   );
 };

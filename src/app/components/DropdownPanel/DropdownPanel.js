@@ -54,8 +54,8 @@ const DropdownPanel = ({ children, title, onOpen, onClose }) => {
 
   return (
     <AnimateSharedLayout type='crossfade'>
-      <StyledDropdownPanel layout>
-        <DropdownPanelHeader layout onClick={handleToggle}>
+      <StyledDropdownPanel>
+        <DropdownPanelHeader layoutId='dropdownPanel' onClick={handleToggle}>
           <DropdownPanelTitle>{title}</DropdownPanelTitle>
           <DropdownPanelArrow isOpen={isOpen}>
             <FontAwesomeIcon icon={faAngleDown} />
@@ -63,7 +63,7 @@ const DropdownPanel = ({ children, title, onOpen, onClose }) => {
         </DropdownPanelHeader>
 
         <DoropdownContent
-          layout
+          layoutId='dropdownPanel'
           animate={!isOpen ? 'enter' : 'exit'}
           variants={contentAnimation}
         >

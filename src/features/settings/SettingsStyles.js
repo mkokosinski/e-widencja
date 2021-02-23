@@ -30,9 +30,9 @@ export const PurposesContainer = styled.div`
   box-shadow: 0 0 4px -2px rgba(0, 0, 0, 0.4) inset;
   display: grid;
   gap: 10px;
-  padding: 10px;
+  margin: 10px;
+  padding: 20px;
   position: relative;
-  width: 100%;
 
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 `;

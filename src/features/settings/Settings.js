@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
 import { StyledForm, Row } from '../forms/FormsStyles';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 import Purposes from './Purposes';
@@ -13,15 +14,14 @@ import {
 } from './SettingsStyles';
 
 const Settings = () => {
-  const { name, items } = useSelector(selectPurposes);
+  const purposes = useSelector(selectPurposes);
   const notices = useSelector(selectNotices);
 
   return (
     <StyledSettings>
-      <SettingsSection>
-        <SettingsTitle>{name}</SettingsTitle>
-        <Purposes items={items} />
-      </SettingsSection>
+      <DropdownPanel title={purposes.name}>
+        <Purposes items={purposes.items} />
+      </DropdownPanel>
     </StyledSettings>
   );
 };
