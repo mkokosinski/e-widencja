@@ -64,6 +64,12 @@ const Router = () => {
           <Route exact path={Routing.VehicleDetails.path}>
             <Routing.VehicleDetails.Component />
           </Route>
+          <Route exact path={Routing.VehicleAddNotice.path}>
+            <Routing.VehicleAddNotice.Component />
+          </Route>
+          <Route exact path={Routing.VehicleEditNotice.path}>
+            <Routing.VehicleEditNotice.Component />
+          </Route>
           <Route exact path={Routing.Vehicles.path}>
             <Routing.Vehicles.Component />
           </Route>

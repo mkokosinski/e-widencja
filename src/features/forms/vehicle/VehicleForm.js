@@ -27,7 +27,7 @@ import {
   formSelectCreateLabel,
   validationMessages,
 } from '../../../utils/formUtils';
-import { addVehicle, editVehicle } from '../../vehicles/vehiclesSlice';
+import { addVehicle, editVehicle } from '../../vehicles/redux/vehicleThunk';
 import { toast } from 'react-toastify';
 import useValidation from '../../hooks/useValidation';
 

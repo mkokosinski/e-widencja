@@ -7,21 +7,9 @@ import {
   DashboardContainer,
   DashboardHeader,
   DashboardSection,
-  DashboardTitle
+  DashboardTitle,
 } from './DashboardStyles';
 import Glider from '../../app/components/Glider';
-
-const sampletrips = [
-  { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },
-  { from: 'Posum', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'USI', driver: 'MK', distance: '11km' },
-  { from: 'USI', to: 'Posum', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
-  { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
-];
 
 const Dashboard = () => {
   return (

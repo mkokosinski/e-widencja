@@ -8,7 +8,7 @@ import recordsReducer from '../features/records/recordsSlice';
 import settingsReducer from '../features/settings/settingsSlice';
 import tripsReducer from '../features/trips/tripsSlice';
 import tripTemplatesReducer from '../features/tripTemplates/tripTemplatesSlice';
-import vehicleReducer from '../features/vehicles/vehiclesSlice';
+import vehicleReducer from '../features/vehicles/redux/vehiclesSlice';
 import usersReducer from '../features/users/usersSlice';
 
 export default configureStore({
@@ -23,6 +23,6 @@ export default configureStore({
     trips: tripsReducer,
     tripTemplates: tripTemplatesReducer,
     vehicles: vehicleReducer,
-    users: usersReducer
-  }
+    users: usersReducer,
+  },
 });

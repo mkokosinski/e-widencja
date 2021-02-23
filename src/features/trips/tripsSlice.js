@@ -4,74 +4,83 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import { firestore } from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 import { selectRecordById, selectRecords } from '../records/recordsSlice';
 import { compareDates } from '../../utils/dateUtils';
-
-const data = [
-  {
-    record: 'h9NLhJSpgYnSROODO6VK',
-    date: '2020-11-02',
-    tripTemplate: 'h2xYWFdsf6iqKGz9cbZK',
-    purpose: 'Szkolenie',
-    stops: [
-      { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Cel', place: 'Posum', distance: 8 },
-    ],
-    driver: 'RNOGS5sIeYzrKuMIbsCP',
-  },
-  {
-    record: 'h9NLhJSpgYnSROODO6VK',
-    date: '2020-11-03',
-    tripTemplate: '',
-    purpose: 'Serwis',
-    stops: [
-      { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Przystanek1', place: 'Apteka', distance: 5 },
-      { label: 'Cel', place: 'Posum', distance: 11 },
-    ],
-    driver: 'RNOGS5sIeYzrKuMIbsCP',
-  },
-  {
-    record: '0xrTyhzI26ykZ9Le5TMC',
-    date: '2020-11-06',
-    tripTemplate: 'h2xYWFdsf6iqKGz9cbZK',
-    purpose: 'Prezentacja',
-    stops: [
-      { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Cel', place: 'USI-MED', distance: 8 },
-    ],
-    driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43',
-  },
-  {
-    record: '0xrTyhzI26ykZ9Le5TMC',
-    date: '2020-11-02',
-    tripTemplate: '',
-    purpose: 'Serwis',
-    stops: [
-      { label: 'Start', place: 'Biuro', distance: 0 },
-      { label: 'Cel', place: 'Posum', distance: 10 },
-    ],
-    driver: 'ScJmLDeddkU4WV1Qrd3NHkJ3nr43',
-  },
-];
+import { FETCH_STATUS } from '../../utils/constants';
+import { toast } from 'react-toastify';
 
 export const fetchTrips = createAsyncThunk(
   'trips/fetchTrips',
   async (arg = 1, thunkAPI) => {
     const trips = [];
 
-    // data.forEach((d) => {
-    //   firestore.collection('Trips').add(d);
-    // });
+    const user = await thunkAPI.getState().auth.user;
 
-    const coll = await firestore.collection('Trips').get();
+    if (user) {
+      const coll = await firestore
+        .collection('Trips')
+        .where('companyId', '==', user.companyId)
+        .where('active', '==', true)
+        .get();
 
-    coll.forEach((doc) => {
-      trips[doc.id] = { ...doc.data(), id: doc.id };
-    });
+      coll.forEach((doc) => {
+        const data = doc.data();
+        if (data.created) {
+          data.created = data.created.toDate().toString();
+        }
 
-    return trips;
+        if (data.updated) {
+          data.updated = data.updated.toDate().toString();
+        }
+
+        if (data.deleted) {
+          data.deleted = data.deleted.toDate().toString();
+        }
+
+        trips.push({ ...data, id: doc.id });
+      });
+
+      return trips;
+    }
+  },
+);
+
+export const addTrip = createAsyncThunk(
+  'trips/addTrip',
+  async (arg, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
+    const distance = arg.stops.reduce((acc, cur) => acc + cur.distance, 0);
+
+    const trip = {
+      date: arg.date,
+      distance,
+      driverId: arg.driver,
+      end: arg.stops[arg.stops.length - 1].place,
+      isOneWay: arg.isOneWay,
+      purpose: arg.purpose,
+      recordId: arg.record,
+      start: arg.stops[0].place,
+      stops: arg.stops,
+      templateId: arg.template,
+      vehicleId: arg.vehicle,
+
+      active: true,
+      companyId: currUser.companyId,
+      createdBy: currUser.id,
+      created: firestoreFunctions.FieldValue.serverTimestamp(),
+    };
+
+    console.log(trip);
+
+    firestore
+      .collection('Trips')
+      .add(trip)
+      .catch((err) => {
+        console.error(err);
+        return thunkAPI.rejectWithValue(err.toString());
+      });
   },
 );
 
@@ -110,17 +119,26 @@ export const tripSlice = createSlice({
   },
   extraReducers: {
     [fetchTrips.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = FETCH_STATUS.LOADING;
     },
-
     [fetchTrips.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.status = FETCH_STATUS.SUCCESS;
       state.items = action.payload;
     },
-
     [fetchTrips.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = FETCH_STATUS.ERROR;
       state.error = action.error.message;
+    },
+
+    [addTrip.fulfilled]: (state, action) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      toast.success('Poprawnie dodano nową ewidencję');
+    },
+
+    [addTrip.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
+      state.error = action.error.message;
+      toast.error(action.payload);
     },
   },
 });
@@ -171,6 +189,30 @@ export const selectFilteredTrips = createSelector(
 export const selectTripById = (state, tripId) => {
   return state.trips.items[tripId];
 };
+
+export const selectTripsForRecord = (state, recordId) =>
+  state.trips.items
+    .filter((trip) => trip.recordId === recordId)
+    .map((trip) => {
+      const driver = state.users.items.find((u) => u.id === trip.driverId);
+      return { ...trip, driver: driver };
+    });
+
+export const selectTripsForVehicle = (state, vehicleId) =>
+  state.trips.items
+    .filter((trip) => trip.vehicleId === vehicleId)
+    .map((trip) => {
+      const driver = state.users.items.find((u) => u.id === trip.driverId);
+      return { ...trip, driver: driver };
+    });
+
+export const selectTripsForDriver = (state, driverId) =>
+  state.trips.items
+    .filter((trip) => trip.driverId === driverId)
+    .map((trip) => {
+      const driver = state.users.items.find((u) => u.id === trip.driverId);
+      return { ...trip, driver: driver };
+    });
 
 // export const selectTripById = (state, tripId) =>
 //   state.trips.items.find((trip) => trip.id === tripId);

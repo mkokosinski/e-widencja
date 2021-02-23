@@ -7,7 +7,7 @@ import { selectFilters } from '../templates/filterSlice';
 import { firestore } from '../../app/firebase/firebase';
 import { selectRecordById, selectRecords } from '../records/recordsSlice';
 import { compareDates } from '../../utils/dateUtils';
-import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { FETCH_STATUS, SETTING_NAME } from '../../utils/constants';
 import { toast } from 'react-toastify';
 
 const mergeSettings = (docs) => {
@@ -275,7 +275,10 @@ const tips = (state) => state.settings;
 export const selectSettings = (state) => state.settings.items;
 
 export const selectPurposes = (state) =>
-  state.settings.items.find((i) => i.id === 'purposes');
+  state.settings.items.find((i) => i.id === SETTING_NAME.PURPOSES);
+
+export const selectNotices = (state) =>
+  state.settings.items.find((i) => i.id === SETTING_NAME.NOTICES);
 
 export const selectFilteredSettings = createSelector(
   [selectSettings, selectFilters],

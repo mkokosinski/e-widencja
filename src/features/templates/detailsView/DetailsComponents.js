@@ -1,30 +1,27 @@
 import React, { useRef } from 'react';
 import { useHistory } from 'react-router';
 
-import {
-  DetailsGoBack,
-  DetailsEdit,
-  DetailsEditButton,
-  DetailsDelete
-} from './DetailsStyles';
+import { DetailsGoBack, DetailsButton } from './DetailsStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faPen,
-  faTrash
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import useModal from '../../hooks/useModal';
 import { useDispatch } from 'react-redux';
-import { deleteVehicle } from '../../vehicles/vehiclesSlice';
+import { deleteVehicle } from '../../vehicles/redux/vehicleThunk';
 import {
   Button,
   ButtonBorderedSeconderySoft,
   ButtonMain,
-  PanelBoxShadow
+  PanelBoxShadow,
 } from '../../layout/LayoutStyles';
-import { Container } from '../../forms/FormsStyles';
+import { ButtonsContainer, Container, Row } from '../../forms/FormsStyles';
 import Routing from '../../routing/RoutingPaths';
+import { ModalContent } from '../ListView/ListViewStyles';
+import { Link } from 'react-router-dom';
 
 export const ButtonGoBack = () => {
   const { goBack } = useHistory();
@@ -38,11 +35,11 @@ export const ButtonGoBack = () => {
 
 export const ButtonEdit = ({ actionPath }) => {
   return (
-    <DetailsEdit>
-      <DetailsEditButton to={actionPath}>
+    <DetailsButton>
+      <Link to={actionPath}>
         <FontAwesomeIcon icon={faPen} />
-      </DetailsEditButton>
-    </DetailsEdit>
+      </Link>
+    </DetailsButton>
   );
 };
 
@@ -55,19 +52,31 @@ export const ButtonDelete = ({ item, onClick, redirectPath }) => {
     replace(redirectPath);
   };
 
+  const close = () => {
+    console.log('click');
+    closeModal();
+  };
+
   return (
-    <DetailsDelete onClick={openModal}>
-      <FontAwesomeIcon icon={faTrash} />
+    <>
+      <DetailsButton onClick={openModal}>
+        <FontAwesomeIcon icon={faTrash} />
+      </DetailsButton>
       <Modal>
-        <Container>
-          {`Czy napewno chcesz usunąć ${item.name} ?`}
-          <ButtonMain onClick={handleDelete}>Tak</ButtonMain>
-          <br />
-          <ButtonBorderedSeconderySoft onClick={closeModal}>
-            Nie
-          </ButtonBorderedSeconderySoft>
-        </Container>
+        <ModalContent>
+          <Row>{`Czy napewno chcesz usunąć ${item.name} ?`}</Row>
+
+          <Row>
+            <ButtonsContainer>
+              <ButtonMain onClick={handleDelete}>Tak</ButtonMain>
+
+              <ButtonBorderedSeconderySoft onClick={close}>
+                Nie
+              </ButtonBorderedSeconderySoft>
+            </ButtonsContainer>
+          </Row>
+        </ModalContent>
       </Modal>
-    </DetailsDelete>
+    </>
   );
 };

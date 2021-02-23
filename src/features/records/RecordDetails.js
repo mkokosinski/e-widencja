@@ -10,7 +10,7 @@ import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete
+  ButtonDelete,
 } from '../templates/detailsView/DetailsComponents';
 import {
   DetailsTopPanel,
@@ -22,7 +22,7 @@ import {
   Details,
   SectionDesc,
   SectionChart,
-  SectionRecent
+  SectionRecent,
 } from '../templates/detailsView/DetailsStyles';
 
 import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
@@ -30,7 +30,8 @@ import { ReactComponent as YearIco } from '../../assets/year.svg';
 import { ReactComponent as MonthIco } from '../../assets/month.svg';
 import { ReactComponent as CarIco } from '../../assets/car.svg';
 import { months } from '../../utils/dateUtils';
-import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { FETCH_STATUS } from '../../utils/constants';
+import { selectTripsForRecord } from '../trips/tripsSlice';
 
 const sampleData = {
   labels: [
@@ -45,7 +46,7 @@ const sampleData = {
     'Wrz',
     'Paź',
     'Lis',
-    'Gru'
+    'Gru',
   ],
   datasets: [
     {
@@ -57,9 +58,9 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3
-    }
-  ]
+      pointBorderWidth: 3,
+    },
+  ],
 };
 
 const sampletrips = [
@@ -71,14 +72,17 @@ const sampletrips = [
   { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
   { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
   { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
+  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' },
 ];
 
 const VehileDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
   const record = useSelector((state) => selectRecordById(state, id));
+  const trips = useSelector((state) => selectTripsForRecord(state, id));
+
+  console.log(trips);
+
   return record ? (
     <Details>
       <SectionDesc>
@@ -137,7 +141,7 @@ const VehileDetails = () => {
       </SectionChart>
 
       <SectionRecent>
-        <RecentList title='Ostatnie trasy' list={sampletrips} />
+        <RecentList title='Ostatnie trasy' list={trips} />
       </SectionRecent>
     </Details>
   ) : null;

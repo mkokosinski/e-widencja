@@ -1,19 +1,21 @@
 import React from 'react';
 import { ErrorContainer, FormField, Label, StyledError } from './FormsStyles';
 import { ErrorMessage, useFormikContext, getIn } from 'formik';
+import { selectIsMobile } from '../layout/layoutSlice';
+import { useSelector } from 'react-redux';
 
 const FieldWithErrors = React.forwardRef((props, ref) => {
   const { children, label, name, onFocus, scrollFocused } = props;
 
   const context = useFormikContext();
-
+  const isMobile = useSelector(selectIsMobile);
   const errors = getIn(context.errors, name);
   const isTouched = getIn(context.touched, name);
 
   const hasError = isTouched && errors;
 
   const handleFocus = () => {
-    if (scrollFocused) {
+    if (scrollFocused && isMobile) {
       const focused = document.activeElement;
       const labelHeight = 26;
       const pos = focused.getBoundingClientRect();
@@ -22,7 +24,7 @@ const FieldWithErrors = React.forwardRef((props, ref) => {
         window.scrollBy({
           top: pos.y - labelHeight,
           behavior: 'smooth',
-          align: 'top'
+          align: 'top',
         });
       }, 200);
     }
@@ -40,8 +42,8 @@ const FieldWithErrors = React.forwardRef((props, ref) => {
           id: name,
           haserror: hasError,
           onFocus: handleFocus,
-          ref
-        })
+          ref,
+        }),
       )}
 
       <ErrorContainer>

@@ -16,9 +16,9 @@ import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
 import {
   ButtonBorderedSeconderySoft,
-  ButtonMain
+  ButtonMain,
 } from '../layout/LayoutStyles';
-import { selectCarBrands, selectVehicles } from './vehiclesSlice';
+import { selectCarBrands, selectVehicles } from './redux/vehiclesSlice';
 
 const FilterModal = ({ closeModal }) => {
   const dispatch = useDispatch();
@@ -28,17 +28,17 @@ const FilterModal = ({ closeModal }) => {
 
   const carBrandItems = [
     filterDefaults.carBrandFilter,
-    ...brands.map((brand) => ({ label: brand, value: brand }))
+    ...brands.map((brand) => ({ label: brand, value: brand })),
   ];
 
   const vehicleItems = [
     filterDefaults.vehicleFilter,
-    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
+    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id })),
   ];
 
   const initValues = {
     vehicleFilter: vehicleFilter.filter,
-    carBrandFilter: carBrandFilter.filter
+    carBrandFilter: carBrandFilter.filter,
   };
 
   const handleSubmit = (values) => {

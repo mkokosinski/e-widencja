@@ -8,7 +8,7 @@ import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  ItemsList
+  ItemsList,
 } from '../templates/ListView/ListViewStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +18,7 @@ import {
   faFileAlt,
   faPlusSquare,
   faEdit,
-  faSortAmountUpAlt
+  faSortAmountUpAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import useModal from '../hooks/useModal';
 import UserFiltersModal from './UserFiltersModal';
@@ -30,18 +30,18 @@ const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.UserDetails.action}/${id}`
+    action: `${Routing.UserDetails.action}/${id}`,
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.UserEdit.action}/${id}`
+    action: `${Routing.UserEdit.action}/${id}`,
   },
   {
     ico: faPlusSquare,
     label: 'cośtam',
-    action: 'details'
-  }
+    action: 'details',
+  },
 ];
 
 function Users() {
@@ -53,7 +53,7 @@ function Users() {
         <ButtonAdd>
           <AddItem to={`${Routing.UserAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
-            <span>Nowy kierowca</span>
+            <span>Nowy użytkownik</span>
           </AddItem>
         </ButtonAdd>
         <FilterButton modalComponent={FilterModal} />

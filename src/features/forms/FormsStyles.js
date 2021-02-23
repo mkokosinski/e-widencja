@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Form, Field } from 'formik';
 import { PanelBordered, device, Button } from '../layout/LayoutStyles';
+import { FlexCenter } from '../../AppStyles';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -77,6 +78,16 @@ export const StyledCheckbox = styled(FormField)`
   }
 `;
 
+export const StyledFormTitle = styled.div`
+  ${FlexCenter}
+  border-bottom: 1px solid ${({ theme }) => theme.grayLight};
+  color: ${({ theme }) => theme.main};
+  font-weight: 600;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+  padding: 8px;
+`;
+
 export const Label = styled.label`
   padding: 2px 0;
 `;
@@ -133,6 +144,8 @@ export const DateRange = styled(Input)`
 
 export const StyledField = styled(Field)`
   ${inputStyle}
+
+  resize: ${(props) => props.resize};
 `;
 
 export const StyledSelect = styled.div`

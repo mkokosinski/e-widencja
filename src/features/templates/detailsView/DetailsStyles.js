@@ -1,37 +1,35 @@
 import styled from 'styled-components';
+import { gap, gapHorizontal } from '../../../AppStyles';
 
 import { device, Button, H2, A } from '../../layout/LayoutStyles';
 
 export const Details = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
   background-color: #f2f3f5;
   font-size: 1em;
   @media screen and (${device.mobileXL}) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      'desc recent'
-      'chart chart';
     background-color: #ffffff;
-    font-size: 1em;
   }
 `;
 
 export const DetailsSection = styled.section`
-  width: 98%;
-  margin: 8px auto;
-  padding: 8px;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  box-shadow: 0px 1px 6px -3px rgba(0, 0, 0, 0.3);
+  flex: 1 1 100%;
   font-size: 0.9em;
+  margin: 8px;
+  padding: 8px;
+  @media screen and (${device.mobileXL}) {
+    flex: 1 1 calc(50% - 16px);
+  }
   @media screen and (${device.laptop}) {
     border: none;
-    box-shadow: ${props=>props.theme.shadows.shadow1}
+    box-shadow: ${(props) => props.theme.shadows.shadow1};
   }
 `;
 
@@ -46,20 +44,22 @@ export const SectionDesc = styled(DetailsSection)`
 `;
 
 export const DetailsTopPanel = styled.div`
-  grid-area: toppanel;
-  display: flex;
   align-items: center;
-  width: 100%;
-  margin: 0 0 10px;
-  padding: 0 16px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
   color: ${({ theme }) => theme.main};
+  display: flex;
+  ${gapHorizontal('10px')}
   font-size: 1.2em;
+  grid-area: toppanel;
+  margin: 0 0 10px;
+  padding: 0 16px 8px;
+  width: 100%;
 
   @media screen and (${device.laptop}) {
     border-radius: none;
     font-size: 1.3em;
+    ${gapHorizontal('4px')}
     height: 60px;
   }
 `;
@@ -82,18 +82,7 @@ export const DetailsTitle = styled(H2)`
   }
 `;
 
-export const DetailsEditButton = styled(A)``;
-
-export const DetailsEdit = styled(Button)`
-  height: 100%;
-  margin-right: 10px;
-  flex-basis: 10%;
-  @media screen and (${device.laptop}) {
-    font-size: 0.8em;
-  }
-`;
-
-export const DetailsDelete = styled(Button)`
+export const DetailsButton = styled(Button)`
   height: 100%;
   flex-basis: 10%;
   @media screen and (${device.laptop}) {

@@ -58,19 +58,14 @@ const useModal = () => {
 
     // return ReactDOM.createPortal(
     return ReactDOM.createPortal(
-      <AnimatePresence>
-        {isOpen && (
-          <ModalBackground
-            {...ModalAnimation.bg}
-            transition={{ duration: 0.2 }}
-          >
-            <ModalContent {...ModalAnimation.content} ref={contentRef}>
-              {children}
-            </ModalContent>
-          </ModalBackground>
-        )}
-      </AnimatePresence>,
-      document.getElementById('portals')
+      isOpen && (
+        <ModalBackground {...ModalAnimation.bg} transition={{ duration: 0.2 }}>
+          <ModalContent {...ModalAnimation.content} ref={contentRef}>
+            {children}
+          </ModalContent>
+        </ModalBackground>
+      ),
+      document.getElementById('portals'),
     );
   };
 

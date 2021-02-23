@@ -4,16 +4,16 @@ import { StyledField } from './FormsStyles';
 
 const skipedProps = ['triggerField', 'triggerValue'];
 
-export const DepentetInput = (props) => {
+export const DependenttInput = (props) => {
   const { triggerField, triggerValue = 'value', name } = props;
   const inputProps = Object.keys(props)
     .filter((key) => !skipedProps.includes(key))
     .reduce(
       (obj, key) => ({
         ...obj,
-        [key]: props[key]
+        [key]: props[key],
       }),
-      {}
+      {},
     );
 
   const { values, touched, setFieldValue } = useFormikContext();

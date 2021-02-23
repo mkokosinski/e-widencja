@@ -1,33 +1,24 @@
+import { format } from 'date-fns';
+import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { format } from 'date-fns';
 import Select from 'react-select';
 
+import DateInput from '../forms/DateInput';
+import FieldWithErrors from '../forms/fieldWithErrors';
 import {
   filterDefaults,
   selectFilters,
   setFilter,
 } from '../templates/filterSlice';
+import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
 
-import { selectVehicles } from '../vehicles/vehiclesSlice';
-
-import {
-  ModalContent,
-} from '../templates/ListView/ListViewStyles';
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
-import { Formik } from 'formik';
 import {
   ButtonBorderedSeconderySoft,
-  ButtonMain
+  ButtonMain,
 } from '../layout/LayoutStyles';
-import FieldWithErrors from '../forms/fieldWithErrors';
-import DateInput from '../forms/DateInput';
-
-
-
-
-
+import { ModalContent } from '../templates/ListView/ListViewStyles';
 
 const FilterModal = ({ closeModal }) => {
   const dispatch = useDispatch();
@@ -37,7 +28,7 @@ const FilterModal = ({ closeModal }) => {
 
   const sortedItems = [
     filterDefaults.vehicleFilter,
-    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id }))
+    ...vehicles.map((veh) => ({ label: veh.name, value: veh.id })),
   ];
 
   const handleSubmit = (values) => {
@@ -45,8 +36,8 @@ const FilterModal = ({ closeModal }) => {
       vehicleFilter: values.vehicleFilter,
       dateFilter: {
         from: format(values.dateFrom, 'yyyy-MM-dd'),
-        to: format(values.dateTo, 'yyyy-MM-dd')
-      }
+        to: format(values.dateTo, 'yyyy-MM-dd'),
+      },
     };
     dispatch(setFilter(formatedValue));
     closeModal();
@@ -55,7 +46,7 @@ const FilterModal = ({ closeModal }) => {
   const initValues = {
     vehicleFilter: vehicleFilter.filter,
     dateFrom: new Date(dateFilter.filter.from),
-    dateTo: new Date(dateFilter.filter.to)
+    dateTo: new Date(dateFilter.filter.to),
   };
 
   return (

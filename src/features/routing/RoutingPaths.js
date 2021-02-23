@@ -28,9 +28,11 @@ import UserDetails from '../users/UserDetails';
 import Dashboard from '../dashboard/Dashboard';
 
 import Vehicles from '../vehicles/Vehicles';
+import VehicleDetails from '../vehicles/VehicleDetails';
 import AddVehicleForm from '../forms/vehicle/AddVehicleForm';
 import EditVehicleForm from '../forms/vehicle/EditVehicleForm';
-import VehicleDetails from '../vehicles/VehicleDetails';
+import AddVehicleNoticeForm from '../forms/vehicle/Notice/AddNoticeForm';
+import EditVehicleNoticeForm from '../forms/vehicle/Notice/EditNoticeForm';
 
 const Routing = {
   Login: { Component: Login, path: '/auth' },
@@ -137,6 +139,21 @@ const Routing = {
     action: '/app/vehicles/details',
     get path() {
       return `${this.action}/:id`;
+    },
+  },
+
+  VehicleAddNotice: {
+    Component: AddVehicleNoticeForm,
+    action: '/app/vehicles/notice',
+    get path() {
+      return `${this.action}/:id`;
+    },
+  },
+  VehicleEditNotice: {
+    Component: EditVehicleNoticeForm,
+    action: '/app/vehicles/notice',
+    get path() {
+      return `${this.action}/:id/:noticeId`;
     },
   },
 };

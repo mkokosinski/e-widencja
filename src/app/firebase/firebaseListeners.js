@@ -4,7 +4,7 @@ import { fetchTrips } from '../../features/trips/tripsSlice';
 import { fetchTripTemplates } from '../../features/tripTemplates/tripTemplatesSlice';
 import { fetchUsers } from '../../features/users/usersSlice';
 import { fetchCarBrands } from '../../features/vehicles/carBrandsSlice';
-import { fetchVehicles } from '../../features/vehicles/vehiclesSlice';
+import { fetchVehicles } from '../../features/vehicles/redux/vehicleThunk';
 import { firestore } from './firebase';
 
 export const subscribeVehicles = (dispatch) => {

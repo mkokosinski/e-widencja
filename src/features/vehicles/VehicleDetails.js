@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteVehicle, selectVehicleById } from './vehiclesSlice';
+import { deleteVehicle } from './redux/vehicleThunk';
 import Routing from '../routing/RoutingPaths';
 
 import LineChart from '../charts/Chart';
@@ -15,13 +15,14 @@ import {
   Details,
   SectionDesc,
   SectionChart,
-  SectionRecent
+  SectionRecent,
+  DetailsButton,
 } from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete
+  ButtonDelete,
 } from '../templates/detailsView/DetailsComponents';
 
 import { ReactComponent as BrandIco } from '../../assets/branding.svg';
@@ -29,6 +30,12 @@ import { ReactComponent as CarIco } from '../../assets/car.svg';
 import { ReactComponent as LicenseIco } from '../../assets/licensePlate.svg';
 import { ReactComponent as TachometerIco } from '../../assets/tachometer.svg';
 import { monthsShort } from '../../utils/dateUtils';
+import { selectTripsForVehicle } from '../trips/tripsSlice';
+import { Button } from '../layout/LayoutStyles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { selectVehicleById } from './redux/vehiclesSlice';
 
 const sampleData = {
   labels: monthsShort,
@@ -42,27 +49,16 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3
-    }
-  ]
+      pointBorderWidth: 3,
+    },
+  ],
 };
-
-const sampletrips = [
-  { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },
-  { from: 'Posum', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'USI', driver: 'MK', distance: '11km' },
-  { from: 'USI', to: 'Posum', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
-  { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
-];
 
 const VehileDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const vehicle = useSelector((state) => selectVehicleById(state, id));
+  const trips = useSelector((state) => selectTripsForVehicle(state, id));
 
   return vehicle ? (
     <Details>
@@ -78,6 +74,11 @@ const VehileDetails = () => {
             redirectPath={Routing.Vehicles.path}
             onClick={() => dispatch(deleteVehicle(vehicle.id))}
           />
+          <DetailsButton>
+            <Link to={`${Routing.VehicleAddNotice.action}/${id}`}>
+              <FontAwesomeIcon icon={faExclamationCircle} />
+            </Link>
+          </DetailsButton>
         </DetailsTopPanel>
 
         <DetailsInfo>
@@ -113,6 +114,10 @@ const VehileDetails = () => {
         </DetailsInfo>
       </SectionDesc>
 
+      <SectionRecent>
+        <RecentList title='Ostatnie trasy' list={trips} />
+      </SectionRecent>
+
       <SectionChart>
         <LineChart
           data={sampleData}
@@ -120,10 +125,6 @@ const VehileDetails = () => {
           title={'Przejechane kilometry'}
         />
       </SectionChart>
-
-      <SectionRecent>
-        <RecentList title='Ostatnie trasy' list={sampletrips} />
-      </SectionRecent>
     </Details>
   ) : null;
 };

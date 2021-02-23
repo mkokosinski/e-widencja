@@ -1,15 +1,14 @@
 import {
   createSlice,
   createAsyncThunk,
-  createSelector
+  createSelector,
 } from '@reduxjs/toolkit';
 import { months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
-import { selectVehicleById } from '../vehicles/vehiclesSlice';
+import { selectVehicleById } from '../vehicles/redux/vehiclesSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
-import { selectUserById } from '../users/usersSlice';
 
-import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 
@@ -45,7 +44,7 @@ export const fetchRecords = createAsyncThunk(
     }
 
     return records;
-  }
+  },
 );
 
 export const addRecord = createAsyncThunk(
@@ -61,7 +60,7 @@ export const addRecord = createAsyncThunk(
       companyId: currUser.companyId,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
-      active: true
+      active: true,
     };
 
     return await firestore
@@ -71,7 +70,7 @@ export const addRecord = createAsyncThunk(
         console.error(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
-  }
+  },
 );
 
 export const editRecord = createAsyncThunk(
@@ -85,7 +84,7 @@ export const editRecord = createAsyncThunk(
       mileage: arg.mileage,
       vehicleId: arg.vehicleId,
       updatedBy: currUser.id,
-      updated: firestoreFunctions.FieldValue.serverTimestamp()
+      updated: firestoreFunctions.FieldValue.serverTimestamp(),
     };
 
     firestore
@@ -95,7 +94,7 @@ export const editRecord = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 export const deleteRecord = createAsyncThunk(
@@ -109,19 +108,19 @@ export const deleteRecord = createAsyncThunk(
       .update({
         active: false,
         deletedBy: currUser.id,
-        deleted: firestoreFunctions.FieldValue.serverTimestamp()
+        deleted: firestoreFunctions.FieldValue.serverTimestamp(),
       })
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 const sortMethods = {
   Data: {
     asc: (a, b) => a.year - b.year || a.month - b.month,
-    desc: (a, b) => b.year - a.year || b.month - a.month
-  }
+    desc: (a, b) => b.year - a.year || b.month - a.month,
+  },
 };
 
 export const recordsSlice = createSlice({
@@ -136,10 +135,10 @@ export const recordsSlice = createSlice({
         title: 'Data',
         items: [
           { label: 'od najnowszych', condition: 'desc' },
-          { label: 'od najstarszych', condition: 'asc' }
-        ]
-      }
-    ]
+          { label: 'od najstarszych', condition: 'asc' },
+        ],
+      },
+    ],
   },
   reducers: {
     setSortFunc: (state, action) => {
@@ -147,7 +146,7 @@ export const recordsSlice = createSlice({
       const entry = Object.entries(payload)[0];
 
       state.sortFunc = { name: entry[0], condition: entry[1] };
-    }
+    },
   },
   extraReducers: {
     [fetchRecords.pending]: (state, action) => {
@@ -162,7 +161,7 @@ export const recordsSlice = createSlice({
           ...rec,
           get name() {
             return `${months[this.month - 1]} ${this.year}`;
-          }
+          },
         });
       });
       state.items = items;
@@ -214,8 +213,8 @@ export const recordsSlice = createSlice({
     [deleteRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
       toast.error(action.payload);
-    }
-  }
+    },
+  },
 });
 
 export const selectRecords = (state) => {
@@ -242,19 +241,19 @@ export const selectFiteredRecords = createSelector(
       .filter((rec) =>
         vehicleFilter.enable
           ? rec.vehicleId === vehicleFilter.filter.value
-          : rec
+          : rec,
       )
       .filter((rec) => {
         if (dateFilter.enable) {
           const date = {
             from: new Date(dateFilter.filter.from),
-            to: new Date(dateFilter.filter.to)
+            to: new Date(dateFilter.filter.to),
           };
 
           const formatedDate = {
             from: new Date(date.from.getFullYear(), date.from.getMonth(), 1),
             to: new Date(date.to.getFullYear(), date.to.getMonth(), 1),
-            rec: new Date(rec.year, rec.month - 1, 1)
+            rec: new Date(rec.year, rec.month - 1, 1),
           };
 
           return (
@@ -267,7 +266,7 @@ export const selectFiteredRecords = createSelector(
       });
 
     return { ...records, items: filtered };
-  }
+  },
 );
 
 export const selectRecordById = (state, recordId) => {
@@ -275,7 +274,7 @@ export const selectRecordById = (state, recordId) => {
   if (records.status === FETCH_STATUS.SUCCESS) {
     const record = state.records.items.find((record) => record.id === recordId);
     const vehicle = state.vehicles.items.find(
-      (vehicle) => vehicle.id === record.vehicleId
+      (vehicle) => vehicle.id === record.vehicleId,
     );
     return { ...record, vehicle: { ...vehicle } };
   }
@@ -301,7 +300,7 @@ export const selectSortCases = (state) => state.records.sortCases;
 export const {
   setDateFilter,
   setVehicleFilter,
-  setSortFunc
+  setSortFunc,
 } = recordsSlice.actions;
 
 export default recordsSlice.reducer;

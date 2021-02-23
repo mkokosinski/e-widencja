@@ -1,22 +1,27 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { differenceInDays } from '../../utils/dateUtils';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { compareDates, dateBetween } from '../../utils/dateUtils';
-import { selectVehicles } from '../vehicles/vehiclesSlice';
+
+import {
+  compareDates,
+  dateBetween,
+  differenceInDays,
+} from '../../utils/dateUtils';
+import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
+import Routing from '../routing/RoutingPaths';
+
 import {
   CheckupRemain,
   DashboardList,
-  DashboardListItem
+  CheckupListItem,
 } from './DashboardStyles';
-import Routing from '../routing/RoutingPaths';
 
 const getStatus = (date) => {
   const today = new Date();
   const withinMonth = new Date(
     today.getFullYear(),
     today.getMonth() + 1,
-    today.getDate()
+    today.getDate(),
   );
   if (compareDates(date, today) === -1) {
     return 'error';
@@ -64,11 +69,11 @@ const CheckupList = () => {
       {checkups.sort().map(({ name, date, status, reamin, path }) => {
         return (
           <React.Fragment key={date + name}>
-            <DashboardListItem status={status} to={path}>
+            <CheckupListItem status={status} to={path}>
               <div style={{ opacity: 0.9 }}>{name}</div>
               <div style={{ opacity: 0.7, fontSize: '.9em' }}>{date}</div>
               <CheckupRemain>{status !== 'default' && reamin}</CheckupRemain>
-            </DashboardListItem>
+            </CheckupListItem>
           </React.Fragment>
         );
       })}

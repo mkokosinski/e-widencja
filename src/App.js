@@ -10,7 +10,7 @@ import { auth } from './app/firebase/firebase';
 import { selectAuth, authorize } from './features/auth/authSlice';
 import Loading from './features/loading/Loading';
 import { fetchSettings } from './features/settings/settingsSlice';
-import { fetchVehicles } from './features/vehicles/vehiclesSlice';
+import { fetchVehicles } from './features/vehicles/redux/vehicleThunk';
 import { fetchUsers } from './features/users/usersSlice';
 import { fetchRecords } from './features/records/recordsSlice';
 import { fetchTrips } from './features/trips/tripsSlice';
@@ -25,7 +25,7 @@ import {
   setIsMobile,
   setInitSiteSize,
   selectIsLaptop,
-  selectIsMobile
+  selectIsMobile,
 } from './features/layout/layoutSlice';
 import { ThemeProvider } from 'styled-components';
 
@@ -49,7 +49,7 @@ const App = () => {
       dispatch(fetchTrips()),
       dispatch(fetchTripTemplates()),
       dispatch(fetchCarBrands()),
-      dispatch(fetchCarModels())
+      dispatch(fetchCarModels()),
     ])
       .then((dataEntities) => {
         const hasErrors = dataEntities.some((data) => data.error);
@@ -84,7 +84,7 @@ const App = () => {
 
   const handleInitSize = useCallback(() => {
     const {
-      documentElement: { clientHeight, clientWidth }
+      documentElement: { clientHeight, clientWidth },
     } = document;
     dispatch(setInitSiteSize({ height: clientHeight, width: clientWidth }));
     setCurrSiteSize({ x: clientWidth, y: clientHeight });
@@ -96,7 +96,7 @@ const App = () => {
 
   const handleCurrSite = useCallback(() => {
     const {
-      documentElement: { clientHeight, clientWidth }
+      documentElement: { clientHeight, clientWidth },
     } = document;
 
     if (!isMobile && clientWidth < 768) {

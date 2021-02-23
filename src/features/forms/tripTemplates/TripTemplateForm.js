@@ -18,27 +18,27 @@ import {
   RemoveItemButton,
   MileageFieldsGroup,
   Input,
-  StyledCheckbox
+  StyledCheckbox,
 } from '../FormsStyles';
 import {
   ButtonMain,
-  ButtonBorderedSeconderySoft
+  ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectVehicles } from '../../vehicles/vehiclesSlice';
+import { selectVehicles } from '../../vehicles/redux/vehicleThunk';
 import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
 import { selectFbUser } from '../../auth/authSlice';
-import { USER_ROLES } from '../../../utils/authUtils';
+import { USER_ROLES } from '../../../utils/constants';
 import {
   addTripTemplate,
   editTripTemplate,
   selectTripTemplates,
-  selectTripTemplateSort
+  selectTripTemplateSort,
 } from '../../tripTemplates/tripTemplatesSlice';
 import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
 import MileageInput from './MileageInput';
@@ -54,9 +54,9 @@ const validationSchema = Yup.object().shape({
   stops: Yup.array().of(
     Yup.object().shape({
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
-      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane')
-    })
-  )
+      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
+    }),
+  ),
 });
 
 const TripTemplateForm = ({ tripTemplate, isEdit }) => {
@@ -68,23 +68,23 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
 
   const selectedPurpose = {
     label: tripTemplate.purpose,
-    value: tripTemplate.purpose
+    value: tripTemplate.purpose,
   };
 
   const purposesSelectItems = purposes.items.map((purpose) => ({
     label: purpose.name,
-    value: purpose.name
+    value: purpose.name,
   }));
 
   const stops = tripTemplate.stops.map((stop) => ({
     ...stop,
-    mileage: 0
+    mileage: 0,
   }));
 
   const initValues = {
     label: tripTemplate.label,
     purpose: tripTemplate.purpose ? selectedPurpose : '',
-    stops: stops
+    stops: stops,
   };
 
   const handleSubmit = (values) => {
@@ -92,7 +92,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
       id: tripTemplate?.id || '',
       label: values.label,
       purpose: values.purpose.value,
-      stops: values.stops
+      stops: values.stops,
     };
 
     const validate = validation.tripTemplate(data);
@@ -119,7 +119,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
           submitForm,
           setFieldTouched,
           setFieldValue,
-          handleChange
+          handleChange,
         }) => (
           <StyledForm>
             <Row>
@@ -159,7 +159,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
                     ...values.stops
                       .map((s, i) => 'Przystanek ' + i)
                       .slice(1, -1),
-                    'Koniec trasy'
+                    'Koniec trasy',
                   ];
 
                   return values.stops.map((stop, index) => (
@@ -198,7 +198,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
                               label: `Przystanek ${index + 1}`,
                               place: ``,
                               distance: 0,
-                              mileage: values.stops[index].mileage
+                              mileage: values.stops[index].mileage,
                             });
                           }}
                         >

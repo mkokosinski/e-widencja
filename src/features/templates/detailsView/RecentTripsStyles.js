@@ -25,11 +25,13 @@ export const List = styled.ul`
 `;
 
 export const ListItem = styled.li`
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 6fr 1fr 1fr;
+  gap: 10px;
   justify-content: space-between;
 
   width: 100%;
-  padding: 6px 3px;
+  padding: 6px;
 
   cursor: pointer;
   font-size: 0.8em;
@@ -42,7 +44,6 @@ export const ListItem = styled.li`
 export const FromTo = styled.span`
   display: flex;
   justify-content: center;
-  width: 70%;
 
   span {
     text-align: center;
@@ -60,10 +61,8 @@ export const FromTo = styled.span`
 export const Driver = styled.span`
   display: flex;
   justify-content: center;
-  width: 15%;
 `;
 export const Distance = styled.span`
   display: flex;
   justify-content: center;
-  width: 15%;
 `;

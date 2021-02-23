@@ -26,12 +26,12 @@ import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
-import { useSelector } from 'react-redux';
-import { selectVehicles } from '../../vehicles/vehiclesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVehicles } from '../../vehicles/redux/vehicleThunk';
 import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
 import { selectFbUser } from '../../auth/authSlice';
-import { USER_ROLES } from '../../../utils/authUtils';
+import { USER_ROLES } from '../../../utils/constants';
 import {
   selectTripTemplates,
   selectTripTemplateSort,
@@ -40,6 +40,7 @@ import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
+import { addTrip } from '../../trips/tripsSlice';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -57,10 +58,6 @@ const validationSchema = Yup.object().shape({
   ),
 });
 
-const handleSubmit = (values) => {
-  // console.error(values);
-};
-
 const emptyRecord = {
   name: '',
   vehicle: {
@@ -76,6 +73,7 @@ const emptyTripTemplate = {
 
 const TripForm = ({ trip }) => {
   const { goBack } = useHistory();
+  const dispatch = useDispatch();
   const tripTemplateRef = useRef(null);
 
   const { items: records } = useSelector(selectRecords);
@@ -89,7 +87,7 @@ const TripForm = ({ trip }) => {
     tripTemplates.find((t) => t.id === trip.tripTemplate) || emptyTripTemplate;
 
   const selectedRecord = {
-    label: ` ${record.vehicle.name} - ${record.name}`,
+    label: `${record.vehicle.name} - ${record.name}`,
     value: record.id,
     mileage: record.vehicle.mileage,
   };
@@ -99,10 +97,10 @@ const TripForm = ({ trip }) => {
     value: trip.purpose,
   };
 
-  const isAdmin = user.role === USER_ROLES.admin;
+  const isAdmin = user.role === USER_ROLES.ADMIN;
 
   const selectedDriver = {
-    label: user.fullname,
+    label: `${user.name} ${user.surname}`,
     value: user.id,
   };
 
@@ -116,11 +114,12 @@ const TripForm = ({ trip }) => {
     label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
     value: rec.id,
     mileage: rec.vehicle.mileage,
+    vehicle: rec.vehicle.id,
   }));
 
   const driverSelectItems = isAdmin
     ? drivers.map((driv) => ({
-        label: driv.fullname,
+        label: `${driv.name} ${driv.surname}`,
         value: driv.id,
       }))
     : selectedDriver;
@@ -153,9 +152,23 @@ const TripForm = ({ trip }) => {
     driver: selectedDriver,
     initMileage: initMileage,
     record: selectedRecord,
-    tripTemplate: trip.tripTemplate ? selectedTemplate : '',
-    purpose: trip.purpose ? selectedPurpose : '',
+    tripTemplate: trip.tripTemplate && selectedTemplate,
+    purpose: trip.purpose && selectedPurpose,
     stops: stops,
+  };
+
+  const handleSubmit = (values) => {
+    const newTrip = {
+      date: values.date,
+      record: values.record.value,
+      driver: values.driver.value,
+      purpose: values.purpose.value,
+      template: values.tripTemplate.value,
+      stops: values.stops,
+      vehicle: values.record.vehicle,
+      isOneWay: false,
+    };
+    dispatch(addTrip(newTrip));
   };
 
   return (

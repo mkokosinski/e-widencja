@@ -5,8 +5,8 @@ import {
   fetchVehicles,
   selectFilteredVehicles,
   selectVehicleSort,
-  setSortFunc
-} from './vehiclesSlice';
+  setSortFunc,
+} from './redux/vehiclesSlice';
 import Routing from '../routing/RoutingPaths';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,7 @@ import {
   faCarAlt,
   faFileAlt,
   faPlusSquare,
-  faEdit
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
@@ -23,7 +23,7 @@ import {
   ButtonAdd,
   TopPanel,
   AddItem,
-  ItemsList
+  ItemsList,
 } from '../templates/ListView/ListViewStyles';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './VehiclesFiltersModal';
@@ -35,7 +35,7 @@ import {
   Journeys,
   Name,
   Subname,
-  Title
+  Title,
 } from '../templates/ListView/ListViewItemStyles';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 
@@ -43,18 +43,18 @@ const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.VehicleDetails.action}/${id}`
+    action: `${Routing.VehicleDetails.action}/${id}`,
   },
   {
     ico: faPlusSquare,
     label: 'Przejazd',
-    action: 'details'
+    action: 'details',
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.VehicleEdit.action}/${id}`
-  }
+    action: `${Routing.VehicleEdit.action}/${id}`,
+  },
 ];
 
 function Vehicles() {

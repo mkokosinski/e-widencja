@@ -1,26 +1,24 @@
+import { format } from 'date-fns';
+import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { format } from 'date-fns';
 import Select from 'react-select';
 
+import DateInput, { DATEPICKER_TYPES } from '../forms/DateInput';
+import FieldWithErrors from '../forms/fieldWithErrors';
 import {
   filterDefaults,
   selectFilters,
   setFilter,
 } from '../templates/filterSlice';
+import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
 
-import { selectVehicles } from '../vehicles/vehiclesSlice';
-
-import { ModalContent } from '../templates/ListView/ListViewStyles';
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
-import { Formik } from 'formik';
 import {
   ButtonBorderedSeconderySoft,
   ButtonMain,
 } from '../layout/LayoutStyles';
-import FieldWithErrors from '../forms/fieldWithErrors';
-import DateInput, { DATEPICKER_TYPES } from '../forms/DateInput';
+import { ModalContent } from '../templates/ListView/ListViewStyles';
 
 const FilterModal = ({ closeModal }) => {
   const dispatch = useDispatch();

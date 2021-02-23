@@ -1,4 +1,6 @@
 import React from 'react';
+import { compareDates } from '../../../utils/dateUtils';
+import { getNameInitials } from '../../../utils/stringUtils';
 import {
   Title,
   List,
@@ -11,8 +13,6 @@ import {
   StyledRecentList,
 } from './RecentTripsStyles';
 
-import { v4 } from 'uuid';
-
 const RecentList = ({ title, list }) => {
   return (
     <StyledRecentList>
@@ -21,16 +21,23 @@ const RecentList = ({ title, list }) => {
         <ShowMore>pokaż więcej...</ShowMore>
       </TopPanel>
       <List>
-        {list.map((item) => (
-          <ListItem key={v4()}>
-            <FromTo>
-              <span> {item.from}</span>
-              <span> {'<->'}</span>
-              <span> {item.to}</span>
-            </FromTo>
-            <Driver>{item.driver}</Driver> <Distance>{item.distance}</Distance>
-          </ListItem>
-        ))}
+        {list
+          .sort((a, b) => compareDates(b.date, a.date))
+          .splice(0, 8)
+          .map((item) => (
+            <ListItem key={item.id}>
+              <span>{item.date}</span>
+              <FromTo>
+                <span> {item.start}</span>
+                <span> {`<- ${item.stops.length - 2} ->`}</span>
+                <span> {item.end}</span>
+              </FromTo>
+              <Driver>
+                {getNameInitials(item.driver.name, item.driver.surname)}
+              </Driver>{' '}
+              <Distance>{item.distance} km</Distance>
+            </ListItem>
+          ))}
       </List>
     </StyledRecentList>
   );

@@ -4,7 +4,12 @@ import { motion } from 'framer-motion';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 import { Field } from 'formik';
 
-export const StyledSettings = styled(DetailsSection)`
+export const StyledSettings = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export const SettingsSection = styled(DetailsSection)`
   padding: 30px;
 `;
 

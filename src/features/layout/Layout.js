@@ -11,12 +11,12 @@ import {
   setIsLaptop,
   setIsMobile,
   setIsMobileKeyboard,
-  selectInitSize
+  selectInitSize,
 } from './layoutSlice';
 
 import { fetchRecords } from '../records/recordsSlice';
 import { fetchUsers } from '../users/usersSlice';
-import { fetchVehicles } from '../vehicles/vehiclesSlice';
+import { fetchVehicles } from '../vehicles/redux/vehicleThunk';
 
 import Navbar from '../navbar/Navbar';
 

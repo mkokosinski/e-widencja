@@ -10,7 +10,7 @@ import {
   firestore,
   firestoreFunctions,
 } from '../../app/firebase/firebase';
-import { FETCH_STATUS } from '../../utils/fetchUtils';
+import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import { signUpEmail } from '../auth/authSlice';
 
@@ -65,6 +65,7 @@ export const addUser = createAsyncThunk(
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
       active: true,
+      role: 'User',
     };
 
     return await firestore
@@ -166,8 +167,8 @@ export const usersSlice = createSlice({
 
     [addUser.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.payload;
-      toast.error(action.payload);
+      state.error = action.error.message;
+      toast.error(action.error.message);
     },
     [editUser.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
@@ -180,8 +181,8 @@ export const usersSlice = createSlice({
 
     [editUser.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.payload;
-      toast.error(action.payload);
+      state.error = action.error.message;
+      toast.error(action.error.message);
     },
     [deleteUser.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
@@ -194,7 +195,7 @@ export const usersSlice = createSlice({
 
     [deleteUser.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      toast.error(action.payload);
+      toast.error(action.error.message);
     },
   },
 });

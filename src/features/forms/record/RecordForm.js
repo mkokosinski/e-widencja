@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
 import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import Select from 'react-select';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import FieldWithErrors from '../fieldWithErrors';
-import Select from 'react-select';
+
+import DateInput, { DATEPICKER_TYPES } from '../DateInput';
+import { DependenttInput } from '../DepentetInput';
+import { addRecord, editRecord } from '../../records/recordsSlice';
+import { selectVehicles } from '../../vehicles/redux/vehiclesSlice';
+import useValidation from '../../hooks/useValidation';
 
 import {
   StyledForm,
@@ -12,24 +20,17 @@ import {
   StyledField,
   ButtonsContainer,
   Row,
-  StyledSelect
+  StyledSelect,
 } from '../FormsStyles';
 import {
   ButtonMain,
-  ButtonBorderedSeconderySoft
+  ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
-import DateInput, { DATEPICKER_TYPES } from '../DateInput';
-import { addRecord, editRecord } from '../../records/recordsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectVehicles } from '../../vehicles/vehiclesSlice';
-import useValidation from '../../hooks/useValidation';
-import { DepentetInput } from '../DepentetInput';
-import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
   vehicle: Yup.string().required('Pole wymagane'),
-  mileage: Yup.number().min(1, 'Nie mniejszy niż 1').required('Pole wymagane')
+  mileage: Yup.number().min(1, 'Nie mniejszy niż 1').required('Pole wymagane'),
 });
 
 const RecordForm = ({ record, isEdit }) => {
@@ -51,7 +52,7 @@ const RecordForm = ({ record, isEdit }) => {
       year: date.getFullYear(),
       month: date.getMonth() + 1,
       vehicleId: values.vehicle.value,
-      mileage: values.mileage
+      mileage: values.mileage,
     };
 
     const validate = validation.record(data);
@@ -70,7 +71,7 @@ const RecordForm = ({ record, isEdit }) => {
     return {
       label: vehicle.name,
       value: vehicle.id,
-      mileage: vehicle.mileage
+      mileage: vehicle.mileage,
     };
   });
 
@@ -84,7 +85,7 @@ const RecordForm = ({ record, isEdit }) => {
   const initValues = record || {
     date: minDate(),
     vehicle: '',
-    mileage: 1
+    mileage: 1,
   };
 
   return (
@@ -132,7 +133,7 @@ const RecordForm = ({ record, isEdit }) => {
 
             <Row>
               <FieldWithErrors name='mileage' label='Przebieg' scrollFocused>
-                <DepentetInput
+                <DependenttInput
                   type='number'
                   placeholder='Przebieg'
                   disabled

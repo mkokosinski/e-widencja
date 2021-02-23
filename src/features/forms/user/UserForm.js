@@ -11,11 +11,11 @@ import {
   Container,
   StyledField,
   ButtonsContainer,
-  Row
+  Row,
 } from '../FormsStyles';
 import {
   ButtonMain,
-  ButtonBorderedSeconderySoft
+  ButtonBorderedSeconderySoft,
 } from '../../layout/LayoutStyles';
 import { validationMessages } from '../../../utils/formUtils';
 import { toast } from 'react-toastify';
@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
   label: Yup.string()
     .max(15, validationMessages.max(15))
     .required(validationMessages.required),
-  isDriver: Yup.bool()
+  isDriver: Yup.bool(),
   // eMail: Yup.string()
   //   .email(validationMessages.email)
   //   .min(7, validationMessages.min(7))
@@ -53,7 +53,7 @@ const UserForm = ({ user, isEdit }) => {
       label: values.label,
       eMail: values.eMail,
       isDriver: values.isDriver,
-      isAppUser: values.isAppUser
+      isAppUser: values.isAppUser,
     };
     const validate = validation.user(data);
     const action = isEdit ? editUser : addUser;
@@ -72,9 +72,9 @@ const UserForm = ({ user, isEdit }) => {
     name: '',
     surname: '',
     label: '',
-    isDriver: false
-    // eMail: '',
-    // isAppUser: false
+    isDriver: false,
+    eMail: '',
+    isAppUser: false,
   };
 
   return (

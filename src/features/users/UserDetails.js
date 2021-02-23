@@ -15,19 +15,22 @@ import {
   Details,
   SectionDesc,
   SectionChart,
-  SectionRecent
+  SectionRecent,
 } from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete
+  ButtonDelete,
 } from '../templates/detailsView/DetailsComponents';
 
 import { ReactComponent as NameIco } from '../../assets/man.svg';
 import { ReactComponent as SurnameIco } from '../../assets/idCard.svg';
 import { ReactComponent as DriverIco } from '../../assets/driver.svg';
 import { ReactComponent as EmailIco } from '../../assets/email.svg';
+import { selectTripsForDriver } from '../trips/tripsSlice';
+import { selectFbUser } from '../auth/authSlice';
+import { USER_ROLES } from '../../utils/constants';
 
 const sampleData = {
   labels: [
@@ -42,7 +45,7 @@ const sampleData = {
     'Wrz',
     'Paź',
     'Lis',
-    'Gru'
+    'Gru',
   ],
   datasets: [
     {
@@ -54,27 +57,19 @@ const sampleData = {
       pointBorderColor: '#ffffff',
       pointBackgroundColor: 'rgba(88, 64, 187,1)',
       pointRadius: 6,
-      pointBorderWidth: 3
-    }
-  ]
+      pointBorderWidth: 3,
+    },
+  ],
 };
-
-const sampletrips = [
-  { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },
-  { from: 'Posum', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'USI', driver: 'MK', distance: '11km' },
-  { from: 'USI', to: 'Posum', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'USA', driver: 'MK', distance: '11km' },
-  { from: 'USA', to: 'Biuro', driver: 'MK', distance: '11km' },
-  { from: 'Biuro', to: 'Hiszpania', driver: 'MK', distance: '11km' },
-  { from: 'Hiszpania', to: 'Biuro', driver: 'MK', distance: '11km' }
-];
 
 const UserDetalis = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => selectUserById(state, id));
+  const appUser = useSelector(selectFbUser);
+  const trips = useSelector((state) => selectTripsForDriver(state, id));
+
+  const canEdit = appUser.role === USER_ROLES.ADMIN || appUser.id === user.id;
 
   return user ? (
     <Details>
@@ -82,12 +77,18 @@ const UserDetalis = () => {
         <DetailsTopPanel>
           <ButtonGoBack />
           <DetailsTitle>{user.label}</DetailsTitle>
-          <ButtonEdit actionPath={`${Routing.UserEdit.action}/${user.id}`} />
-          <ButtonDelete
-            item={user}
-            redirectPath={Routing.Users.path}
-            onClick={() => dispatch(deleteUser(user.id))}
-          />
+          {canEdit && (
+            <>
+              <ButtonEdit
+                actionPath={`${Routing.UserEdit.action}/${user.id}`}
+              />
+              <ButtonDelete
+                item={user}
+                redirectPath={Routing.Users.path}
+                onClick={() => dispatch(deleteUser(user.id))}
+              />
+            </>
+          )}
         </DetailsTopPanel>
 
         <DetailsInfo>
@@ -123,17 +124,21 @@ const UserDetalis = () => {
         </DetailsInfo>
       </SectionDesc>
 
-      <SectionChart>
-        <LineChart
-          data={sampleData}
-          dataOffset={6}
-          title={'Przejechane kilometry'}
-        />
-      </SectionChart>
+      {user.isDriver && (
+        <>
+          <SectionChart>
+            <LineChart
+              data={sampleData}
+              dataOffset={6}
+              title={'Przejechane kilometry'}
+            />
+          </SectionChart>
 
-      <SectionRecent>
-        <RecentList title='Ostatnie trasy' list={sampletrips} />
-      </SectionRecent>
+          <SectionRecent>
+            <RecentList title='Ostatnie trasy' list={trips} />
+          </SectionRecent>
+        </>
+      )}
     </Details>
   ) : null;
 };

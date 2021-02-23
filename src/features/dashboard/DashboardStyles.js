@@ -56,7 +56,6 @@ export const DashboardList = styled.div``;
 
 export const DashboardListItem = styled(Link)`
   box-shadow: 0 1px 6px -5px rgba(0, 0, 0, 0.5);
-  border-left: 3px solid ${({ status, theme }) => theme.status[status]};
   border-radius: 3px;
   cursor: pointer;
   display: flex;
@@ -75,6 +74,10 @@ export const DashboardListItem = styled(Link)`
     box-shadow: 0 1px 8px -6px #000000cc;
     transition: box-shadow 200ms;
   }
+`;
+
+export const CheckupListItem = styled(DashboardListItem)`
+  border-left: 3px solid ${({ status, theme }) => theme.status[status]};
 `;
 
 export const CheckupRemain = styled.div`
