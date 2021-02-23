@@ -63,7 +63,11 @@ const DropdownPanel = ({ children, title, onOpen, onClose }) => {
         </DropdownPanelHeader>
 
         <DoropdownContent
+<<<<<<< HEAD
           layoutId='dropdownPanel'
+=======
+          layout
+>>>>>>> 4766d15213d10468caafce0ddc9aba1fe457ec9e
           animate={!isOpen ? 'enter' : 'exit'}
           variants={contentAnimation}
         >
