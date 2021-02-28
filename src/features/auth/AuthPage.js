@@ -9,7 +9,7 @@ import {
   AuthBackgroundTitle,
   AuthBackgroundText,
   AuthBackgroundSquares,
-  AuthBackgroundMobile
+  AuthBackgroundMobile,
 } from './AuthStyles';
 import Logo from '../layout/Logo';
 import SignInForm from './SignInForm';
@@ -22,16 +22,19 @@ import { ReactComponent as Van } from '../../assets/van.svg';
 import { useSelector } from 'react-redux';
 import { selectIsMobile } from '../layout/layoutSlice';
 import { authFormAnimations, MotionRedirect } from '../../utils/animationUtils';
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
 const AuthPage = () => {
   const location = useLocation();
   const isMobile = useSelector(selectIsMobile);
+  const theme = useContext(ThemeContext);
 
   return (
     <AuthContainer>
       <FormContainer>
         <LogoContainer>
-          <Logo />
+          <Logo color={theme.main} />
         </LogoContainer>
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.key}>

@@ -9,7 +9,7 @@ export const size = {
   tablet: '768',
   laptop: '1024',
   laptopL: '1440',
-  desktop: '2560'
+  desktop: '2560',
 };
 
 export const device = {
@@ -22,9 +22,9 @@ export const device = {
   laptopL: `min-width: ${size.laptopL}px`,
   desktop: `min-width: ${size.desktop}px`,
   desktopL: `min-width: ${size.desktop}px`,
-  max:{
+  max: {
     tablet: `max-width: ${size.tablet}px`,
-  }
+  },
 };
 
 export const StyledLayout = styled.div`
@@ -76,10 +76,13 @@ export const Menu = styled.div`
 
 export const StyledLogo = styled.div`
   display: flex;
-  justify-content: center;
   color: white;
   position: relative;
   z-index: 1;
+
+  @media screen and ${device.laptop} {
+    justify-content: center;
+  }
 `;
 
 export const Body = styled.div`

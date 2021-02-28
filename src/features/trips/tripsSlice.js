@@ -72,8 +72,6 @@ export const addTrip = createAsyncThunk(
       created: firestoreFunctions.FieldValue.serverTimestamp(),
     };
 
-    console.log(trip);
-
     firestore
       .collection('Trips')
       .add(trip)
@@ -213,6 +211,15 @@ export const selectTripsForDriver = (state, driverId) =>
       const driver = state.users.items.find((u) => u.id === trip.driverId);
       return { ...trip, driver: driver };
     });
+
+export const selectFullTripsData = (state) => {
+  const { vehicles, users, trips } = state;
+  return trips.items.map((trip) => {
+    const vehicle = vehicles.items.find((veh) => veh.id === trip.vehicleId);
+    const driver = users.items.find((user) => user.id === trip.driverId);
+    return { ...trip, vehicle, driver };
+  });
+};
 
 // export const selectTripById = (state, tripId) =>
 //   state.trips.items.find((trip) => trip.id === tripId);

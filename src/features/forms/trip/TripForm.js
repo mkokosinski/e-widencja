@@ -90,6 +90,7 @@ const TripForm = ({ trip }) => {
     label: `${record.vehicle.name} - ${record.name}`,
     value: record.id,
     mileage: record.vehicle.mileage,
+    vehicle: record.vehicle.id,
   };
 
   const selectedPurpose = {
@@ -158,6 +159,7 @@ const TripForm = ({ trip }) => {
   };
 
   const handleSubmit = (values) => {
+    console.log(values);
     const newTrip = {
       date: values.date,
       record: values.record.value,

@@ -10,13 +10,14 @@ export const AuthContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr max-content;
-  height: ${({ theme }) => theme.currSiteSize.y}px;
+  min-height: 100vh;
   width: 100vw;
+  /* height: ${({ theme }) => theme.currSiteSize.y}px; */
 
   @media screen and (${device.tablet}) {
     align-items: stretch;
     display: grid;
-    grid-template-columns: minmax(300px, 2fr) 3fr;
+    grid-template-columns: minmax(300px, 580px) 3fr;
     justify-content: stretch;
     @media screen and (${device.laptop}) {
     }
@@ -32,24 +33,25 @@ export const FormContainer = styled.div`
 
   @media screen and (${device.tablet}) {
     display: grid;
-    grid-template-rows: 140px 1fr;
+    grid-template-rows: 200px 1fr;
     max-width: 600px;
     padding: 0 26px;
+    max-width: 500px;
   }
 `;
 
 export const AuthForm = styled(StyledForm)`
   display: grid;
-  grid-template-rows: 38% min-content 1fr;
+  grid-template-rows: 34% 3fr;
   justify-content: space-around;
   height: 100%;
 
   @media screen and (${device.mobileM}) {
-    grid-template-rows: 40% min-content 1fr;
   }
 
   @media screen and (${device.tablet}) {
-    grid-template-rows: repeat(3, min-content);
+    grid-template-rows: max-content 3fr;
+    height: auto;
   }
 `;
 
@@ -58,11 +60,25 @@ export const LogoContainer = styled.div`
   background: ${({ theme }) => theme.mainSoft};
   color: white;
   display: flex;
-  font-size: 1.4em;
+  font-size: 1.2rem;
+  margin: 10px 5px 0;
+  stroke: white;
+
+  @media screen and (${device.mobileM}) {
+    background: unset;
+    font-size: 1.4rem;
+  }
 
   @media screen and (${device.tablet}) {
     background: unset;
+    font-size: 1.6rem;
+    justify-content: center;
     color: ${({ theme }) => theme.main};
+    stroke: ${({ theme }) => theme.main};
+  }
+
+  @media screen and (${device.desktop}) {
+    font-size: 2rem;
   }
 `;
 
@@ -84,7 +100,7 @@ export const AuthFormHeader = styled.div`
     font-size: 1rem;
     font-weight: 300;
     line-height: 1.4rem;
-    margin: 0.6rem 0 1.6rem;
+    margin: 0.6rem 0;
     opacity: 0.6;
   }
 
@@ -94,11 +110,7 @@ export const AuthFormHeader = styled.div`
 `;
 
 export const AuthFormBody = styled(motion.div)`
-  padding: 10px 16px 10px;
-
-  @media screen and (${device.mobileM}) {
-    padding: 40px 16px 10px;
-  }
+  padding: 10px 16px 0px;
 `;
 
 export const AuthFormFooter = styled.div`
@@ -154,11 +166,11 @@ export const AuthBackgroundMobile = styled(motion.div)`
 
     @media screen and (${device.mobileM}) {
       &::before {
-        height: 40%;
+        height: 32%;
       }
 
       &::after {
-        top: 40%;
+        top: 32%;
       }
     }
 

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import ReactPDF, { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import MonthlyReport, { downloadReportVatPdf } from './MonthlyReport';
+import ReportVatTemplate, { downloadReportVatPdf } from './ReportVatTemplate';
 
 import { useSelector } from 'react-redux';
-import { selectRecords } from '../records/recordsSlice';
+import { selectRecords } from '../../records/recordsSlice';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
@@ -14,11 +14,17 @@ import {
   ReportDownloadButton,
   ReportLabel,
   ReportVatContent,
-} from './ReportsStyles';
-import { LoaderSpinner } from '../loading/LoadingStyles';
+} from '../ReportsStyles';
+import { LoaderSpinner } from '../../loading/LoadingStyles';
+import {
+  selectFullTripsData,
+  selectTripsForRecord,
+} from '../../trips/tripsSlice';
+import { formatTripsForVatReport } from '../../../utils/reportsUtils';
 
 const ReportVat = (props) => {
   const { items: records } = useSelector(selectRecords);
+  const trips = useSelector(selectFullTripsData);
 
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [isGenerated, setIsGenerated] = useState(false);
@@ -26,15 +32,23 @@ const ReportVat = (props) => {
   const isDisabled = !selectedRecords?.length;
 
   const handleDownload = () => {
-    if (!isDisabled) {
+    if (!isDisabled && selectedRecords.length > 0) {
       setIsGenerated(true);
     }
   };
 
-  const recordsOptions = records.map((rec) => ({
-    label: `${rec.vehicle && rec.vehicle.name} - ${rec.name}`,
-    value: rec.id,
-  }));
+  const recordsOptions = records.map((rec) => {
+    const recTrips = trips.filter((trip) => trip.recordId === rec.id);
+    const dataRows = formatTripsForVatReport(recTrips);
+    return {
+      label: `${rec.vehicle && rec.vehicle.name} - ${rec.name} (${
+        dataRows.length
+      })`,
+      value: rec.id,
+      record: rec,
+      trips: dataRows,
+    };
+  });
 
   return (
     <ReportVatContent>
@@ -66,7 +80,7 @@ const ReportVat = (props) => {
           </>
         ) : (
           <PDFDownloadLink
-            document={<MonthlyReport data={selectedRecords} />}
+            document={<ReportVatTemplate data={selectedRecords} />}
             fileName='somename.pdf'
           >
             {({ blob, url, loading, error }) =>
