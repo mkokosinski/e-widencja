@@ -78,9 +78,10 @@ export const StyledLogo = styled.div`
   display: flex;
   color: white;
   position: relative;
+  stroke: white;
   z-index: 1;
 
-  @media screen and ${device.laptop} {
+  @media screen and (${device.laptop}) {
     justify-content: center;
   }
 `;
