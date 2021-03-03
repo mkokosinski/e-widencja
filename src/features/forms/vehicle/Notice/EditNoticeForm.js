@@ -3,6 +3,7 @@ import React from 'react';
 import VehicleNoticeForm from './VehicleNoticeForm';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { selectVehicleById } from '../../../vehicles/redux/vehiclesSlice';
 
 const EditVehicleNoticeForm = () => {
   const { id } = useParams();

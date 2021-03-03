@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { useSelector } from 'react-redux';
 
 const styles2 = StyleSheet.create({
   pagesCount: {
@@ -27,23 +28,20 @@ const styles2 = StyleSheet.create({
   },
 });
 
-const ReportVatHeader = (props) => {
+const ReportVatHeader = ({ totalPages, currentPage, record }) => {
   return (
     <View>
       <View style={styles2.pagesCount}>
-        <Text>strona 2/3</Text>
+        <Text> {`Strona ${currentPage} z ${totalPages}`}</Text>
       </View>
 
       <View style={styles2.pageHeader}>
         <View style={[styles2.pageHeaderColumn, { marginRight: 60 }]}>
-          <Text style={styles2.pageHeaderText}>
-            Dane podatnika (nazwisko, imię/ nazwa1), adres prowadzonej
-            działalności, NIP)
-          </Text>
+          <Text style={styles2.pageHeaderText}></Text>
+          <Text style={styles2.pageHeaderText}>Dane podatnika</Text>
 
           <Text style={styles2.pageHeaderText}>
-            Numer rejestracyjny pojazdu samochodowego . . . . . . . . . . . . .
-            . .
+            {`Numer rejestracyjny pojazdu samochodowego: ${record.vehicle.registrationNumber}`}
           </Text>
           <Text style={styles2.pageHeaderText}>
             Dzień rozpoczęcia prowadzenia ewidencji . . . . . . . . . . . . . .

@@ -76,19 +76,23 @@ const styles = StyleSheet.create({
 const ReportVatTemplate = ({ data: records }) => {
   return (
     <Document>
-      {records.map((record) => {
-        const pagesCount = Math.ceil(record.trips.length / 17) || 1;
+      {records.map((recordData) => {
+        const pagesCount = Math.ceil(recordData.trips.length / 17) || 1;
         const pages = Array.from(Array(pagesCount), (v, k) => k);
 
         return pages.map((page) => {
           const rows = Array.from(
             Array(17),
-            (v, idx) => record.trips[idx + page * 17],
+            (v, idx) => recordData.trips[idx + page * 17]
           );
 
           return (
             <Page size='A4' style={styles.page}>
-              <ReportVatHeader />
+              <ReportVatHeader
+                totalPages={pagesCount}
+                currentPage={page + 1}
+                record={recordData.record}
+              />
 
               <View style={styles.table}>
                 <View style={styles.row}>
@@ -141,7 +145,7 @@ const ReportVatTemplate = ({ data: records }) => {
                     <DataRow styles={styles} data={row} />
                   ) : (
                     <EmptyRow styles={styles} />
-                  ),
+                  )
                 )}
               </View>
             </Page>

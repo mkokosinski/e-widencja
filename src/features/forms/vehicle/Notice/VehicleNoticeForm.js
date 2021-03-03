@@ -59,7 +59,7 @@ const VehicleNoticeForm = ({ isEdit }) => {
       type: values.type,
     };
 
-    isEdit ? null : null;
+    // isEdit ? null : null;
   };
 
   const initValues = {
