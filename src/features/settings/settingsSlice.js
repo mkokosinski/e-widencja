@@ -83,7 +83,7 @@ export const fetchSettings = createAsyncThunk(
     mergeDeep(settings, userData);
 
     return Object.values(settings);
-  },
+  }
 );
 
 export const addPurpose = createAsyncThunk(
@@ -92,7 +92,7 @@ export const addPurpose = createAsyncThunk(
     const user = thunkAPI.getState().auth.user;
     const purposes = thunkAPI
       .getState()
-      .settings.items.find((s) => s.id === 'purposes');
+      .settings.items.find((s) => s.id === SETTING_NAME.PURPOSES);
 
     const newItems = [...purposes.items, arg];
     const newPurposes = {
@@ -112,7 +112,7 @@ export const addPurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  },
+  }
 );
 
 export const editPurpose = createAsyncThunk(
@@ -121,7 +121,9 @@ export const editPurpose = createAsyncThunk(
     const user = thunkAPI.getState().auth.user;
     const purposes = thunkAPI
       .getState()
-      .settings.items.find((s) => s.id === 'purposes');
+      .settings.items.find((s) => s.id === SETTING_NAME.PURPOSES);
+
+    console.log(purposes);
 
     const newItems = purposes.items.map((p) => (p.id === arg.id ? arg : p));
     const newPurposes = {
@@ -141,7 +143,7 @@ export const editPurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  },
+  }
 );
 export const deletePurpose = createAsyncThunk(
   'settings/deletePurpose',
@@ -149,7 +151,7 @@ export const deletePurpose = createAsyncThunk(
     const user = thunkAPI.getState().auth.user;
     const purposes = thunkAPI
       .getState()
-      .settings.items.find((s) => s.id === 'purposes');
+      .settings.items.find((s) => s.id === SETTING_NAME.PURPOSES);
 
     const newItems = purposes.items.filter((p) => p.id !== arg.id);
     const newPurposes = {
@@ -169,7 +171,7 @@ export const deletePurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  },
+  }
 );
 
 const sortMethods = {
@@ -223,7 +225,7 @@ export const settingSlice = createSlice({
     [addPurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === 'purposes' ? action.payload : i,
+        i.id === SETTING_NAME.PURPOSES ? action.payload : i
       );
       toast.success('Poprawnie dodano opcje');
     },
@@ -240,7 +242,7 @@ export const settingSlice = createSlice({
     [editPurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === 'purposes' ? action.payload : i,
+        i.id === SETTING_NAME.PURPOSES ? action.payload : i
       );
       toast.success('Poprawnie edytowano opcje');
     },
@@ -257,7 +259,7 @@ export const settingSlice = createSlice({
     [deletePurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === 'purposes' ? action.payload : i,
+        i.id === SETTING_NAME.PURPOSES ? action.payload : i
       );
       toast.success('Poprawnie usunięto opcje');
     },
@@ -287,14 +289,14 @@ export const selectFilteredSettings = createSelector(
 
     const filtered = settings.items
       .filter((veh) =>
-        settingFilter.enable ? veh.id === settingFilter.filter.value : veh,
+        settingFilter.enable ? veh.id === settingFilter.filter.value : veh
       )
       .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
       );
 
     return { ...settings, items: filtered };
-  },
+  }
 );
 
 export const selectSettingSort = (state) => state.settings.sortCases;
