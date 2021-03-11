@@ -20,6 +20,7 @@ import {
   splitStop,
 } from '../../../utils/reportsUtils';
 import ReportVatHeader from './ReportVatHeader';
+import ReportVatFooter from './ReportVatFooter';
 
 const styles = StyleSheet.create({
   page: {
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
     height: 24,
   },
   header: {
-    flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
     display: 'flex',
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReportVatTemplate = ({ data: records }) => {
+const ReportVatTemplate = ({ data: records, company }) => {
   return (
     <Document>
       {records.map((recordData) => {
@@ -85,48 +85,58 @@ const ReportVatTemplate = ({ data: records }) => {
             Array(17),
             (v, idx) => recordData.trips[idx + page * 17]
           );
-
+          const initMonthMileage = recordData.trips[0]?.mileageStart || '';
+          const pageSumDistance =
+            rows.reduce((acc, cur) => (cur ? acc + cur.distance : acc), 0) ||
+            '';
+          const sumDistance =
+            recordData.trips.reduce(
+              (acc, cur) => (cur ? acc + cur.distance : acc),
+              0
+            ) || '';
           return (
             <Page size='A4' style={styles.page}>
               <ReportVatHeader
                 totalPages={pagesCount}
                 currentPage={page + 1}
                 record={recordData.record}
+                company={company}
+                initMonthMileage={initMonthMileage}
               />
 
               <View style={styles.table}>
                 <View style={styles.row}>
-                  <View style={[styles.header, { flex: 2 }]}>
+                  <View style={[styles.header, { flex: 1 }]}>
                     <Text style={styles.cell}>Nr kolejny wpisu </Text>
                   </View>
-                  <View style={[styles.header, { flex: 3 }]}>
+                  <View style={[styles.header, { width: 65 }]}>
                     <Text style={styles.cell}>
                       Data wyjazdu/ udostępnienia pojazdu
                     </Text>
                   </View>
-                  <View style={[styles.header, { flex: 5 }]}>
+                  <View style={[styles.header, { width: 100 }]}>
                     <Text style={styles.cell}>
                       Opis trasy wyjazdu (skąd-dokąd)
                     </Text>
                   </View>
-                  <View style={[styles.header, { flex: 7 }]}>
+                  <View style={[styles.header, { width: 130 }]}>
                     <Text style={styles.cell}>
                       Cel wyjazdu/ udostępnienia pojazdu
                     </Text>
                   </View>
-                  <View style={[styles.header, { flex: 3 }]}>
+                  <View style={[styles.header, { width: 70 }]}>
                     <Text style={styles.cell}>
                       Liczba faktyczna przejechanych kilometrów
                     </Text>
                   </View>
-                  <View style={[styles.header, { flex: 4 }]}>
+                  <View style={[styles.header, { width: 90 }]}>
                     <Text style={styles.cell}>
                       Imię i nazwisko osoby kierującej pojazdem/osoby, której
                       udostępniony został pojazd
                     </Text>
                   </View>
 
-                  <View style={[styles.splittedCol, { flex: 4 }]}>
+                  <View style={[styles.splittedCol, { width: 80 }]}>
                     <View style={[styles.splittedCell, { padding: 4 }]}>
                       <Text style={{ textAlign: 'center' }}>
                         Stan licznika na dzień udostępnienia pojazdu
@@ -148,6 +158,11 @@ const ReportVatTemplate = ({ data: records }) => {
                   )
                 )}
               </View>
+              <ReportVatFooter
+                record={recordData.record}
+                pageSumDistance={pageSumDistance}
+                sumDistance={sumDistance}
+              />
             </Page>
           );
         });

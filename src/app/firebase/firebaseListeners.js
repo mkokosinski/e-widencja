@@ -1,3 +1,4 @@
+import { fetchCompany } from '../../features/company/companySlice';
 import { fetchRecords } from '../../features/records/recordsSlice';
 import { fetchSettings } from '../../features/settings/settingsSlice';
 import { fetchTrips } from '../../features/trips/tripsSlice';
@@ -59,6 +60,14 @@ export const subscribeTrips = (dispatch) => {
   return firestore.collection('Trips').onSnapshot(function (doc) {
     if (!doc.metadata.hasPendingWrites) {
       dispatch(fetchTrips());
+    }
+  });
+};
+
+export const subscribeCompany = (dispatch) => {
+  return firestore.collection('Company').onSnapshot(function (doc) {
+    if (!doc.metadata.hasPendingWrites) {
+      dispatch(fetchCompany());
     }
   });
 };
