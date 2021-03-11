@@ -21,15 +21,18 @@ import {
   selectTripsForRecord,
 } from '../../trips/tripsSlice';
 import { formatTripsForVatReport } from '../../../utils/reportsUtils';
+import { selectCompany } from '../../company/companySlice';
 
 const ReportVat = (props) => {
   const { items: records } = useSelector(selectRecords);
   const trips = useSelector(selectFullTripsData);
+  const company = useSelector(selectCompany);
 
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [isGenerated, setIsGenerated] = useState(false);
 
   const isDisabled = !selectedRecords?.length;
+  const fileName = `RaportVAT_${new Date().toLocaleString()}.pdf`;
 
   const handleDownload = () => {
     if (!isDisabled && selectedRecords.length > 0) {
@@ -80,8 +83,10 @@ const ReportVat = (props) => {
           </>
         ) : (
           <PDFDownloadLink
-            document={<ReportVatTemplate data={selectedRecords} />}
-            fileName='somename.pdf'
+            document={
+              <ReportVatTemplate data={selectedRecords} company={company} />
+            }
+            fileName={fileName}
           >
             {({ blob, url, loading, error }) =>
               loading ? (

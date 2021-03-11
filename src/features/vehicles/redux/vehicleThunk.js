@@ -4,44 +4,44 @@ import { firestore, firestoreFunctions } from '../../../app/firebase/firebase';
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
   async (arg = 1, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const vehicles = [];
-    const coll = await firestore
-      .collection('Vehicles')
-      .where('companyId', '==', currUser.companyId)
-      .where('active', '==', true)
-      .get()
-      .catch((err) => {
-        console.error(err);
-        return thunkAPI.rejectWithValue('Err');
+      const vehicles = [];
+      const coll = await firestore
+        .collection('Vehicles')
+        .where('companyId', '==', currUser.companyId)
+        .where('active', '==', true)
+        .get();
+
+      coll.forEach((doc) => {
+        const data = doc.data();
+
+        const vehicle = {
+          ...data,
+          id: doc.id,
+        };
+
+        if (data.created) {
+          vehicle.created = data.created.toDate().toString();
+        }
+
+        if (data.updated) {
+          vehicle.updated = data.updated.toDate().toString();
+        }
+
+        if (data.deleted) {
+          data.deleted = data.deleted.toDate().toString();
+        }
+
+        vehicles.push(vehicle);
       });
 
-    coll.forEach((doc) => {
-      const data = doc.data();
-
-      const vehicle = {
-        ...data,
-        id: doc.id,
-      };
-
-      if (data.created) {
-        vehicle.created = data.created.toDate().toString();
-      }
-
-      if (data.updated) {
-        vehicle.updated = data.updated.toDate().toString();
-      }
-
-      if (data.deleted) {
-        data.deleted = data.deleted.toDate().toString();
-      }
-
-      vehicles.push(vehicle);
-    });
-
-    return vehicles;
-  },
+      return vehicles;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
 );
 
 export const addVehicle = createAsyncThunk(
@@ -70,7 +70,7 @@ export const addVehicle = createAsyncThunk(
         console.error(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
-  },
+  }
 );
 
 export const editVehicle = createAsyncThunk(
@@ -97,7 +97,7 @@ export const editVehicle = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  },
+  }
 );
 
 export const deleteVehicle = createAsyncThunk(
@@ -116,5 +116,5 @@ export const deleteVehicle = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  },
+  }
 );

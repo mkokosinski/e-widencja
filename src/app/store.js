@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
 import carBrandsReducer from '../features/vehicles/carBrandsSlice';
+import companyReducer from '../features/company/companySlice';
 import carModelsReducer from '../features/vehicles/carModelsSlice';
 import filtersReducer from '../features/templates/filterSlice';
 import layoutReducer from '../features/layout/layoutSlice';
@@ -16,6 +17,7 @@ export default configureStore({
     auth: authReducer,
     carBrands: carBrandsReducer,
     carModels: carModelsReducer,
+    company: companyReducer,
     filters: filtersReducer,
     layout: layoutReducer,
     records: recordsReducer,

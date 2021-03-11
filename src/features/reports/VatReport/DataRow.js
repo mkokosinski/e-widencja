@@ -5,26 +5,26 @@ import { Text, View } from '@react-pdf/renderer';
 const DataRow = ({ styles, data }) => {
   return (
     <View style={styles.row}>
-      <View style={[styles.col, { flex: 2 }]}>
+      <View style={[styles.header, { flex: 1 }]}>
         <Text style={styles.cell}>{data.rowNumber}</Text>
       </View>
-      <View style={[styles.col, { flex: 3 }]}>
+      <View style={[styles.header, { width: 65 }]}>
         <Text style={styles.cell}>{data.date} </Text>
       </View>
-      <View style={[styles.col, { flex: 5 }]}>
+      <View style={[styles.header, { width: 100 }]}>
         <Text style={styles.cell}>{data.label}</Text>
       </View>
-      <View style={[styles.col, { flex: 7 }]}>
+      <View style={[styles.header, { width: 130 }]}>
         <Text style={styles.cell}> {data.purpose}</Text>
       </View>
-      <View style={[styles.col, { flex: 3 }]}>
+      <View style={[styles.header, { width: 70 }]}>
         <Text style={styles.cell}> {data.distance} </Text>
       </View>
-      <View style={[styles.col, { flex: 4 }]}>
+      <View style={[styles.header, { width: 90 }]}>
         <Text style={styles.cell}> {data.driver} </Text>
       </View>
 
-      <View style={[styles.splittedCol, { flex: 4 }]}>
+      <View style={[styles.splittedCol, { width: 80 }]}>
         <View style={styles.splittedCell}>
           <Text style={{ textAlign: 'center' }}>{data.mileageStart}</Text>
         </View>

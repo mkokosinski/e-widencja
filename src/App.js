@@ -28,6 +28,7 @@ import {
   selectIsMobile,
 } from './features/layout/layoutSlice';
 import { ThemeProvider } from 'styled-components';
+import { fetchCompany } from './features/company/companySlice';
 
 const App = () => {
   const [currSiteSize, setCurrSiteSize] = useState({ x: 0, y: 0 });
@@ -50,6 +51,7 @@ const App = () => {
       dispatch(fetchTripTemplates()),
       dispatch(fetchCarBrands()),
       dispatch(fetchCarModels()),
+      dispatch(fetchCompany()),
     ])
       .then((dataEntities) => {
         const hasErrors = dataEntities.some((data) => data.error);
