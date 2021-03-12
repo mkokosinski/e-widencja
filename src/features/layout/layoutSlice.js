@@ -7,19 +7,20 @@ export const layoutSlice = createSlice({
     IsLaptop: false,
     isMobileKeyboard: false,
     initSiteSize: { height: 0, width: 0 },
+    siteSize: { height: 0, width: 0 },
   },
   reducers: {
-    func: (state) => {
-      //function body
+    setCurrSiteSize: (state, { payload }) => {
+      state.siteSize = payload;
     },
-    setIsMobile: (state, payload) => {
-      state.isMobile = payload.payload;
+    setIsMobile: (state, { payload }) => {
+      state.isMobile = payload;
     },
-    setIsLaptop: (state, payload) => {
-      state.IsLaptop = payload.payload;
+    setIsLaptop: (state, { payload }) => {
+      state.IsLaptop = payload;
     },
-    setInitSiteSize: (state, payload) => {
-      state.initSiteSize = payload.payload;
+    setInitSiteSize: (state, { payload }) => {
+      state.initSiteSize = payload;
     },
     setIsMobileKeyboard: (state, action) => {
       state.isMobileKeyboard = action.payload;
@@ -33,12 +34,15 @@ export const selectIsLaptop = (state) => state.layout.IsLaptop;
 
 export const selectInitSize = (state) => state.layout.initSiteSize;
 
+export const selectSiteSize = (state) => state.layout.siteSize;
+
 export const selectIsMobileKeyboard = (state) => state.layout.isMobileKeyboard;
 
 export const {
   setIsMobile,
   setIsLaptop,
   setInitSiteSize,
+  setCurrSiteSize,
   setIsMobileKeyboard,
 } = layoutSlice.actions;
 

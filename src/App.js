@@ -24,19 +24,20 @@ import {
   setIsLaptop,
   setIsMobile,
   setInitSiteSize,
-  selectIsLaptop,
+  selectSiteSize,
   selectIsMobile,
+  setCurrSiteSize,
 } from './features/layout/layoutSlice';
 import { ThemeProvider } from 'styled-components';
 import { fetchCompany } from './features/company/companySlice';
 
 const App = () => {
-  const [currSiteSize, setCurrSiteSize] = useState({ x: 0, y: 0 });
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { user: appUser } = useSelector(selectAuth);
   const isMobile = useSelector(selectIsMobile);
+  const currSiteSize = useSelector(selectSiteSize);
 
   const dispatch = useDispatch();
   const shouldSignIn = !isUserLoading && !appUser;
@@ -89,7 +90,7 @@ const App = () => {
       documentElement: { clientHeight, clientWidth },
     } = document;
     dispatch(setInitSiteSize({ height: clientHeight, width: clientWidth }));
-    setCurrSiteSize({ x: clientWidth, y: clientHeight });
+    dispatch(setCurrSiteSize({ x: clientWidth, y: clientHeight }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -110,8 +111,7 @@ const App = () => {
       dispatch(setIsLaptop(true));
       dispatch(setIsMobile(false));
     }
-
-    // setCurrSiteSize({ x: clientWidth, y: clientHeight });
+    dispatch(setCurrSiteSize({ x: clientWidth, y: clientHeight }));
   }, [dispatch, isMobile]);
 
   useEffect(() => {

@@ -54,7 +54,7 @@ const validationSchema = Yup.object().shape({
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       mileage: Yup.number().min(1, 'Zła wartość').required('Wymagane'),
       distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
-    }),
+    })
   ),
 });
 
@@ -159,7 +159,6 @@ const TripForm = ({ trip }) => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
     const newTrip = {
       date: values.date,
       record: values.record.value,
@@ -240,7 +239,7 @@ const TripForm = ({ trip }) => {
                         values.stops.map((stop) => ({
                           ...stop,
                           mileage: option.mileage,
-                        })),
+                        }))
                       );
                       focusOn(tripTemplateRef);
                     }}
@@ -275,7 +274,7 @@ const TripForm = ({ trip }) => {
                         option.stops.map((stop) => ({
                           ...stop,
                           mileage: values.record.mileage + stop.distance,
-                        })),
+                        }))
                       );
                     }}
                     placeholder='Wybierz szablon'

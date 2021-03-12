@@ -123,8 +123,6 @@ export const editPurpose = createAsyncThunk(
       .getState()
       .settings.items.find((s) => s.id === SETTING_NAME.PURPOSES);
 
-    console.log(purposes);
-
     const newItems = purposes.items.map((p) => (p.id === arg.id ? arg : p));
     const newPurposes = {
       ...purposes,

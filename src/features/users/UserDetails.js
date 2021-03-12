@@ -16,6 +16,7 @@ import {
   SectionDesc,
   SectionChart,
   SectionRecent,
+  DetailsSection,
 } from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTrips';
 import {
@@ -126,17 +127,17 @@ const UserDetalis = () => {
 
       {user.isDriver && (
         <>
-          <SectionChart>
+          <DetailsSection>
             <LineChart
               data={sampleData}
               dataOffset={6}
               title={'Przejechane kilometry'}
             />
-          </SectionChart>
+          </DetailsSection>
 
-          <SectionRecent>
+          <DetailsSection>
             <RecentList title='Ostatnie trasy' list={trips} />
-          </SectionRecent>
+          </DetailsSection>
         </>
       )}
     </Details>

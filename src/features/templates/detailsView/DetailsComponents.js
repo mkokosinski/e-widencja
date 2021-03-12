@@ -53,7 +53,6 @@ export const ButtonDelete = ({ item, onClick, redirectPath }) => {
   };
 
   const close = () => {
-    console.log('click');
     closeModal();
   };
 

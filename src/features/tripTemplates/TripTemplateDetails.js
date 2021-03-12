@@ -101,9 +101,9 @@ const VehileDetails = () => {
 
       <DetailsSection></DetailsSection>
 
-      <SectionRecent>
+      <DetailsSection>
         <RecentList title='Ostatnie trasy' list={sampletrips} />
-      </SectionRecent>
+      </DetailsSection>
     </Details>
   ) : null;
 };

@@ -8,8 +8,6 @@ export const fetchCompany = createAsyncThunk(
   async (arg, thunkAPI) => {
     const user = thunkAPI.getState().auth.user;
 
-    console.log(user);
-
     const companyDoc = await firestore
       .collection('Companies')
       .doc(user.companyId)

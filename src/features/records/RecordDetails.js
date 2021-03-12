@@ -21,8 +21,7 @@ import {
   DetailsData,
   Details,
   SectionDesc,
-  SectionChart,
-  SectionRecent,
+  DetailsSection,
 } from '../templates/detailsView/DetailsStyles';
 
 import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
@@ -81,8 +80,6 @@ const VehileDetails = () => {
   const record = useSelector((state) => selectRecordById(state, id));
   const trips = useSelector((state) => selectTripsForRecord(state, id));
 
-  console.log(trips);
-
   return record ? (
     <Details>
       <SectionDesc>
@@ -132,17 +129,17 @@ const VehileDetails = () => {
         </DetailsInfo>
       </SectionDesc>
 
-      <SectionChart>
+      <DetailsSection>
         <LineChart
           data={sampleData}
           dataOffset={6}
           title={'Przejechane kilometry'}
         />
-      </SectionChart>
+      </DetailsSection>
 
-      <SectionRecent>
+      <DetailsSection>
         <RecentList title='Ostatnie trasy' list={trips} />
-      </SectionRecent>
+      </DetailsSection>
     </Details>
   ) : null;
 };

@@ -4,7 +4,15 @@ import { useEffect } from 'react';
 
 import Chart from 'chart.js';
 import { useState } from 'react';
-import { Buttons, StyledChart, ButtonPagintation, Title, Canvas } from './ChartsStyles';
+import {
+  Pagination,
+  StyledChart,
+  ButtonPagintation,
+  Title,
+  Canvas,
+} from './ChartsStyles';
+import { format } from 'date-fns';
+import { DateFrom } from '../../utils/dateUtils';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
 
@@ -16,7 +24,7 @@ const custom = Chart.controllers.line.extend({
     ctx.stroke = function () {
       ctx.save();
       ctx.shadowColor = 'rgba(0,0,50,0.0)';
-      ctx.shadowBlur =4;
+      ctx.shadowBlur = 4;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 2;
       originalStroke.apply(this, arguments);
@@ -26,12 +34,16 @@ const custom = Chart.controllers.line.extend({
 });
 Chart.controllers.lineAlt = custom;
 
-const LineChart = ({ title='', data, dataOffset }) => {
+const LineChart = ({ title = '', data, dataOffset }) => {
   const [chart, setChart] = useState(null);
   // const [limitedData, setLimitedData] = useState({});
   // const [paginationIndex, setPaginationIndex] = useState(0)
+  const [currentYear, setCurrentYear] = useState(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const chartRef = useRef(null);
+  const previousButtonDisabled = currentOffset - dataOffset < 0;
+  const nextButtonDisabled =
+    currentOffset + dataOffset >= Object.keys(data.datasets[0].data).length;
 
   const buildChart = () => {
     const ctx = chartRef.current.getContext('2d');
@@ -80,54 +92,68 @@ const LineChart = ({ title='', data, dataOffset }) => {
     setChart(chartLine);
   };
 
-  const limitData = useCallback((offset) => {
-    if (chart && data) {
-      const { labels, datasets } = data;
-      const limitedLabels = labels.slice(currentOffset, currentOffset + offset);
-      const limitedDatasets = [];
+  const limitData = useCallback(
+    (offset) => {
+      if (chart && data) {
+        const { labels, datasets } = data;
+        const limitedLabels = labels.slice(
+          currentOffset,
+          currentOffset + offset
+        );
+        const limitedDatasets = [];
+        datasets.forEach((dataset) => {
+          const newDataset = {
+            ...dataset,
+            data: Object.values(dataset.data).slice(
+              currentOffset,
+              currentOffset + offset
+            ),
+          };
+          limitedDatasets.push(newDataset);
+        });
 
-      datasets.forEach((dataset) => {
-        const newDataset = {
-          ...dataset,
-          data: dataset.data.slice(currentOffset, currentOffset + offset),
-        };
-        limitedDatasets.push(newDataset);
-      });
-
-      chart.data.labels = limitedLabels;
-      chart.data.datasets = limitedDatasets;
-      chart.update();
-    }
-  },[chart, currentOffset, data]); 
+        chart.data.labels = limitedLabels;
+        chart.data.datasets = limitedDatasets;
+        chart.update();
+      }
+    },
+    [chart, currentOffset, data]
+  );
 
   const nextStep = () => {
-    if (currentOffset + dataOffset < data.labels.length)
-      setCurrentOffset(currentOffset + dataOffset);
+    if (!nextButtonDisabled) setCurrentOffset(currentOffset + dataOffset);
   };
 
   const previuosStep = () => {
-    if (currentOffset - dataOffset >= 0)
-      setCurrentOffset(currentOffset - dataOffset);
+    if (!previousButtonDisabled) setCurrentOffset(currentOffset - dataOffset);
   };
 
   useEffect(() => {
     limitData(dataOffset);
+
+    const dateOffset = Object.keys(data.datasets[0].data)[0 + currentOffset];
+    setCurrentYear(DateFrom(dateOffset).getFullYear());
   }, [chart, currentOffset, dataOffset, limitData]);
 
   useEffect(() => {
     buildChart();
   }, []);
 
-
   return (
     <StyledChart>
-      <Title>
-        {title}
-      </Title>
-      <Buttons>
-        <ButtonPagintation onClick={previuosStep}> {'< wcześniej'} </ButtonPagintation>
-        <ButtonPagintation onClick={nextStep}> {'później >'} </ButtonPagintation>
-      </Buttons>
+      <Title>{title}</Title>
+      <Pagination>
+        <ButtonPagintation
+          disabled={previousButtonDisabled}
+          onClick={previuosStep}
+        >
+          {'<'}
+        </ButtonPagintation>
+        {currentYear}
+        <ButtonPagintation disabled={nextButtonDisabled} onClick={nextStep}>
+          {'>'}
+        </ButtonPagintation>
+      </Pagination>
       <Canvas id='lineChart' ref={chartRef}></Canvas>
     </StyledChart>
   );

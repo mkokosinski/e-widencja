@@ -14,9 +14,8 @@ import {
   DetailsData,
   Details,
   SectionDesc,
-  SectionChart,
-  SectionRecent,
   DetailsButton,
+  DetailsSection,
 } from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTrips';
 import {
@@ -29,36 +28,37 @@ import { ReactComponent as BrandIco } from '../../assets/branding.svg';
 import { ReactComponent as CarIco } from '../../assets/car.svg';
 import { ReactComponent as LicenseIco } from '../../assets/licensePlate.svg';
 import { ReactComponent as TachometerIco } from '../../assets/tachometer.svg';
-import { monthsShort } from '../../utils/dateUtils';
+import { getFirstDateOfMoth, monthsShort } from '../../utils/dateUtils';
 import { selectTripsForVehicle } from '../trips/tripsSlice';
 import { Button } from '../layout/LayoutStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { selectVehicleById } from './redux/vehiclesSlice';
-
-const sampleData = {
-  labels: monthsShort,
-  datasets: [
-    {
-      label: 'Przejechano',
-      data: [142, 145, 154, 142, 121, 130, 132, 124, 100, 121, 130, 144],
-      backgroundColor: ['transparent'],
-      borderColor: 'rgba(88, 64, 187,0.8)',
-      borderWidth: 2,
-      pointBorderColor: '#ffffff',
-      pointBackgroundColor: 'rgba(88, 64, 187,1)',
-      pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
-};
+import { getTripsData } from '../../utils/chartUtils';
 
 const VehileDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const vehicle = useSelector((state) => selectVehicleById(state, id));
   const trips = useSelector((state) => selectTripsForVehicle(state, id));
+
+  const vehicleTrips = {
+    labels: monthsShort,
+    datasets: [
+      {
+        label: 'Przejechano',
+        data: getTripsData(trips),
+        backgroundColor: ['transparent'],
+        borderColor: 'rgba(88, 64, 187,0.8)',
+        borderWidth: 2,
+        pointBorderColor: '#ffffff',
+        pointBackgroundColor: 'rgba(88, 64, 187,1)',
+        pointRadius: 6,
+        pointBorderWidth: 3,
+      },
+    ],
+  };
 
   return vehicle ? (
     <Details>
@@ -114,17 +114,17 @@ const VehileDetails = () => {
         </DetailsInfo>
       </SectionDesc>
 
-      <SectionRecent>
-        <RecentList title='Ostatnie trasy' list={trips} />
-      </SectionRecent>
-
-      <SectionChart>
+      <DetailsSection>
         <LineChart
-          data={sampleData}
+          data={vehicleTrips}
           dataOffset={6}
           title={'Przejechane kilometry'}
         />
-      </SectionChart>
+      </DetailsSection>
+
+      <DetailsSection>
+        <RecentList title='Ostatnie trasy' list={trips} />
+      </DetailsSection>
     </Details>
   ) : null;
 };

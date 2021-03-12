@@ -14,7 +14,7 @@ export const months = [
   'Wrzesień',
   'Październik',
   'Listopad',
-  'Grudzień'
+  'Grudzień',
 ];
 
 export const monthsShort = [
@@ -29,7 +29,7 @@ export const monthsShort = [
   'Wrz',
   'Paź',
   'Lis',
-  'Gru'
+  'Gru',
 ];
 
 export const days = [
@@ -39,7 +39,7 @@ export const days = [
   'Środa',
   'Czwartek',
   'Piątek',
-  'Sobota'
+  'Sobota',
 ];
 export const daysShort = ['Nd', 'Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So'];
 
@@ -47,12 +47,12 @@ export const locale = {
   pl,
   localize: {
     day: (n) => daysShort[n],
-    month: (n) => months[n]
+    month: (n) => months[n],
   },
   options: {
-    weekStartsOn: 1
+    weekStartsOn: 1,
   },
-  formatLong
+  formatLong,
 };
 
 export const DateFrom = (date) => {
@@ -104,4 +104,9 @@ export const differenceInDays = (dateOne, dateTwo) => {
   const diff = (date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24);
 
   return diff;
+};
+
+export const getFirstDateOfMoth = (date) => {
+  const fullDate = DateFrom(date);
+  return new Date(fullDate.getFullYear(), fullDate.getMonth(), 1);
 };

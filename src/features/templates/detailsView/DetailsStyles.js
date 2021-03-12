@@ -36,7 +36,6 @@ export const DetailsSection = styled.section`
 export const SectionDesc = styled(DetailsSection)`
   grid-area: desc;
   display: grid;
-  grid-template: fit-content 1fr 1fr/1fr 1fr;
   grid-template-areas:
     'toppanel toppanel'
     'info info'
@@ -123,12 +122,4 @@ export const DetailsLabel = styled.div`
 
 export const DetailsData = styled.div`
   font-weight: 600;
-`;
-
-export const SectionChart = styled(DetailsSection)`
-  grid-area: chart;
-`;
-
-export const SectionRecent = styled(DetailsSection)`
-  grid-area: recent;
 `;
