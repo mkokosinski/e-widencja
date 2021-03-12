@@ -43,7 +43,7 @@ export const ButtonEdit = ({ actionPath }) => {
   );
 };
 
-export const ButtonDelete = ({ item, onClick, redirectPath }) => {
+export const ButtonDelete = ({ item, onClick, redirectPath, title }) => {
   const { replace } = useHistory();
   const { Modal, openModal, closeModal } = useModal();
 

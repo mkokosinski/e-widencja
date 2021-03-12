@@ -36,7 +36,10 @@ import {
   selectTripTemplates,
   selectTripTemplateSort,
 } from '../../tripTemplates/tripTemplatesSlice';
-import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
+import {
+  selectPurposes,
+  selectSettings,
+} from '../../settings/redux/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';

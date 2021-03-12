@@ -1,6 +1,6 @@
 import { fetchCompany } from '../../features/company/companySlice';
 import { fetchRecords } from '../../features/records/recordsSlice';
-import { fetchSettings } from '../../features/settings/settingsSlice';
+import { fetchSettings } from '../../features/settings/redux/settingsSlice';
 import { fetchTrips } from '../../features/trips/tripsSlice';
 import { fetchTripTemplates } from '../../features/tripTemplates/tripTemplatesSlice';
 import { fetchUsers } from '../../features/users/usersSlice';

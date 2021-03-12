@@ -11,8 +11,8 @@ import {
   Title,
   Canvas,
 } from './ChartsStyles';
-import { format } from 'date-fns';
 import { DateFrom } from '../../utils/dateUtils';
+import { createLineChart } from '../../utils/chartUtils';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
 
@@ -36,59 +36,16 @@ Chart.controllers.lineAlt = custom;
 
 const LineChart = ({ title = '', data, dataOffset }) => {
   const [chart, setChart] = useState(null);
-  // const [limitedData, setLimitedData] = useState({});
-  // const [paginationIndex, setPaginationIndex] = useState(0)
   const [currentYear, setCurrentYear] = useState(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const chartRef = useRef(null);
+  const dataLength = Object.keys(data.datasets[0].data).length;
   const previousButtonDisabled = currentOffset - dataOffset < 0;
-  const nextButtonDisabled =
-    currentOffset + dataOffset >= Object.keys(data.datasets[0].data).length;
+  const nextButtonDisabled = currentOffset + dataOffset >= dataLength;
 
   const buildChart = () => {
     const ctx = chartRef.current.getContext('2d');
-
-    const chartLine = new Chart(ctx, {
-      type: 'lineAlt',
-      data: {},
-      options: {
-        layout: {
-          padding: {
-            left: 0,
-            right: 20,
-            top: 0,
-            bottom: 0,
-          },
-        },
-        legend: false,
-        scales: {
-          yAxes: [
-            {
-              gridLines: {
-                // drawOnChartArea: false,
-                color: 'rgba(0,0,0,.08)',
-              },
-              ticks: {
-                display: true,
-                fontSize: 10,
-                maxTicksLimit: 6,
-              },
-            },
-          ],
-          xAxes: [
-            {
-              gridLines: {
-                // drawOnChartArea: false,
-                color: 'rgba(0,0,0,.01)',
-              },
-              tricks: {
-                display: false,
-              },
-            },
-          ],
-        },
-      },
-    });
+    const chartLine = createLineChart(ctx);
     setChart(chartLine);
   };
 
@@ -149,7 +106,7 @@ const LineChart = ({ title = '', data, dataOffset }) => {
         >
           {'<'}
         </ButtonPagintation>
-        {currentYear}
+        {dataLength > 0 ? currentYear : 'Brak przejazdów'}
         <ButtonPagintation disabled={nextButtonDisabled} onClick={nextStep}>
           {'>'}
         </ButtonPagintation>

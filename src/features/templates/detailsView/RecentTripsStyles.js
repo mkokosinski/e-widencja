@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H2, Button } from '../../layout/LayoutStyles';
+import { H2, Button, device } from '../../layout/LayoutStyles';
 
 export const StyledRecentList = styled.div`
   margin: 16px 0;
@@ -38,6 +38,10 @@ export const ListItem = styled.li`
 
   :hover {
     background: ${({ theme }) => theme.lightSoft};
+  }
+
+  @media screen and (${device.mobileXL}) {
+    grid-template-columns: 2fr 6fr 3fr 1fr;
   }
 `;
 

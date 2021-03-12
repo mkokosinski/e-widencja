@@ -14,7 +14,7 @@ import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import EditPurposeItem from './EditPurposeItem';
 import { v4 as uid } from 'uuid';
 import { useDispatch } from 'react-redux';
-import { addPurpose, editPurpose } from './settingsSlice';
+import { addPurpose, editPurpose } from './redux/settingsSlice';
 import { ThemeContext } from 'styled-components';
 
 const AddPurposeItem = (props) => {

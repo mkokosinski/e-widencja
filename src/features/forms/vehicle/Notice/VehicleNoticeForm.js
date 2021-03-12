@@ -22,18 +22,21 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { validationMessages } from '../../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../../vehicles/redux/vehicleThunk';
-import { selectNotices } from '../../../settings/settingsSlice';
+import { selectNotices } from '../../../settings/redux/settingsSlice';
 import { selectVehicleById } from '../../../vehicles/redux/vehiclesSlice';
 
 const validationSchema = Yup.object({
-  name: Yup.string()
+  noticeName: Yup.string()
     .min(3, validationMessages.min(3))
     .max(50, validationMessages.max(50))
     .required(validationMessages.required),
-  //   brand: Yup.string()
-  //     .min(3, validationMessages.min(3))
-  //     .max(50, validationMessages.max(50))
-  //     .required(validationMessages.required),
+
+  type: Yup.string().required(validationMessages.required),
+
+  description: Yup.string()
+    .min(3, validationMessages.min(3))
+    .max(500, validationMessages.max(500))
+    .required(validationMessages.required),
 });
 
 const VehicleNoticeForm = ({ isEdit }) => {

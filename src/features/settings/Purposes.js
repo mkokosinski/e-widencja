@@ -4,7 +4,7 @@ import PurposeItem from './PurposeItem';
 
 import { PurposesContainer, VerticalSpan } from './SettingsStyles';
 import AddPurposeItem from './AddPurposeItem';
-import { deletePurpose, editPurpose } from './settingsSlice';
+import { deletePurpose, editPurpose } from './redux/settingsSlice';
 import { useDispatch } from 'react-redux';
 
 const Purposes = ({ items }) => {
@@ -45,7 +45,7 @@ Purposes.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
-    }),
+    })
   ),
 };
 

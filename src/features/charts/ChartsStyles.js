@@ -18,7 +18,7 @@ export const Pagination = styled.div`
   font-weight: bold;
   justify-content: space-around;
   margin: 0 auto;
-  width: min-content;
+  width: max-content;
 `;
 
 export const ButtonPagintation = styled(Button)`

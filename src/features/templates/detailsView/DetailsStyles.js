@@ -1,15 +1,17 @@
 import styled from 'styled-components';
-import { gap, gapHorizontal } from '../../../AppStyles';
+import { FlexCenter, gap, gapHorizontal } from '../../../AppStyles';
 
 import { device, Button, H2, A } from '../../layout/LayoutStyles';
 
 export const Details = styled.div`
+  align-content: flex-start;
+  background-color: #f2f3f5;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
-  background-color: #f2f3f5;
   font-size: 1em;
+  min-height: 100%;
+  width: 100%;
   @media screen and (${device.mobileXL}) {
     background-color: #ffffff;
   }
@@ -24,6 +26,7 @@ export const DetailsSection = styled.section`
   font-size: 0.9em;
   margin: 8px;
   padding: 8px;
+
   @media screen and (${device.mobileXL}) {
     flex: 1 1 calc(50% - 16px);
   }
@@ -122,4 +125,12 @@ export const DetailsLabel = styled.div`
 
 export const DetailsData = styled.div`
   font-weight: 600;
+`;
+
+export const EmptyState = styled.div`
+  ${FlexCenter};
+  color: ${(props) => props.theme.grayLight};
+  font-size: 2.2rem;
+  min-height: 200px;
+  width: 100%;
 `;

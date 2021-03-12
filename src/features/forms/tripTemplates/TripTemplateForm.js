@@ -40,7 +40,10 @@ import {
   selectTripTemplates,
   selectTripTemplateSort,
 } from '../../tripTemplates/tripTemplatesSlice';
-import { selectPurposes, selectSettings } from '../../settings/settingsSlice';
+import {
+  selectPurposes,
+  selectSettings,
+} from '../../settings/redux/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
@@ -55,7 +58,7 @@ const validationSchema = Yup.object().shape({
     Yup.object().shape({
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
-    }),
+    })
   ),
 });
 

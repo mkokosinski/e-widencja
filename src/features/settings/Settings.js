@@ -5,7 +5,11 @@ import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
 import { StyledForm, Row } from '../forms/FormsStyles';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 import Purposes from './Purposes';
-import { selectNotices, selectPurposes, selectSettings } from './settingsSlice';
+import {
+  selectNotices,
+  selectPurposes,
+  selectSettings,
+} from './redux/settingsSlice';
 import {
   SettingItem,
   SettingsSection,

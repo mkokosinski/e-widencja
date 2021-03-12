@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const size = {
+export const screenSize = {
   mobileS: '320',
   mobileM: '375',
   mobileL: '410',
@@ -13,17 +13,17 @@ export const size = {
 };
 
 export const device = {
-  mobileS: `min-width: ${size.mobileS}px`,
-  mobileM: `min-width: ${size.mobileM}px`,
-  mobileL: `min-width: ${size.mobileL}px`,
-  mobileXL: `min-width: ${size.mobileXL}px`,
-  tablet: `min-width: ${size.tablet}px`,
-  laptop: `min-width: ${size.laptop}px`,
-  laptopL: `min-width: ${size.laptopL}px`,
-  desktop: `min-width: ${size.desktop}px`,
-  desktopL: `min-width: ${size.desktop}px`,
+  mobileS: `min-width: ${screenSize.mobileS}px`,
+  mobileM: `min-width: ${screenSize.mobileM}px`,
+  mobileL: `min-width: ${screenSize.mobileL}px`,
+  mobileXL: `min-width: ${screenSize.mobileXL}px`,
+  tablet: `min-width: ${screenSize.tablet}px`,
+  laptop: `min-width: ${screenSize.laptop}px`,
+  laptopL: `min-width: ${screenSize.laptopL}px`,
+  desktop: `min-width: ${screenSize.desktop}px`,
+  desktopL: `min-width: ${screenSize.desktop}px`,
   max: {
-    tablet: `max-width: ${size.tablet}px`,
+    tablet: `max-width: ${screenSize.tablet}px`,
   },
 };
 

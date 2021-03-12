@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { auth } from './app/firebase/firebase';
 import { selectAuth, authorize } from './features/auth/authSlice';
 import Loading from './features/loading/Loading';
-import { fetchSettings } from './features/settings/settingsSlice';
+import { fetchSettings } from './features/settings/redux/settingsSlice';
 import { fetchVehicles } from './features/vehicles/redux/vehicleThunk';
 import { fetchUsers } from './features/users/usersSlice';
 import { fetchRecords } from './features/records/recordsSlice';

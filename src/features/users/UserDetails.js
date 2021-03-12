@@ -32,36 +32,8 @@ import { ReactComponent as EmailIco } from '../../assets/email.svg';
 import { selectTripsForDriver } from '../trips/tripsSlice';
 import { selectFbUser } from '../auth/authSlice';
 import { USER_ROLES } from '../../utils/constants';
-
-const sampleData = {
-  labels: [
-    'Sty',
-    'Lut',
-    'Mar',
-    'Kwi',
-    'Maj',
-    'Cze',
-    'Lip',
-    'Sie',
-    'Wrz',
-    'Paź',
-    'Lis',
-    'Gru',
-  ],
-  datasets: [
-    {
-      label: 'Przejechano',
-      data: [142, 145, 154, 142, 121, 130, 132, 124, 100, 121, 130, 144],
-      backgroundColor: ['transparent'],
-      borderColor: 'rgba(88, 64, 187,0.8)',
-      borderWidth: 2,
-      pointBorderColor: '#ffffff',
-      pointBackgroundColor: 'rgba(88, 64, 187,1)',
-      pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
-};
+import { monthsShort } from '../../utils/dateUtils';
+import { getTripsData } from '../../utils/chartUtils';
 
 const UserDetalis = () => {
   const { id } = useParams();
@@ -71,6 +43,23 @@ const UserDetalis = () => {
   const trips = useSelector((state) => selectTripsForDriver(state, id));
 
   const canEdit = appUser.role === USER_ROLES.ADMIN || appUser.id === user.id;
+
+  const recordTrips = {
+    labels: monthsShort,
+    datasets: [
+      {
+        label: 'Przejechano',
+        data: getTripsData(trips),
+        backgroundColor: ['transparent'],
+        borderColor: 'rgba(88, 64, 187,0.8)',
+        borderWidth: 2,
+        pointBorderColor: '#ffffff',
+        pointBackgroundColor: 'rgba(88, 64, 187,1)',
+        pointRadius: 6,
+        pointBorderWidth: 3,
+      },
+    ],
+  };
 
   return user ? (
     <Details>
@@ -129,7 +118,7 @@ const UserDetalis = () => {
         <>
           <DetailsSection>
             <LineChart
-              data={sampleData}
+              data={recordTrips}
               dataOffset={6}
               title={'Przejechane kilometry'}
             />

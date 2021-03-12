@@ -6,7 +6,7 @@ import carModelsReducer from '../features/vehicles/carModelsSlice';
 import filtersReducer from '../features/templates/filterSlice';
 import layoutReducer from '../features/layout/layoutSlice';
 import recordsReducer from '../features/records/recordsSlice';
-import settingsReducer from '../features/settings/settingsSlice';
+import settingsReducer from '../features/settings/redux/settingsSlice';
 import tripsReducer from '../features/trips/tripsSlice';
 import tripTemplatesReducer from '../features/tripTemplates/tripTemplatesSlice';
 import vehicleReducer from '../features/vehicles/redux/vehiclesSlice';

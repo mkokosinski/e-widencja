@@ -3,11 +3,11 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit';
-import { selectFilters } from '../templates/filterSlice';
-import { firestore } from '../../app/firebase/firebase';
-import { selectRecordById, selectRecords } from '../records/recordsSlice';
-import { compareDates } from '../../utils/dateUtils';
-import { FETCH_STATUS, SETTING_NAME } from '../../utils/constants';
+import { selectFilters } from '../../templates/filterSlice';
+import { firestore } from '../../../app/firebase/firebase';
+import { selectRecordById, selectRecords } from '../../records/recordsSlice';
+import { compareDates } from '../../../utils/dateUtils';
+import { FETCH_STATUS, SETTING_NAME } from '../../../utils/constants';
 import { toast } from 'react-toastify';
 
 const mergeSettings = (docs) => {

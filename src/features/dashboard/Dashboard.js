@@ -10,6 +10,7 @@ import {
   DashboardTitle,
 } from './DashboardStyles';
 import Glider from '../../app/components/Glider';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
 
 const Dashboard = () => {
   return (
@@ -36,7 +37,10 @@ const Dashboard = () => {
         <CheckupList />
       </DashboardSection>
 
-      <DashboardSection>Zgłoszone uwagi</DashboardSection>
+      <DashboardSection>
+        <DashboardTitle>Zgłoszone uwagi</DashboardTitle>
+        <EmptyState>Brak zgłoszonych uwag</EmptyState>
+      </DashboardSection>
     </DashboardContainer>
   );
 };
