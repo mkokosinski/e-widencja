@@ -1,7 +1,7 @@
 import React from 'react';
 import { selectFilteredUsers } from './usersSlice';
 import { useSelector } from 'react-redux';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
 import {

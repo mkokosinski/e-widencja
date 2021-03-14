@@ -7,7 +7,7 @@ import {
   faPlusSquare,
   faTrash,
   faTruckPickup,
-  faUser
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredUsers } from '../users/usersSlice';
@@ -15,7 +15,7 @@ import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  TopPanel
+  TopPanel,
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TripsFilters from './TripFilters';
@@ -25,19 +25,19 @@ import FilterModal from './TripFilters';
 import { selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { EndLabel, StartLabel, StopsLabel } from './TripTemplatesStyles';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 const buttons = (id) => [
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.TripTemplateEdit.action}/${id}`
+    action: `${Routing.TripTemplateEdit.action}/${id}`,
   },
   {
     ico: faTrash,
     label: 'Usuń',
-    action: `${Routing.TripTemplateEdit.action}/${id}`
-  }
+    action: `${Routing.TripTemplateEdit.action}/${id}`,
+  },
 ];
 
 const TripTemplates = () => {

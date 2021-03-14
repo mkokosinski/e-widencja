@@ -16,7 +16,7 @@ import SignInForm from './SignInForm';
 import { Redirect, Route, Switch, useLocation } from 'react-router';
 import SignUpForm from './SignUpForm';
 import { AnimatePresence, motion } from 'framer-motion';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 import { ReactComponent as Earth } from '../../assets/earth.svg';
 import { ReactComponent as Van } from '../../assets/van.svg';
 import { useSelector } from 'react-redux';

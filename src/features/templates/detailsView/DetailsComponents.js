@@ -19,7 +19,7 @@ import {
   PanelBoxShadow,
 } from '../../layout/LayoutStyles';
 import { ButtonsContainer, Container, Row } from '../../forms/FormsStyles';
-import Routing from '../../routing/RoutingPaths';
+import Routing from '../../routing/Routing';
 import { ModalContent } from '../ListView/ListViewStyles';
 import { Link } from 'react-router-dom';
 

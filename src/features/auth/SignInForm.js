@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
 import { StyledField, Row, StyledError } from '../forms/FormsStyles';
@@ -16,7 +16,7 @@ import {
   AuthFormFooter,
   AuthFormHeader,
   AuthLink,
-  AuthFormBody
+  AuthFormBody,
 } from './AuthStyles';
 import { motion } from 'framer-motion';
 import { authFormAnimations } from '../../utils/animationUtils';
@@ -30,12 +30,12 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .max(30, 'Maksymalnie 30 znaków')
     .matches(/^[A-Za-z\d@$!%*#?&]{1,}$/, 'Niedozwolone znaki w haśle')
-    .required('Pole wymagane')
+    .required('Pole wymagane'),
 });
 
 const initValues = {
   email: '',
-  password: ''
+  password: '',
 };
 
 const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {

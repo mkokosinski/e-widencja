@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as Styled from './NavbarStyles';
 import NavbarItem from './NavbarItem';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import {
   faChartLine,
@@ -11,7 +11,7 @@ import {
   faUserFriends,
   faRoute,
   faCog,
-  faFileAlt
+  faFileAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import ShowMore from './ShowMore';
 import { useSelector } from 'react-redux';
@@ -24,18 +24,18 @@ const itemsDesktop = [
   {
     name: Routing.Users.label,
     path: Routing.Users.path,
-    icon: faUserFriends
+    icon: faUserFriends,
   },
   { name: 'Trasy', path: Routing.TripTemplates.path, icon: faRoute },
   { name: 'Ustawienia', path: Routing.Settings.path, icon: faCog },
-  { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt }
+  { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
 ];
 
 const itemsMobile = [
   { name: 'Ewidencja', path: Routing.Records.path, icon: faClipboard },
   { name: 'Pojazdy', path: Routing.Vehicles.path, icon: faCarAlt },
   { name: 'Trasy', path: Routing.TripTemplates.path, icon: faRoute },
-  { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt }
+  { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
 ];
 
 const hiddenMobileItems = [
@@ -43,9 +43,9 @@ const hiddenMobileItems = [
   {
     name: Routing.Users.label,
     path: Routing.Users.path,
-    icon: faUserFriends
+    icon: faUserFriends,
   },
-  { name: 'Ustawienia', path: Routing.Settings.path, icon: faCog }
+  { name: 'Ustawienia', path: Routing.Settings.path, icon: faCog },
 ];
 
 const Navbar = () => {

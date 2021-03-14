@@ -43,7 +43,37 @@ export const createLineChart = (context) =>
     },
   });
 
+export const fillDatasets = (datasets, labels) => {
+  console.log(datasets[0].data);
+};
+
+export const groupByYear = (items) =>
+  items.reduce((acc, cur) => {
+    const year = new Date(cur.date).getFullYear();
+    if (acc[year]) {
+      return { ...acc, [year]: [...acc[year], cur] };
+    }
+
+    return { ...acc, [year]: [cur] };
+  }, {});
+
 export const getTripsData = (trips) => {
+  const groupedByYear = groupByYear(trips);
+
+  const test = Object.keys(groupedByYear).reduce((acc, cur) => {
+    return {
+      ...acc,
+      [cur]: Array.from({ length: 12 }, (v, k) => k).reduce(
+        (months, curMonth) => {
+          return { ...months, [curMonth]: curMonth };
+        },
+        {},
+      ),
+    };
+  }, {});
+
+  console.log(test);
+
   const groupedTrips = trips.reduce((acc, cur) => {
     const monthYear = getFirstDateOfMoth(cur.date);
     if (acc[monthYear]) {

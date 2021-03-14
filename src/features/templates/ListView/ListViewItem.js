@@ -7,7 +7,7 @@ import {
   Buttons,
   Button,
   ButtonBody,
-  ButtonIco
+  ButtonIco,
 } from './ListViewItemStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,7 +29,7 @@ const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
           {buttons &&
             buttons.map((button, index) => (
               <Button key={index}>
-                <A to={{ pathname: button.action }}>
+                <A to={{ pathname: button.action, state: button.state }}>
                   <ButtonBody>
                     <ButtonIco>
                       <FontAwesomeIcon icon={button.ico} />

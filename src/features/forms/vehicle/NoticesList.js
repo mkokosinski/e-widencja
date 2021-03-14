@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EmptyState } from '../../templates/detailsView/DetailsStyles';
-import Routing from '../../routing/RoutingPaths';
+import Routing from '../../routing/Routing';
 import { getRemainDays } from '../../../utils/dateUtils';
 import {
   BorderedListItem,

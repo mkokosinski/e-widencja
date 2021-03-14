@@ -12,7 +12,7 @@ import {
   Canvas,
 } from './ChartsStyles';
 import { DateFrom } from '../../utils/dateUtils';
-import { createLineChart } from '../../utils/chartUtils';
+import { createLineChart, fillDatasets } from '../../utils/chartUtils';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
 
@@ -39,6 +39,7 @@ const LineChart = ({ title = '', data, dataOffset }) => {
   const [currentYear, setCurrentYear] = useState(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const chartRef = useRef(null);
+
   const dataLength = Object.keys(data.datasets[0].data).length;
   const previousButtonDisabled = currentOffset - dataOffset < 0;
   const nextButtonDisabled = currentOffset + dataOffset >= dataLength;
@@ -53,17 +54,20 @@ const LineChart = ({ title = '', data, dataOffset }) => {
     (offset) => {
       if (chart && data) {
         const { labels, datasets } = data;
+        const chartData = fillDatasets(datasets);
+
         const limitedLabels = labels.slice(
           currentOffset,
-          currentOffset + offset
+          currentOffset + offset,
         );
         const limitedDatasets = [];
+
         datasets.forEach((dataset) => {
           const newDataset = {
             ...dataset,
             data: Object.values(dataset.data).slice(
               currentOffset,
-              currentOffset + offset
+              currentOffset + offset,
             ),
           };
           limitedDatasets.push(newDataset);
@@ -74,7 +78,7 @@ const LineChart = ({ title = '', data, dataOffset }) => {
         chart.update();
       }
     },
-    [chart, currentOffset, data]
+    [chart, currentOffset, data],
   );
 
   const nextStep = () => {

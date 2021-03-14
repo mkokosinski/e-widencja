@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectIsMobileKeyboard } from '../layout/layoutSlice';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import {
   selectFiteredRecords,
   selectSortCases,
-  setSortFunc
+  setSortFunc,
 } from './recordsSlice';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import SortButton from '../../app/components/SortButton';
@@ -16,7 +16,7 @@ import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  TopPanel
+  TopPanel,
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -24,7 +24,7 @@ import {
   faFileAlt,
   faPlus,
   faPlusSquare,
-  faUser
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import FilterButton from '../../app/components/FilterButton';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
@@ -33,18 +33,18 @@ const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.RecordDetails.action}/${id}`
+    action: `${Routing.RecordDetails.action}/${id}`,
   },
   {
     ico: faPlusSquare,
     label: 'Przejazd',
-    action: `${Routing.TripAdd.action}/${id}`
+    action: `${Routing.TripAdd.action}/${id}`,
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.RecordEdit.action}/${id}`
-  }
+    action: `${Routing.RecordEdit.action}/${id}`,
+  },
 ];
 const Records = () => {
   const { items: records, status } = useSelector(selectFiteredRecords);
@@ -54,7 +54,7 @@ const Records = () => {
     <ItemsList>
       <TopPanel isMobileKeyboard={isMobileKeyboard}>
         <ButtonAdd>
-          <AddItem to={`${Routing.RecordAdd.path}`}>
+          <AddItem to={`${Routing.RecordAdd.action}`}>
             <FontAwesomeIcon icon={faPlus} />
             <span> Nowa ewidencja</span>
           </AddItem>

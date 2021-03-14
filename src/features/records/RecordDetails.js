@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteRecord, selectRecordById } from './recordsSlice';
 
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import LineChart from '../charts/Chart';
 import RecentList from '../templates/detailsView/RecentTrips';

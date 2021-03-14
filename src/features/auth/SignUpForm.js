@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
 import { StyledField, Row, StyledError } from '../forms/FormsStyles';
@@ -18,7 +18,7 @@ import {
   AuthFormHeader,
   AuthFormSubHeader,
   AuthLink,
-  SignUpLink
+  SignUpLink,
 } from './AuthStyles';
 import { motion } from 'framer-motion';
 import { authFormAnimations } from '../../utils/animationUtils';
@@ -38,18 +38,18 @@ const validationSchema = Yup.object({
     .matches(/[@$!%*#?&]/, 'Przynajmniej 1 znak specjalny')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      'Niedozwolone znaki w haśle'
+      'Niedozwolone znaki w haśle',
     )
     .required('Pole wymagane'),
   passwordConfirmation: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Hasła różną się od siebie')
-    .required('Pole wymagane')
+    .required('Pole wymagane'),
 });
 
 const initValues = {
   email: '',
   password: '',
-  passwordConfirmation: ''
+  passwordConfirmation: '',
 };
 
 const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import styled from 'styled-components';
 import PrivateRoute from './PrivateRoute';
-import Routing from './RoutingPaths';
+import Routing from './Routing';
 
 const ErrorMessage = styled.div`
   color: rgb(151, 1, 1);
@@ -103,6 +103,9 @@ const AppRouter = () => {
         <Switch>
           <Route exact path={Routing.TripAdd.path}>
             <Routing.TripAdd.Component />
+          </Route>
+          <Route exact path={Routing.TripRecordNotExists.path}>
+            <Routing.TripRecordNotExists.Component />
           </Route>
           <Route exact path={Routing.TripEdit.path}>
             <Routing.TripEdit.Component />

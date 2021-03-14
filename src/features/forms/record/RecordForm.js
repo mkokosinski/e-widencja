@@ -23,6 +23,7 @@ import {
   StyledSelect,
 } from '../FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
+import Routing from '../../routing/Routing';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
@@ -30,17 +31,39 @@ const validationSchema = Yup.object({
   mileage: Yup.number().min(1, 'Nie mniejszy niż 1').required('Pole wymagane'),
 });
 
-const RecordForm = ({ record, isEdit }) => {
-  const { goBack } = useHistory();
+const RecordForm = ({ record, isEdit, vehicleId }) => {
+  const { push } = useHistory();
   const dispatch = useDispatch();
   const validation = useValidation();
 
   const { items: vehicles } = useSelector(selectVehicles);
-  // const tripTemplateRef = useRef(null);
 
-  // const focusOn = (ref) => {
-  //   ref.current.focus();
-  // };
+  const vehicleSelectOptions = vehicles.map((vehicle) => {
+    return {
+      label: vehicle.name,
+      value: vehicle.id,
+      mileage: vehicle.mileage,
+    };
+  });
+
+  const defaultVehicleOption = isEdit
+    ? {
+        label: record.vehicle.name,
+        value: record.vehicle.id,
+        mileage: record.vehicle.mileage,
+      }
+    : vehicleSelectOptions.find((opt) => opt.value === vehicleId);
+
+  const minDate = () => {
+    const date = new Date();
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  };
+
+  const initValues = {
+    date: record ? `${record.year}-${record.month}` : minDate(),
+    vehicle: defaultVehicleOption || '',
+    mileage: record?.mileage || defaultVehicleOption?.mileage,
+  };
 
   const handleSubmit = (values) => {
     const date = new Date(values.date);
@@ -57,32 +80,11 @@ const RecordForm = ({ record, isEdit }) => {
 
     if (validate.success) {
       dispatch(action(data)).then((res) => {
-        goBack();
+        push(Routing.Records.path);
       });
     } else {
       toast.error(validate.error);
     }
-  };
-
-  const vehicleSelectOptions = vehicles.map((vehicle) => {
-    return {
-      label: vehicle.name,
-      value: vehicle.id,
-      mileage: vehicle.mileage,
-    };
-  });
-
-  const defaultVehicleOption = record && (record.vehicle || '');
-
-  const minDate = () => {
-    const date = new Date();
-    return new Date(date.getFullYear(), date.getMonth(), 1);
-  };
-
-  const initValues = record || {
-    date: minDate(),
-    vehicle: '',
-    mileage: 1,
   };
 
   return (
@@ -116,6 +118,7 @@ const RecordForm = ({ record, isEdit }) => {
                     as='select'
                     isSearchable={true}
                     options={vehicleSelectOptions}
+                    ini
                     onChange={(value) => {
                       setFieldTouched('vehicle');
                       setFieldTouched('mileage');
@@ -142,7 +145,9 @@ const RecordForm = ({ record, isEdit }) => {
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
+              <ButtonBordered onClick={() => push(Routing.Records.path)}>
+                Anuluj
+              </ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

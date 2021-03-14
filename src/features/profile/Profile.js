@@ -11,7 +11,7 @@ import {
   faUserAlt,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';

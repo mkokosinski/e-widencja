@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import {
   faEdit,
@@ -8,7 +8,7 @@ import {
   faPlus,
   faPlusSquare,
   faTruckPickup,
-  faUser
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredUsers } from '../users/usersSlice';
@@ -16,7 +16,7 @@ import {
   AddItem,
   ButtonAdd,
   ItemsList,
-  TopPanel
+  TopPanel,
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TripsFilters from './TripFilters';
@@ -30,13 +30,13 @@ const buttons = (id) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
-    action: `${Routing.TripDetails.action}/${id}`
+    action: `${Routing.TripDetails.action}/${id}`,
   },
   {
     ico: faEdit,
     label: 'Edytuj',
-    action: `${Routing.TripEdit.action}/${id}`
-  }
+    action: `${Routing.TripEdit.action}/${id}`,
+  },
 ];
 
 const Users = () => {

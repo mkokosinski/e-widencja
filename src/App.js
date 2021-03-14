@@ -4,7 +4,7 @@ import { Route, Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './features/routing/PrivateRoute';
-import Routing from './features/routing/RoutingPaths';
+import Routing from './features/routing/Routing';
 import AppRouter from './features/routing/AppRouter';
 
 import LayoutProvider from './features/layout/LayoutProvider';
@@ -20,7 +20,6 @@ import { fetchUsers } from './features/users/usersSlice';
 import { fetchVehicles } from './features/vehicles/redux/vehicleThunk';
 import { fetchCarBrands } from './features/vehicles/carBrandsSlice';
 import { fetchCarModels } from './features/vehicles/carModelsSlice';
-import { subscribeAll, unsubscribeAll } from './app/firebase/firebaseListeners';
 import Logo from './features/layout/Logo';
 import Navbar from './features/navbar/Navbar';
 import Profilebar from './features/profile/Profilebar';
@@ -76,10 +75,8 @@ const App = () => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
         dispatch(authorize({ user }));
-        subscribeAll(dispatch);
       } else {
         setIsUserLoading(false);
-        unsubscribeAll();
       }
     });
   }, [dispatch]);

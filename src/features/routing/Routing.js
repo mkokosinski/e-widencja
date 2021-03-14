@@ -4,6 +4,7 @@ import SignUp from '../auth/SignUpForm';
 
 import Trips from '../trips/Trips';
 import AddTripForm from '../forms/trip/AddTripForm';
+import TripRecordNotExists from '../trips/TripRecordNotExists';
 import EditTripForm from '../forms/trip/EditTripForm';
 import TripDetails from '../trips/TripDetails';
 
@@ -47,6 +48,10 @@ const Routing = {
       return `${this.action}/:recordId`;
     },
   },
+  TripRecordNotExists: {
+    Component: TripRecordNotExists,
+    action: '/app/trips/add',
+  },
   TripEdit: {
     Component: EditTripForm,
     action: '/app/trips/edit',
@@ -83,7 +88,13 @@ const Routing = {
   Reports: { Component: Reports, path: '/app/reports' },
 
   Records: { Component: Records, path: '/app/records' },
-  RecordAdd: { Component: AddRecordForm, path: '/app/records/add' },
+  RecordAdd: {
+    Component: AddRecordForm,
+    action: '/app/records/add',
+    get path() {
+      return `${this.action}/:vehicleId?`;
+    },
+  },
   RecordEdit: {
     Component: EditRecordForm,
     action: '/app/records/edit',

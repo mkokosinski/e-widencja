@@ -7,7 +7,7 @@ import {
   selectVehicleSort,
   setSortFunc,
 } from './redux/vehiclesSlice';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -38,8 +38,12 @@ import {
   Title,
 } from '../templates/ListView/ListViewItemStyles';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
+import {
+  selectCurrentMonthRecordForVehicle,
+  selectRecords,
+} from '../records/recordsSlice';
 
-const buttons = (id) => [
+const buttons = (id, currentMonthRecordId) => [
   {
     ico: faFileAlt,
     label: 'Szczegóły',
@@ -48,7 +52,8 @@ const buttons = (id) => [
   {
     ico: faPlusSquare,
     label: 'Przejazd',
-    action: 'details',
+    action: `${Routing.TripAdd.action}/${currentMonthRecordId}`,
+    state: { vehicleId: id },
   },
   {
     ico: faEdit,
@@ -59,6 +64,7 @@ const buttons = (id) => [
 
 function Vehicles() {
   const { items: vehicles } = useSelector(selectFilteredVehicles);
+  const { items: records } = useSelector(selectRecords);
   const dispach = useDispatch();
   const sortItems = useSelector(selectVehicleSort);
 
@@ -76,30 +82,38 @@ function Vehicles() {
       </TopPanel>
 
       {vehicles.length > 0 ? (
-        vehicles.map((vehicle, index) => (
-          <ListViewItem
-            key={vehicle.id}
-            ico={faCarAlt}
-            path={Routing.Vehicles.path}
-            buttons={buttons(vehicle.id)}
-          >
-            <Title>
-              <Name>{vehicle.name}</Name>
-              <Subname>{`${vehicle.brand} ${vehicle.model}`}</Subname>
-            </Title>
+        vehicles.map((vehicle, index) => {
+          const recordForCurrentMonth = records.find(
+            (rec) =>
+              rec.vehicleId === vehicle.id &&
+              rec.month === new Date().getMonth() + 1,
+          );
 
-            <Journeys>
-              <Journey>
-                <InfoMain>359,34km</InfoMain>
-                <InfoSecondary>w tym miesiącu</InfoSecondary>
-              </Journey>
-              <Journey>
-                <InfoMain>29 przejazdów</InfoMain>
-                <InfoSecondary>w tym miesiącu</InfoSecondary>
-              </Journey>
-            </Journeys>
-          </ListViewItem>
-        ))
+          return (
+            <ListViewItem
+              key={vehicle.id}
+              ico={faCarAlt}
+              path={Routing.Vehicles.path}
+              buttons={buttons(vehicle.id, recordForCurrentMonth?.id || '')}
+            >
+              <Title>
+                <Name>{vehicle.name}</Name>
+                <Subname>{`${vehicle.brand} ${vehicle.model}`}</Subname>
+              </Title>
+
+              <Journeys>
+                <Journey>
+                  <InfoMain>359,34km</InfoMain>
+                  <InfoSecondary>w tym miesiącu</InfoSecondary>
+                </Journey>
+                <Journey>
+                  <InfoMain>29 przejazdów</InfoMain>
+                  <InfoSecondary>w tym miesiącu</InfoSecondary>
+                </Journey>
+              </Journeys>
+            </ListViewItem>
+          );
+        })
       ) : (
         <EmptyState>Brak dostępnych pojazdów</EmptyState>
       )}

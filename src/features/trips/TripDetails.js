@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import LineChart from '../charts/Chart';
 import RecentList from '../templates/detailsView/RecentTrips';

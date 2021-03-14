@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, selectUserById } from './usersSlice';
-import Routing from '../routing/RoutingPaths';
+import Routing from '../routing/Routing';
 
 import LineChart from '../charts/Chart';
 import {

@@ -9,7 +9,7 @@ import {
   getRemainDays,
 } from '../../../utils/dateUtils';
 import { selectVehicles } from '../../vehicles/redux/vehiclesSlice';
-import Routing from '../../routing/RoutingPaths';
+import Routing from '../../routing/Routing';
 
 import {
   ListItemMinorInfo,
