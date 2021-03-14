@@ -12,7 +12,7 @@ export const AuthContainer = styled.div`
   grid-template-rows: 1fr max-content;
   min-height: 100vh;
   width: 100vw;
-  /* height: ${({ theme }) => theme.currSiteSize.y}px; */
+  /* height: ${({ theme }) => theme.currSiteSize.height}px; */
 
   @media screen and (${device.tablet}) {
     align-items: stretch;

@@ -1,3 +1,5 @@
+import { INFO_STATUS } from '../../utils/constants';
+
 const font = {
   family: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",
   size: '18px',
@@ -72,9 +74,10 @@ export const darkTheme = {
     color: '#d0d0d0',
   },
   status: {
-    error: '#ff0000',
-    warning: '#f0bb00',
-    default: '#009938',
+    [INFO_STATUS.DEFAULT]: '#009938',
+    [INFO_STATUS.INFO]: '#174aa0',
+    [INFO_STATUS.ERROR]: '#ff0000',
+    [INFO_STATUS.WARNING]: '#f0bb00',
   },
   font,
   shadows: {

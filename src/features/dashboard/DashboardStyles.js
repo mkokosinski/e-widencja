@@ -61,7 +61,7 @@ export const DashboardListItem = styled(Link)`
   display: flex;
   gap: 3px;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: 0.8rem;
   justify-content: center;
   margin: 8px 0;
   margin-left: 3px;
@@ -74,14 +74,18 @@ export const DashboardListItem = styled(Link)`
     box-shadow: 0 1px 8px -6px #000000cc;
     transition: box-shadow 200ms;
   }
+
+  @media screen and (${device.mobileXL}) {
+    font-size: 0.9rem;
+  }
 `;
 
-export const CheckupListItem = styled(DashboardListItem)`
+export const BorderedListItem = styled(DashboardListItem)`
   border-left: 3px solid ${({ status, theme }) => theme.status[status]};
 `;
 
-export const CheckupRemain = styled.div`
-  font-size: 0.8rem;
+export const ListItemMinorInfo = styled.div`
+  font-size: 0.7rem;
   opacity: 0.4;
   position: absolute;
   right: 1rem;

@@ -13,6 +13,7 @@ import {
   editVehicle,
   fetchVehicles,
 } from './vehicleThunk';
+import noticeReducers from './notices';
 
 const sortMethods = {
   Nazwa: {
@@ -124,6 +125,7 @@ export const vehicleSlice = createSlice({
       state.error = action.payload.message;
       toast.error(action.payload.message);
     },
+    ...noticeReducers,
   },
 });
 
@@ -131,7 +133,7 @@ export const selectVehicles = (state) => {
   const { vehicles } = state;
   const { sortFunc } = vehicles;
   const sorted = [...vehicles.items].sort(
-    sortMethods[sortFunc.name][sortFunc.condition]
+    sortMethods[sortFunc.name][sortFunc.condition],
   );
   return { ...vehicles, items: sorted };
 };
@@ -143,14 +145,14 @@ export const selectFilteredVehicles = createSelector(
 
     const filtered = vehicles.items
       .filter((veh) =>
-        vehicleFilter.enable ? veh.id === vehicleFilter.filter.value : veh
+        vehicleFilter.enable ? veh.id === vehicleFilter.filter.value : veh,
       )
       .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
       );
 
     return { ...vehicles, items: filtered };
-  }
+  },
 );
 
 export const selectVehicleById = (state, vehicleId) =>

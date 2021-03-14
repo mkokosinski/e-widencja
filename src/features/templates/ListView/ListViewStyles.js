@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 
 import SearchBar from '../../searchbar/SearchBar';
 
-import { device, ButtonBorderedMain } from '../../layout/LayoutStyles';
+import {
+  device,
+  ButtonBorderedMain,
+  screenSize,
+} from '../../layout/LayoutStyles';
 
 export const TopPanel = styled.div`
   display: ${(props) => (props.isMobileKeyboard ? `none` : `flex`)};
@@ -51,7 +55,7 @@ export const ButtonAdd = styled(TopPanelButton)`
     background-color: ${(props) => props.theme.secondarySoft};
   }
 
-  @media screen and (${device.mobileXL}) {
+  @media screen and (max-width: ${screenSize.mobileXL}px) {
     border-radius: 50%;
     box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.5),
       0 4px 8px -2px rgba(0, 0, 0, 0.2);

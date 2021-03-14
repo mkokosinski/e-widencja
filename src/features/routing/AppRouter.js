@@ -18,7 +18,7 @@ const Error404 = () => {
   );
 };
 
-const Router = () => {
+const AppRouter = () => {
   return (
     <Switch>
       <Route exact path='/'>
@@ -151,4 +151,4 @@ const Router = () => {
   );
 };
 
-export default Router;
+export default AppRouter;

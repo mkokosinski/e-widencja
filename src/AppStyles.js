@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 
 export const StyledApp = styled.div`
   position: relative;
-  min-width: ${({ theme }) => theme.currSiteSize.x}px;
-  min-height: ${({ theme }) => theme.currSiteSize.y}px;
+  min-width: ${({ theme }) => theme.currSiteSize.width}px;
+  min-height: ${({ theme }) => theme.currSiteSize.height}px;
   height: 100%;
   width: 100%;
 `;

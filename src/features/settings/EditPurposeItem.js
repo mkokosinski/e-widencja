@@ -57,6 +57,7 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
               innerRef={inputref}
               ref={inputref}
               value={value}
+              scrollFocused
               placeholder='Podaj cel wyjazdu'
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={keysBinding}

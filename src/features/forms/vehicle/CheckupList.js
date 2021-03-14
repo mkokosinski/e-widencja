@@ -6,15 +6,16 @@ import {
   compareDates,
   dateBetween,
   differenceInDays,
-} from '../../utils/dateUtils';
-import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
-import Routing from '../routing/RoutingPaths';
+  getRemainDays,
+} from '../../../utils/dateUtils';
+import { selectVehicles } from '../../vehicles/redux/vehiclesSlice';
+import Routing from '../../routing/RoutingPaths';
 
 import {
-  CheckupRemain,
+  ListItemMinorInfo,
   DashboardList,
-  CheckupListItem,
-} from './DashboardStyles';
+  BorderedListItem,
+} from '../../dashboard/DashboardStyles';
 
 const getStatus = (date) => {
   const today = new Date();
@@ -30,25 +31,6 @@ const getStatus = (date) => {
     return 'warning';
   }
   return 'default';
-};
-
-const getRemainDays = (date) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const checkupDate = new Date(date);
-  const diff = differenceInDays(checkupDate, today);
-  const dayString = Math.abs(diff) === 1 ? 'dzień' : 'dni';
-
-  const reaminText =
-    diff === 0
-      ? 'dziś'
-      : diff === 1
-      ? 'jutro'
-      : diff < 0
-      ? `${Math.abs(diff)} ${dayString} po terminie`
-      : `za ${Math.abs(diff)} ${dayString}`;
-
-  return reaminText;
 };
 
 const CheckupList = () => {
@@ -69,11 +51,13 @@ const CheckupList = () => {
       {checkups.sort().map(({ name, date, status, reamin, path }) => {
         return (
           <React.Fragment key={date + name}>
-            <CheckupListItem status={status} to={path}>
+            <BorderedListItem status={status} to={path}>
               <div style={{ opacity: 0.9 }}>{name}</div>
               <div style={{ opacity: 0.7, fontSize: '.9em' }}>{date}</div>
-              <CheckupRemain>{status !== 'default' && reamin}</CheckupRemain>
-            </CheckupListItem>
+              <ListItemMinorInfo>
+                {status !== 'default' && reamin}
+              </ListItemMinorInfo>
+            </BorderedListItem>
           </React.Fragment>
         );
       })}

@@ -103,10 +103,30 @@ export const differenceInDays = (dateOne, dateTwo) => {
 
   const diff = (date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24);
 
-  return diff;
+  return parseInt(diff);
 };
 
 export const getFirstDateOfMoth = (date) => {
   const fullDate = DateFrom(date);
   return new Date(fullDate.getFullYear(), fullDate.getMonth(), 1);
+};
+
+export const getRemainDays = (date, expiredText = 'po terminie') => {
+  console.log(date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const checkedDate = new Date(date);
+  const diff = differenceInDays(checkedDate, today);
+  const dayString = Math.abs(diff) === 1 ? 'dzień' : 'dni';
+
+  const reaminText =
+    diff === 0
+      ? 'dziś'
+      : diff === 1
+      ? 'jutro'
+      : diff < 0
+      ? `${Math.abs(diff)} ${dayString} ${expiredText}`
+      : `za ${Math.abs(diff)} ${dayString}`;
+
+  return reaminText;
 };

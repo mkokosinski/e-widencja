@@ -101,7 +101,7 @@ function Vehicles() {
           </ListViewItem>
         ))
       ) : (
-        <Title>Brak dostępnych pojazdów</Title>
+        <EmptyState>Brak dostępnych pojazdów</EmptyState>
       )}
     </ItemsList>
   );

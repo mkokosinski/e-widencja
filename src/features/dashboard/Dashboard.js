@@ -2,17 +2,22 @@ import React from 'react';
 
 import ProfileSection from './ProfileSection';
 import RecentList from '../templates/detailsView/RecentTrips';
-import CheckupList from './CheckupList';
+import CheckupList from '../forms/vehicle/CheckupList';
+import Glider from '../../app/components/Glider';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
+import NoticesList from '../forms/vehicle/NoticesList';
+import { useSelector } from 'react-redux';
+import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
+
 import {
   DashboardContainer,
   DashboardHeader,
   DashboardSection,
   DashboardTitle,
 } from './DashboardStyles';
-import Glider from '../../app/components/Glider';
-import { EmptyState } from '../templates/detailsView/DetailsStyles';
 
 const Dashboard = () => {
+  const { items: vehicles } = useSelector(selectVehicles);
   return (
     <DashboardContainer>
       {/* <DetailsSection>
@@ -39,7 +44,7 @@ const Dashboard = () => {
 
       <DashboardSection>
         <DashboardTitle>Zgłoszone uwagi</DashboardTitle>
-        <EmptyState>Brak zgłoszonych uwag</EmptyState>
+        <NoticesList vehicles={vehicles} />
       </DashboardSection>
     </DashboardContainer>
   );

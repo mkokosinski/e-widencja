@@ -24,8 +24,12 @@ import { validationMessages } from '../../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../../vehicles/redux/vehicleThunk';
 import { selectNotices } from '../../../settings/redux/settingsSlice';
 import { selectVehicleById } from '../../../vehicles/redux/vehiclesSlice';
+import { addNotice } from '../../../vehicles/redux/notices';
+import DateInput, { DATEPICKER_TYPES } from '../../DateInput';
 
 const validationSchema = Yup.object({
+  date: Yup.string().required(validationMessages.required),
+
   noticeName: Yup.string()
     .min(3, validationMessages.min(3))
     .max(50, validationMessages.max(50))
@@ -50,23 +54,29 @@ const VehicleNoticeForm = ({ isEdit }) => {
 
   const typeOptions = noticeTypes.items.map((opt) => ({
     label: opt.name,
-    value: opt.name,
+    value: opt,
   }));
 
   const handleSubmit = (values) => {
     const data = {
       id: values.id,
-      vehicle: values.vehicle,
-      name: values.noticeName,
+      date: values.date,
       description: values.description,
+      name: values.noticeName,
+      vehicleId: vehicle.id,
       type: values.type,
     };
+    const action = isEdit ? null : addNotice;
 
-    // isEdit ? null : null;
+    dispatch(action(data)).then((res) => {
+      goBack();
+    });
   };
 
   const initValues = {
     vehicle: `${vehicle.brand} ${vehicle.model} (${vehicle.registrationNumber})`,
+    vehicleId: vehicle.id,
+    date: new Date(),
     noticeName: '',
     description: '',
     type: '',
@@ -81,14 +91,25 @@ const VehicleNoticeForm = ({ isEdit }) => {
       >
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
-            <StyledFormTitle>{values.vehicle}</StyledFormTitle>
-
+            <StyledFormTitle>{`${values.vehicle} - uwagi`}</StyledFormTitle>
+            <Row>
+              <FieldWithErrors name='date' label='Data'>
+                <DateInput
+                  dateFormat='yyyy-MM-dd'
+                  onChange={(date) => {
+                    setFieldTouched('date');
+                    setFieldValue('date', date);
+                  }}
+                  defaultDate={values.date}
+                  type={DATEPICKER_TYPES.daypicker}
+                />
+              </FieldWithErrors>
+            </Row>
             <Row>
               <FieldWithErrors name='noticeName' label='Nazwa' scrollFocused>
                 <StyledField type='text' />
               </FieldWithErrors>
             </Row>
-
             <Row>
               <FieldWithErrors name='type' label='Typ' scrollFocused>
                 <StyledSelect>
@@ -106,13 +127,11 @@ const VehicleNoticeForm = ({ isEdit }) => {
                 </StyledSelect>
               </FieldWithErrors>
             </Row>
-
             <Row>
               <FieldWithErrors name='description' label='Opis' scrollFocused>
-                <StyledField as='textarea' resize='vertical' rows='6' />
+                <StyledField component='textarea' resize='vertical' rows='6' />
               </FieldWithErrors>
             </Row>
-
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
               <ButtonBorderedSeconderySoft onClick={goBack}>

@@ -37,7 +37,7 @@ export const StyledLayout = styled.div`
     'logo profile'
     'body body'
     'menu menu';
-  min-height: ${({ theme }) => theme.currSiteSize.y}px;
+  min-height: ${({ theme }) => theme.currSiteSize.height}px;
   @media screen and (${device.laptop}) {
     background-color: ${(props) => props.theme.mainSoft};
     grid-template-columns: 18% 82%;

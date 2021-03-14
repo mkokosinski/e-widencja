@@ -1,43 +1,42 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Router, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './features/routing/PrivateRoute';
 import Routing from './features/routing/RoutingPaths';
+import AppRouter from './features/routing/AppRouter';
 
-import Layout from './features/layout/Layout';
-import { useDispatch, useSelector } from 'react-redux';
+import LayoutProvider from './features/layout/LayoutProvider';
 import { auth } from './app/firebase/firebase';
-import { selectAuth, authorize } from './features/auth/authSlice';
 import Loading from './features/loading/Loading';
-import { fetchSettings } from './features/settings/redux/settingsSlice';
-import { fetchVehicles } from './features/vehicles/redux/vehicleThunk';
-import { fetchUsers } from './features/users/usersSlice';
+import { selectAuth, authorize } from './features/auth/authSlice';
+import { fetchCompany } from './features/company/companySlice';
 import { fetchRecords } from './features/records/recordsSlice';
+import { fetchSettings } from './features/settings/redux/settingsSlice';
 import { fetchTrips } from './features/trips/tripsSlice';
 import { fetchTripTemplates } from './features/tripTemplates/tripTemplatesSlice';
+import { fetchUsers } from './features/users/usersSlice';
+import { fetchVehicles } from './features/vehicles/redux/vehicleThunk';
 import { fetchCarBrands } from './features/vehicles/carBrandsSlice';
 import { fetchCarModels } from './features/vehicles/carModelsSlice';
 import { subscribeAll, unsubscribeAll } from './app/firebase/firebaseListeners';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Logo from './features/layout/Logo';
+import Navbar from './features/navbar/Navbar';
+import Profilebar from './features/profile/Profilebar';
 import {
-  setIsLaptop,
-  setIsMobile,
-  setInitSiteSize,
-  selectSiteSize,
-  selectIsMobile,
-  setCurrSiteSize,
-} from './features/layout/layoutSlice';
-import { ThemeProvider } from 'styled-components';
-import { fetchCompany } from './features/company/companySlice';
+  StyledLayout,
+  Menu,
+  Body,
+  StyledLogo,
+} from './features/layout/LayoutStyles';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [errors, setErrors] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { user: appUser } = useSelector(selectAuth);
-  const isMobile = useSelector(selectIsMobile);
-  const currSiteSize = useSelector(selectSiteSize);
 
   const dispatch = useDispatch();
   const shouldSignIn = !isUserLoading && !appUser;
@@ -85,46 +84,8 @@ const App = () => {
     });
   }, [dispatch]);
 
-  const handleInitSize = useCallback(() => {
-    const {
-      documentElement: { clientHeight, clientWidth },
-    } = document;
-    dispatch(setInitSiteSize({ height: clientHeight, width: clientWidth }));
-    dispatch(setCurrSiteSize({ x: clientWidth, y: clientHeight }));
-  }, [dispatch]);
-
-  useEffect(() => {
-    handleInitSize();
-  }, [handleInitSize]);
-
-  const handleCurrSite = useCallback(() => {
-    const {
-      documentElement: { clientHeight, clientWidth },
-    } = document;
-
-    if (!isMobile && clientWidth < 768) {
-      dispatch(setIsLaptop(false));
-      dispatch(setIsMobile(true));
-    }
-
-    if (isMobile && clientWidth >= 768) {
-      dispatch(setIsLaptop(true));
-      dispatch(setIsMobile(false));
-    }
-    dispatch(setCurrSiteSize({ x: clientWidth, y: clientHeight }));
-  }, [dispatch, isMobile]);
-
-  useEffect(() => {
-    handleCurrSite();
-    window.addEventListener('resize', handleCurrSite);
-
-    return () => {
-      window.removeEventListener('resize', handleCurrSite);
-    };
-  }, [handleCurrSite]);
-
   return (
-    <ThemeProvider theme={{ currSiteSize }}>
+    <LayoutProvider>
       <ToastContainer
         position='top-right'
         autoClose={4000}
@@ -147,11 +108,22 @@ const App = () => {
           </Route>
 
           <PrivateRoute path='/'>
-            <Layout />
+            <StyledLayout>
+              <StyledLogo>
+                <Logo />
+              </StyledLogo>
+              <Menu>
+                <Navbar />
+              </Menu>
+              <Body>
+                <Profilebar />
+                <AppRouter />
+              </Body>
+            </StyledLayout>
           </PrivateRoute>
         </Switch>
       )}
-    </ThemeProvider>
+    </LayoutProvider>
   );
 };
 

@@ -23,3 +23,10 @@ export const SETTING_NAME = {
   PURPOSES: 'Purposes',
   NOTICES: 'Notices',
 };
+
+export const INFO_STATUS = {
+  DEFAULT: 'default',
+  ERROR: 'error',
+  INFO: 'info',
+  WARNING: 'warning',
+};

@@ -17,9 +17,9 @@ export const ModalBackground = styled(motion.div)`
   position: fixed;
   top: 0;
   z-index: 999;
-  height: ${({ theme }) => theme.currSiteSize.y}px;
+  height: ${({ theme }) => theme.currSiteSize.height}px;
   /* height: calc(var(--vh, 1vh) * 100); */
-  width: ${({ theme }) => theme.currSiteSize.x}px;
+  width: ${({ theme }) => theme.currSiteSize.width}px;
 
   @media screen and (${device.mobileXL}) {
     align-items: center;
