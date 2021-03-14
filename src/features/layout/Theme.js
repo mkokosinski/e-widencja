@@ -30,6 +30,7 @@ export const darkTheme = {
   green: '#009938',
   greenLight: '#3fa063',
   red: '#ff0000',
+  redLight: '#f85858',
   white: '#ffffff',
   nav: {
     default: {

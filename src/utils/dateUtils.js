@@ -112,7 +112,6 @@ export const getFirstDateOfMoth = (date) => {
 };
 
 export const getRemainDays = (date, expiredText = 'po terminie') => {
-  console.log(date);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const checkedDate = new Date(date);

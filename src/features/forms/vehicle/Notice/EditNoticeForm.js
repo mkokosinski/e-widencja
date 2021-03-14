@@ -6,17 +6,14 @@ import { useParams } from 'react-router';
 import { selectVehicleById } from '../../../vehicles/redux/vehiclesSlice';
 
 const EditVehicleNoticeForm = () => {
-  const { id } = useParams();
+  const { id, noticeId } = useParams();
 
   const vehicle = useSelector((state) => selectVehicleById(state, id));
+  const notice = vehicle.notices?.find((notice) => notice.id === noticeId);
 
-  //   const initVehicle = {
-  //     ...vehicle,
-  //     brand: { ...carBrand },
-  //     model: { label: vehicle.model, model: vehicle.model },
-  //   };
-
-  return vehicle ? <VehicleNoticeForm isEdit={true} /> : null;
+  return notice ? (
+    <VehicleNoticeForm isEdit={true} editedNotice={notice} />
+  ) : null;
 };
 
 export default EditVehicleNoticeForm;

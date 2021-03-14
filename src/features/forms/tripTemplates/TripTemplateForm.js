@@ -20,10 +20,7 @@ import {
   Input,
   StyledCheckbox,
 } from '../FormsStyles';
-import {
-  ButtonMain,
-  ButtonBorderedSeconderySoft,
-} from '../../layout/LayoutStyles';
+import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -58,7 +55,7 @@ const validationSchema = Yup.object().shape({
     Yup.object().shape({
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
-    })
+    }),
   ),
 });
 
@@ -217,9 +214,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={goBack}>
-                Anuluj
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

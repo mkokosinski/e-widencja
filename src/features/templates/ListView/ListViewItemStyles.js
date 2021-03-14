@@ -5,7 +5,7 @@ import {
   H2,
   PanelOverlapLight,
   PanelLightSoft,
-  ButtonLightSoft
+  ButtonLightSoft,
 } from '../../layout/LayoutStyles';
 
 export const Container = styled(PanelOverlapLight)`
@@ -141,7 +141,8 @@ export const Buttons = styled.div`
 `;
 
 export const Button = styled(ButtonLightSoft)`
-  width: 60px;
+  flex: 1 1 100%;
+  min-width: 60px;
 
   :nth-child(3) {
     display: none;
@@ -152,8 +153,8 @@ export const Button = styled(ButtonLightSoft)`
       display: flex;
     }
   }
-  @media screen and (${device.laptopL}) {
-    width: 70px;
+  @media screen and (${device.laptop}) {
+    flex: 0 1 100px;
   }
 `;
 

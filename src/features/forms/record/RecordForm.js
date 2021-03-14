@@ -22,10 +22,7 @@ import {
   Row,
   StyledSelect,
 } from '../FormsStyles';
-import {
-  ButtonMain,
-  ButtonBorderedSeconderySoft,
-} from '../../layout/LayoutStyles';
+import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
@@ -145,9 +142,7 @@ const RecordForm = ({ record, isEdit }) => {
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={goBack}>
-                Anuluj
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

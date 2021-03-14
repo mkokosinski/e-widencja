@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { deleteVehicle } from '../../vehicles/redux/vehicleThunk';
 import {
   Button,
-  ButtonBorderedSeconderySoft,
+  ButtonBordered,
   ButtonMain,
   PanelBoxShadow,
 } from '../../layout/LayoutStyles';
@@ -43,39 +43,61 @@ export const ButtonEdit = ({ actionPath }) => {
   );
 };
 
-export const ButtonDelete = ({ item, onClick, redirectPath, title }) => {
-  const { replace } = useHistory();
+export const DeleteButton = ({
+  item,
+  onClick,
+  redirectPath,
+  info,
+  component = (
+    <DetailsButton>
+      <FontAwesomeIcon icon={faTrash} />
+    </DetailsButton>
+  ),
+}) => {
   const { Modal, openModal, closeModal } = useModal();
+  const { replace } = useHistory();
 
   const handleDelete = () => {
     onClick();
-    replace(redirectPath);
+    if (redirectPath) replace(redirectPath);
   };
-
   const close = () => {
     closeModal();
   };
-
   return (
     <>
-      <DetailsButton onClick={openModal}>
-        <FontAwesomeIcon icon={faTrash} />
-      </DetailsButton>
       <Modal>
         <ModalContent>
-          <Row>{`Czy napewno chcesz usunąć ${item.name} ?`}</Row>
+          <Row>{info || `Czy napewno chcesz usunąć ${item.name} ?`}</Row>
 
           <Row>
             <ButtonsContainer>
               <ButtonMain onClick={handleDelete}>Tak</ButtonMain>
 
-              <ButtonBorderedSeconderySoft onClick={close}>
-                Nie
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={close}>Nie</ButtonBordered>
             </ButtonsContainer>
           </Row>
         </ModalContent>
       </Modal>
+      {React.cloneElement(component, {
+        onClick: openModal,
+      })}
     </>
+  );
+};
+
+export const DetailsDeleteButton = ({ item, onClick, redirectPath, info }) => {
+  return (
+    <DeleteButton
+      item={item}
+      onClick={onClick}
+      redirectPath={redirectPath}
+      info={info}
+      component={
+        <DetailsButton>
+          <FontAwesomeIcon icon={faTrash} />
+        </DetailsButton>
+      }
+    />
   );
 };

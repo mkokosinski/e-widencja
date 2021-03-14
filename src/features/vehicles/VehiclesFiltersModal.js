@@ -14,10 +14,7 @@ import { ModalContent } from '../templates/ListView/ListViewStyles';
 
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
-import {
-  ButtonBorderedSeconderySoft,
-  ButtonMain,
-} from '../layout/LayoutStyles';
+import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
 import { selectCarBrands, selectVehicles } from './redux/vehiclesSlice';
 
 const FilterModal = ({ closeModal }) => {
@@ -80,9 +77,7 @@ const FilterModal = ({ closeModal }) => {
             <Row>
               <ButtonsContainer>
                 <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-                <ButtonBorderedSeconderySoft onClick={closeModal}>
-                  Anuluj
-                </ButtonBorderedSeconderySoft>
+                <ButtonBordered onClick={closeModal}>Anuluj</ButtonBordered>
               </ButtonsContainer>
             </Row>
           </>

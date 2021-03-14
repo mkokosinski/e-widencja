@@ -10,7 +10,7 @@ import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  DetailsDeleteButton,
 } from '../templates/detailsView/DetailsComponents';
 import {
   DetailsTopPanel,
@@ -64,7 +64,7 @@ const VehileDetails = () => {
           <ButtonEdit
             actionPath={`${Routing.RecordEdit.action}/${record.id}`}
           />
-          <ButtonDelete
+          <DetailsDeleteButton
             item={record}
             onClick={() => dispatch(deleteRecord(record.id))}
             redirectPath={Routing.Records.path}

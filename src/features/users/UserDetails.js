@@ -22,7 +22,7 @@ import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  DetailsDeleteButton,
 } from '../templates/detailsView/DetailsComponents';
 
 import { ReactComponent as NameIco } from '../../assets/man.svg';
@@ -72,7 +72,7 @@ const UserDetalis = () => {
               <ButtonEdit
                 actionPath={`${Routing.UserEdit.action}/${user.id}`}
               />
-              <ButtonDelete
+              <DetailsDeleteButton
                 item={user}
                 redirectPath={Routing.Users.path}
                 onClick={() => dispatch(deleteUser(user.id))}

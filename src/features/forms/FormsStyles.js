@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 import { Form, Field } from 'formik';
-import { PanelBordered, device, Button } from '../layout/LayoutStyles';
+import {
+  PanelBordered,
+  device,
+  Button,
+  ButtonBordered,
+} from '../layout/LayoutStyles';
 import { FlexCenter } from '../../AppStyles';
 
 // export const StyledForm = styled.form`
@@ -16,21 +21,18 @@ export const Container = styled(PanelBordered)`
 
   @media screen and (${device.tablet}) {
     margin: 10px 10px;
+    max-width: 600px;
     padding: 32px 54px;
-
     width: 70%;
   }
 
   @media screen and (${device.laptop}) {
-    max-width: 600px;
-    width: auto;
+    width: 100%;
     margin: 10px auto;
   }
 
   @media screen and (${device.laptopL}) {
     margin: 30px auto;
-    max-width: 700px;
-    width: auto;
     padding: 40px 60px;
   }
 `;
@@ -175,19 +177,19 @@ export const StyledError = styled.div`
 
 export const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   margin: 30px auto 0;
+  width: 100%;
 
   & > div {
-    height: 42px;
-    margin: 0 20px;
-    width: 100px;
+    padding: 0.5rem 1rem;
+    margin: 0 10px;
   }
 
   @media screen and (${device.tablet}) {
     & > div {
-      height: 50px;
-      width: 120px;
+      padding: 0.5rem 1rem;
+      margin: 0 16px;
     }
   }
 
@@ -195,10 +197,8 @@ export const ButtonsContainer = styled.div`
     padding: 20px;
 
     & > div {
-      height: 50px;
-      width: 130px;
-
-      margin: 0 20px;
+      padding: 0.5rem 1rem;
+      margin: 0 24px;
     }
   }
 `;
@@ -311,4 +311,10 @@ export const RadioControl = styled.span`
       transform: scale(1);
     }
   }
+`;
+
+export const FormTitleDeleteButton = styled(ButtonBordered)`
+  flex: 0 0 40px;
+  margin-left: auto;
+  padding: 10px;
 `;

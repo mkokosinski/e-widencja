@@ -7,7 +7,7 @@ import Checkbox from '../forms/checkbox';
 import {
   filterDefaults,
   selectFilters,
-  setFilter
+  setFilter,
 } from '../templates/filterSlice';
 import FieldWithErrors from '../forms/fieldWithErrors';
 
@@ -15,10 +15,7 @@ import { ModalContent } from '../templates/ListView/ListViewStyles';
 
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
-import {
-  ButtonBorderedSeconderySoft,
-  ButtonMain
-} from '../layout/LayoutStyles';
+import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
 import { selectUsers } from './usersSlice';
 
 const UserFiltersModal = ({ closeModal }) => {
@@ -28,12 +25,12 @@ const UserFiltersModal = ({ closeModal }) => {
 
   const usernameItems = [
     filterDefaults.userFilter,
-    ...users.map((user) => ({ label: user.fullName, value: user.id }))
+    ...users.map((user) => ({ label: user.fullName, value: user.id })),
   ];
 
   const initValues = {
     userFilter: userFilter.filter,
-    userDriverFilter: userDriverFilter.filter
+    userDriverFilter: userDriverFilter.filter,
   };
 
   const handleSubmit = (values) => {
@@ -65,9 +62,7 @@ const UserFiltersModal = ({ closeModal }) => {
             <Row>
               <ButtonsContainer>
                 <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-                <ButtonBorderedSeconderySoft onClick={closeModal}>
-                  Anuluj
-                </ButtonBorderedSeconderySoft>
+                <ButtonBordered onClick={closeModal}>Anuluj</ButtonBordered>
               </ButtonsContainer>
             </Row>
           </>

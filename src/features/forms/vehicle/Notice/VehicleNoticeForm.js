@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Formik } from 'formik';
 import { useHistory, useParams } from 'react-router';
 import * as Yup from 'yup';
@@ -14,18 +14,24 @@ import {
   ButtonsContainer,
   Row,
   StyledFormTitle,
+  FormTitleDeleteButton,
 } from '../../FormsStyles';
-import {
-  ButtonMain,
-  ButtonBorderedSeconderySoft,
-} from '../../../layout/LayoutStyles';
+import { ButtonMain, ButtonBordered } from '../../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { validationMessages } from '../../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../../vehicles/redux/vehicleThunk';
 import { selectNotices } from '../../../settings/redux/settingsSlice';
 import { selectVehicleById } from '../../../vehicles/redux/vehiclesSlice';
-import { addNotice } from '../../../vehicles/redux/notices';
+import {
+  addNotice,
+  deleteNotice,
+  editNotice,
+} from '../../../vehicles/redux/notices';
 import DateInput, { DATEPICKER_TYPES } from '../../DateInput';
+import { ThemeContext } from 'styled-components';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DeleteButton } from '../../../templates/detailsView/DetailsComponents';
 
 const validationSchema = Yup.object({
   date: Yup.string().required(validationMessages.required),
@@ -43,43 +49,56 @@ const validationSchema = Yup.object({
     .required(validationMessages.required),
 });
 
-const VehicleNoticeForm = ({ isEdit }) => {
+const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
   const { id } = useParams();
-
-  const vehicle = useSelector((state) => selectVehicleById(state, id));
-  const noticeTypes = useSelector(selectNotices);
-
   const { goBack } = useHistory();
   const dispatch = useDispatch();
+  const theme = useContext(ThemeContext);
+  const vehicle = useSelector((state) => selectVehicleById(state, id));
+  const noticeTypes = useSelector(selectNotices);
 
   const typeOptions = noticeTypes.items.map((opt) => ({
     label: opt.name,
     value: opt,
   }));
 
+  const defaultType = editedNotice
+    ? { label: editedNotice.type.name, value: editedNotice.type }
+    : '';
+
+  const initValues = {
+    vehicle: `${vehicle.brand} ${vehicle.model} (${vehicle.registrationNumber})`,
+    vehicleId: vehicle?.id,
+    date: editedNotice?.date || new Date(),
+    noticeName: editedNotice?.name || '',
+    description: editedNotice?.description || '',
+    type: editedNotice?.type || '',
+  };
+
   const handleSubmit = (values) => {
     const data = {
-      id: values.id,
+      id: editedNotice?.id || null,
       date: values.date,
       description: values.description,
       name: values.noticeName,
       vehicleId: vehicle.id,
       type: values.type,
     };
-    const action = isEdit ? null : addNotice;
+    const action = isEdit ? editNotice : addNotice;
 
     dispatch(action(data)).then((res) => {
       goBack();
     });
   };
 
-  const initValues = {
-    vehicle: `${vehicle.brand} ${vehicle.model} (${vehicle.registrationNumber})`,
-    vehicleId: vehicle.id,
-    date: new Date(),
-    noticeName: '',
-    description: '',
-    type: '',
+  const handleDelete = () => {
+    if (editedNotice) {
+      dispatch(
+        deleteNotice({ vehicleId: vehicle.id, noticeId: editedNotice.id }),
+      ).then((res) => {
+        goBack();
+      });
+    }
   };
 
   return (
@@ -91,7 +110,20 @@ const VehicleNoticeForm = ({ isEdit }) => {
       >
         {({ values, submitForm, setFieldTouched, setFieldValue }) => (
           <StyledForm>
-            <StyledFormTitle>{`${values.vehicle} - uwagi`}</StyledFormTitle>
+            <StyledFormTitle>
+              {`${values.vehicle} - uwagi`}
+              {isEdit && (
+                <DeleteButton
+                  item={editedNotice}
+                  onClick={handleDelete}
+                  component={
+                    <FormTitleDeleteButton color={theme.redLight}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </FormTitleDeleteButton>
+                  }
+                />
+              )}
+            </StyledFormTitle>
             <Row>
               <FieldWithErrors name='date' label='Data'>
                 <DateInput
@@ -122,7 +154,7 @@ const VehicleNoticeForm = ({ isEdit }) => {
                       setFieldValue('type', value);
                     }}
                     placeholder=''
-                    defaultValue={initValues.type}
+                    defaultValue={defaultType}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -134,9 +166,7 @@ const VehicleNoticeForm = ({ isEdit }) => {
             </Row>
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={goBack}>
-                Anuluj
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

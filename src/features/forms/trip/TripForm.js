@@ -18,10 +18,7 @@ import {
   RemoveItemButton,
   MileageFieldsGroup,
 } from '../FormsStyles';
-import {
-  ButtonMain,
-  ButtonBorderedSeconderySoft,
-} from '../../layout/LayoutStyles';
+import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,7 +54,7 @@ const validationSchema = Yup.object().shape({
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       mileage: Yup.number().min(1, 'Zła wartość').required('Wymagane'),
       distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
-    })
+    }),
   ),
 });
 
@@ -242,7 +239,7 @@ const TripForm = ({ trip }) => {
                         values.stops.map((stop) => ({
                           ...stop,
                           mileage: option.mileage,
-                        }))
+                        })),
                       );
                       focusOn(tripTemplateRef);
                     }}
@@ -277,7 +274,7 @@ const TripForm = ({ trip }) => {
                         option.stops.map((stop) => ({
                           ...stop,
                           mileage: values.record.mileage + stop.distance,
-                        }))
+                        })),
                       );
                     }}
                     placeholder='Wybierz szablon'
@@ -379,9 +376,7 @@ const TripForm = ({ trip }) => {
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={goBack}>
-                Anuluj
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

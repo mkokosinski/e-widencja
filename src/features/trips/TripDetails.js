@@ -9,7 +9,7 @@ import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  DetailsDeleteButton,
 } from '../templates/detailsView/DetailsComponents';
 import {
   DetailsTopPanel,
@@ -87,7 +87,7 @@ const VehileDetails = () => {
           <ButtonGoBack />
           <DetailsTitle>{trip.date}</DetailsTitle>
           <ButtonEdit actionPath={`${Routing.TripEdit.action}/${trip.id}`} />
-          <ButtonDelete item={trip} />
+          <DetailsDeleteButton item={trip} />
         </DetailsTopPanel>
 
         {/* <DetailsInfo>

@@ -21,7 +21,7 @@ import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
   ButtonEdit,
-  ButtonDelete,
+  DetailsDeleteButton,
 } from '../templates/detailsView/DetailsComponents';
 
 import { ReactComponent as BrandIco } from '../../assets/branding.svg';
@@ -69,7 +69,7 @@ const VehileDetails = () => {
           <ButtonEdit
             actionPath={`${Routing.VehicleEdit.action}/${vehicle.id}`}
           />
-          <ButtonDelete
+          <DetailsDeleteButton
             item={vehicle}
             redirectPath={Routing.Vehicles.path}
             onClick={() => dispatch(deleteVehicle(vehicle.id))}

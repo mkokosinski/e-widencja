@@ -17,10 +17,7 @@ import {
   ButtonsContainer,
   Row,
 } from '../FormsStyles';
-import {
-  ButtonMain,
-  ButtonBorderedSeconderySoft,
-} from '../../layout/LayoutStyles';
+import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCarBrands } from '../../vehicles/carBrandsSlice';
 import {
@@ -232,9 +229,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={goBack}>
-                Anuluj
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

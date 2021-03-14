@@ -14,10 +14,7 @@ import {
 import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
 
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
-import {
-  ButtonBorderedSeconderySoft,
-  ButtonMain,
-} from '../layout/LayoutStyles';
+import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
 import { ModalContent } from '../templates/ListView/ListViewStyles';
 
 const FilterModal = ({ closeModal }) => {
@@ -100,9 +97,7 @@ const FilterModal = ({ closeModal }) => {
             <Row>
               <ButtonsContainer>
                 <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-                <ButtonBorderedSeconderySoft onClick={closeModal}>
-                  Anuluj
-                </ButtonBorderedSeconderySoft>
+                <ButtonBordered onClick={closeModal}>Anuluj</ButtonBordered>
               </ButtonsContainer>
             </Row>
           </>

@@ -196,15 +196,14 @@ export const PanelOverlapLight = styled(PanelBoxShadow)`
 
 export const Button = styled.div`
   align-items: center;
-  /* clip-path: polygon(0 8px, 10px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 10px) 100%, 0 100%); */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 100ms;
   border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  flex: 1 1;
+  transition: background-color 100ms;
+  white-space: nowrap;
+  user-select: none;
 
   :focus,
   :active {
@@ -220,7 +219,6 @@ export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: white;
-  flex: 1 1;
 
   :hover {
     background: ${({ theme }) => theme.hover.mainSoft};
@@ -258,10 +256,10 @@ export const ButtonBorderedMain = styled(Button)`
   }
 `;
 
-export const ButtonBorderedSeconderySoft = styled(Button)`
+export const ButtonBordered = styled(Button)`
   background: white;
-  border: 1px solid ${({ theme }) => theme.secondarySoft};
-  color: ${({ theme }) => theme.secondarySoft};
+  border: 1px solid ${({ theme, color }) => color || theme.secondarySoft};
+  color: ${({ theme, color }) => color || theme.secondarySoft};
   transition: opacity 150ms;
 
   :hover {

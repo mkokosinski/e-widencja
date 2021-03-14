@@ -13,10 +13,7 @@ import {
   ButtonsContainer,
   Row,
 } from '../FormsStyles';
-import {
-  ButtonMain,
-  ButtonBorderedSeconderySoft,
-} from '../../layout/LayoutStyles';
+import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import { validationMessages } from '../../../utils/formUtils';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
@@ -128,9 +125,7 @@ const UserForm = ({ user, isEdit }) => {
 
             <ButtonsContainer>
               <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBorderedSeconderySoft onClick={goBack}>
-                Anuluj
-              </ButtonBorderedSeconderySoft>
+              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}
