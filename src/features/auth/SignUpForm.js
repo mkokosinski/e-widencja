@@ -111,7 +111,9 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
               </Row>
 
               <AuthButtonsWrapper>
-                <ButtonMain onClick={submitForm}>Zarejestruj</ButtonMain>
+                <ButtonMain type='button' onClick={submitForm}>
+                  Zarejestruj
+                </ButtonMain>
               </AuthButtonsWrapper>
               <Row>
                 <StyledError>{error}</StyledError>

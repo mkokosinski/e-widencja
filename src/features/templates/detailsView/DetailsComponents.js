@@ -27,7 +27,7 @@ export const ButtonGoBack = () => {
   const { goBack } = useHistory();
 
   return (
-    <DetailsGoBack onClick={goBack}>
+    <DetailsGoBack type='button' onClick={goBack}>
       <FontAwesomeIcon icon={faChevronLeft} />
     </DetailsGoBack>
   );
@@ -49,7 +49,7 @@ export const DeleteButton = ({
   redirectPath,
   info,
   component = (
-    <DetailsButton>
+    <DetailsButton type='button'>
       <FontAwesomeIcon icon={faTrash} />
     </DetailsButton>
   ),
@@ -72,9 +72,13 @@ export const DeleteButton = ({
 
           <Row>
             <ButtonsContainer>
-              <ButtonMain onClick={handleDelete}>Tak</ButtonMain>
+              <ButtonMain type='button' onClick={handleDelete}>
+                Tak
+              </ButtonMain>
 
-              <ButtonBordered onClick={close}>Nie</ButtonBordered>
+              <ButtonBordered type='button' onClick={close}>
+                Nie
+              </ButtonBordered>
             </ButtonsContainer>
           </Row>
         </ModalContent>

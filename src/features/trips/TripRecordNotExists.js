@@ -29,9 +29,13 @@ const TripRecordNotExists = (props) => {
 
       <Row>
         <ButtonsContainer>
-          <ButtonMain onClick={handleConfirm}>Tak</ButtonMain>
+          <ButtonMain type='button' onClick={handleConfirm}>
+            Tak
+          </ButtonMain>
 
-          <ButtonBordered onClick={handleReject}>Nie</ButtonBordered>
+          <ButtonBordered type='button' onClick={handleReject}>
+            Nie
+          </ButtonBordered>
         </ButtonsContainer>
       </Row>
     </ModalContent>

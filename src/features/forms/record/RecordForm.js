@@ -138,8 +138,13 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBordered onClick={() => push(Routing.Records.path)}>
+              <ButtonMai type='button' n onClick={submitForm}>
+                Zapisz
+              </ButtonMai>
+              <ButtonBordered
+                type='button'
+                onClick={() => push(Routing.Records.path)}
+              >
                 Anuluj
               </ButtonBordered>
             </ButtonsContainer>

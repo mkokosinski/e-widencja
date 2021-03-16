@@ -117,7 +117,7 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
                   item={editedNotice}
                   onClick={handleDelete}
                   component={
-                    <FormTitleDeleteButton color={theme.redLight}>
+                    <FormTitleDeleteButton type='button' color={theme.redLight}>
                       <FontAwesomeIcon icon={faTrash} />
                     </FormTitleDeleteButton>
                   }
@@ -165,8 +165,12 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
               </FieldWithErrors>
             </Row>
             <ButtonsContainer>
-              <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
+              <ButtonMain type='button' onClick={submitForm}>
+                Zapisz
+              </ButtonMain>
+              <ButtonBordered type='button' onClick={goBack}>
+                Anuluj
+              </ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

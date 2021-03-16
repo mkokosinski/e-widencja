@@ -391,8 +391,12 @@ const TripForm = ({ trip }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-              <ButtonBordered onClick={goBack}>Anuluj</ButtonBordered>
+              <ButtonMain type='button' onClick={submitForm}>
+                Zapisz
+              </ButtonMain>
+              <ButtonBordered type='button' onClick={goBack}>
+                Anuluj
+              </ButtonBordered>
             </ButtonsContainer>
           </StyledForm>
         )}

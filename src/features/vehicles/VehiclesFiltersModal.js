@@ -76,8 +76,12 @@ const FilterModal = ({ closeModal }) => {
             </Row>
             <Row>
               <ButtonsContainer>
-                <ButtonMain onClick={submitForm}>Zapisz</ButtonMain>
-                <ButtonBordered onClick={closeModal}>Anuluj</ButtonBordered>
+                <ButtonMain type='button' onClick={submitForm}>
+                  Zapisz
+                </ButtonMain>
+                <ButtonBordered type='button' onClick={closeModal}>
+                  Anuluj
+                </ButtonBordered>
               </ButtonsContainer>
             </Row>
           </>

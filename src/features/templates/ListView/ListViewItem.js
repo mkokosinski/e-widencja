@@ -28,7 +28,7 @@ const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
         <Buttons>
           {buttons &&
             buttons.map((button, index) => (
-              <Button tabIndex='-1' key={index}>
+              <Button type='button' tabIndex='-1' key={index}>
                 <A to={{ pathname: button.action, state: button.state }}>
                   <ButtonBody>
                     <ButtonIco>

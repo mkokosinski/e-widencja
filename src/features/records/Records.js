@@ -53,7 +53,7 @@ const Records = () => {
   return (
     <ItemsList>
       <TopPanel isMobileKeyboard={isMobileKeyboard}>
-        <ButtonAdd>
+        <ButtonAdd type='button'>
           <AddItem to={`${Routing.RecordAdd.action}`}>
             <FontAwesomeIcon icon={faPlus} />
             <span> Nowa ewidencja</span>
