@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/e-widencja/static/css/main.f84e17a3.chunk.css",
-    "main.js": "/e-widencja/static/js/main.6bf9620f.chunk.js",
-    "main.js.map": "/e-widencja/static/js/main.6bf9620f.chunk.js.map",
+    "main.css": "/e-widencja/static/css/main.c62f06d4.chunk.css",
+    "main.js": "/e-widencja/static/js/main.e4e7830d.chunk.js",
+    "main.js.map": "/e-widencja/static/js/main.e4e7830d.chunk.js.map",
     "runtime-main.js": "/e-widencja/static/js/runtime-main.9fc514ea.js",
     "runtime-main.js.map": "/e-widencja/static/js/runtime-main.9fc514ea.js.map",
     "static/css/2.b747d0fa.chunk.css": "/e-widencja/static/css/2.b747d0fa.chunk.css",
-    "static/js/2.5a8e9e45.chunk.js": "/e-widencja/static/js/2.5a8e9e45.chunk.js",
-    "static/js/2.5a8e9e45.chunk.js.map": "/e-widencja/static/js/2.5a8e9e45.chunk.js.map",
+    "static/js/2.cdaec0f2.chunk.js": "/e-widencja/static/js/2.cdaec0f2.chunk.js",
+    "static/js/2.cdaec0f2.chunk.js.map": "/e-widencja/static/js/2.cdaec0f2.chunk.js.map",
     "index.html": "/e-widencja/index.html",
-    "precache-manifest.1f04fae498e4ac8615e630fc8c332c4a.js": "/e-widencja/precache-manifest.1f04fae498e4ac8615e630fc8c332c4a.js",
+    "precache-manifest.0f4975e1b17fae86903c76cf93858b78.js": "/e-widencja/precache-manifest.0f4975e1b17fae86903c76cf93858b78.js",
     "service-worker.js": "/e-widencja/service-worker.js",
     "static/css/2.b747d0fa.chunk.css.map": "/e-widencja/static/css/2.b747d0fa.chunk.css.map",
-    "static/css/main.f84e17a3.chunk.css.map": "/e-widencja/static/css/main.f84e17a3.chunk.css.map",
-    "static/js/2.5a8e9e45.chunk.js.LICENSE.txt": "/e-widencja/static/js/2.5a8e9e45.chunk.js.LICENSE.txt",
+    "static/css/main.c62f06d4.chunk.css.map": "/e-widencja/static/css/main.c62f06d4.chunk.css.map",
+    "static/js/2.cdaec0f2.chunk.js.LICENSE.txt": "/e-widencja/static/js/2.cdaec0f2.chunk.js.LICENSE.txt",
     "static/media/branding.9ccfb63a.svg": "/e-widencja/static/media/branding.9ccfb63a.svg",
     "static/media/car.6438cff4.svg": "/e-widencja/static/media/car.6438cff4.svg",
     "static/media/chessBoard.svg": "/e-widencja/static/media/chessBoard.c8c85203.svg",
@@ -34,8 +34,8 @@
   "entrypoints": [
     "static/js/runtime-main.9fc514ea.js",
     "static/css/2.b747d0fa.chunk.css",
-    "static/js/2.5a8e9e45.chunk.js",
-    "static/css/main.f84e17a3.chunk.css",
-    "static/js/main.6bf9620f.chunk.js"
+    "static/js/2.cdaec0f2.chunk.js",
+    "static/css/main.c62f06d4.chunk.css",
+    "static/js/main.e4e7830d.chunk.js"
   ]
 }
