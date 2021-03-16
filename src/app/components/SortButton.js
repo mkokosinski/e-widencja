@@ -5,7 +5,7 @@ import useModal from '../../features/hooks/useModal';
 import {
   ShowFilterLabel,
   TopButtonIco,
-  TopPanelButton
+  TopPanelButton,
 } from '../../features/templates/ListView/ListViewStyles';
 import SortModalContent from './SortModal';
 
@@ -14,7 +14,7 @@ const SortButton = ({ modalItems, sortFunc }) => {
 
   return (
     <>
-      <TopPanelButton onClick={SortModal.openModal}>
+      <TopPanelButton tabIndex='0' onClick={SortModal.openModal}>
         <TopButtonIco>
           <FontAwesomeIcon icon={faSortAmountUpAlt} />
         </TopButtonIco>

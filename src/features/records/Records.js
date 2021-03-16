@@ -40,11 +40,11 @@ const buttons = (id) => [
     label: 'Przejazd',
     action: `${Routing.TripAdd.action}/${id}`,
   },
-  {
-    ico: faEdit,
-    label: 'Edytuj',
-    action: `${Routing.RecordEdit.action}/${id}`,
-  },
+  // {
+  //   ico: faEdit,
+  //   label: 'Edytuj',
+  //   action: `${Routing.RecordEdit.action}/${id}`,
+  // },
 ];
 const Records = () => {
   const { items: records, status } = useSelector(selectFiteredRecords);

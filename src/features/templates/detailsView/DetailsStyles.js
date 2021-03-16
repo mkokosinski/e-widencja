@@ -76,9 +76,13 @@ export const DetailsGoBack = styled(Button)`
 
 export const DetailsTitle = styled(H2)`
   font-size: 1.1em;
-  margin: 0 10px;
   padding: 10px;
   flex-basis: 70%;
+
+  @media screen and (${device.mobileL}) {
+    margin: 0 10px;
+    font-size: 1em;
+  }
   @media screen and (${device.laptop}) {
     font-size: 1em;
   }
@@ -130,7 +134,15 @@ export const DetailsData = styled.div`
 export const EmptyState = styled.div`
   ${FlexCenter};
   color: ${(props) => props.theme.grayLight};
-  font-size: 2.2rem;
+  font-size: 1.2rem;
   min-height: 200px;
   width: 100%;
+
+  @media screen and (${device.mobileXL}) {
+    font-size: 1.6rem;
+  }
+
+  @media screen and (${device.laptop}) {
+    font-size: 2rem;
+  }
 `;

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import {
-  fetchVehicles,
   selectFilteredVehicles,
   selectVehicleSort,
   setSortFunc,
@@ -37,11 +36,8 @@ import {
   Subname,
   Title,
 } from '../templates/ListView/ListViewItemStyles';
-import { DetailsSection } from '../templates/detailsView/DetailsStyles';
-import {
-  selectCurrentMonthRecordForVehicle,
-  selectRecords,
-} from '../records/recordsSlice';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
+import { selectRecords } from '../records/recordsSlice';
 
 const buttons = (id, currentMonthRecordId) => [
   {
@@ -65,8 +61,9 @@ const buttons = (id, currentMonthRecordId) => [
 function Vehicles() {
   const { items: vehicles } = useSelector(selectFilteredVehicles);
   const { items: records } = useSelector(selectRecords);
-  const dispach = useDispatch();
   const sortItems = useSelector(selectVehicleSort);
+
+  console.log(records.map((r) => ({ name: r.name, veh: r.vehicle.name })));
 
   return (
     <ItemsList>
@@ -82,13 +79,12 @@ function Vehicles() {
       </TopPanel>
 
       {vehicles.length > 0 ? (
-        vehicles.map((vehicle, index) => {
+        vehicles.map((vehicle) => {
           const recordForCurrentMonth = records.find(
             (rec) =>
               rec.vehicleId === vehicle.id &&
               rec.month === new Date().getMonth() + 1,
           );
-
           return (
             <ListViewItem
               key={vehicle.id}

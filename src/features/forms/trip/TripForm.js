@@ -41,6 +41,7 @@ import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
 import { addTrip } from '../../trips/tripsSlice';
+import { DateFrom } from '../../../utils/dateUtils';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -63,6 +64,9 @@ const emptyRecord = {
   vehicle: {
     name: '',
   },
+  mileage: 0,
+  month: new Date().getMonth(),
+  year: new Date().getFullYear(),
 };
 
 const emptyTripTemplate = {
@@ -91,6 +95,8 @@ const TripForm = ({ trip }) => {
     value: record.id,
     mileage: record.vehicle.mileage,
     vehicle: record.vehicle.id,
+    month: record.month,
+    year: record.year,
   };
 
   const selectedPurpose = {
@@ -116,6 +122,8 @@ const TripForm = ({ trip }) => {
     value: rec.id,
     mileage: rec.vehicle.mileage,
     vehicle: rec.vehicle.id,
+    month: rec.month,
+    year: rec.year,
   }));
 
   const driverSelectItems = isAdmin
@@ -169,7 +177,7 @@ const TripForm = ({ trip }) => {
       vehicle: values.record.vehicle,
       isOneWay: false,
     };
-    dispatch(addTrip(newTrip));
+    dispatch(addTrip(newTrip)).then(() => goBack());
   };
 
   return (
@@ -197,6 +205,10 @@ const TripForm = ({ trip }) => {
                   }}
                   defaultDate={values.date}
                   type={DATEPICKER_TYPES.daypicker}
+                  minDate={
+                    new Date(values.record.year, values.record.month - 1, 1)
+                  }
+                  maxDate={new Date(values.record.year, values.record.month, 0)}
                 />
               </FieldWithErrors>
             </Row>
@@ -234,6 +246,10 @@ const TripForm = ({ trip }) => {
                     onChange={(option) => {
                       setFieldTouched('record');
                       setFieldValue('record', option);
+                      setFieldValue(
+                        'date',
+                        new Date(option.year, option.month - 1, 1),
+                      );
                       setFieldValue(
                         'stops',
                         values.stops.map((stop) => ({

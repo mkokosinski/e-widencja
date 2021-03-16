@@ -8,9 +8,16 @@ import TripForm from './TripForm';
 
 const AddTripForm = () => {
   const { recordId } = useParams();
+  const record = useSelector((state) => selectRecordById(state, recordId));
+
+  const today = new Date();
+  const isCurrentMonth =
+    today.getFullYear() === record.year && today.getMonth() === record.month;
 
   const trip = {
-    date: new Date(),
+    date: isCurrentMonth
+      ? new Date()
+      : new Date(record.year, record.month - 1, 1),
     driver: '',
     initialMileage: 0,
     purpose: '',

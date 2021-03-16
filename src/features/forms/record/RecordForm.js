@@ -1,10 +1,10 @@
-import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 
 import FieldWithErrors from '../fieldWithErrors';
 
@@ -54,13 +54,8 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
       }
     : vehicleSelectOptions.find((opt) => opt.value === vehicleId);
 
-  const minDate = () => {
-    const date = new Date();
-    return new Date(date.getFullYear(), date.getMonth(), 1);
-  };
-
   const initValues = {
-    date: record ? `${record.year}-${record.month}` : minDate(),
+    date: record ? `${record.year}-${record.month}` : new Date(),
     vehicle: defaultVehicleOption || '',
     mileage: record?.mileage || defaultVehicleOption?.mileage,
   };
@@ -68,7 +63,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
   const handleSubmit = (values) => {
     const date = new Date(values.date);
     const data = {
-      id: values.id || '',
+      id: record?.id || '',
       year: date.getFullYear(),
       month: date.getMonth() + 1,
       vehicleId: values.vehicle.value,
@@ -100,7 +95,6 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
               <FieldWithErrors name='date' label='Data'>
                 <DateInput
                   dateFormat='yyyy-MM'
-                  minDate={minDate()}
                   onChange={(date) => {
                     setFieldTouched('date');
                     setFieldValue('date', date);

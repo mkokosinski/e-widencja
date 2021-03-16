@@ -36,6 +36,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { selectVehicleById } from './redux/vehiclesSlice';
 import { getTripsData } from '../../utils/chartUtils';
+import NoticesList from '../forms/vehicle/NoticesList';
 
 const VehileDetails = () => {
   const { id } = useParams();
@@ -113,6 +114,11 @@ const VehileDetails = () => {
           <DetailsLabel>Numer rejestracyjny</DetailsLabel>
         </DetailsInfo>
       </SectionDesc>
+
+      <DetailsSection>
+        <DetailsTitle>Zgłoszone uwagi</DetailsTitle>
+        <NoticesList vehicles={[vehicle]} />
+      </DetailsSection>
 
       <DetailsSection>
         <LineChart

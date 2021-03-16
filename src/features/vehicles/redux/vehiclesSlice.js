@@ -86,11 +86,12 @@ export const vehicleSlice = createSlice({
       console.error(action.payload);
     },
 
-    [addVehicle.pending]: (state, action) => {
+    [addVehicle.pending]: (state, { payload }) => {
       state.status = FETCH_STATUS.LOADING;
     },
     [addVehicle.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items.push(payload);
       toast.success('Poprawnie dodano nowy pojazd');
     },
     [addVehicle.rejected]: (state, action) => {
@@ -104,6 +105,9 @@ export const vehicleSlice = createSlice({
     },
     [editVehicle.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((vehicle) =>
+        vehicle.id === payload.id ? payload : vehicle,
+      );
       toast.success('Poprawnie zmieniono pojazd');
     },
     [editVehicle.rejected]: (state, action) => {
@@ -116,14 +120,14 @@ export const vehicleSlice = createSlice({
       state.status = FETCH_STATUS.LOADING;
     },
     [deleteVehicle.fulfilled]: (state, { payload }) => {
-      state.items = state.items.filter((veh) => veh.id !== payload);
       state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.filter((veh) => veh.id !== payload);
       toast.success('Poprawnie usunieto pojazd');
     },
-    [deleteVehicle.rejected]: (state, action) => {
+    [deleteVehicle.rejected]: (state, { payload }) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.payload.message;
-      toast.error(action.payload.message);
+      state.error = payload.message;
+      toast.error(payload.message);
     },
     ...noticeReducers,
   },

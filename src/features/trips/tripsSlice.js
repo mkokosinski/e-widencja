@@ -49,36 +49,39 @@ export const fetchTrips = createAsyncThunk(
 export const addTrip = createAsyncThunk(
   'trips/addTrip',
   async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const distance = arg.stops.reduce((acc, cur) => acc + cur.distance, 0);
+      const distance = arg.stops.reduce((acc, cur) => acc + cur.distance, 0);
 
-    const trip = {
-      date: arg.date,
-      distance,
-      driverId: arg.driver,
-      end: arg.stops[arg.stops.length - 1].place,
-      isOneWay: arg.isOneWay,
-      purpose: arg.purpose,
-      recordId: arg.record,
-      start: arg.stops[0].place,
-      stops: arg.stops,
-      templateId: arg.template,
-      vehicleId: arg.vehicle,
+      const trip = {
+        date: arg.date,
+        distance,
+        driverId: arg.driver,
+        end: arg.stops[arg.stops.length - 1].place,
+        isOneWay: arg.isOneWay,
+        purpose: arg.purpose,
+        recordId: arg.record,
+        start: arg.stops[0].place,
+        stops: arg.stops,
+        templateId: arg.template,
+        vehicleId: arg.vehicle,
 
-      active: true,
-      companyId: currUser.companyId,
-      createdBy: currUser.id,
-      created: firestoreFunctions.FieldValue.serverTimestamp(),
-    };
+        active: true,
+        companyId: currUser.companyId,
+        createdBy: currUser.id,
+        created: firestoreFunctions.FieldValue.serverTimestamp(),
+      };
 
-    firestore
-      .collection('Trips')
-      .add(trip)
-      .catch((err) => {
-        console.error(err);
-        return thunkAPI.rejectWithValue(err.toString());
-      });
+      firestore
+        .collection('Trips')
+        .add(trip)
+        .catch((err) => {});
+
+      return trip;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 
@@ -128,15 +131,16 @@ export const tripSlice = createSlice({
       state.error = action.error.message;
     },
 
-    [addTrip.fulfilled]: (state, action) => {
+    [addTrip.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
-      toast.success('Poprawnie dodano nową ewidencję');
+      state.items.push(payload);
+      toast.success('Poprawnie dodano nową przejazd');
     },
 
-    [addTrip.rejected]: (state, action) => {
+    [addTrip.rejected]: (state, { payload }) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.error.message;
-      toast.error(action.payload);
+      state.error = payload.message;
+      toast.error('Nie udało się dodać przejazdu');
     },
   },
 });
@@ -220,16 +224,6 @@ export const selectFullTripsData = (state) => {
     return { ...trip, vehicle, driver };
   });
 };
-
-// export const selectTripById = (state, tripId) =>
-//   state.trips.items.find((trip) => trip.id === tripId);
-
-// export const selectTripDetails => tripId => createSelector(
-//   [selectTrips, selectRecordDetails],
-//   (trip, rec) =>{
-
-//   }
-// )
 
 export const selectTripSort = (state) => state.trips.sortCases;
 

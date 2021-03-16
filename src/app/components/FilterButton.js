@@ -5,7 +5,7 @@ import useModal from '../../features/hooks/useModal';
 import {
   ShowFilterLabel,
   TopButtonIco,
-  TopPanelButton
+  TopPanelButton,
 } from '../../features/templates/ListView/ListViewStyles';
 
 const FilterButton = ({ modalComponent: ModalContent }) => {
@@ -13,7 +13,7 @@ const FilterButton = ({ modalComponent: ModalContent }) => {
 
   return (
     <>
-      <TopPanelButton onClick={openModal}>
+      <TopPanelButton tabIndex={0} onClick={openModal}>
         <TopButtonIco>
           <FontAwesomeIcon icon={faFilter} />
         </TopButtonIco>

@@ -34,15 +34,16 @@ const custom = Chart.controllers.line.extend({
 });
 Chart.controllers.lineAlt = custom;
 
-const LineChart = ({ title = '', data, dataOffset }) => {
+const LineChart = ({ title = '', data }) => {
   const [chart, setChart] = useState(null);
-  const [currentYear, setCurrentYear] = useState(null);
-  const [currentOffset, setCurrentOffset] = useState(0);
+  const [chartData, setData] = useState(data.datasets[0]);
+  const [labels, setLabels] = useState(data.labels);
+  const [selectedYear, setSelectedYear] = useState(null);
   const chartRef = useRef(null);
 
   const dataLength = Object.keys(data.datasets[0].data).length;
-  const previousButtonDisabled = currentOffset - dataOffset < 0;
-  const nextButtonDisabled = currentOffset + dataOffset >= dataLength;
+  const previousButtonDisabled = !chartData.data[selectedYear - 1];
+  const nextButtonDisabled = !chartData.data[selectedYear + 1];
 
   const buildChart = () => {
     const ctx = chartRef.current.getContext('2d');
@@ -50,53 +51,36 @@ const LineChart = ({ title = '', data, dataOffset }) => {
     setChart(chartLine);
   };
 
-  const limitData = useCallback(
-    (offset) => {
-      if (chart && data) {
-        const { labels, datasets } = data;
-        const chartData = fillDatasets(datasets);
+  const limitData = useCallback(() => {
+    if (chart && chartData.data[selectedYear]) {
+      const newDataset = {
+        ...chartData,
+        data: Object.values(chartData.data[selectedYear]),
+      };
 
-        const limitedLabels = labels.slice(
-          currentOffset,
-          currentOffset + offset,
-        );
-        const limitedDatasets = [];
+      console.log(newDataset);
 
-        datasets.forEach((dataset) => {
-          const newDataset = {
-            ...dataset,
-            data: Object.values(dataset.data).slice(
-              currentOffset,
-              currentOffset + offset,
-            ),
-          };
-          limitedDatasets.push(newDataset);
-        });
-
-        chart.data.labels = limitedLabels;
-        chart.data.datasets = limitedDatasets;
-        chart.update();
-      }
-    },
-    [chart, currentOffset, data],
-  );
+      chart.data.labels = labels;
+      chart.data.datasets = [newDataset];
+      chart.update();
+    }
+  }, [chart, selectedYear, data]);
 
   const nextStep = () => {
-    if (!nextButtonDisabled) setCurrentOffset(currentOffset + dataOffset);
+    if (!nextButtonDisabled) setSelectedYear(selectedYear + 1);
   };
 
   const previuosStep = () => {
-    if (!previousButtonDisabled) setCurrentOffset(currentOffset - dataOffset);
+    if (!previousButtonDisabled) setSelectedYear(selectedYear - 1);
   };
 
   useEffect(() => {
-    limitData(dataOffset);
-
-    const dateOffset = Object.keys(data.datasets[0].data)[0 + currentOffset];
-    setCurrentYear(DateFrom(dateOffset).getFullYear());
-  }, [chart, currentOffset, dataOffset, limitData]);
+    limitData();
+  }, [chart, limitData]);
 
   useEffect(() => {
+    const currentYear = new Date().getFullYear();
+    setSelectedYear(currentYear);
     buildChart();
   }, []);
 
@@ -110,7 +94,7 @@ const LineChart = ({ title = '', data, dataOffset }) => {
         >
           {'<'}
         </ButtonPagintation>
-        {dataLength > 0 ? currentYear : 'Brak przejazdów'}
+        {dataLength > 0 ? selectedYear : 'Brak przejazdów'}
         <ButtonPagintation disabled={nextButtonDisabled} onClick={nextStep}>
           {'>'}
         </ButtonPagintation>

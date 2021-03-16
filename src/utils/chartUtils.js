@@ -43,10 +43,6 @@ export const createLineChart = (context) =>
     },
   });
 
-export const fillDatasets = (datasets, labels) => {
-  console.log(datasets[0].data);
-};
-
 export const groupByYear = (items) =>
   items.reduce((acc, cur) => {
     const year = new Date(cur.date).getFullYear();
@@ -60,28 +56,22 @@ export const groupByYear = (items) =>
 export const getTripsData = (trips) => {
   const groupedByYear = groupByYear(trips);
 
-  const test = Object.keys(groupedByYear).reduce((acc, cur) => {
+  return Object.keys(groupedByYear).reduce((acc, cur) => {
     return {
       ...acc,
       [cur]: Array.from({ length: 12 }, (v, k) => k).reduce(
         (months, curMonth) => {
-          return { ...months, [curMonth]: curMonth };
+          return {
+            ...months,
+            [curMonth]: groupedByYear[cur]
+              ?.filter((trip) => {
+                return getFirstDateOfMoth(trip.date).getMonth() === curMonth;
+              })
+              .reduce((distance, trip) => distance + trip.distance, 0),
+          };
         },
         {},
       ),
     };
   }, {});
-
-  console.log(test);
-
-  const groupedTrips = trips.reduce((acc, cur) => {
-    const monthYear = getFirstDateOfMoth(cur.date);
-    if (acc[monthYear]) {
-      return { ...acc, [monthYear]: acc[monthYear] + cur.distance };
-    } else {
-      return { ...acc, [monthYear]: cur.distance };
-    }
-  }, {});
-
-  return groupedTrips;
 };

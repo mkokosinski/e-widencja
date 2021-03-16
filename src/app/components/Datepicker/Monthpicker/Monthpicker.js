@@ -1,6 +1,6 @@
 import {
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ import {
   months as monthsNames,
   datesAreEqual,
   dateBetween,
-  compareDates
+  compareDates,
 } from '../../../../utils/dateUtils';
 
 import {
@@ -24,7 +24,7 @@ import {
   DatepickerNext,
   DatepickerPrevious,
   DetepickerActiveMonth,
-  MonthpickerMonthsContainer
+  MonthpickerMonthsContainer,
 } from '../DatepickerStyles';
 import Month from './Month';
 
@@ -36,7 +36,7 @@ const useMonthpicker = (date) => {
   useEffect(() => {
     const monthsItems = monthsNames.map((month, index) => ({
       label: month,
-      date: new Date(currentYear, index, 1)
+      date: new Date(currentYear, index, 1),
     }));
 
     setMonths(monthsItems);
@@ -59,7 +59,7 @@ const useMonthpicker = (date) => {
     selectedDate,
     nextYear,
     previousYear,
-    selectDate
+    selectDate,
   };
 };
 
@@ -78,7 +78,7 @@ const MonthpickerComponent = (props) => {
     closeDatepicker,
     nextYear,
     previousYear,
-    selectDate
+    selectDate,
   } = props;
 
   const handelSelect = (date) => {
@@ -169,7 +169,7 @@ export const Monthpicker = (props) => {
     rangeEnd,
     readOnly,
     startDate,
-    endDate
+    endDate,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -181,14 +181,14 @@ export const Monthpicker = (props) => {
     months,
     nextYear,
     previousYear,
-    selectDate
+    selectDate,
   } = useMonthpicker(new Date(defaultDate));
 
   const dispatchOnClick = useCallback(() => {
     const input = inputRef.current;
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
-      'value'
+      'value',
     ).set;
     nativeInputValueSetter.call(input, 'selectedDate');
     const event = new Event('input', { bubbles: true });
@@ -222,7 +222,7 @@ export const Monthpicker = (props) => {
     closeDatepicker,
     nextYear,
     previousYear,
-    selectDate
+    selectDate,
   };
 
   const inputProps = {
@@ -233,7 +233,7 @@ export const Monthpicker = (props) => {
     autoComplete: 'off',
     value: format(new Date(selectedDate), dateFormat),
     ref: inputRef,
-    readOnly
+    readOnly,
   };
 
   return (
@@ -253,7 +253,7 @@ export const Monthpicker = (props) => {
               </DatepickerContainer>
             )}
           </AnimatePresence>,
-          document.getElementById(portalId)
+          document.getElementById(portalId),
         )
       ) : (
         <AnimatePresence>

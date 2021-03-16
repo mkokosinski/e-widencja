@@ -13,6 +13,7 @@ import {
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import { signUpEmail } from '../auth/authSlice';
+import { toCapitalize } from '../../utils/stringUtils';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',

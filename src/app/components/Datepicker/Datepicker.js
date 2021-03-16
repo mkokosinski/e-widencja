@@ -8,7 +8,7 @@ import {
   DatepickerHeader,
   DatepickerNext,
   DatepickerPrevious,
-  DetepickerActiveMonth
+  DetepickerActiveMonth,
 } from './DatepickerStyles';
 
 import { useEffect } from 'react';
@@ -18,12 +18,12 @@ import {
   dateBetween,
   datesAreEqual,
   daysShort,
-  months
+  months,
 } from '../../../utils/dateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import Day from './Day';
 import useDetectOutsideClick from '../../../features/hooks/useDetectOutsideClick';
@@ -38,7 +38,7 @@ const getPreviousDays = (year, month, count) => {
 
   const previuosDaysCount = getDaysCount(
     previousDate.getFullYear(),
-    previousDate.getMonth()
+    previousDate.getMonth(),
   );
 
   const previousDays = [];
@@ -50,8 +50,8 @@ const getPreviousDays = (year, month, count) => {
       date: new Date(
         previousDate.getFullYear(),
         previousDate.getMonth(),
-        previuosDaysCount - i
-      )
+        previuosDaysCount - i,
+      ),
     });
   }
   return previousDays.reverse();
@@ -67,7 +67,7 @@ const getNextDays = (year, month, count) => {
     nextDays.push({
       label: i,
       isOtherMonth: true,
-      date: new Date(nextDate.getFullYear(), nextDate.getMonth(), i)
+      date: new Date(nextDate.getFullYear(), nextDate.getMonth(), i),
     });
   }
   return nextDays;
@@ -82,7 +82,7 @@ const getCalendarDays = (year, month, firstDayOfWeek) => {
 
   const days = [...Array(daysCount + 1).keys()].slice(1).map((day) => ({
     label: day,
-    date: new Date(year, month, day)
+    date: new Date(year, month, day),
   }));
 
   const previousDays = getPreviousDays(year, month, firstDayOffset);
@@ -147,7 +147,7 @@ const useDatepicker = (date, firstDayOfWeek) => {
     nextMonth,
     previousMonth,
     onSelectDate,
-    selectDate
+    selectDate,
   };
 };
 
@@ -169,7 +169,7 @@ const Calendar = (props) => {
     nextMonth,
     previousMonth,
     selectedDate,
-    selectDate
+    selectDate,
   } = props;
 
   const datepickerRef = useRef(null);
@@ -275,7 +275,7 @@ export const Datepicker = (props) => {
     rangeEnd,
     readOnly,
     endDate,
-    startDate
+    startDate,
   } = props;
 
   const {
@@ -286,7 +286,7 @@ export const Datepicker = (props) => {
     selectedDate,
     nextMonth,
     previousMonth,
-    selectDate
+    selectDate,
   } = useDatepicker(new Date(defaultDate), firstDayOfWeek);
 
   const dispatchOnClick = useCallback(() => {
@@ -294,7 +294,7 @@ export const Datepicker = (props) => {
 
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
-      'value'
+      'value',
     ).set;
 
     nativeInputValueSetter.call(input, selectedDate);
@@ -329,7 +329,7 @@ export const Datepicker = (props) => {
     closeDatepicker,
     nextMonth,
     previousMonth,
-    selectDate
+    selectDate,
   };
 
   const inputProps = {
@@ -340,12 +340,18 @@ export const Datepicker = (props) => {
     autoComplete: 'off',
     value: format(new Date(selectedDate), dateFormat),
     ref: inputRef,
-    readOnly
+    readOnly,
   };
 
   useEffect(() => {
     dispatchOnClick();
   }, [dispatchOnClick, selectedDate]);
+
+  useEffect(() => {
+    if (defaultDate) {
+      selectDate(new Date(defaultDate));
+    }
+  }, [defaultDate]);
 
   return (
     <div>
@@ -363,7 +369,7 @@ export const Datepicker = (props) => {
               </DatepickerContainer>
             )}
           </AnimatePresence>,
-          document.getElementById(portalId)
+          document.getElementById(portalId),
         )
       ) : (
         <AnimatePresence>

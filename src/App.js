@@ -72,13 +72,14 @@ const App = () => {
   }, [fetchAllData, appUser]);
 
   useEffect(() => {
-    auth.onAuthStateChanged(function (user) {
+    const unsubscribe = auth.onAuthStateChanged(function (user) {
       if (user) {
         dispatch(authorize({ user }));
       } else {
         setIsUserLoading(false);
       }
     });
+    return unsubscribe;
   }, [dispatch]);
 
   return (

@@ -251,8 +251,10 @@ export const ButtonBorderedMain = styled(Button)`
     box-shadow: none;
   }
 
-  :active {
+  :active,
+  :focus {
     background: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 `;
 

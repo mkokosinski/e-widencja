@@ -16,6 +16,13 @@ span {
   color: inherit;
   font-size: inherit;
   text-decoration: none;
+  border-radius: inherit;
+}
+
+a:active,
+a:focus {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+  outline: none;
 }
 
 ul {
@@ -28,4 +35,9 @@ ul {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.firebase-emulator-warning {
+  opacity: 0.1;
+  pointer-events: none;
 }

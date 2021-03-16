@@ -4,12 +4,12 @@ import { format } from 'date-fns';
 export const filterDefaults = {
   dateFilter: {
     from: format(new Date(new Date().getFullYear(), 0, 1), 'yyyy-MM-dd'),
-    to: format(new Date(new Date().getFullYear(), new Date().getMonth(), 1), 'yyyy-MM-dd')
+    to: format(new Date(new Date().getFullYear(), 11, 1), 'yyyy-MM-dd'),
   },
   vehicleFilter: { label: 'Wszystkie', value: '0' },
   userFilter: { label: 'Wszyscy', value: '0' },
   userDriverFilter: false,
-  carBrandFilter: { label: 'Wszystkie', value: 'Wszystkie' }
+  carBrandFilter: { label: 'Wszystkie', value: 'Wszystkie' },
 };
 
 export const filters = createSlice({
@@ -17,15 +17,15 @@ export const filters = createSlice({
   initialState: {
     dateFilter: {
       enable: true,
-      filter: filterDefaults.dateFilter
+      filter: filterDefaults.dateFilter,
     },
     vehicleFilter: { enable: false, filter: filterDefaults.vehicleFilter },
     userFilter: { enable: false, filter: filterDefaults.userFilter },
     userDriverFilter: {
       enable: false,
-      filter: filterDefaults.userDriverFilter
+      filter: filterDefaults.userDriverFilter,
     },
-    carBrandFilter: { enable: false, filter: filterDefaults.carBrandFilter }
+    carBrandFilter: { enable: false, filter: filterDefaults.carBrandFilter },
   },
   reducers: {
     setFilter: (state, action) => {
@@ -40,8 +40,8 @@ export const filters = createSlice({
           state[filter].filter = payload[filter];
         }
       });
-    }
-  }
+    },
+  },
 });
 
 export const selectFilters = (state) => state.filters;

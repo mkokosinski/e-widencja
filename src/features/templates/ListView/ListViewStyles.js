@@ -50,9 +50,15 @@ export const ShowFilterLabel = styled.span`
 export const ButtonAdd = styled(TopPanelButton)`
   background: ${(props) => props.theme.secondary};
   color: white;
+  padding: 0;
 
-  &:hover {
+  :hover {
     background-color: ${(props) => props.theme.secondarySoft};
+  }
+
+  :active,
+  :focus {
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
   @media screen and (max-width: ${screenSize.mobileXL}px) {

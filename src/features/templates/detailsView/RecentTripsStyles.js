@@ -14,6 +14,7 @@ export const TopPanel = styled.div`
 export const Title = styled(H2)``;
 
 export const ShowMore = styled(Button)`
+  flex: 0 1;
   font-size: 0.8em;
   color: ${({ theme }) => theme.mainSoft};
 `;

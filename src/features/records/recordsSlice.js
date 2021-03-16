@@ -39,7 +39,10 @@ export const fetchRecords = createAsyncThunk(
           data.deleted = data.deleted.toDate().toString();
         }
 
-        records.push({ ...data, id: doc.id });
+        records.push({
+          ...data,
+          id: doc.id,
+        });
       });
     }
 
@@ -49,70 +52,80 @@ export const fetchRecords = createAsyncThunk(
 
 export const addRecord = createAsyncThunk(
   'records/addRecord',
-  async (arg, thunkAPI) => {
+  async (newRecord, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
     const record = {
-      month: arg.month,
-      year: arg.year,
-      mileage: arg.mileage,
-      vehicleId: arg.vehicleId,
+      month: newRecord.month,
+      year: newRecord.year,
+      mileage: newRecord.mileage,
+      vehicleId: newRecord.vehicleId,
+      get name() {
+        return `${months[this.month - 1]} ${this.year}`;
+      },
       companyId: currUser.companyId,
       createdBy: currUser.id,
       created: firestoreFunctions.FieldValue.serverTimestamp(),
       active: true,
     };
 
-    return await firestore
+    const doc = await firestore
       .collection('Records')
       .add(record)
       .catch((err) => {
         console.error(err);
         return thunkAPI.rejectWithValue(err.toString());
       });
+
+    return { ...record, id: doc.id };
   },
 );
 
 export const editRecord = createAsyncThunk(
   'records/editRecord',
-  async (arg, thunkAPI) => {
+  async (editedRecord, thunkAPI) => {
     const currUser = thunkAPI.getState().auth.user;
 
     const record = {
-      month: arg.month,
-      year: arg.year,
-      mileage: arg.mileage,
-      vehicleId: arg.vehicleId,
+      month: editedRecord.month,
+      year: editedRecord.year,
+      mileage: editedRecord.mileage,
+      get name() {
+        return `${months[this.month - 1]} ${this.year}`;
+      },
+      vehicleId: editedRecord.vehicleId,
       updatedBy: currUser.id,
       updated: firestoreFunctions.FieldValue.serverTimestamp(),
     };
 
-    firestore
+    await firestore
       .collection('Records')
-      .doc(arg.id)
+      .doc(editedRecord.id)
       .update(record)
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
+
+    return { ...editedRecord, ...record };
   },
 );
 
 export const deleteRecord = createAsyncThunk(
   'records/deleteRecord',
-  async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+  async (deletedRecordId, thunkAPI) => {
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    firestore
-      .collection('Records')
-      .doc(arg)
-      .update({
+      firestore.collection('Records').doc(deletedRecordId).update({
         active: false,
         deletedBy: currUser.id,
         deleted: firestoreFunctions.FieldValue.serverTimestamp(),
-      })
-      .catch((err) => {
-        return thunkAPI.rejectWithValue(err);
       });
+
+      return deletedRecordId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 
@@ -153,16 +166,11 @@ export const recordsSlice = createSlice({
       state.status = FETCH_STATUS.LOADING;
     },
 
-    [fetchRecords.fulfilled]: (state, action) => {
+    [fetchRecords.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
       const items = [];
-      action.payload.forEach((rec) => {
-        items.push({
-          ...rec,
-          get name() {
-            return `${months[this.month - 1]} ${this.year}`;
-          },
-        });
+      payload.forEach((rec) => {
+        items.push(rec);
       });
       state.items = items;
     },
@@ -176,14 +184,14 @@ export const recordsSlice = createSlice({
       state.status = FETCH_STATUS.LOADING;
     },
 
-    [addRecord.fulfilled]: (state, action) => {
+    [addRecord.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items.push(payload);
       toast.success('Poprawnie dodano nową ewidencję');
     },
 
     [addRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.error('err', action);
       state.error = action.error.message;
       toast.error(action.payload);
     },
@@ -191,28 +199,35 @@ export const recordsSlice = createSlice({
       state.status = FETCH_STATUS.LOADING;
     },
 
-    [editRecord.fulfilled]: (state, action) => {
+    [editRecord.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((rec) =>
+        rec.id === payload.id ? payload : rec,
+      );
       toast.success('Poprawnie edytowano ewidencję');
     },
 
     [editRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.payload;
+      console.log(action);
+      state.error = action.payload.message;
       toast.error(action.payload);
     },
     [deleteRecord.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
     },
 
-    [deleteRecord.fulfilled]: (state, action) => {
+    [deleteRecord.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.filter((rec) => rec.id !== payload);
       toast.success('Poprawnie usunięto ewidencję');
     },
 
-    [deleteRecord.rejected]: (state, action) => {
+    [deleteRecord.rejected]: (state, { payload }) => {
       state.status = FETCH_STATUS.ERROR;
-      toast.error(action.payload);
+      state.error = payload.message;
+      toast.error(payload);
     },
   },
 });
@@ -270,16 +285,11 @@ export const selectFiteredRecords = createSelector(
 );
 
 export const selectRecordById = (state, recordId) => {
-  const { records } = state;
-  if (records.status === FETCH_STATUS.SUCCESS) {
-    const record = state.records.items.find((record) => record.id === recordId);
-    const vehicle = state.vehicles.items.find(
-      (vehicle) => vehicle.id === record.vehicleId,
-    );
-    return { ...record, vehicle: { ...vehicle } };
-  }
-
-  return { status: records.status };
+  const record = state.records.items.find((record) => record.id === recordId);
+  const vehicle = state.vehicles.items.find(
+    (vehicle) => vehicle.id === record.vehicleId,
+  );
+  return { ...record, vehicle: { ...vehicle } };
 };
 
 export const selectActiveVehicleFilter = (state) =>

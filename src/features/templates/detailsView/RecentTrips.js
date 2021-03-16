@@ -19,6 +19,7 @@ import {
 
 const RecentList = ({ title, list }) => {
   const siteSize = useSelector(selectSiteSize);
+
   const isEmptyList = list.length === 0;
   return (
     <StyledRecentList>
@@ -30,7 +31,7 @@ const RecentList = ({ title, list }) => {
         {isEmptyList ? (
           <EmptyState>Brak przejazdów</EmptyState>
         ) : (
-          list
+          [...list]
             .sort((a, b) => compareDates(b.date, a.date))
             .splice(0, 8)
             .map((item) => (

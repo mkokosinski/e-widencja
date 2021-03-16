@@ -6,6 +6,7 @@ import { FETCH_STATUS } from '../../utils/constants';
 export const authorize = createAsyncThunk(
   'auth/authorize',
   async (arg, thunkAPI) => {
+    console.log(arg);
     if (arg && arg.user) {
       const data = await getFirebaseUser(arg.user.uid);
       if (data.created) {
@@ -96,14 +97,14 @@ export const authSlice = createSlice({
     },
 
     [signIn.fulfilled]: (state, action) => {
-      state.status = 'fulfilled';
+      state.status = FETCH_STATUS.SUCCESS;
       toast.success('Poprawnie zalogowano');
       state.user = action.payload;
       state.error = null;
     },
 
     [signIn.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = FETCH_STATUS.ERROR;
       state.error = action.payload;
       toast.error(`Błąd: ${action.payload}`);
     },
@@ -113,13 +114,13 @@ export const authSlice = createSlice({
     },
 
     [signUpEmail.fulfilled]: (state, action) => {
-      state.status = 'fulfilled';
+      state.status = FETCH_STATUS.SUCCESS;
       toast.success('Poprawnie zarejestrowano');
       state.error = null;
     },
 
     [signUpEmail.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = FETCH_STATUS.ERROR;
       state.error = action.payload;
       toast.error(`Błąd: ${action.payload}`);
     },
@@ -129,22 +130,22 @@ export const authSlice = createSlice({
     },
 
     [signOut.fulfilled]: (state, action) => {
-      state.status = 'fulfilled';
+      state.status = FETCH_STATUS.SUCCESS;
       state.user = null;
     },
 
     [signOut.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = FETCH_STATUS.ERROR;
       state.error = action.error.message;
     },
 
     [authorize.fulfilled]: (state, action) => {
-      state.status = 'fulfilled';
+      state.status = FETCH_STATUS.SUCCESS;
       state.user = action.payload;
     },
 
     [authorize.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = FETCH_STATUS.ERROR;
     },
   },
 });
