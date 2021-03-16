@@ -181,13 +181,13 @@ export const ButtonsContainer = styled.div`
   margin: 30px auto 0;
   width: 100%;
 
-  & > div {
+  & > * {
     padding: 0.5rem 1rem;
     margin: 0 10px;
   }
 
   @media screen and (${device.tablet}) {
-    & > div {
+    & > * {
       padding: 0.5rem 1rem;
       margin: 0 16px;
     }
@@ -196,7 +196,7 @@ export const ButtonsContainer = styled.div`
   @media screen and (${device.laptop}) {
     padding: 20px;
 
-    & > div {
+    & > * {
       padding: 0.5rem 1rem;
       margin: 0 24px;
     }

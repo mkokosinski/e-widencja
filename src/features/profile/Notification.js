@@ -8,7 +8,12 @@ import {
 } from './ProfilebarStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faChartPie, faCloudMoonRain, faSnowboarding } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBell,
+  faChartPie,
+  faCloudMoonRain,
+  faSnowboarding,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { useDropdown } from '../hooks/useDropdown';
 
@@ -16,7 +21,7 @@ const Notification = () => {
   const [isNewNotification, setIsNewNotification] = useState(true);
 
   const button = useRef(null);
-  const {List, isOpen} = useDropdown(button);
+  const { List, isOpen } = useDropdown(button);
 
   const handleClick = () => {
     setIsNewNotification(false);
@@ -25,6 +30,7 @@ const Notification = () => {
   return (
     <>
       <NotificationButton
+        tabIndex={0}
         ref={button}
         onClick={handleClick}
         active={isOpen}

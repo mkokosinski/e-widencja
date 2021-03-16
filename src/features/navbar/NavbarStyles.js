@@ -82,6 +82,7 @@ export const A = styled(NavLink)`
 
     :focus {
       outline: none;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 
     @media screen and (${device.laptop}) {

@@ -30,7 +30,7 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileButton ref={button} active={isOpen}>
+      <ProfileButton tabIndex={0} ref={button} active={isOpen}>
         <FontAwesomeIcon icon={faUserCircle} />
       </ProfileButton>
 

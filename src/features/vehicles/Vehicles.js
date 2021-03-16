@@ -68,7 +68,7 @@ function Vehicles() {
   return (
     <ItemsList>
       <TopPanel>
-        <ButtonAdd>
+        <ButtonAdd tabIndex='-1'>
           <AddItem to={`${Routing.VehicleAdd.path}`}>
             <FontAwesomeIcon icon={faPlus} />
             <span>Nowy pojazd</span>

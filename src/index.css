@@ -21,8 +21,11 @@ span {
 
 a:active,
 a:focus {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
   outline: none;
+}
+
+a:focus {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 ul {

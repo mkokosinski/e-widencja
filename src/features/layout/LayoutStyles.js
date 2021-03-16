@@ -194,20 +194,32 @@ export const PanelOverlapLight = styled(PanelBoxShadow)`
   border-left: 6px solid ${({ theme }) => theme.secondary};
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   align-items: center;
+  background: transparent;
+  border: none;
+  color: inherit;
   cursor: pointer;
   border-radius: 6px;
   display: flex;
   justify-content: center;
   flex: 1 1;
+  font: inherit;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
   transition: background-color 100ms;
   white-space: nowrap;
   user-select: none;
-
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
   :focus,
   :active {
     outline: none;
+  }
+  :focus {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3);
   }
 
   :disabled {
@@ -219,6 +231,8 @@ export const ButtonMain = styled(Button)`
   background: ${({ theme }) => theme.mainSoft};
   border: 1px solid rgba(0, 0, 0, 0.04);
   color: white;
+  outline: none;
+  padding: 0.5rem 1rem;
 
   :hover {
     background: ${({ theme }) => theme.hover.mainSoft};
@@ -251,7 +265,6 @@ export const ButtonBorderedMain = styled(Button)`
     box-shadow: none;
   }
 
-  :active,
   :focus {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.2);

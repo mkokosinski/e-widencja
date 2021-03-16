@@ -56,8 +56,8 @@ export const ButtonAdd = styled(TopPanelButton)`
     background-color: ${(props) => props.theme.secondarySoft};
   }
 
-  :active,
   :focus {
+    background-color: ${(props) => props.theme.secondarySoft};
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
