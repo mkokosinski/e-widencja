@@ -2,10 +2,10 @@ import { device } from '../layout/LayoutStyles';
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 import { DetailsSection } from '../templates/detailsView/DetailsStyles';
-import { Field } from 'formik';
 
 export const StyledSettings = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
 `;
 
@@ -24,8 +24,8 @@ export const SettingItem = styled.div`
   }
 `;
 
-export const PurposesContainer = styled.div`
-  background: ${(props) => props.theme.grayLight};
+export const FeatureItemsContainer = styled.div`
+  background: ${(props) => props.theme.grayLighter};
   /* border: 1px dashed ${(props) => props.theme.gray}; */
   box-shadow: 0 0 4px -2px rgba(0, 0, 0, 0.4) inset;
   display: grid;
@@ -37,9 +37,9 @@ export const PurposesContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 `;
 
-export const PurposeItemContainer = styled.div``;
+export const FeatureItemContainer = styled.div``;
 
-export const StyledPurposeItem = styled(motion.div)`
+export const StyledFeatureItem = styled(motion.div)`
   align-items: center;
   background: white;
   box-shadow: ${(props) => props.theme.shadows.shadow1};
@@ -60,7 +60,7 @@ export const StyledPurposeItem = styled(motion.div)`
   }
 `;
 
-export const PurposeTitle = styled(motion.div)`
+export const FeatureItemsTitle = styled(motion.div)`
   flex: 1 1 90%;
   overflow: hidden;
   font-size: 14px;
@@ -68,12 +68,12 @@ export const PurposeTitle = styled(motion.div)`
   opacity: 1;
 `;
 
-export const PurposeButtonsContainer = styled(motion.div)`
+export const FeatureItemButtonsContainer = styled(motion.div)`
   display: flex;
   flex: 1 1 10%;
 `;
 
-export const PurposeButton = styled.div`
+export const FeatureItemButton = styled.div`
   align-items: center;
 
   display: flex;
@@ -98,7 +98,7 @@ export const PurposeButton = styled.div`
     `}
 `;
 
-export const ExpandedPurposeItem = styled(motion.div)`
+export const ExpandedFeatureItem = styled(motion.div)`
   align-items: center;
   display: flex;
   justify-content: center;
@@ -118,7 +118,7 @@ export const ExpandedPurposeItem = styled(motion.div)`
     left: calc(50vw - 370px);
   }
 
-  ${PurposeButton} {
+  ${FeatureItemButton} {
     font-size: 20px;
     height: 30px;
     margin: 0;
@@ -137,7 +137,7 @@ export const ExpandedItemOverlay = styled(motion.div)`
   z-index: 1;
 `;
 
-export const ExpandedPurposeItemContent = styled(motion.div)`
+export const ExpandedItemContent = styled(motion.div)`
   align-items: center;
   box-shadow: ${(props) => props.theme.shadows.shadow1};
   background: white;
@@ -147,12 +147,12 @@ export const ExpandedPurposeItemContent = styled(motion.div)`
   width: 100%;
 `;
 
-export const PurposeInputContainer = styled.div`
+export const FeatureItemInputContainer = styled.div`
   flex: 1 1 90%;
   margin: 0 8px;
 `;
 
-export const PurposeInput = styled.input`
+export const FeatureItemInput = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => props.theme.main};
   padding: 5px;

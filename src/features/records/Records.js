@@ -20,7 +20,6 @@ import {
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faEdit,
   faFileAlt,
   faPlus,
   faPlusSquare,
@@ -47,7 +46,7 @@ const buttons = (id) => [
   // },
 ];
 const Records = () => {
-  const { items: records, status } = useSelector(selectFiteredRecords);
+  const { items: records } = useSelector(selectFiteredRecords);
   const sortItems = useSelector(selectSortCases);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
   return (

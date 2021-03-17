@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
 
 import { DetailsGoBack, DetailsButton } from './DetailsStyles';
@@ -10,19 +10,9 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import useModal from '../../hooks/useModal';
-import { useDispatch } from 'react-redux';
-import { deleteVehicle } from '../../vehicles/redux/vehicleThunk';
-import {
-  A,
-  Button,
-  ButtonBordered,
-  ButtonMain,
-  PanelBoxShadow,
-} from '../../layout/LayoutStyles';
-import { ButtonsContainer, Container, Row } from '../../forms/FormsStyles';
-import Routing from '../../routing/Routing';
+import { A, ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
+import { ButtonsContainer, Row } from '../../forms/FormsStyles';
 import { ModalContent } from '../ListView/ListViewStyles';
-import { Link } from 'react-router-dom';
 
 export const ButtonGoBack = () => {
   const { goBack } = useHistory();

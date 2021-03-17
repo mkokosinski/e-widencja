@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ModalContent } from '../templates/ListView/ListViewStyles';
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';

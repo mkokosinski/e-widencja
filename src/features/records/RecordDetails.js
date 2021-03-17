@@ -28,7 +28,6 @@ import { ReactComponent as MonthIco } from '../../assets/month.svg';
 import { ReactComponent as CarIco } from '../../assets/car.svg';
 import { months } from '../../utils/dateUtils';
 import { selectTripsForRecord } from '../trips/tripsSlice';
-import { selectDrivers } from '../users/usersSlice';
 
 const RecordDetails = () => {
   const { id } = useParams();

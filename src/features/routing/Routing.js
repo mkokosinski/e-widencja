@@ -11,7 +11,6 @@ import TripDetails from '../trips/TripDetails';
 import TripTemplates from '../tripTemplates/TripTemplates';
 import AddTripTemplateForm from '../forms/tripTemplates/AddTripTemplateForm';
 import EditTripTemplateForm from '../forms/tripTemplates/EditTripTemplateForm';
-import TripTemplateDetails from '../tripTemplates/TripTemplateDetails';
 
 import Settings from '../settings/Settings';
 import Reports from '../reports/Reports';

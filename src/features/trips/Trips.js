@@ -6,12 +6,9 @@ import {
   faEdit,
   faFileAlt,
   faPlus,
-  faPlusSquare,
   faTruckPickup,
-  faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredUsers } from '../users/usersSlice';
+import { useSelector } from 'react-redux';
 import {
   AddItem,
   ButtonAdd,
@@ -19,7 +16,6 @@ import {
   TopPanel,
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TripsFilters from './TripFilters';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './TripFilters';

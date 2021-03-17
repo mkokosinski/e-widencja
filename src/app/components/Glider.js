@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import GliderJS from 'glider-js';
 import '../../../node_modules/glider-js/glider.min.css';
 import styled from 'styled-components';
@@ -15,7 +15,6 @@ const StyledGlider = styled.div`
 `;
 
 const Glider = ({ children, itemWidth }) => {
-  const [glider, setGlider] = useState(null);
   const gliderRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const Glider = ({ children, itemWidth }) => {
         exactWidth: true,
         itemWidth: itemWidth,
         slidesToShow: 'auto',
-        slidesToScroll: 1
+        slidesToScroll: 1,
       });
     }
   }, [gliderRef, itemWidth]);

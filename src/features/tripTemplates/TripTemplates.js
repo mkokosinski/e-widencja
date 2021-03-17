@@ -2,15 +2,11 @@ import React from 'react';
 
 import {
   faEdit,
-  faFileAlt,
   faPlus,
-  faPlusSquare,
   faTrash,
   faTruckPickup,
-  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredUsers } from '../users/usersSlice';
 import {
   AddItem,
   ButtonAdd,
@@ -18,13 +14,12 @@ import {
   TopPanel,
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TripsFilters from './TripFilters';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './TripFilters';
 import { deleteTripTemplate, selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
-import { EndLabel, StartLabel, StopsLabel } from './TripTemplatesStyles';
+import { StopsLabel } from './TripTemplatesStyles';
 import Routing from '../routing/Routing';
 
 const TripTemplates = () => {

@@ -1,30 +1,44 @@
-import { Formik } from 'formik';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
-import { StyledForm, Row } from '../forms/FormsStyles';
-import { DetailsSection } from '../templates/detailsView/DetailsStyles';
-import Purposes from './Purposes';
+import FeatureItems from './FeatureItems';
 import {
+  settingsAddNotice,
+  settingsEditNotice,
+  settingsDeleteNotice,
+} from './redux/settingNoticesSlice';
+import {
+  addPurpose,
+  deletePurpose,
+  editPurpose,
   selectNotices,
   selectPurposes,
-  selectSettings,
 } from './redux/settingsSlice';
-import {
-  SettingItem,
-  SettingsSection,
-  SettingsTitle,
-  StyledSettings,
-} from './SettingsStyles';
+import { StyledSettings } from './SettingsStyles';
 
 const Settings = () => {
   const purposes = useSelector(selectPurposes);
   const notices = useSelector(selectNotices);
 
+  console.log(notices);
+
   return (
     <StyledSettings>
       <DropdownPanel title={purposes.name}>
-        <Purposes items={purposes.items} />
+        <FeatureItems
+          items={purposes.items}
+          addItem={addPurpose}
+          editItem={editPurpose}
+          deleteItem={deletePurpose}
+        />
+      </DropdownPanel>
+      <DropdownPanel title={notices.name}>
+        <FeatureItems
+          items={notices.items}
+          addItem={settingsAddNotice}
+          editItem={settingsEditNotice}
+          deleteItem={settingsDeleteNotice}
+        />
       </DropdownPanel>
     </StyledSettings>
   );

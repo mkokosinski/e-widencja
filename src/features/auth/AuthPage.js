@@ -13,7 +13,7 @@ import {
 } from './AuthStyles';
 import Logo from '../layout/Logo';
 import SignInForm from './SignInForm';
-import { Redirect, Route, Switch, useLocation } from 'react-router';
+import { Route, Switch, useLocation } from 'react-router';
 import SignUpForm from './SignUpForm';
 import { AnimatePresence, motion } from 'framer-motion';
 import Routing from '../routing/Routing';

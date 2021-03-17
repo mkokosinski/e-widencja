@@ -12,14 +12,12 @@ import {
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import Routing from '../routing/Routing';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const user = useSelector(selectFbUser);
   const dispatch = useDispatch();
-  const history = useHistory();
   const button = useRef(null);
 
   const { List, isOpen } = useDropdown(button);

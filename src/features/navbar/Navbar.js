@@ -13,9 +13,6 @@ import {
   faCog,
   faFileAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import ShowMore from './ShowMore';
-import { useSelector } from 'react-redux';
-import { selectIsMobile } from '../layout/layoutSlice';
 
 const itemsDesktop = [
   { name: 'Dashboard', path: Routing.Dashboard.path, icon: faChartLine },
@@ -31,25 +28,25 @@ const itemsDesktop = [
   { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
 ];
 
-const itemsMobile = [
-  { name: 'Ewidencja', path: Routing.Records.path, icon: faClipboard },
-  { name: 'Pojazdy', path: Routing.Vehicles.path, icon: faCarAlt },
-  { name: 'Szablony', path: Routing.TripTemplates.path, icon: faRoute },
-  { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
-];
+// const itemsMobile = [
+//   { name: 'Ewidencja', path: Routing.Records.path, icon: faClipboard },
+//   { name: 'Pojazdy', path: Routing.Vehicles.path, icon: faCarAlt },
+//   { name: 'Szablony', path: Routing.TripTemplates.path, icon: faRoute },
+//   { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
+// ];
 
-const hiddenMobileItems = [
-  { name: 'Dashboard', path: Routing.Dashboard.path, icon: faChartLine },
-  {
-    name: Routing.Users.label,
-    path: Routing.Users.path,
-    icon: faUserFriends,
-  },
-  { name: 'Ustawienia', path: Routing.Settings.path, icon: faCog },
-];
+// const hiddenMobileItems = [
+//   { name: 'Dashboard', path: Routing.Dashboard.path, icon: faChartLine },
+//   {
+//     name: Routing.Users.label,
+//     path: Routing.Users.path,
+//     icon: faUserFriends,
+//   },
+//   { name: 'Ustawienia', path: Routing.Settings.path, icon: faCog },
+// ];
 
 const Navbar = () => {
-  const isMobile = useSelector(selectIsMobile);
+  // const isMobile = useSelector(selectIsMobile);
   const items = itemsDesktop;
   // const items = isMobile ? itemsMobile : itemsDesktop;
   return (

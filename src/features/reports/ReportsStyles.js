@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { FlexCenter, gap, gapHorizontal } from '../../AppStyles';
+import { FlexCenter, gap } from '../../AppStyles';
 import { Button } from '../layout/LayoutStyles';
 
 export const StyledReportGrid = styled.div`

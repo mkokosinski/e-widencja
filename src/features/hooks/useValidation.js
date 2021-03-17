@@ -64,16 +64,7 @@ const useValidation = () => {
   };
 
   const vehicle = (values) => {
-    const {
-      id,
-      name,
-      brand,
-      model,
-      registrationNumber,
-      mileage,
-      checkupDate,
-      type,
-    } = values;
+    const { id, name, registrationNumber } = values;
 
     const oldVehicle = vehicles
       .map((rec) => ({
@@ -120,7 +111,7 @@ const useValidation = () => {
   };
 
   const user = (values) => {
-    const { id, name, surname, label, eMail, isDriver } = values;
+    const { id, eMail } = values;
 
     const oldUser = users
       .map((user) => ({
@@ -154,7 +145,7 @@ const useValidation = () => {
   };
 
   const tripTemplate = (values) => {
-    const { id, label, purpose, stops } = values;
+    const { id, label } = values;
 
     const isDuplicateLabel = tripTemplates.some(
       (template) => template.label.trim() === label.trim(),

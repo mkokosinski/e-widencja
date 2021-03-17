@@ -9,11 +9,8 @@ import {
 } from './DropdownPanelStyles';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faAngleDown,
-  faArrowAltCircleRight,
-} from '@fortawesome/free-solid-svg-icons';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { AnimateSharedLayout } from 'framer-motion';
 
 const contentAnimation = {
   enter: {

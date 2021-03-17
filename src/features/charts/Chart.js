@@ -11,8 +11,7 @@ import {
   Title,
   Canvas,
 } from './ChartsStyles';
-import { DateFrom } from '../../utils/dateUtils';
-import { createLineChart, fillDatasets } from '../../utils/chartUtils';
+import { createLineChart } from '../../utils/chartUtils';
 
 Chart.defaults.lineAlt = Chart.defaults.line;
 
@@ -36,10 +35,10 @@ Chart.controllers.lineAlt = custom;
 
 const LineChart = ({ title = '', data }) => {
   const [chart, setChart] = useState(null);
-  const [chartData, setData] = useState(data.datasets[0]);
-  const [labels, setLabels] = useState(data.labels);
   const [selectedYear, setSelectedYear] = useState(null);
   const chartRef = useRef(null);
+  const chartData = data.datasets[0];
+  const labels = data.labels;
 
   const dataLength = Object.keys(data.datasets[0].data).length;
   const previousButtonDisabled = !chartData.data[selectedYear - 1];
@@ -62,7 +61,7 @@ const LineChart = ({ title = '', data }) => {
       chart.data.datasets = [newDataset];
       chart.update();
     }
-  }, [chart, selectedYear, data]);
+  }, [chart, chartData, selectedYear, labels]);
 
   const nextStep = () => {
     if (!nextButtonDisabled) setSelectedYear(selectedYear + 1);

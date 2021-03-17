@@ -1,5 +1,4 @@
 import { pl } from 'date-fns/locale';
-import * as test from 'date-fns';
 import formatLong from 'date-fns/locale/pl/_lib/formatLong/index';
 
 export const months = [
