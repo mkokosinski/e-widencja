@@ -104,14 +104,14 @@ const AppRouter = () => {
           <Route exact path={Routing.TripAdd.path}>
             <Routing.TripAdd.Component />
           </Route>
-          <Route exact path={Routing.TripRecordNotExists.path}>
-            <Routing.TripRecordNotExists.Component />
-          </Route>
           <Route exact path={Routing.TripEdit.path}>
             <Routing.TripEdit.Component />
           </Route>
           <Route exact path={Routing.TripDetails.path}>
             <Routing.TripDetails.Component />
+          </Route>
+          <Route exact path={Routing.TripRecordNotExists.path}>
+            <Routing.TripRecordNotExists.Component />
           </Route>
           <Route exact path={Routing.Trips.path}>
             <Routing.Trips.Component />

@@ -11,6 +11,8 @@ import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import { editVehicle } from '../vehicles/redux/vehicleThunk';
 import { addTripTemplate } from '../tripTemplates/tripTemplatesSlice';
+import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
+import { selectDrivers } from '../users/usersSlice';
 
 export const fetchTrips = createAsyncThunk(
   'trips/fetchTrips',
@@ -23,7 +25,6 @@ export const fetchTrips = createAsyncThunk(
       const coll = await firestore
         .collection('Trips')
         .where('companyId', '==', user.companyId)
-        .where('active', '==', true)
         .get();
 
       coll.forEach((doc) => {
@@ -121,6 +122,67 @@ export const addTrip = createAsyncThunk(
   },
 );
 
+export const editTrip = createAsyncThunk(
+  'trips/editTrip',
+  async (editedTrip, thunkAPI) => {
+    try {
+      const currUser = thunkAPI.getState().auth.user;
+      const maxVehicleMileage = thunkAPI
+        .getState()
+        .trips.items.filter((trip) => trip.vehicleId === editedTrip.vehicle)
+        .reduce((max, cur) => {
+          const tripMileage = cur.stops[cur.stops.length - 1].mileage;
+          return tripMileage > max ? tripMileage : max;
+        }, 0);
+
+      const distance = editedTrip.stops.reduce(
+        (acc, cur) => acc + cur.distance,
+        0,
+      );
+
+      const trip = {
+        ...editedTrip,
+        updatedBy: currUser.id,
+        updated: firestoreFunctions.FieldValue.serverTimestamp(),
+      };
+
+      const currentTripMileage =
+        editedTrip.stops[editedTrip.stops.length - 1].mileage;
+      const newMileage =
+        currentTripMileage > maxVehicleMileage
+          ? currentTripMileage
+          : maxVehicleMileage;
+
+      firestore.collection('Trips').doc(editedTrip.id).update(trip);
+
+      // thunkAPI.dispatch(
+      //   editVehicle({
+      //     id: editedTrip.vehicle,
+      //     mileage: newMileage,
+      //   }),
+      // );
+
+      // if (editedTrip.saveTemplate) {
+      //   thunkAPI.dispatch(
+      //     addTripTemplate({
+      //       name: editedTrip.templateName,
+      //       purpose: editedTrip.purpose,
+      //       stops: editedTrip.stops,
+      //       companyId: currUser.companyId,
+      //       createdBy: currUser.id,
+      //       created: firestoreFunctions.FieldValue.serverTimestamp(),
+      //       active: true,
+      //     }),
+      //   );
+      // }
+
+      return trip;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const sortMethods = {
   Data: {
     asc: (a, b) => compareDates(a.date, b.date),
@@ -147,7 +209,6 @@ export const tripSlice = createSlice({
   },
   reducers: {
     setSortFunc: (state, action) => {
-      console.error(action);
       const { payload } = action;
       const entry = Object.entries(payload)[0];
 
@@ -178,24 +239,45 @@ export const tripSlice = createSlice({
       state.error = payload.message;
       toast.error('Nie udało się dodać przejazdu');
     },
+
+    [editTrip.fulfilled]: (state, { payload }) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((trip) =>
+        trip.id === payload.id ? { ...trip, ...payload } : trip,
+      );
+      toast.success('Poprawnie edytowano przejazd');
+    },
+
+    [editTrip.rejected]: (state, { payload }) => {
+      state.status = FETCH_STATUS.ERROR;
+      state.error = payload.message;
+      toast.error('Nie udało się edytować przejazdu');
+    },
   },
 });
 
 const trips = (state) => state.trips;
 
-export const selectTrips = createSelector(
-  [trips, selectRecords],
-  (trips, records) => {
-    const { sortFunc } = trips;
+export const selectTrips = (state) => ({
+  ...state.trips,
+  items: state.trips.items.filter((trip) => trip.active),
+});
 
+export const selectTripsFullData = createSelector(
+  [selectTrips, selectRecords, selectVehicles, selectDrivers],
+  (trips, records, { items: vehicles }, drivers) => {
+    const { sortFunc } = trips;
     const items = [];
     Object.values(trips.items).forEach((trip) => {
       const name = trip.stops.map((t) => t.place).join(' - ');
-      const record = records.items.find((r) => r.id === trip.record);
-      const vehicle = record && record.vehicle && record.vehicle.name;
+      const record = records.items.find((r) => r.id === trip.recordId);
+      const vehicle = vehicles.find((veh) => veh.id === trip.vehicleId);
+      const driver = drivers.find((driver) => driver.id === trip.driverId);
       const subname = `${trip.date} ${vehicle}`;
       items.push({
         ...trip,
+        record,
+        driver,
         name,
         vehicle,
       });
@@ -208,7 +290,7 @@ export const selectTrips = createSelector(
 );
 
 export const selectFilteredTrips = createSelector(
-  [selectTrips, selectFilters],
+  [selectTripsFullData, selectFilters],
   (trips, filters) => {
     const { tripFilter, carBrandFilter } = filters;
 
@@ -225,7 +307,7 @@ export const selectFilteredTrips = createSelector(
 );
 
 export const selectTripById = (state, tripId) => {
-  return state.trips.items[tripId];
+  return state.trips.items.find((trip) => trip.id === tripId);
 };
 
 export const selectTripsForRecord = (state, recordId) =>

@@ -32,7 +32,7 @@ import { selectPurposes } from '../../settings/redux/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
-import { addTrip } from '../../trips/tripsSlice';
+import { addTrip, editTrip } from '../../trips/tripsSlice';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -167,6 +167,7 @@ const TripForm = ({ trip, isEdit }) => {
 
   const handleSubmit = (values) => {
     const newTrip = {
+      id: trip?.id,
       date: values.date,
       record: values.record.value,
       driver: values.driver.value,
@@ -177,7 +178,8 @@ const TripForm = ({ trip, isEdit }) => {
       saveTemplate: values.saveTemplate,
       templateName: values.templateName,
     };
-    dispatch(addTrip(newTrip)).then(() => goBack());
+    const action = isEdit ? editTrip : addTrip;
+    dispatch(action(newTrip)).then(() => goBack());
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProfileSection from './ProfileSection';
+import LastTripDashboardItem from './LastTripDashboardItem';
 import RecentList from '../templates/detailsView/RecentTrips';
 import CheckupList from '../forms/vehicle/CheckupList';
 import Glider from '../../app/components/Glider';
@@ -15,9 +15,12 @@ import {
   DashboardSection,
   DashboardTitle,
 } from './DashboardStyles';
+import { selectTrips, selectTripsFullData } from '../trips/tripsSlice';
+import { compareDates } from '../../utils/dateUtils';
 
 const Dashboard = () => {
   const { items: vehicles } = useSelector(selectVehicles);
+  const trips = useSelector(selectTripsFullData);
   return (
     <DashboardContainer>
       {/* <DetailsSection>
@@ -29,11 +32,11 @@ const Dashboard = () => {
       </DetailsSection> */}
       <DashboardHeader>
         <Glider itemWidth={250}>
-          <ProfileSection />
-          <ProfileSection />
-          <ProfileSection />
-          <ProfileSection />
-          <ProfileSection />
+          {trips.slice(0, 5).map((trip) => (
+            <React.Fragment key={trip.id}>
+              <LastTripDashboardItem trip={trip} />
+            </React.Fragment>
+          ))}
         </Glider>
       </DashboardHeader>
 

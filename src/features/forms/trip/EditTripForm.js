@@ -10,7 +10,20 @@ const EditTripForm = () => {
 
   const trip = useSelector((state) => selectTripById(state, id));
 
-  return trip ? <TripForm trip={trip} /> : null;
+  const tripData = {
+    id,
+    date: trip.date,
+    driver: trip.driverId,
+    initialMileage: 0,
+    purpose: trip.purpose,
+    record: trip.recordId,
+    stops: trip.stops,
+    tripTemplate: trip.templateId,
+  };
+
+  console.log(trip);
+
+  return trip ? <TripForm trip={tripData} isEdit={true} /> : null;
 };
 
 export default EditTripForm;

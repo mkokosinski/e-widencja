@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Document,
   Page,
@@ -9,16 +8,8 @@ import {
   Font,
 } from '@react-pdf/renderer';
 
-import { useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { selectTrips, selectTripsForRecord } from '../../trips/tripsSlice';
 import EmptyRow from './EmptyRow';
-import styled from 'styled-components';
 import DataRow from './DataRow';
-import {
-  formatTripsForVatReport,
-  splitStop,
-} from '../../../utils/reportsUtils';
 import ReportVatHeader from './ReportVatHeader';
 import ReportVatFooter from './ReportVatFooter';
 
@@ -83,7 +74,7 @@ const ReportVatTemplate = ({ data: records, company }) => {
         return pages.map((page) => {
           const rows = Array.from(
             Array(17),
-            (v, idx) => recordData.trips[idx + page * 17]
+            (v, idx) => recordData.trips[idx + page * 17],
           );
           const initMonthMileage = recordData.trips[0]?.mileageStart || '';
           const pageSumDistance =
@@ -92,7 +83,7 @@ const ReportVatTemplate = ({ data: records, company }) => {
           const sumDistance =
             recordData.trips.reduce(
               (acc, cur) => (cur ? acc + cur.distance : acc),
-              0
+              0,
             ) || '';
           return (
             <Page size='A4' style={styles.page}>
@@ -155,7 +146,7 @@ const ReportVatTemplate = ({ data: records, company }) => {
                     <DataRow styles={styles} data={row} />
                   ) : (
                     <EmptyRow styles={styles} />
-                  )
+                  ),
                 )}
               </View>
               <ReportVatFooter

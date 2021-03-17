@@ -56,7 +56,7 @@ const Routing = {
     Component: EditTripForm,
     action: '/app/trips/edit',
     get path() {
-      return `${this.action}/:id`;
+      return `${this.action}/:id?`;
     },
   },
   TripDetails: {

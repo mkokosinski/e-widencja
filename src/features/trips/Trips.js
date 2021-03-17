@@ -23,7 +23,7 @@ import TripsFilters from './TripFilters';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './TripFilters';
-import { selectTrips } from './tripsSlice';
+import { selectTripsFullData } from './tripsSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 
 const buttons = (id) => [
@@ -40,7 +40,7 @@ const buttons = (id) => [
 ];
 
 const Users = () => {
-  const trips = useSelector(selectTrips);
+  const { items: trips } = useSelector(selectTripsFullData);
 
   return (
     <ItemsList>
