@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -8,7 +8,7 @@ import FieldWithErrors from '../forms/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
 import { StyledField, Row, StyledError } from '../forms/FormsStyles';
 
-import { selectAuth, signIn, signUpEmail } from './authSlice';
+import { selectAuth, signUpEmail } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AuthButtonsWrapper,
@@ -16,9 +16,7 @@ import {
   AuthFormBody,
   AuthFormFooter,
   AuthFormHeader,
-  AuthFormSubHeader,
   AuthLink,
-  SignUpLink,
 } from './AuthStyles';
 import { motion } from 'framer-motion';
 import { authFormAnimations } from '../../utils/animationUtils';
@@ -71,7 +69,7 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ submitForm }) => (
+      {() => (
         <AuthForm>
           <AuthFormHeader>
             <motion.h2 {...authFormAnimations}>Rejestracja </motion.h2>
@@ -111,9 +109,7 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
               </Row>
 
               <AuthButtonsWrapper>
-                <ButtonMain type='button' onClick={submitForm}>
-                  Zarejestruj
-                </ButtonMain>
+                <ButtonMain type='submit'>Zarejestruj</ButtonMain>
               </AuthButtonsWrapper>
               <Row>
                 <StyledError>{error}</StyledError>

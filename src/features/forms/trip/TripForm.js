@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Field, FieldArray, Formik } from 'formik';
-import { useHistory, useLocation } from 'react-router';
+import React, { useRef } from 'react';
+import { FieldArray, Formik } from 'formik';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
 import FieldWithErrors from '../fieldWithErrors';
@@ -22,26 +22,17 @@ import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectVehicles } from '../../vehicles/redux/vehicleThunk';
 import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
 import { selectFbUser } from '../../auth/authSlice';
 import { USER_ROLES } from '../../../utils/constants';
-import {
-  selectTripTemplates,
-  selectTripTemplateSort,
-} from '../../tripTemplates/tripTemplatesSlice';
-import {
-  selectPurposes,
-  selectSettings,
-} from '../../settings/redux/settingsSlice';
+import { selectTripTemplates } from '../../tripTemplates/tripTemplatesSlice';
+import { selectPurposes } from '../../settings/redux/settingsSlice';
 import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
 import { addTrip } from '../../trips/tripsSlice';
-import { DateFrom } from '../../../utils/dateUtils';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -196,13 +187,7 @@ const TripForm = ({ trip, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({
-          values,
-          submitForm,
-          setFieldTouched,
-          setFieldValue,
-          handleChange,
-        }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -417,9 +402,7 @@ const TripForm = ({ trip, isEdit }) => {
             )}
 
             <ButtonsContainer>
-              <ButtonMain type='button' onClick={submitForm}>
-                Zapisz
-              </ButtonMain>
+              <ButtonMain type='submit'>Zapisz</ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

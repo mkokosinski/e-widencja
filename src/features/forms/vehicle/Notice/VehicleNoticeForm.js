@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { useHistory, useParams } from 'react-router';
 import * as Yup from 'yup';
@@ -19,7 +19,6 @@ import {
 import { ButtonMain, ButtonBordered } from '../../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { validationMessages } from '../../../../utils/formUtils';
-import { addVehicle, editVehicle } from '../../../vehicles/redux/vehicleThunk';
 import { selectNotices } from '../../../settings/redux/settingsSlice';
 import { selectVehicleById } from '../../../vehicles/redux/vehiclesSlice';
 import {
@@ -85,7 +84,7 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
     };
     const action = isEdit ? editNotice : addNotice;
 
-    dispatch(action(data)).then((res) => {
+    dispatch(action(data)).then(() => {
       goBack();
     });
   };
@@ -94,7 +93,7 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
     if (editedNotice) {
       dispatch(
         deleteNotice({ vehicleId: vehicle.id, noticeId: editedNotice.id }),
-      ).then((res) => {
+      ).then(() => {
         goBack();
       });
     }
@@ -107,7 +106,7 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, submitForm, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <StyledFormTitle>
               {`${values.vehicle} - uwagi`}
@@ -164,9 +163,7 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
               </FieldWithErrors>
             </Row>
             <ButtonsContainer>
-              <ButtonMain type='button' onClick={submitForm}>
-                Zapisz
-              </ButtonMain>
+              <ButtonMain type='submit'>Zapisz</ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

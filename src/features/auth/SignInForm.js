@@ -58,7 +58,7 @@ const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ submitForm }) => (
+        {() => (
           <AuthForm>
             <AuthFormHeader>
               <motion.h2 {...authFormAnimations}>Logowanie</motion.h2>
@@ -85,9 +85,7 @@ const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {
                 </Row>
 
                 <AuthButtonsWrapper>
-                  <ButtonMain type='button' onClick={submitForm}>
-                    Zaloguj
-                  </ButtonMain>
+                  <ButtonMain type='submit'>Zaloguj</ButtonMain>
                 </AuthButtonsWrapper>
                 <Row>
                   <StyledError>{error}</StyledError>

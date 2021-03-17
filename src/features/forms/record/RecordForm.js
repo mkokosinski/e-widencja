@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Formik } from 'formik';
@@ -17,7 +17,6 @@ import useValidation from '../../hooks/useValidation';
 import {
   StyledForm,
   Container,
-  StyledField,
   ButtonsContainer,
   Row,
   StyledSelect,
@@ -89,7 +88,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, submitForm, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -138,9 +137,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMai type='button' n onClick={submitForm}>
-                Zapisz
-              </ButtonMai>
+              <ButtonMain type='submit'>Zapisz</ButtonMain>
               <ButtonBordered
                 type='button'
                 onClick={() => push(Routing.Records.path)}

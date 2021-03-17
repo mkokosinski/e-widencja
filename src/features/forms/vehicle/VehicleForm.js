@@ -94,7 +94,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
     const action = isEdit ? editVehicle : addVehicle;
 
     if (validate.success) {
-      dispatch(action(data)).then((res) => {
+      dispatch(action(data)).then(() => {
         goBack();
       });
     } else {
@@ -123,7 +123,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, submitForm, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa' scrollFocused>
@@ -228,9 +228,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain type='button' onClick={submitForm}>
-                Zapisz
-              </ButtonMain>
+              <ButtonMain type='submit'>Zapisz</ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

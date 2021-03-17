@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Field, FieldArray, Formik } from 'formik';
-import { useHistory, useLocation } from 'react-router';
+import React from 'react';
+import { FieldArray, Formik } from 'formik';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
 import FieldWithErrors from '../fieldWithErrors';
-import Select from 'react-select';
 import SelectCreatable from 'react-select/creatable';
 
 import {
@@ -17,33 +16,16 @@ import {
   AddItemButton,
   RemoveItemButton,
   MileageFieldsGroup,
-  Input,
-  StyledCheckbox,
 } from '../FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
-import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectVehicles } from '../../vehicles/redux/vehicleThunk';
-import { selectDrivers } from '../../users/usersSlice';
-import { selectRecords } from '../../records/recordsSlice';
-import { selectFbUser } from '../../auth/authSlice';
-import { USER_ROLES } from '../../../utils/constants';
 import {
   addTripTemplate,
   editTripTemplate,
-  selectTripTemplates,
-  selectTripTemplateSort,
 } from '../../tripTemplates/tripTemplatesSlice';
-import {
-  selectPurposes,
-  selectSettings,
-} from '../../settings/redux/settingsSlice';
-import MileageInput from './MileageInput';
-import DistanceInput from './DistanceInput';
-import Checkbox from '../checkbox';
+import { selectPurposes } from '../../settings/redux/settingsSlice';
 import useValidation from '../../hooks/useValidation';
 import { toast } from 'react-toastify';
 
@@ -99,7 +81,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
     const action = isEdit ? editTripTemplate : addTripTemplate;
 
     if (validate.success) {
-      dispatch(action(data)).then((res) => {
+      dispatch(action(data)).then(() => {
         goBack();
       });
     } else {
@@ -114,13 +96,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({
-          values,
-          submitForm,
-          setFieldTouched,
-          setFieldValue,
-          handleChange,
-        }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa' scrollFocused>
@@ -213,9 +189,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain type='button' onClick={submitForm}>
-                Zapisz
-              </ButtonMain>
+              <ButtonMain type='submit'>Zapisz</ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>
