@@ -27,6 +27,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import FilterButton from '../../app/components/FilterButton';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
 
 const buttons = (id) => [
   {
@@ -62,23 +63,27 @@ const Records = () => {
         <SortButton modalItems={sortItems} sortFunc={setSortFunc} />
       </TopPanel>
 
-      {records.map((record) => {
-        const subname = record.vehicle && record.vehicle.name;
-        return (
-          <ListViewItem
-            key={record.id}
-            ico={faUser}
-            item={{ ...record, subname }}
-            path={Routing.Records.path}
-            buttons={buttons(record.id)}
-          >
-            <Title>
-              <Name>{record.name}</Name>
-              <Subname>{subname}</Subname>
-            </Title>
-          </ListViewItem>
-        );
-      })}
+      {records?.length > 0 ? (
+        records.map((record) => {
+          const subname = record.vehicle && record.vehicle.name;
+          return (
+            <ListViewItem
+              key={record.id}
+              ico={faUser}
+              item={{ ...record, subname }}
+              path={Routing.Records.path}
+              buttons={buttons(record.id)}
+            >
+              <Title>
+                <Name>{record.name}</Name>
+                <Subname>{subname}</Subname>
+              </Title>
+            </ListViewItem>
+          );
+        })
+      ) : (
+        <EmptyState>Brak aktywnych ewidencji</EmptyState>
+      )}
     </ItemsList>
   );
 };

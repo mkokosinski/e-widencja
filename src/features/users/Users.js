@@ -22,6 +22,7 @@ import {
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from '../records/FilterModal';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
 
 const buttons = (id) => [
   {
@@ -56,20 +57,24 @@ function Users() {
         <FilterButton modalComponent={FilterModal} />
       </TopPanel>
 
-      {users.map((user) => (
-        <ListViewItem
-          key={user.id}
-          ico={faUser}
-          item={user}
-          path={Routing.Users.path}
-          buttons={buttons(user.id)}
-        >
-          <Title>
-            <Name>{`${user.name} ${user.surname}`}</Name>
-            <Subname>{user.label}</Subname>
-          </Title>
-        </ListViewItem>
-      ))}
+      {users?.length ? (
+        users.map((user) => (
+          <ListViewItem
+            key={user.id}
+            ico={faUser}
+            item={user}
+            path={Routing.Users.path}
+            buttons={buttons(user.id)}
+          >
+            <Title>
+              <Name>{`${user.name} ${user.surname}`}</Name>
+              <Subname>{user.label}</Subname>
+            </Title>
+          </ListViewItem>
+        ))
+      ) : (
+        <EmptyState>Brak aktywnych użytkowników</EmptyState>
+      )}
     </ItemsList>
   );
 }

@@ -21,6 +21,7 @@ import { deleteTripTemplate, selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { StopsLabel } from './TripTemplatesStyles';
 import Routing from '../routing/Routing';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
 
 const TripTemplates = () => {
   const templates = useSelector(selectTripTemplates);
@@ -51,30 +52,34 @@ const TripTemplates = () => {
         <FilterButton modalComponent={FilterModal} />
       </TopPanel>
 
-      {templates.map((template) => {
-        return (
-          <ListViewItem
-            key={template.id}
-            ico={faTruckPickup}
-            item={template}
-            path={Routing.Trips.path}
-            buttons={buttons(template.id)}
-          >
-            <Title>
-              <Name>{template.name}</Name>
-              <Subname>
-                <StopsLabel>
-                  {template.stops.map((stop) => (
-                    <span key={template.id + stop.place + stop.label}>
-                      {stop.place}
-                    </span>
-                  ))}
-                </StopsLabel>
-              </Subname>
-            </Title>
-          </ListViewItem>
-        );
-      })}
+      {templates?.length ? (
+        templates.map((template) => {
+          return (
+            <ListViewItem
+              key={template.id}
+              ico={faTruckPickup}
+              item={template}
+              path={Routing.Trips.path}
+              buttons={buttons(template.id)}
+            >
+              <Title>
+                <Name>{template.name}</Name>
+                <Subname>
+                  <StopsLabel>
+                    {template.stops.map((stop) => (
+                      <span key={template.id + stop.place + stop.label}>
+                        {stop.place}
+                      </span>
+                    ))}
+                  </StopsLabel>
+                </Subname>
+              </Title>
+            </ListViewItem>
+          );
+        })
+      ) : (
+        <EmptyState>Brak zdefiniowanych szablonów</EmptyState>
+      )}
     </ItemsList>
   );
 };

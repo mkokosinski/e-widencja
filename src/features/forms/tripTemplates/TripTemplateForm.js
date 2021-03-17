@@ -110,6 +110,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
                   <SelectCreatable
                     as='select'
                     isSearchable={true}
+                    noOptionsMessage='Lista pusta. Dodaj cel w opcjach'
                     options={purposesSelectItems}
                     onChange={(option) => {
                       setFieldTouched('purpose');

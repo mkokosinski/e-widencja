@@ -14,6 +14,7 @@ import {
   DashboardList,
   BorderedListItem,
 } from '../../dashboard/DashboardStyles';
+import { EmptyState } from '../../templates/detailsView/DetailsStyles';
 
 const getStatus = (date) => {
   const today = new Date();
@@ -43,6 +44,10 @@ const CheckupList = () => {
 
       return { name: veh.name, date: veh.checkupDate, status, reamin, path };
     });
+
+  if (!checkups.length || checkups.length === 0) {
+    return <EmptyState>Brak zgłoszonych uwag</EmptyState>;
+  }
 
   return (
     <DashboardList>
