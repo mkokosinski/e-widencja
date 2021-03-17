@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { selectRecordById } from '../../records/recordsSlice';
-import { selectTripById } from '../../trips/tripsSlice';
 
 import TripForm from './TripForm';
 

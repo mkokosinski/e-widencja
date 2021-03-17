@@ -1,11 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import {
   compareDates,
   dateBetween,
-  differenceInDays,
   getRemainDays,
 } from '../../../utils/dateUtils';
 import { selectSortedVehicles } from '../../vehicles/redux/vehiclesSlice';

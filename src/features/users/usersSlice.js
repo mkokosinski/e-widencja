@@ -4,16 +4,9 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import {
-  auth,
-  authOtherUser,
-  firestore,
-  firestoreFunctions,
-} from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
-import { signUpEmail } from '../auth/authSlice';
-import { toCapitalize } from '../../utils/stringUtils';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
-import { ButtonMain } from '../layout/LayoutStyles';
 import ReportVat from './VatReport/ReportVat';
 
 const Reports = () => {

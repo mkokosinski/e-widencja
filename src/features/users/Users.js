@@ -18,10 +18,7 @@ import {
   faFileAlt,
   faPlusSquare,
   faEdit,
-  faSortAmountUpAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import useModal from '../hooks/useModal';
-import UserFiltersModal from './UserFiltersModal';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from '../records/FilterModal';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';

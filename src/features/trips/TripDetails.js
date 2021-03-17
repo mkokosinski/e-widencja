@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import Routing from '../routing/Routing';
 
-import LineChart from '../charts/Chart';
 import RecentList from '../templates/detailsView/RecentTrips';
 import {
   ButtonGoBack,
@@ -14,53 +13,12 @@ import {
 import {
   DetailsTopPanel,
   DetailsTitle,
-  DetailsInfo,
-  DetailsIco,
-  DetailsLabel,
-  DetailsData,
   Details,
   SectionDesc,
-  SectionChart,
-  SectionRecent,
   DetailsSection,
 } from '../templates/detailsView/DetailsStyles';
 
-import { ReactComponent as CompanyIco } from '../../assets/branding.svg';
-import { ReactComponent as YearIco } from '../../assets/year.svg';
-import { ReactComponent as MonthIco } from '../../assets/month.svg';
-import { ReactComponent as CarIco } from '../../assets/car.svg';
 import { selectTripById } from '../trips/tripsSlice';
-import { selectVehicleById } from '../vehicles/redux/vehicleThunk';
-
-const sampleData = {
-  labels: [
-    'Sty',
-    'Lut',
-    'Mar',
-    'Kwi',
-    'Maj',
-    'Cze',
-    'Lip',
-    'Sie',
-    'Wrz',
-    'Paź',
-    'Lis',
-    'Gru',
-  ],
-  datasets: [
-    {
-      label: 'Przejechano',
-      data: [242, 215, 224, 242, 232, 224, 200, 199, 202, 222, 230, 244],
-      backgroundColor: ['transparent'],
-      borderColor: 'rgba(88, 64, 187,0.8)',
-      borderWidth: 2,
-      pointBorderColor: '#ffffff',
-      pointBackgroundColor: 'rgba(88, 64, 187,1)',
-      pointRadius: 6,
-      pointBorderWidth: 3,
-    },
-  ],
-};
 
 const sampletrips = [
   { from: 'Biuro', to: 'Posum', driver: 'MK', distance: '11km' },

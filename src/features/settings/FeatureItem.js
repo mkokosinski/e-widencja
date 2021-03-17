@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  PurposeButton,
-  PurposeButtonsContainer,
-  PurposeItemContainer,
-  PurposeTitle,
-  StyledPurposeItem,
+  FeatureItemButton,
+  FeatureItemButtonsContainer,
+  FeatureItemContainer,
+  FeatureItemsTitle,
+  StyledFeatureItem,
 } from './SettingsStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEdit,
-  faTimes,
-  faTrash,
-  faTrashAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import EditPurposeItem from './EditPurposeItem';
-import { useDispatch } from 'react-redux';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { AnimatePresence } from 'framer-motion';
+import EditFeatureItem from './EditFeatureItem';
 
 const PurposeItem = ({
   item,
@@ -25,8 +19,6 @@ const PurposeItem = ({
   deleteItem,
   isSelected,
 }) => {
-  const [changed, setChanged] = useState(false);
-
   const closeItem = () => {
     handleSelect(null);
   };
@@ -40,10 +32,10 @@ const PurposeItem = ({
   };
 
   return (
-    <PurposeItemContainer>
+    <FeatureItemContainer>
       <AnimatePresence>
         {isSelected && (
-          <EditPurposeItem
+          <EditFeatureItem
             key={item.id}
             item={item}
             defaultValue={item.name}
@@ -54,30 +46,33 @@ const PurposeItem = ({
       </AnimatePresence>
 
       <>
-        <StyledPurposeItem
+        <StyledFeatureItem
           key={item.id}
           layoutId={item.id}
           isSelected={isSelected}
           // onClick={() => handleSelect(item)}
         >
-          <PurposeTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <FeatureItemsTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {item.name}
-          </PurposeTitle>
-          <PurposeButtonsContainer
+          </FeatureItemsTitle>
+          <FeatureItemButtonsContainer
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
           >
-            <PurposeButton title='Edytuj' onClick={() => handleSelect(item.id)}>
+            <FeatureItemButton
+              title='Edytuj'
+              onClick={() => handleSelect(item.id)}
+            >
               <FontAwesomeIcon icon={faEdit} />
-            </PurposeButton>
-            <PurposeButton onClick={handleDelete}>
+            </FeatureItemButton>
+            <FeatureItemButton onClick={handleDelete}>
               <FontAwesomeIcon title='Usuń' icon={faTrash} />
-            </PurposeButton>
-          </PurposeButtonsContainer>
-        </StyledPurposeItem>
+            </FeatureItemButton>
+          </FeatureItemButtonsContainer>
+        </StyledFeatureItem>
       </>
-    </PurposeItemContainer>
+    </FeatureItemContainer>
   );
 };
 

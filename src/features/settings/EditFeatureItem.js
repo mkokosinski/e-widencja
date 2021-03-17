@@ -2,18 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   ExpandedItemOverlay,
-  ExpandedPurposeItem,
-  ExpandedPurposeItemContent,
-  PurposeButton,
-  PurposeButtonsContainer,
-  PurposeInput,
-  PurposeInputContainer,
+  ExpandedFeatureItem,
+  ExpandedItemContent,
+  FeatureItemButton,
+  FeatureItemButtonsContainer,
+  FeatureItemInput,
+  FeatureItemInputContainer,
 } from './SettingsStyles';
-import { StyledForm } from '../forms/FormsStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
+const EditFeatureItem = ({ item, defaultValue, saveItem, closeItem }) => {
   const [value, setValue] = useState(defaultValue || '');
   const inputref = useRef(null);
 
@@ -50,10 +49,10 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
         exit={{ opacity: 0 }}
         transition={{ delay: 0.1 }}
       />
-      <ExpandedPurposeItem key={item.id} layoutId={item.id}>
-        <ExpandedPurposeItemContent>
-          <PurposeInputContainer>
-            <PurposeInput
+      <ExpandedFeatureItem key={item.id} layoutId={item.id}>
+        <ExpandedItemContent>
+          <FeatureItemInputContainer>
+            <FeatureItemInput
               innerRef={inputref}
               ref={inputref}
               value={value}
@@ -62,29 +61,29 @@ const EditPurposeItem = ({ item, defaultValue, saveItem, closeItem }) => {
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={keysBinding}
             />
-          </PurposeInputContainer>
-          <PurposeButtonsContainer
+          </FeatureItemInputContainer>
+          <FeatureItemButtonsContainer
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <PurposeButton
+            <FeatureItemButton
               title='Zapisz'
               onClick={handleSave}
               color={'mainSoft'}
             >
               <FontAwesomeIcon icon={faSave} />
-            </PurposeButton>
-            <PurposeButton title='Zamknij' onClick={closeItem}>
+            </FeatureItemButton>
+            <FeatureItemButton title='Zamknij' onClick={closeItem}>
               <FontAwesomeIcon icon={faTimes} />
-            </PurposeButton>
-          </PurposeButtonsContainer>
-        </ExpandedPurposeItemContent>
-      </ExpandedPurposeItem>
+            </FeatureItemButton>
+          </FeatureItemButtonsContainer>
+        </ExpandedItemContent>
+      </ExpandedFeatureItem>
     </>
   );
 };
 
-EditPurposeItem.propTypes = {
+EditFeatureItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -93,4 +92,4 @@ EditPurposeItem.propTypes = {
   closeItem: PropTypes.func.isRequired,
 };
 
-export default EditPurposeItem;
+export default EditFeatureItem;

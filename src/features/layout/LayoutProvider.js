@@ -1,8 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Navbar from '../navbar/Navbar';
-import Logo from './Logo';
-import Profilebar from '../profile/Profilebar';
 import {
   selectInitSize,
   selectIsMobile,
@@ -61,7 +58,7 @@ const LayoutProvider = ({ children }) => {
     }
 
     dispatch(setCurrSiteSize({ width: clientWidth, height: clientHeight }));
-  }, [dispatch, isMobile, isMobileKeyboard]);
+  }, [dispatch, initSiteSize.height, isMobile, isMobileKeyboard]);
 
   useEffect(() => {
     handleCurrSite();

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { FlexCenter, gap, gapHorizontal } from '../../../AppStyles';
+import { FlexCenter, gapHorizontal } from '../../../AppStyles';
 
-import { device, Button, H2, A } from '../../layout/LayoutStyles';
+import { device, Button, H2 } from '../../layout/LayoutStyles';
 
 export const Details = styled.div`
   align-content: flex-start;

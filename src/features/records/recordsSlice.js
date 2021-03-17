@@ -10,7 +10,6 @@ import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router';
 
 export const fetchRecords = createAsyncThunk(
   'records/fetchrecords',

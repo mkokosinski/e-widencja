@@ -1,5 +1,4 @@
-import styled, { css } from 'styled-components';
-import { DetailsSection } from '../../../features/templates/detailsView/DetailsStyles';
+import styled from 'styled-components';
 import { FlexCenter } from '../../../AppStyles';
 import { motion } from 'framer-motion';
 import { device } from '../../../features/layout/LayoutStyles';

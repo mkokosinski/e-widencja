@@ -1,19 +1,15 @@
 import {
-  faCalendar,
   faCalendarAlt,
   faCar,
-  faCarAlt,
-  faCommentDots,
   faEllipsisH,
   faRoad,
   faTachometerAlt,
-  faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectFbUser } from '../auth/authSlice';
-import { A, Button } from '../layout/LayoutStyles';
+import { A } from '../layout/LayoutStyles';
 import {
   RecentUsersSectionInfoWrapper,
   RecentUsersSectionPhoto,

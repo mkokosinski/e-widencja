@@ -27,7 +27,7 @@ const NoticesList = (props) => {
 
         return (
           <React.Fragment key={date + name}>
-            <BorderedListItem status={type.status} to={path}>
+            <BorderedListItem status={'info'} to={path}>
               <div style={{ opacity: 0.9 }}>{name}</div>
               <div style={{ opacity: 0.7 }}>{title}</div>
 
@@ -48,7 +48,10 @@ NoticesList.propTypes = {
           name: PropTypes.string,
           date: PropTypes.string,
           description: PropTypes.string,
-          type: PropTypes.string,
+          type: PropTypes.shape({
+            id: PropTypes.string,
+            name: PropTypes.string,
+          }),
         }),
       ),
     }),

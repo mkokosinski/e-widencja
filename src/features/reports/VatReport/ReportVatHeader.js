@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
-import { useSelector } from 'react-redux';
 import { months } from '../../../utils/dateUtils';
 
 const styles2 = StyleSheet.create({

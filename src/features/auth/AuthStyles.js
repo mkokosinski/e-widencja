@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { device, PanelBordered } from '../layout/LayoutStyles';
+import { device } from '../layout/LayoutStyles';
 import Wave from '../../assets/wave.svg';
 import Squares from '../../assets/chessBoard.svg';
 import { StyledForm } from '../forms/FormsStyles';

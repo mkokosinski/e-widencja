@@ -5,10 +5,10 @@ import {
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../../templates/filterSlice';
 import { firestore } from '../../../app/firebase/firebase';
-import { selectRecordById, selectRecords } from '../../records/recordsSlice';
 import { compareDates } from '../../../utils/dateUtils';
 import { FETCH_STATUS, SETTING_NAME } from '../../../utils/constants';
 import { toast } from 'react-toastify';
+import settingNoticesReducers from './settingNoticesSlice';
 
 const mergeSettings = (docs) => {
   return docs.length
@@ -83,7 +83,7 @@ export const fetchSettings = createAsyncThunk(
     mergeDeep(settings, userData);
 
     return Object.values(settings);
-  }
+  },
 );
 
 export const addPurpose = createAsyncThunk(
@@ -112,7 +112,7 @@ export const addPurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 export const editPurpose = createAsyncThunk(
@@ -141,7 +141,7 @@ export const editPurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 export const deletePurpose = createAsyncThunk(
   'settings/deletePurpose',
@@ -169,7 +169,7 @@ export const deletePurpose = createAsyncThunk(
       .catch((err) => {
         return thunkAPI.rejectWithValue(err);
       });
-  }
+  },
 );
 
 const sortMethods = {
@@ -223,7 +223,7 @@ export const settingSlice = createSlice({
     [addPurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === SETTING_NAME.PURPOSES ? action.payload : i
+        i.id === SETTING_NAME.PURPOSES ? action.payload : i,
       );
       toast.success('Poprawnie dodano opcje');
     },
@@ -240,7 +240,7 @@ export const settingSlice = createSlice({
     [editPurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === SETTING_NAME.PURPOSES ? action.payload : i
+        i.id === SETTING_NAME.PURPOSES ? action.payload : i,
       );
       toast.success('Poprawnie edytowano opcje');
     },
@@ -257,7 +257,7 @@ export const settingSlice = createSlice({
     [deletePurpose.fulfilled]: (state, action) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((i) =>
-        i.id === SETTING_NAME.PURPOSES ? action.payload : i
+        i.id === SETTING_NAME.PURPOSES ? action.payload : i,
       );
       toast.success('Poprawnie usunięto opcje');
     },
@@ -267,6 +267,8 @@ export const settingSlice = createSlice({
       state.error = action.error.message;
       toast.error(action.payload);
     },
+
+    ...settingNoticesReducers,
   },
 });
 
@@ -287,14 +289,14 @@ export const selectFilteredSettings = createSelector(
 
     const filtered = settings.items
       .filter((veh) =>
-        settingFilter.enable ? veh.id === settingFilter.filter.value : veh
+        settingFilter.enable ? veh.id === settingFilter.filter.value : veh,
       )
       .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh
+        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
       );
 
     return { ...settings, items: filtered };
-  }
+  },
 );
 
 export const selectSettingSort = (state) => state.settings.sortCases;

@@ -1,10 +1,8 @@
 import React from 'react';
 
 import LastTripDashboardItem from './LastTripDashboardItem';
-import RecentList from '../templates/detailsView/RecentTrips';
 import CheckupList from '../forms/vehicle/CheckupList';
 import Glider from '../../app/components/Glider';
-import { EmptyState } from '../templates/detailsView/DetailsStyles';
 import NoticesList from '../forms/vehicle/NoticesList';
 import { useSelector } from 'react-redux';
 import { selectSortedVehicles } from '../vehicles/redux/vehiclesSlice';
@@ -15,8 +13,7 @@ import {
   DashboardSection,
   DashboardTitle,
 } from './DashboardStyles';
-import { selectTrips, selectTripsFullData } from '../trips/tripsSlice';
-import { compareDates } from '../../utils/dateUtils';
+import { selectTripsFullData } from '../trips/tripsSlice';
 
 const Dashboard = () => {
   const { items: vehicles } = useSelector(selectSortedVehicles);

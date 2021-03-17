@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
-import { selectRecordById, selectRecords } from '../records/recordsSlice';
+import { selectRecords } from '../records/recordsSlice';
 import { compareDates } from '../../utils/dateUtils';
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';

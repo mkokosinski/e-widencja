@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from '../../app/firebase/firebase';
 import { FETCH_STATUS } from '../../utils/constants';
 

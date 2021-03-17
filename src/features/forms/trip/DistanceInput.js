@@ -1,6 +1,5 @@
 import { useField, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { number } from 'yup';
 import { Input } from '../FormsStyles';
 
 const DistanceInput = (props) => {
@@ -8,7 +7,6 @@ const DistanceInput = (props) => {
 
   const {
     values: { stops },
-    touched,
     initialValues,
     setFieldValue,
   } = useFormikContext();

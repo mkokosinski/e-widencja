@@ -14,8 +14,6 @@ import {
   DetailsData,
   Details,
   SectionDesc,
-  SectionChart,
-  SectionRecent,
   DetailsSection,
 } from '../templates/detailsView/DetailsStyles';
 import RecentList from '../templates/detailsView/RecentTrips';

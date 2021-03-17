@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { compareDates } from '../../../utils/dateUtils';
 import { getNameInitials } from '../../../utils/stringUtils';
 import { selectSiteSize } from '../../layout/layoutSlice';
-import { device, screenSize } from '../../layout/LayoutStyles';
+import { screenSize } from '../../layout/LayoutStyles';
 import { EmptyState } from './DetailsStyles';
 import {
   Title,

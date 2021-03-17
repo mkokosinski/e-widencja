@@ -1,3 +1,4 @@
+import Chart from 'chart.js';
 import { getFirstDateOfMoth } from './dateUtils';
 
 export const createLineChart = (context) =>

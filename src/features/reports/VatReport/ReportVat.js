@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import Select from 'react-select';
-import ReactPDF, { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import ReportVatTemplate, { downloadReportVatPdf } from './ReportVatTemplate';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import ReportVatTemplate from './ReportVatTemplate';
 
 import { useSelector } from 'react-redux';
 import { selectRecords } from '../../records/recordsSlice';
@@ -10,16 +9,12 @@ import { selectRecords } from '../../records/recordsSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import {
-  monthlyReportStyles,
   ReportDownloadButton,
   ReportLabel,
   ReportVatContent,
 } from '../ReportsStyles';
 import { LoaderSpinner } from '../../loading/LoadingStyles';
-import {
-  selectFullTripsData,
-  selectTripsForRecord,
-} from '../../trips/tripsSlice';
+import { selectFullTripsData } from '../../trips/tripsSlice';
 import { formatTripsForVatReport } from '../../../utils/reportsUtils';
 import { selectCompany } from '../../company/companySlice';
 
