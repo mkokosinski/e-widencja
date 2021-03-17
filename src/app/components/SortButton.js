@@ -31,4 +31,4 @@ const SortButton = ({ modalItems, sortFunc }) => {
   );
 };
 
-export default SortButton;
+export default React.memo(SortButton);

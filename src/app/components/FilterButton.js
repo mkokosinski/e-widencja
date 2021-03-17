@@ -1,6 +1,6 @@
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useModal from '../../features/hooks/useModal';
 import {
   ShowFilterLabel,
@@ -10,6 +10,10 @@ import {
 
 const FilterButton = ({ modalComponent: ModalContent }) => {
   const { Modal, openModal, closeModal } = useModal();
+
+  useEffect(() => {
+    console.log('render');
+  });
 
   return (
     <>
@@ -26,4 +30,4 @@ const FilterButton = ({ modalComponent: ModalContent }) => {
   );
 };
 
-export default FilterButton;
+export default React.memo(FilterButton);

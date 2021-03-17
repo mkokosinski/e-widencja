@@ -26,7 +26,7 @@ const itemsDesktop = [
     path: Routing.Users.path,
     icon: faUserFriends,
   },
-  { name: 'Trasy', path: Routing.TripTemplates.path, icon: faRoute },
+  { name: 'Szablony', path: Routing.TripTemplates.path, icon: faRoute },
   { name: 'Ustawienia', path: Routing.Settings.path, icon: faCog },
   { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
 ];
@@ -34,7 +34,7 @@ const itemsDesktop = [
 const itemsMobile = [
   { name: 'Ewidencja', path: Routing.Records.path, icon: faClipboard },
   { name: 'Pojazdy', path: Routing.Vehicles.path, icon: faCarAlt },
-  { name: 'Trasy', path: Routing.TripTemplates.path, icon: faRoute },
+  { name: 'Szablony', path: Routing.TripTemplates.path, icon: faRoute },
   { name: 'Raporty', path: Routing.Reports.path, icon: faFileAlt },
 ];
 

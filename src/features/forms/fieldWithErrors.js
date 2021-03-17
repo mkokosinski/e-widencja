@@ -21,12 +21,12 @@ const FieldWithErrors = React.forwardRef((props, ref) => {
       const pos = focused.getBoundingClientRect();
 
       setTimeout(() => {
-        window.scrollBy({
-          top: pos.y - labelHeight,
+        window.scrollTo({
+          top: pos.top - labelHeight + window.scrollY,
           behavior: 'smooth',
           align: 'top',
         });
-      }, 200);
+      }, 100);
     }
 
     onFocus && onFocus();

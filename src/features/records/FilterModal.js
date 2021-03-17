@@ -11,7 +11,7 @@ import {
   selectFilters,
   setFilter,
 } from '../templates/filterSlice';
-import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
+import { selectSortedVehicles } from '../vehicles/redux/vehiclesSlice';
 
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
@@ -20,7 +20,7 @@ import { ModalContent } from '../templates/ListView/ListViewStyles';
 const FilterModal = ({ closeModal }) => {
   const dispatch = useDispatch();
   const { dateFilter, vehicleFilter } = useSelector(selectFilters);
-  const { items: vehicles } = useSelector(selectVehicles);
+  const { items: vehicles } = useSelector(selectSortedVehicles);
   // const minDate = useSelector(selectEldestDate);
 
   const sortedItems = [
@@ -61,6 +61,7 @@ const FilterModal = ({ closeModal }) => {
                     setFieldValue('vehicleFilter', filter);
                     setFieldTouched('vehicleFilter');
                   }}
+                  menuShouldScrollIntoView
                 />
               </FieldWithErrors>
             </Row>

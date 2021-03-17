@@ -15,12 +15,12 @@ import { ModalContent } from '../templates/ListView/ListViewStyles';
 import { ButtonsContainer, Row } from '../forms/FormsStyles';
 import { Formik } from 'formik';
 import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
-import { selectCarBrands, selectVehicles } from './redux/vehiclesSlice';
+import { selectCarBrands, selectSortedVehicles } from './redux/vehiclesSlice';
 
 const FilterModal = ({ closeModal }) => {
   const dispatch = useDispatch();
   const { vehicleFilter, carBrandFilter } = useSelector(selectFilters);
-  const { items: vehicles } = useSelector(selectVehicles);
+  const { items: vehicles } = useSelector(selectSortedVehicles);
   const brands = useSelector(selectCarBrands);
 
   const carBrandItems = [

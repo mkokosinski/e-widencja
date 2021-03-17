@@ -7,7 +7,7 @@ import Glider from '../../app/components/Glider';
 import { EmptyState } from '../templates/detailsView/DetailsStyles';
 import NoticesList from '../forms/vehicle/NoticesList';
 import { useSelector } from 'react-redux';
-import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
+import { selectSortedVehicles } from '../vehicles/redux/vehiclesSlice';
 
 import {
   DashboardContainer,
@@ -19,7 +19,7 @@ import { selectTrips, selectTripsFullData } from '../trips/tripsSlice';
 import { compareDates } from '../../utils/dateUtils';
 
 const Dashboard = () => {
-  const { items: vehicles } = useSelector(selectVehicles);
+  const { items: vehicles } = useSelector(selectSortedVehicles);
   const trips = useSelector(selectTripsFullData);
   return (
     <DashboardContainer>

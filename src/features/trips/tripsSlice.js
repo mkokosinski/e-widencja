@@ -11,7 +11,7 @@ import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import { editVehicle } from '../vehicles/redux/vehicleThunk';
 import { addTripTemplate } from '../tripTemplates/tripTemplatesSlice';
-import { selectVehicles } from '../vehicles/redux/vehiclesSlice';
+import { selectSortedVehicles } from '../vehicles/redux/vehiclesSlice';
 import { selectDrivers } from '../users/usersSlice';
 
 export const fetchTrips = createAsyncThunk(
@@ -264,7 +264,7 @@ export const selectTrips = (state) => ({
 });
 
 export const selectTripsFullData = createSelector(
-  [selectTrips, selectRecords, selectVehicles, selectDrivers],
+  [selectTrips, selectRecords, selectSortedVehicles, selectDrivers],
   (trips, records, { items: vehicles }, drivers) => {
     const { sortFunc } = trips;
     const items = [];

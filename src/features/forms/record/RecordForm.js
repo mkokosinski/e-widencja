@@ -11,7 +11,7 @@ import FieldWithErrors from '../fieldWithErrors';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { DependenttInput } from '../DepentetInput';
 import { addRecord, editRecord } from '../../records/recordsSlice';
-import { selectVehicles } from '../../vehicles/redux/vehiclesSlice';
+import { selectSortedVehicles } from '../../vehicles/redux/vehiclesSlice';
 import useValidation from '../../hooks/useValidation';
 
 import {
@@ -35,7 +35,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
   const dispatch = useDispatch();
   const validation = useValidation();
 
-  const { items: vehicles } = useSelector(selectVehicles);
+  const { items: vehicles } = useSelector(selectSortedVehicles);
 
   const vehicleSelectOptions = vehicles.map((vehicle) => {
     return {

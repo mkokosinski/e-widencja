@@ -8,7 +8,7 @@ import {
   differenceInDays,
   getRemainDays,
 } from '../../../utils/dateUtils';
-import { selectVehicles } from '../../vehicles/redux/vehiclesSlice';
+import { selectSortedVehicles } from '../../vehicles/redux/vehiclesSlice';
 import Routing from '../../routing/Routing';
 
 import {
@@ -34,7 +34,7 @@ const getStatus = (date) => {
 };
 
 const CheckupList = () => {
-  const { items: vehicles } = useSelector(selectVehicles);
+  const { items: vehicles } = useSelector(selectSortedVehicles);
   const checkups = vehicles
     .sort((v1, v2) => compareDates(v1.checkupDate, v2.checkupDate))
     .slice(0, 5)

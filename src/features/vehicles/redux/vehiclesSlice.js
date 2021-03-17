@@ -133,7 +133,12 @@ export const vehicleSlice = createSlice({
   },
 });
 
-export const selectVehicles = (state) => {
+export const selectVehicles = (state) => ({
+  ...state.vehicles,
+  items: state.vehicles.items.filter((veh) => veh.active),
+});
+
+export const selectSortedVehicles = (state) => {
   const { vehicles } = state;
   const { sortFunc } = vehicles;
   const sorted = [...vehicles.items].sort(
@@ -143,7 +148,7 @@ export const selectVehicles = (state) => {
 };
 
 export const selectFilteredVehicles = createSelector(
-  [selectVehicles, selectFilters],
+  [selectSortedVehicles, selectFilters],
   (vehicles, filters) => {
     const { vehicleFilter, carBrandFilter } = filters;
 
@@ -165,8 +170,6 @@ export const selectVehicleById = (state, vehicleId) =>
 export const selectCarBrands = (state) => [
   ...new Set(state.vehicles.items.map((veh) => veh.brand)),
 ];
-
-export const selectVehiclesProblems = (state) => {};
 
 export const selectVehicleSort = (state) => state.vehicles.sortCases;
 
