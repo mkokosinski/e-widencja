@@ -70,6 +70,7 @@ export const ButtonAdd = styled(TopPanelButton)`
     margin: 8px;
     position: fixed;
     right: 10px;
+    width: 60px;
   }
 
   @media screen and (${device.mobileXL}) {
