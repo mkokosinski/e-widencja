@@ -96,6 +96,7 @@ export const DashboardHeader = styled.div`
   overflow: hidden;
   position: relative;
   max-width: 1250px;
+  min-height: 50px;
   width: 100%;
   & > * {
     margin: 10px;

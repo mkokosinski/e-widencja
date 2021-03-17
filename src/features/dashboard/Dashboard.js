@@ -14,6 +14,7 @@ import {
   DashboardTitle,
 } from './DashboardStyles';
 import { selectTripsFullData } from '../trips/tripsSlice';
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
 
 const Dashboard = () => {
   const { items: vehicles } = useSelector(selectSortedVehicles);
@@ -28,13 +29,17 @@ const Dashboard = () => {
         />
       </DetailsSection> */}
       <DashboardHeader>
-        <Glider itemWidth={250}>
-          {trips.slice(0, 5).map((trip) => (
-            <React.Fragment key={trip.id}>
-              <LastTripDashboardItem trip={trip} />
-            </React.Fragment>
-          ))}
-        </Glider>
+        {trips?.length > 0 ? (
+          <Glider itemWidth={250}>
+            {trips.slice(0, 5).map((trip) => (
+              <React.Fragment key={trip.id}>
+                <LastTripDashboardItem trip={trip} />
+              </React.Fragment>
+            ))}
+          </Glider>
+        ) : (
+          <EmptyState style={{ height: '100%' }}>Brak przejazdów</EmptyState>
+        )}
       </DashboardHeader>
 
       <DashboardSection>

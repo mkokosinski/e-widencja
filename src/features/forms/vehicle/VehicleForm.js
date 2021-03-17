@@ -219,7 +219,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
                       setFieldTouched('type');
                       setFieldValue('type', value);
                     }}
-                    noOptionsMessage='Wpisz nowy typ'
+                    noOptionsMessage={() => 'Wpisz nowy typ'}
                     openMenuOnFocus={true}
                     defaultValue={{ label: values.type, value: values.type }}
                     formatCreateLabel={(label) => formSelectCreateLabel(label)}

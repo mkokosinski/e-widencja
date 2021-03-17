@@ -64,9 +64,9 @@ export const addVehicle = createAsyncThunk(
         active: true,
       };
 
-      await firestore.collection('Vehicles').add(vehicle);
+      const newVehicle = await firestore.collection('Vehicles').add(vehicle);
 
-      return vehicle;
+      return { ...vehicle, id: newVehicle.id };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

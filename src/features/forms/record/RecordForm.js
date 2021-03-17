@@ -111,7 +111,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
                     as='select'
                     isSearchable={true}
                     options={vehicleSelectOptions}
-                    noOptionsMessage='Brak aktywnych pojazdów'
+                    noOptionsMessage={() => 'Brak aktywnych pojazdów'}
                     onChange={(value) => {
                       setFieldTouched('vehicle');
                       setFieldTouched('mileage');

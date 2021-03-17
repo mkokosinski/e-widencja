@@ -59,7 +59,7 @@ const ReportVat = (props) => {
         closeMenuOnSelect={false}
         isMulti
         isSearchable={true}
-        noOptionsMessage='Brak aktywnych ewidencji'
+        noOptionsMessage={() => 'Brak aktywnych ewidencji'}
         options={recordsOptions}
         placeholder='Nie wybrano żadnej ewidencji'
         onChange={(itmes) => {
