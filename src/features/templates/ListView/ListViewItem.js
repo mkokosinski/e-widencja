@@ -12,6 +12,7 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { A } from '../../layout/LayoutStyles';
+import { DeleteButton } from '../detailsView/DetailsComponents';
 
 const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
   return (
@@ -27,18 +28,41 @@ const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
 
         <Buttons>
           {buttons &&
-            buttons.map((button, index) => (
-              <Button type='button' tabIndex='-1' key={index}>
-                <A to={{ pathname: button.action, state: button.state }}>
-                  <ButtonBody>
-                    <ButtonIco>
-                      <FontAwesomeIcon icon={button.ico} />
-                    </ButtonIco>
-                    <span>{button.label}</span>
-                  </ButtonBody>
-                </A>
-              </Button>
-            ))}
+            buttons.map((button, index) => {
+              switch (button.type) {
+                case 'deleteButton':
+                  return (
+                    <DeleteButton
+                      onClick={button.action}
+                      key={index}
+                      item={item}
+                      component={
+                        <Button type='button' tabIndex='-1' key={index}>
+                          <ButtonBody>
+                            <ButtonIco>
+                              <FontAwesomeIcon icon={button.ico} />
+                            </ButtonIco>
+                            <span>{button.label}</span>
+                          </ButtonBody>
+                        </Button>
+                      }
+                    />
+                  );
+                default:
+                  return (
+                    <Button type='button' tabIndex='-1' key={index}>
+                      <A to={{ pathname: button.action, state: button.state }}>
+                        <ButtonBody>
+                          <ButtonIco>
+                            <FontAwesomeIcon icon={button.ico} />
+                          </ButtonIco>
+                          <span>{button.label}</span>
+                        </ButtonBody>
+                      </A>
+                    </Button>
+                  );
+              }
+            })}
         </Buttons>
       </Body>
     </Container>

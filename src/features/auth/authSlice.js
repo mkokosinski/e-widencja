@@ -6,7 +6,6 @@ import { FETCH_STATUS } from '../../utils/constants';
 export const authorize = createAsyncThunk(
   'auth/authorize',
   async (arg, thunkAPI) => {
-    console.log(arg);
     if (arg && arg.user) {
       const data = await getFirebaseUser(arg.user.uid);
       if (data.created) {

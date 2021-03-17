@@ -9,6 +9,8 @@ import { selectRecordById, selectRecords } from '../records/recordsSlice';
 import { compareDates } from '../../utils/dateUtils';
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
+import { editVehicle } from '../vehicles/redux/vehicleThunk';
+import { addTripTemplate } from '../tripTemplates/tripTemplatesSlice';
 
 export const fetchTrips = createAsyncThunk(
   'trips/fetchTrips',
@@ -48,24 +50,33 @@ export const fetchTrips = createAsyncThunk(
 
 export const addTrip = createAsyncThunk(
   'trips/addTrip',
-  async (arg, thunkAPI) => {
+  async (newTrip, thunkAPI) => {
     try {
       const currUser = thunkAPI.getState().auth.user;
+      const maxVehicleMileage = thunkAPI
+        .getState()
+        .trips.items.filter((trip) => trip.vehicleId === newTrip.vehicle)
+        .reduce((max, cur) => {
+          const tripMileage = cur.stops[cur.stops.length - 1].mileage;
+          return tripMileage > max ? tripMileage : max;
+        }, 0);
 
-      const distance = arg.stops.reduce((acc, cur) => acc + cur.distance, 0);
+      const distance = newTrip.stops.reduce(
+        (acc, cur) => acc + cur.distance,
+        0,
+      );
 
       const trip = {
-        date: arg.date,
+        date: newTrip.date,
         distance,
-        driverId: arg.driver,
-        end: arg.stops[arg.stops.length - 1].place,
-        isOneWay: arg.isOneWay,
-        purpose: arg.purpose,
-        recordId: arg.record,
-        start: arg.stops[0].place,
-        stops: arg.stops,
-        templateId: arg.template,
-        vehicleId: arg.vehicle,
+        driverId: newTrip.driver,
+        end: newTrip.stops[newTrip.stops.length - 1].place,
+        purpose: newTrip.purpose,
+        recordId: newTrip.record,
+        start: newTrip.stops[0].place,
+        stops: newTrip.stops,
+        templateId: newTrip.template,
+        vehicleId: newTrip.vehicle,
 
         active: true,
         companyId: currUser.companyId,
@@ -73,10 +84,35 @@ export const addTrip = createAsyncThunk(
         created: firestoreFunctions.FieldValue.serverTimestamp(),
       };
 
-      firestore
-        .collection('Trips')
-        .add(trip)
-        .catch((err) => {});
+      const currentTripMileage =
+        newTrip.stops[newTrip.stops.length - 1].mileage;
+      const newMileage =
+        currentTripMileage > maxVehicleMileage
+          ? currentTripMileage
+          : maxVehicleMileage;
+
+      firestore.collection('Trips').add(trip);
+
+      thunkAPI.dispatch(
+        editVehicle({
+          id: newTrip.vehicle,
+          mileage: newMileage,
+        }),
+      );
+
+      if (newTrip.saveTemplate) {
+        thunkAPI.dispatch(
+          addTripTemplate({
+            name: newTrip.templateName,
+            purpose: newTrip.purpose,
+            stops: newTrip.stops,
+            companyId: currUser.companyId,
+            createdBy: currUser.id,
+            created: firestoreFunctions.FieldValue.serverTimestamp(),
+            active: true,
+          }),
+        );
+      }
 
       return trip;
     } catch (error) {
@@ -134,7 +170,7 @@ export const tripSlice = createSlice({
     [addTrip.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items.push(payload);
-      toast.success('Poprawnie dodano nową przejazd');
+      toast.success('Poprawnie dodano nowy przejazd');
     },
 
     [addTrip.rejected]: (state, { payload }) => {

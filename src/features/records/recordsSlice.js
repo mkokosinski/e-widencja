@@ -209,7 +209,6 @@ export const recordsSlice = createSlice({
 
     [editRecord.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.log(action);
       state.error = action.payload.message;
       toast.error(action.payload);
     },
@@ -218,7 +217,6 @@ export const recordsSlice = createSlice({
     },
 
     [deleteRecord.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.filter((rec) => rec.id !== payload);
       toast.success('Poprawnie usunięto ewidencję');

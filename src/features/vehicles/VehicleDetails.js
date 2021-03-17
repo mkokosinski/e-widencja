@@ -30,7 +30,7 @@ import { ReactComponent as LicenseIco } from '../../assets/licensePlate.svg';
 import { ReactComponent as TachometerIco } from '../../assets/tachometer.svg';
 import { getFirstDateOfMoth, monthsShort } from '../../utils/dateUtils';
 import { selectTripsForVehicle } from '../trips/tripsSlice';
-import { Button } from '../layout/LayoutStyles';
+import { A, Button } from '../layout/LayoutStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -76,9 +76,9 @@ const VehileDetails = () => {
             onClick={() => dispatch(deleteVehicle(vehicle.id))}
           />
           <DetailsButton>
-            <Link to={`${Routing.VehicleAddNotice.action}/${id}`}>
+            <A to={`${Routing.VehicleAddNotice.action}/${id}`}>
               <FontAwesomeIcon icon={faExclamationCircle} />
-            </Link>
+            </A>
           </DetailsButton>
         </DetailsTopPanel>
 

@@ -91,6 +91,7 @@ export const DetailsTitle = styled(H2)`
 export const DetailsButton = styled(Button)`
   height: 100%;
   flex-basis: 10%;
+  display: flex;
   @media screen and (${device.laptop}) {
     font-size: 0.8em;
   }

@@ -22,26 +22,27 @@ import TripsFilters from './TripFilters';
 import ListViewItem from '../templates/ListView/ListViewItem';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from './TripFilters';
-import { selectTripTemplates } from './tripTemplatesSlice';
+import { deleteTripTemplate, selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { EndLabel, StartLabel, StopsLabel } from './TripTemplatesStyles';
 import Routing from '../routing/Routing';
 
-const buttons = (id) => [
-  {
-    ico: faEdit,
-    label: 'Edytuj',
-    action: `${Routing.TripTemplateEdit.action}/${id}`,
-  },
-  {
-    ico: faTrash,
-    label: 'Usuń',
-    action: `${Routing.TripTemplateEdit.action}/${id}`,
-  },
-];
-
 const TripTemplates = () => {
   const templates = useSelector(selectTripTemplates);
+  const dispatch = useDispatch();
+  const buttons = (id) => [
+    {
+      ico: faEdit,
+      label: 'Edytuj',
+      action: `${Routing.TripTemplateEdit.action}/${id}`,
+    },
+    {
+      ico: faTrash,
+      label: 'Usuń',
+      type: 'deleteButton',
+      action: () => dispatch(deleteTripTemplate(id)),
+    },
+  ];
   return (
     <ItemsList>
       <TopPanel>
@@ -65,11 +66,13 @@ const TripTemplates = () => {
             buttons={buttons(template.id)}
           >
             <Title>
-              <Name>{template.label}</Name>
+              <Name>{template.name}</Name>
               <Subname>
                 <StopsLabel>
                   {template.stops.map((stop) => (
-                    <span key={stop.place + stop.label}>{stop.place}</span>
+                    <span key={template.id + stop.place + stop.label}>
+                      {stop.place}
+                    </span>
                   ))}
                 </StopsLabel>
               </Subname>

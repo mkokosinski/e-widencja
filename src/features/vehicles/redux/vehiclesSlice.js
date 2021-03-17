@@ -106,9 +106,9 @@ export const vehicleSlice = createSlice({
     [editVehicle.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
       state.items = state.items.map((vehicle) =>
-        vehicle.id === payload.id ? payload : vehicle,
+        vehicle.id === payload.id ? { ...vehicle, ...payload } : vehicle,
       );
-      toast.success('Poprawnie zmieniono pojazd');
+      toast.success('Poprawnie edytowano pojazd');
     },
     [editVehicle.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;

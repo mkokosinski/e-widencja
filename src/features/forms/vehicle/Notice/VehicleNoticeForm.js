@@ -45,8 +45,7 @@ const validationSchema = Yup.object({
 
   description: Yup.string()
     .min(3, validationMessages.min(3))
-    .max(500, validationMessages.max(500))
-    .required(validationMessages.required),
+    .max(500, validationMessages.max(500)),
 });
 
 const VehicleNoticeForm = ({ isEdit, editedNotice }) => {

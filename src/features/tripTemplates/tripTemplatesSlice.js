@@ -13,8 +13,13 @@ import { toast } from 'react-toastify';
 export const fetchTripTemplates = createAsyncThunk(
   'tripTemplates/fetchTripTemplates',
   async (arg = 1, thunkAPI) => {
+    const currUser = thunkAPI.getState().auth.user;
+
     const tripTemplates = [];
-    const coll = await firestore.collection('TripTemplates').get();
+    const coll = await firestore
+      .collection('TripTemplates')
+      .where('companyId', '==', currUser.companyId)
+      .get();
 
     coll.forEach((doc) => {
       const data = doc.data();
@@ -41,48 +46,69 @@ export const fetchTripTemplates = createAsyncThunk(
 export const addTripTemplate = createAsyncThunk(
   'records/addTripTemplate',
   async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const newTemplate = {
-      label: arg.label,
-      purpose: arg.purpose,
-      stops: arg.stops,
-      companyId: currUser.companyId,
-      createdBy: currUser.id,
-      created: firestoreFunctions.FieldValue.serverTimestamp(),
-      active: true,
-    };
+      const newTemplate = {
+        name: arg.name,
+        purpose: arg.purpose,
+        stops: arg.stops,
+        companyId: currUser.companyId,
+        createdBy: currUser.id,
+        created: firestoreFunctions.FieldValue.serverTimestamp(),
+        active: true,
+      };
 
-    return await firestore
-      .collection('TripTemplates')
-      .add(newTemplate)
-      .catch((err) => {
-        console.error(err);
-        return thunkAPI.rejectWithValue(err.toString());
-      });
+      const doc = await firestore.collection('TripTemplates').add(newTemplate);
+
+      return { ...newTemplate, id: doc.id };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 
 export const editTripTemplate = createAsyncThunk(
   'records/editTripTemplate',
-  async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+  async (editedTemplate, thunkAPI) => {
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const editedTemplate = {
-      label: arg.label,
-      purpose: arg.purpose,
-      stops: arg.stops,
-      updatedBy: currUser.id,
-      updated: firestoreFunctions.FieldValue.serverTimestamp(),
-    };
+      const template = {
+        name: editedTemplate.name,
+        purpose: editedTemplate.purpose,
+        stops: editedTemplate.stops,
+        updatedBy: currUser.id,
+        updated: firestoreFunctions.FieldValue.serverTimestamp(),
+      };
 
-    firestore
-      .collection('TripTemplates')
-      .doc(arg.id)
-      .update(editedTemplate)
-      .catch((err) => {
-        return thunkAPI.rejectWithValue(err);
-      });
+      firestore
+        .collection('TripTemplates')
+        .doc(editedTemplate.id)
+        .update(template);
+
+      return template;
+    } catch (error) {
+      console.error(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const deleteTripTemplate = createAsyncThunk(
+  'tripTemplates/deleteTripTemplate',
+  (deletedId, thunkAPI) => {
+    try {
+      firestore
+        .collection('TripTemplates')
+        .doc(deletedId)
+        .update({ active: false });
+
+      return deletedId;
+    } catch (error) {
+      console.error(error);
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 
@@ -134,9 +160,10 @@ export const tripTemplateSlice = createSlice({
     [addTripTemplate.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
     },
-    [addTripTemplate.fulfilled]: (state, action) => {
+    [addTripTemplate.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
-      toast.success('Poprawnie dodano nową ewidencję');
+      state.items.push(payload);
+      toast.success('Poprawnie dodano nowy szablon');
     },
     [addTripTemplate.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
@@ -148,13 +175,31 @@ export const tripTemplateSlice = createSlice({
     [editTripTemplate.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
     },
-    [editTripTemplate.fulfilled]: (state, action) => {
+    [editTripTemplate.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
-      toast.success('Poprawnie dodano nową ewidencję');
+      state.items = state.items.map((template) =>
+        template.id === payload.id ? { ...template, ...payload } : template,
+      );
+      toast.success('Poprawnie edytowano szablon');
     },
     [editTripTemplate.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
-      console.error('err', action);
+      state.error = action.error.message;
+      toast.error(action.payload);
+    },
+
+    [deleteTripTemplate.pending]: (state, action) => {
+      state.status = FETCH_STATUS.LOADING;
+    },
+    [deleteTripTemplate.fulfilled]: (state, { payload }) => {
+      state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((template) =>
+        template.id === payload ? { ...template, active: false } : template,
+      );
+      toast.success('Poprawnie usunięto szblon');
+    },
+    [deleteTripTemplate.rejected]: (state, action) => {
+      state.status = FETCH_STATUS.ERROR;
       state.error = action.error.message;
       toast.error(action.payload);
     },
@@ -163,7 +208,8 @@ export const tripTemplateSlice = createSlice({
 
 const tips = (state) => state.tripTemplates;
 
-export const selectTripTemplates = (state) => state.tripTemplates.items;
+export const selectTripTemplates = (state) =>
+  state.tripTemplates.items.filter((template) => template.active);
 
 export const selectFilteredTripTemplates = createSelector(
   [selectTripTemplates, selectFilters],

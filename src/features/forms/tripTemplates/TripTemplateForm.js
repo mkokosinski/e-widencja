@@ -90,7 +90,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
   const handleSubmit = (values) => {
     const data = {
       id: tripTemplate?.id || '',
-      label: values.label,
+      name: values.name,
       purpose: values.purpose.value,
       stops: values.stops,
     };
@@ -123,7 +123,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
         }) => (
           <StyledForm>
             <Row>
-              <FieldWithErrors name='label' label='Nazwa' scrollFocused>
+              <FieldWithErrors name='name' label='Nazwa' scrollFocused>
                 <StyledField type='text' />
               </FieldWithErrors>
             </Row>

@@ -57,7 +57,6 @@ const LayoutProvider = ({ children }) => {
     }
 
     if (isMobileKeyboard && clientHeight >= initSiteSize.height) {
-      console.log(false);
       dispatch(setIsMobileKeyboard(false));
     }
 

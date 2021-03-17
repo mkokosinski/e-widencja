@@ -13,6 +13,7 @@ import useModal from '../../hooks/useModal';
 import { useDispatch } from 'react-redux';
 import { deleteVehicle } from '../../vehicles/redux/vehicleThunk';
 import {
+  A,
   Button,
   ButtonBordered,
   ButtonMain,
@@ -36,9 +37,9 @@ export const ButtonGoBack = () => {
 export const ButtonEdit = ({ actionPath }) => {
   return (
     <DetailsButton>
-      <Link to={actionPath}>
+      <A to={actionPath}>
         <FontAwesomeIcon icon={faPen} />
-      </Link>
+      </A>
     </DetailsButton>
   );
 };
@@ -59,6 +60,7 @@ export const DeleteButton = ({
 
   const handleDelete = () => {
     onClick();
+    closeModal();
     if (redirectPath) replace(redirectPath);
   };
   const close = () => {

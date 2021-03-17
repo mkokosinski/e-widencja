@@ -37,12 +37,10 @@ export const editNotice = createAsyncThunk(
   'vehicles/editNotice',
   (editedNotice, thunkAPI) => {
     try {
-      console.log(editedNotice);
       const vehicle = thunkAPI
         .getState()
         .vehicles.items.find((veh) => veh.id === editedNotice.vehicleId);
 
-      console.log(vehicle);
       const newNotices = vehicle.notices?.map((notice) =>
         notice.id !== editedNotice.id ? notice : editedNotice,
       );
@@ -101,7 +99,6 @@ const noticeReducers = {
     toast.success('Poprawnie dodano uwagę');
   },
   [addNotice.rejected]: (state, action) => {
-    console.log(action);
     state.status = FETCH_STATUS.ERROR;
     toast.error('Nie udało się dodać uwag');
   },
@@ -117,7 +114,6 @@ const noticeReducers = {
     toast.success('Poprawnie edytowano uwagę');
   },
   [editNotice.rejected]: (state, action) => {
-    console.log(action);
     state.status = FETCH_STATUS.ERROR;
     toast.error('Nie udało się edytować uwag');
   },
@@ -133,7 +129,6 @@ const noticeReducers = {
     toast.success('Poprawnie usunięto uwagę');
   },
   [deleteNotice.rejected]: (state, action) => {
-    console.log(action);
     state.status = FETCH_STATUS.ERROR;
     toast.error('Nie udało się usunąć uwagi');
   },

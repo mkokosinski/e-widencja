@@ -53,8 +53,14 @@ const validationSchema = Yup.object().shape({
     Yup.object().shape({
       label: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
-      mileage: Yup.number().min(1, 'Zła wartość').required('Wymagane'),
-      distance: Yup.number().min(0, 'Zła wartość').required('Wymagane'),
+      mileage: Yup.number()
+        .typeError('Wymagane')
+        .min(1, 'Zła wartość')
+        .required('Wymagane'),
+      distance: Yup.number()
+        .typeError('Wymagane')
+        .min(0, 'Zła wartość')
+        .required('Wymagane'),
     }),
   ),
 });
@@ -75,7 +81,7 @@ const emptyTripTemplate = {
   stops: [],
 };
 
-const TripForm = ({ trip }) => {
+const TripForm = ({ trip, isEdit }) => {
   const { goBack } = useHistory();
   const dispatch = useDispatch();
   const tripTemplateRef = useRef(null);
@@ -112,7 +118,7 @@ const TripForm = ({ trip }) => {
   };
 
   const selectedTemplate = {
-    label: tripTemplate.label,
+    label: tripTemplate.name,
     value: tripTemplate.id,
     stops: tripTemplate.stops,
   };
@@ -134,7 +140,7 @@ const TripForm = ({ trip }) => {
     : selectedDriver;
 
   const tripTemplatesSelectItems = tripTemplates.map((template) => ({
-    label: template.label,
+    label: template.name,
     value: template.id,
     stops: template.stops,
     purpose: template.purpose,
@@ -164,6 +170,8 @@ const TripForm = ({ trip }) => {
     tripTemplate: trip.tripTemplate && selectedTemplate,
     purpose: trip.purpose && selectedPurpose,
     stops: stops,
+    saveTemplate: false,
+    templateName: '',
   };
 
   const handleSubmit = (values) => {
@@ -175,7 +183,8 @@ const TripForm = ({ trip }) => {
       template: values.tripTemplate.value,
       stops: values.stops,
       vehicle: values.record.vehicle,
-      isOneWay: false,
+      saveTemplate: values.saveTemplate,
+      templateName: values.templateName,
     };
     dispatch(addTrip(newTrip)).then(() => goBack());
   };
@@ -326,7 +335,7 @@ const TripForm = ({ trip }) => {
 
             <Row>
               <FieldArray name='stops'>
-                {({ remove, push }) => {
+                {({ remove, insert }) => {
                   const labels = [
                     'Początek trasy',
                     ...values.stops
@@ -336,7 +345,7 @@ const TripForm = ({ trip }) => {
                   ];
 
                   return values.stops.map((stop, index) => (
-                    <React.Fragment key={stop.label + index}>
+                    <React.Fragment key={labels[index]}>
                       <MileageFieldsGroup>
                         <FieldWithErrors
                           name={`stops[${index}].place`}
@@ -360,15 +369,19 @@ const TripForm = ({ trip }) => {
                         </FieldWithErrors>
 
                         {index >= 1 && index < values.stops.length - 1 && (
-                          <RemoveItemButton onClick={() => remove(index)}>
+                          <RemoveItemButton
+                            type='button'
+                            onClick={() => remove(index)}
+                          >
                             <FontAwesomeIcon icon={faMinus} />
                           </RemoveItemButton>
                         )}
                       </MileageFieldsGroup>
                       {index === values.stops.length - 2 && (
                         <AddItemButton
+                          type='button'
                           onClick={() => {
-                            push(values.stops.length - 1, {
+                            insert(values.stops.length - 1, {
                               label: `Przystanek ${index + 1}`,
                               place: ``,
                               distance: 0,
@@ -386,9 +399,22 @@ const TripForm = ({ trip }) => {
               </FieldArray>
             </Row>
 
-            <Row>
-              <Checkbox name='saveTemplate' label='zapisz jako szablon' />
-            </Row>
+            {!isEdit && (
+              <>
+                <Row>
+                  <Checkbox name='saveTemplate' label='zapisz jako szablon' />
+                </Row>
+                {values.saveTemplate && (
+                  <FieldWithErrors
+                    name='templateName'
+                    label='Nazwa szablonu'
+                    scrollFocused
+                  >
+                    <StyledField type='text' placeholder='Nazwa' />
+                  </FieldWithErrors>
+                )}
+              </>
+            )}
 
             <ButtonsContainer>
               <ButtonMain type='button' onClick={submitForm}>

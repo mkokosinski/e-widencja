@@ -80,13 +80,7 @@ export const editVehicle = createAsyncThunk(
       const currUser = thunkAPI.getState().auth.user;
 
       const vehicle = {
-        brand: editedVehicle.brand,
-        checkupDate: editedVehicle.checkupDate,
-        mileage: editedVehicle.mileage,
-        model: editedVehicle.model,
-        name: editedVehicle.name,
-        registrationNumber: editedVehicle.registrationNumber,
-        type: editedVehicle.type,
+        ...editedVehicle,
         updatedBy: currUser.id,
         updated: firestoreFunctions.FieldValue.serverTimestamp(),
       };
@@ -97,7 +91,7 @@ export const editVehicle = createAsyncThunk(
         .update(vehicle)
         .catch((err) => {});
 
-      return { ...editedVehicle, ...vehicle };
+      return editedVehicle;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

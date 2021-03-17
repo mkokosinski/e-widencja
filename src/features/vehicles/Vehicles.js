@@ -63,8 +63,6 @@ function Vehicles() {
   const { items: records } = useSelector(selectRecords);
   const sortItems = useSelector(selectVehicleSort);
 
-  console.log(records.map((r) => ({ name: r.name, veh: r.vehicle.name })));
-
   return (
     <ItemsList>
       <TopPanel>

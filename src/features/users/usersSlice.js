@@ -24,7 +24,6 @@ export const fetchUsers = createAsyncThunk(
     const coll = await firestore
       .collection('Users')
       .where('companyId', '==', user.companyId)
-      .where('active', '==', true)
       .get();
 
     coll.forEach((doc) => {
@@ -201,7 +200,10 @@ export const usersSlice = createSlice({
   },
 });
 
-export const selectUsers = (state) => state.users;
+export const selectUsers = (state) => ({
+  ...state.users,
+  items: state.users.items.filter((user) => user.active),
+});
 
 export const selectFilteredUsers = createSelector(
   [selectUsers, selectFilters],

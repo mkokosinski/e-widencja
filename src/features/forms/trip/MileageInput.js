@@ -10,7 +10,7 @@ const MilageInput = (props) => {
     values: { stops },
     touched,
     initialValues,
-    setFieldValue
+    setFieldValue,
   } = useFormikContext();
   const [field] = useField(props);
 
@@ -19,30 +19,30 @@ const MilageInput = (props) => {
 
     newStops[props.index] = {
       ...newStops[props.index],
-      mileage: value
+      mileage: value,
     };
 
     for (let i = 0; i < newStops.length; i++) {
       const s = newStops[i];
       const pre = i !== 0 ? newStops[i - 1].mileage : initialValues.initMileage;
 
-      const newDistance = parseFloat(s.mileage - pre)
+      const newDistance = parseFloat(s.mileage - pre);
 
       if (i === props.index) {
         newStops[i] = {
           ...s,
-          distance: newDistance
+          distance: newDistance,
         };
       } else {
         newStops[i] = {
           ...s,
-          mileage: pre + s.distance
+          mileage: pre + s.distance,
         };
       }
     }
 
     setFieldValue('stops', newStops);
-  }, [initialValues.initMileage, setFieldValue, value]);
+  }, [initialValues.initMileage, setFieldValue, value, stops.length]);
 
   return (
     <>

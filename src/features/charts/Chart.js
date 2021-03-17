@@ -58,8 +58,6 @@ const LineChart = ({ title = '', data }) => {
         data: Object.values(chartData.data[selectedYear]),
       };
 
-      console.log(newDataset);
-
       chart.data.labels = labels;
       chart.data.datasets = [newDataset];
       chart.update();
