@@ -277,21 +277,15 @@ const TripForm = ({ trip, isEdit }) => {
                     onChange={(option) => {
                       setFieldTouched('tripTemplate');
                       setFieldValue('tripTemplate', option);
-                      console.error(option);
                       setFieldValue('purpose', {
                         label: option.purpose,
                         value: option.purpose,
                       });
-                      setFieldValue(
-                        'stops',
-                        option.stops.map((stop) => ({
-                          ...stop,
-                          mileage: values.record.mileage + stop.distance,
-                        })),
-                      );
+
+                      setFieldValue('stops', option.stops);
                     }}
-                    placeholder='Wybierz szablon'
-                    value={values.tripTemplate}
+                    placeholder='Opcjonalne'
+                    defaultValue={values.tripTemplate}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -315,7 +309,7 @@ const TripForm = ({ trip, isEdit }) => {
                       setFieldValue('purpose', option);
                     }}
                     placeholder='Wybierz cel'
-                    value={values.purpose}
+                    defaultValue={values.purpose}
                   />
                 </StyledSelect>
               </FieldWithErrors>

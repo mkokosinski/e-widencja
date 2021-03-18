@@ -50,7 +50,10 @@ const LayoutProvider = ({ children }) => {
     }
 
     if (isMobile && !isMobileKeyboard && clientHeight < initSiteSize.height) {
-      dispatch(setIsMobileKeyboard(true));
+      const inputs = ['input', 'select', 'button', 'textarea'];
+      if (inputs.includes(document.activeElement.tagName.toLowerCase())) {
+        dispatch(setIsMobileKeyboard(true));
+      }
     }
 
     if (isMobileKeyboard && clientHeight >= initSiteSize.height) {

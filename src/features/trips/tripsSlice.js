@@ -6,7 +6,7 @@ import {
 import { selectFilters } from '../templates/filterSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 import { selectRecords } from '../records/recordsSlice';
-import { compareDates } from '../../utils/dateUtils';
+import { compareDates, getNowString } from '../../utils/dateUtils';
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 import { editVehicle } from '../vehicles/redux/vehicleThunk';
@@ -62,7 +62,12 @@ export const addTrip = createAsyncThunk(
           return tripMileage > max ? tripMileage : max;
         }, 0);
 
-      const distance = newTrip.stops.reduce(
+      const formattedStops = [
+        { ...newTrip.stops[0], distance: 0 },
+        ...newTrip.stops.slice(1),
+      ];
+
+      const distance = formattedStops.reduce(
         (acc, cur) => acc + cur.distance,
         0,
       );
@@ -75,7 +80,7 @@ export const addTrip = createAsyncThunk(
         purpose: newTrip.purpose,
         recordId: newTrip.record,
         start: newTrip.stops[0].place,
-        stops: newTrip.stops,
+        stops: formattedStops,
         templateId: newTrip.template || '',
         vehicleId: newTrip.vehicle,
 
@@ -106,7 +111,11 @@ export const addTrip = createAsyncThunk(
           addTripTemplate({
             name: newTrip.templateName,
             purpose: newTrip.purpose,
-            stops: newTrip.stops,
+            stops: trip.stops.map((stop) => ({
+              label: stop.label,
+              place: stop.place,
+              distance: stop.distance,
+            })),
             companyId: currUser.companyId,
             createdBy: currUser.id,
             created: firestoreFunctions.FieldValue.serverTimestamp(),
@@ -115,8 +124,9 @@ export const addTrip = createAsyncThunk(
         );
       }
 
-      return trip;
+      return { ...trip, id: newTrip.id, created: getNowString() };
     } catch (error) {
+      console.error(error);
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -176,7 +186,7 @@ export const editTrip = createAsyncThunk(
       //   );
       // }
 
-      return trip;
+      return { ...trip, id: editedTrip.id };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

@@ -63,7 +63,7 @@ export const addTripTemplate = createAsyncThunk(
       return {
         ...template,
         id: doc.id,
-        created: template.created.toDate().toString(),
+        created: getNowString(),
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

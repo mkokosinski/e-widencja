@@ -241,11 +241,12 @@ export const AddItemButton = styled(ItemButton)`
 `;
 
 export const RemoveItemButton = styled(ItemButton)`
-  bottom: 24px;
+  align-self: center;
   color: ${(props) => props.theme.textColorLight};
+  flex: 0 0;
   height: 22px;
-  position: absolute;
-  right: -20px;
+  position: relative;
+  top: 6px;
   width: 22px;
 `;
 
