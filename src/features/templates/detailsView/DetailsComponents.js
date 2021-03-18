@@ -13,6 +13,7 @@ import useModal from '../../hooks/useModal';
 import { A, ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
 import { ButtonsContainer, Row } from '../../forms/FormsStyles';
 import { ModalContent } from '../ListView/ListViewStyles';
+import AppLink from '../AppLink';
 
 export const ButtonGoBack = () => {
   const { goBack } = useHistory();
@@ -24,12 +25,12 @@ export const ButtonGoBack = () => {
   );
 };
 
-export const ButtonEdit = ({ actionPath }) => {
+export const ButtonEdit = ({ actionPath, disabled }) => {
   return (
-    <DetailsButton>
-      <A to={actionPath}>
+    <DetailsButton disabled={disabled} noPermission={disabled}>
+      <AppLink disabled={disabled} to={actionPath}>
         <FontAwesomeIcon icon={faPen} />
-      </A>
+      </AppLink>
     </DetailsButton>
   );
 };
@@ -82,7 +83,13 @@ export const DeleteButton = ({
   );
 };
 
-export const DetailsDeleteButton = ({ item, onClick, redirectPath, info }) => {
+export const DetailsDeleteButton = ({
+  item,
+  onClick,
+  redirectPath,
+  info,
+  disabled,
+}) => {
   return (
     <DeleteButton
       item={item}
@@ -90,7 +97,7 @@ export const DetailsDeleteButton = ({ item, onClick, redirectPath, info }) => {
       redirectPath={redirectPath}
       info={info}
       component={
-        <DetailsButton>
+        <DetailsButton disabled={disabled} noPermission={disabled}>
           <FontAwesomeIcon icon={faTrash} />
         </DetailsButton>
       }

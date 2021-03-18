@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit';
-import { months } from '../../utils/dateUtils';
+import { getNowString, months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/redux/vehiclesSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
@@ -76,36 +76,39 @@ export const addRecord = createAsyncThunk(
         return thunkAPI.rejectWithValue(err.toString());
       });
 
-    return { ...record, id: doc.id };
+    return { ...record, id: doc.id, created: getNowString() };
   },
 );
 
 export const editRecord = createAsyncThunk(
   'records/editRecord',
   async (editedRecord, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const record = {
-      month: editedRecord.month,
-      year: editedRecord.year,
-      mileage: editedRecord.mileage,
-      get name() {
-        return `${months[this.month - 1]} ${this.year}`;
-      },
-      vehicleId: editedRecord.vehicleId,
-      updatedBy: currUser.id,
-      updated: firestoreFunctions.FieldValue.serverTimestamp(),
-    };
+      const record = {
+        month: editedRecord.month,
+        year: editedRecord.year,
+        mileage: editedRecord.mileage,
+        get name() {
+          return `${months[this.month - 1]} ${this.year}`;
+        },
+        vehicleId: editedRecord.vehicleId,
+        updatedBy: currUser.id,
+        updated: firestoreFunctions.FieldValue.serverTimestamp(),
+      };
 
-    await firestore
-      .collection('Records')
-      .doc(editedRecord.id)
-      .update(record)
-      .catch((err) => {
-        return thunkAPI.rejectWithValue(err);
-      });
+      firestore
+        .collection('Records')
+        .doc(editedRecord.id)
+        .update(record)
+        .catch((err) => {});
 
-    return { ...editedRecord, ...record };
+      return { ...editedRecord, ...record, updated: getNowString() };
+    } catch (error) {
+      console.error(error);
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 

@@ -13,6 +13,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { A } from '../../layout/LayoutStyles';
 import { DeleteButton } from '../detailsView/DetailsComponents';
+import AppLink from '../AppLink';
 
 const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
   return (
@@ -37,7 +38,12 @@ const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
                       key={index}
                       item={item}
                       component={
-                        <Button type='button' tabIndex='-1' key={index}>
+                        <Button
+                          type='button'
+                          tabIndex='0'
+                          key={index}
+                          {...button.props}
+                        >
                           <ButtonBody>
                             <ButtonIco>
                               <FontAwesomeIcon icon={button.ico} />
@@ -50,15 +56,23 @@ const ListViewItem = ({ children, ico, item, path = '/', buttons = [] }) => {
                   );
                 default:
                   return (
-                    <Button type='button' tabIndex='-1' key={index}>
-                      <A to={{ pathname: button.action, state: button.state }}>
+                    <Button
+                      type='button'
+                      tabIndex='-1'
+                      key={index}
+                      {...button.props}
+                    >
+                      <AppLink
+                        to={{ pathname: button.action, state: button.state }}
+                        {...button.props}
+                      >
                         <ButtonBody>
                           <ButtonIco>
                             <FontAwesomeIcon icon={button.ico} />
                           </ButtonIco>
                           <span>{button.label}</span>
                         </ButtonBody>
-                      </A>
+                      </AppLink>
                     </Button>
                   );
               }

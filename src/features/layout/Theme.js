@@ -71,7 +71,7 @@ export const darkTheme = {
       '0px 0px 12px -6px rgba(0, 0, 0, 0.8), 0px 1px 16px -8px rgba(0, 0, 0, 0.6)',
   },
   disabled: {
-    bg: '#eeeeee',
+    bg: '#f7f7f7',
     color: '#d0d0d0',
   },
   status: {

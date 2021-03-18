@@ -31,10 +31,10 @@ const validationSchema = Yup.object({
     .max(15, validationMessages.max(15))
     .required(validationMessages.required),
   isDriver: Yup.bool(),
-  // eMail: Yup.string()
-  //   .email(validationMessages.email)
-  //   .min(7, validationMessages.min(7))
-  //   .required(validationMessages.required)
+  email: Yup.string()
+    .email(validationMessages.email)
+    .min(7, validationMessages.min(7))
+    .required(validationMessages.required),
 });
 
 const UserForm = ({ user, isEdit }) => {
@@ -48,7 +48,7 @@ const UserForm = ({ user, isEdit }) => {
       name: values.name,
       surname: values.surname,
       label: values.label,
-      eMail: values.eMail,
+      email: values.email,
       isDriver: values.isDriver,
       isAppUser: values.isAppUser,
     };
@@ -70,7 +70,7 @@ const UserForm = ({ user, isEdit }) => {
     surname: '',
     label: '',
     isDriver: false,
-    eMail: '',
+    email: '',
     isAppUser: false,
   };
 
@@ -106,7 +106,7 @@ const UserForm = ({ user, isEdit }) => {
             </Row>
 
             <Row>
-              <FieldWithErrors name='eMail' label='E-mail' scrollFocused>
+              <FieldWithErrors name='email' label='E-mail' scrollFocused>
                 <StyledField type='email' />
               </FieldWithErrors>
             </Row>

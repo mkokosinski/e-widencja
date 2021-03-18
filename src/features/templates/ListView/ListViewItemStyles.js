@@ -25,7 +25,6 @@ export const Body = styled.div`
   width: 100%;
   padding: 10px;
   align-items: center;
-  overflow: hidden;
 
   @media screen and (${device.mobileXL}) {
     grid-template-columns: 60px 2fr 1fr;

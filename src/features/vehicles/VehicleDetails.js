@@ -36,6 +36,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { selectVehicleById } from './redux/vehiclesSlice';
 import { getTripsData } from '../../utils/chartUtils';
 import NoticesList from '../forms/vehicle/NoticesList';
+import AppLink from '../templates/AppLink';
 
 const VehileDetails = () => {
   const { id } = useParams();
@@ -75,9 +76,9 @@ const VehileDetails = () => {
             onClick={() => dispatch(deleteVehicle(vehicle.id))}
           />
           <DetailsButton>
-            <A to={`${Routing.VehicleAddNotice.action}/${id}`}>
+            <AppLink to={`${Routing.VehicleAddNotice.action}/${id}`}>
               <FontAwesomeIcon icon={faExclamationCircle} />
-            </A>
+            </AppLink>
           </DetailsButton>
         </DetailsTopPanel>
 

@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import TripTemplateForm from "./TripTemplateForm";
+import TripTemplateForm from './TripTemplateForm';
 
 const AddTripTemplateForm = () => {
   const tripTemplate = {
-    label: "",
-    purpose: "",
+    label: '',
+    purpose: '',
     stops: [
-      { label: "Start", place: "", mileage: "", distance: 0 },
-      { label: "Cel", place: "", mileage: "", distance: null }
-    ]
+      { label: 'Start', place: '', distance: 0 },
+      { label: 'Cel', place: '', distance: 0 },
+    ],
   };
 
   return <TripTemplateForm tripTemplate={tripTemplate} />;

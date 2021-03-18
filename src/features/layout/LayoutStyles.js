@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const screenSize = {
@@ -133,6 +133,14 @@ export const A = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      :focus {
+        box-shadow: none;
+      }
+    `}
 `;
 
 const Panel = styled.div`
@@ -223,7 +231,33 @@ export const Button = styled.button`
   }
 
   :disabled {
-    cursor: not-allowed;
+    cursor: not-allowed !important;
+    background-color: ${({ theme }) => theme.disabled.bg} !important;
+    color: ${({ theme }) => theme.disabled.color} !important;
+
+    & > * {
+      cursor: not-allowed;
+    }
+
+    ${(props) =>
+      props.noPermission &&
+      css`
+        position: relative;
+        :hover {
+          ::after {
+            background-color: ${({ theme }) => theme.white};
+            box-shadow: ${({ theme }) => theme.shadows.shadow1};
+            bottom: -30px;
+            color: ${({ theme }) => theme.red};
+            content: 'brak uprawnień';
+            display: 'block';
+            font-size: 0.8rem;
+            padding: 10px;
+            left: -50%;
+            position: absolute;
+          }
+        }
+      `}
   }
 `;
 

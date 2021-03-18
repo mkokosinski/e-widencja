@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
-import { compareDates } from '../../utils/dateUtils';
+import { compareDates, getNowString } from '../../utils/dateUtils';
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 
@@ -44,23 +44,27 @@ export const fetchTripTemplates = createAsyncThunk(
 
 export const addTripTemplate = createAsyncThunk(
   'records/addTripTemplate',
-  async (arg, thunkAPI) => {
+  async (newTemplate, thunkAPI) => {
     try {
       const currUser = thunkAPI.getState().auth.user;
 
-      const newTemplate = {
-        name: arg.name,
-        purpose: arg.purpose,
-        stops: arg.stops,
+      const template = {
+        name: newTemplate.name,
+        purpose: newTemplate.purpose,
+        stops: newTemplate.stops,
         companyId: currUser.companyId,
         createdBy: currUser.id,
         created: firestoreFunctions.FieldValue.serverTimestamp(),
         active: true,
       };
 
-      const doc = await firestore.collection('TripTemplates').add(newTemplate);
+      const doc = await firestore.collection('TripTemplates').add(template);
 
-      return { ...newTemplate, id: doc.id };
+      return {
+        ...template,
+        id: doc.id,
+        created: template.created.toDate().toString(),
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -86,7 +90,7 @@ export const editTripTemplate = createAsyncThunk(
         .doc(editedTemplate.id)
         .update(template);
 
-      return template;
+      return { ...template, id: editedTemplate.id, updated: getNowString() };
     } catch (error) {
       console.error(error);
       return thunkAPI.rejectWithValue(error);

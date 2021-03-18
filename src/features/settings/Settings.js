@@ -20,8 +20,6 @@ const Settings = () => {
   const purposes = useSelector(selectPurposes);
   const notices = useSelector(selectNotices);
 
-  console.log(notices);
-
   return (
     <StyledSettings>
       <DropdownPanel title={purposes.name}>

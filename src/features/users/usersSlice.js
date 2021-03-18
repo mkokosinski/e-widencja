@@ -7,6 +7,7 @@ import { selectFilters } from '../templates/filterSlice';
 import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';
+import { getNowString } from '../../utils/dateUtils';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
@@ -42,81 +43,83 @@ export const fetchUsers = createAsyncThunk(
 
 export const addUser = createAsyncThunk(
   'records/addUser',
-  async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+  async (user, thunkAPI) => {
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const newUser = {
-      name: arg.name,
-      surname: arg.surname,
-      label: arg.label,
-      eMail: arg.eMail,
-      isDriver: arg.isDriver,
-      isAppUser: arg.isAppUser,
-      isConnectedUser: arg.isAppUser,
-      password: arg.isAppUser,
-      companyId: currUser.companyId,
-      createdBy: currUser.id,
-      created: firestoreFunctions.FieldValue.serverTimestamp(),
-      active: true,
-      role: 'User',
-    };
+      const newUser = {
+        name: user.name,
+        surname: user.surname,
+        label: user.label,
+        email: user.email,
+        isDriver: user.isDriver,
+        companyId: currUser.companyId,
+        createdBy: currUser.id,
+        created: firestoreFunctions.FieldValue.serverTimestamp(),
+        active: true,
+        role: 'User',
+      };
 
-    return await firestore
-      .collection('Users')
-      .add(newUser)
-      .catch((err) => {
-        console.error(err);
-        return thunkAPI.rejectWithValue(err.toString());
-      });
+      const doc = await firestore.collection('Users').add(newUser);
+
+      return {
+        ...newUser,
+        id: doc.id,
+        created: getNowString(),
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 
 export const editUser = createAsyncThunk(
   'records/editUser',
-  async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+  async (user, thunkAPI) => {
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    const editedUser = {
-      name: arg.name,
-      surname: arg.surname,
-      label: arg.label,
-      eMail: arg.eMail,
-      isDriver: arg.isDriver,
-      isAppUser: arg.isAppUser,
-      updatedBy: currUser.id,
-      updated: firestoreFunctions.FieldValue.serverTimestamp(),
-    };
+      const editedUser = {
+        name: user.name,
+        surname: user.surname,
+        label: user.label,
+        email: user.email,
+        isDriver: user.isDriver,
+        updatedBy: currUser.id,
+        updated: firestoreFunctions.FieldValue.serverTimestamp(),
+      };
 
-    if (arg.isAppUser) {
-      //TODO: SignUp
+      if (user.isAppUser) {
+        //TODO: SignUp
+      }
+
+      firestore.collection('Users').doc(user.id).update(editedUser);
+
+      return { ...user, ...editedUser, updated: getNowString() };
+    } catch (error) {
+      console.error(error);
+      return thunkAPI.rejectWithValue(error);
     }
-
-    firestore
-      .collection('Users')
-      .doc(arg.id)
-      .update(editedUser)
-      .catch((err) => {
-        return thunkAPI.rejectWithValue(err);
-      });
   },
 );
 
 export const deleteUser = createAsyncThunk(
   'records/deleteUser',
-  async (arg, thunkAPI) => {
-    const currUser = thunkAPI.getState().auth.user;
+  async (deletedUserId, thunkAPI) => {
+    try {
+      const currUser = thunkAPI.getState().auth.user;
 
-    firestore
-      .collection('Users')
-      .doc(arg)
-      .update({
+      firestore.collection('Users').doc(deletedUserId).update({
         active: false,
         deletedBy: currUser.id,
         deleted: firestoreFunctions.FieldValue.serverTimestamp(),
-      })
-      .catch((err) => {
-        return thunkAPI.rejectWithValue(err);
       });
+
+      return deletedUserId;
+    } catch (error) {
+      console.error(error);
+      return thunkAPI.rejectWithValue(error);
+    }
   },
 );
 
@@ -149,43 +152,45 @@ export const usersSlice = createSlice({
       state.status = 'failed';
       state.error = action.error.message;
     },
+
     [addUser.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
     },
-
-    [addUser.fulfilled]: (state, action) => {
+    [addUser.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items.push(payload);
       toast.success('Poprawnie dodano nowego użytkownika');
     },
-
-    [addUser.rejected]: (state, action) => {
+    [addUser.rejected]: (state, { payload }) => {
       state.status = FETCH_STATUS.ERROR;
-      state.error = action.error.message;
-      toast.error(action.error.message);
+      state.error = payload.message;
+      toast.error(payload.message);
     },
+
     [editUser.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
     },
-
-    [editUser.fulfilled]: (state, action) => {
+    [editUser.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.map((user) =>
+        user.id === payload.id ? { ...user, ...payload } : user,
+      );
       toast.success('Poprawnie edytowano użytkownika');
     },
-
     [editUser.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
       state.error = action.error.message;
       toast.error(action.error.message);
     },
+
     [deleteUser.pending]: (state, action) => {
       state.status = FETCH_STATUS.LOADING;
     },
-
-    [deleteUser.fulfilled]: (state, action) => {
+    [deleteUser.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
+      state.items = state.items.filter((user) => user.id !== payload);
       toast.success('Poprawnie usunięto użytkownika');
     },
-
     [deleteUser.rejected]: (state, action) => {
       state.status = FETCH_STATUS.ERROR;
       toast.error(action.error.message);

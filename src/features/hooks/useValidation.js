@@ -111,7 +111,7 @@ const useValidation = () => {
   };
 
   const user = (values) => {
-    const { id, eMail } = values;
+    const { id, email } = values;
 
     const oldUser = users
       .map((user) => ({
@@ -119,21 +119,21 @@ const useValidation = () => {
         name: user.name,
         surname: user.surname,
         label: user.label,
-        eMail: user.eMail,
+        email: user.email,
         isDriver: user.isDriver,
         isAppUser: user.isAppUser,
       }))
       .find((user) => user.id === id);
 
     const itemWasChanged = id ? !shallowEqual(values, oldUser) : true;
-    const eMailChanged = id ? oldUser.eMail !== eMail : true;
+    const emailChanged = id ? oldUser.email !== email : true;
 
     if (itemWasChanged) {
-      const isDuplicateMail = users.some(
-        (veh) => veh.eMail.trim() === eMail.trim(),
+      const isDuplicatemail = users.some(
+        (user) => user.email?.trim() === email?.trim(),
       );
 
-      if (eMailChanged && isDuplicateMail) {
+      if (emailChanged && isDuplicatemail) {
         return {
           error: validationMessages.user.isDuplicateEmail,
           success: false,
@@ -145,20 +145,20 @@ const useValidation = () => {
   };
 
   const tripTemplate = (values) => {
-    const { id, label } = values;
+    const { id, name } = values;
 
     const isDuplicateLabel = tripTemplates.some(
-      (template) => template.label.trim() === label.trim(),
+      (template) => template.name.trim() === name.trim(),
     );
 
     const oldTemplate = tripTemplates
       .map((t) => {
-        const { id, label, purpose, stops } = t;
-        return { id, label, purpose, stops };
+        const { id, name, purpose, stops } = t;
+        return { id, name, purpose, stops };
       })
       .find((template) => template.id === id);
 
-    const nameWasChanged = id ? label !== oldTemplate.label : true;
+    const nameWasChanged = id ? name !== oldTemplate.name : true;
     const itemWasChanged = id ? !deepEqual(values, oldTemplate) : true;
 
     if (itemWasChanged) {

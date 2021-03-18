@@ -76,7 +76,7 @@ export const addTrip = createAsyncThunk(
         recordId: newTrip.record,
         start: newTrip.stops[0].place,
         stops: newTrip.stops,
-        templateId: newTrip.template,
+        templateId: newTrip.template || '',
         vehicleId: newTrip.vehicle,
 
         active: true,

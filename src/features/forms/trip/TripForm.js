@@ -33,6 +33,7 @@ import MileageInput from './MileageInput';
 import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
 import { addTrip, editTrip } from '../../trips/tripsSlice';
+import StopsList from './StopsList';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -172,7 +173,7 @@ const TripForm = ({ trip, isEdit }) => {
       record: values.record.value,
       driver: values.driver.value,
       purpose: values.purpose.value,
-      template: values.tripTemplate.value,
+      template: values.tripTemplate.value || '',
       stops: values.stops,
       vehicle: values.record.vehicle,
       saveTemplate: values.saveTemplate,
@@ -269,7 +270,7 @@ const TripForm = ({ trip, isEdit }) => {
                 scrollFocused
               >
                 <StyledSelect>
-                  <SelectCreatable
+                  <Select
                     as='select'
                     isSearchable={true}
                     options={tripTemplatesSelectItems}
@@ -321,69 +322,7 @@ const TripForm = ({ trip, isEdit }) => {
             </Row>
 
             <Row>
-              <FieldArray name='stops'>
-                {({ remove, insert }) => {
-                  const labels = [
-                    'Początek trasy',
-                    ...values.stops
-                      .map((s, i) => 'Przystanek ' + i)
-                      .slice(1, -1),
-                    'Koniec trasy',
-                  ];
-
-                  return values.stops.map((stop, index) => (
-                    <React.Fragment key={labels[index]}>
-                      <MileageFieldsGroup>
-                        <FieldWithErrors
-                          name={`stops[${index}].place`}
-                          label={labels[index]}
-                          scrollFocused
-                        >
-                          <StyledField type='text' placeholder='Miejsce' />
-                        </FieldWithErrors>
-
-                        <FieldWithErrors
-                          name={`stops[${index}].mileage`}
-                          scrollFocused
-                        >
-                          <MileageInput index={index} type='number' min='0' />
-                        </FieldWithErrors>
-                        <FieldWithErrors
-                          name={`stops[${index}].distance`}
-                          scrollFocused
-                        >
-                          <DistanceInput index={index} type='number' min='0' />
-                        </FieldWithErrors>
-
-                        {index >= 1 && index < values.stops.length - 1 && (
-                          <RemoveItemButton
-                            type='button'
-                            onClick={() => remove(index)}
-                          >
-                            <FontAwesomeIcon icon={faMinus} />
-                          </RemoveItemButton>
-                        )}
-                      </MileageFieldsGroup>
-                      {index === values.stops.length - 2 && (
-                        <AddItemButton
-                          type='button'
-                          onClick={() => {
-                            insert(values.stops.length - 1, {
-                              label: `Przystanek ${index + 1}`,
-                              place: ``,
-                              distance: 0,
-                              mileage: values.stops[index].mileage,
-                            });
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPlusCircle} />
-                          <span> Dodaj przystanek </span>
-                        </AddItemButton>
-                      )}
-                    </React.Fragment>
-                  ));
-                }}
-              </FieldArray>
+              <StopsList stops={values.stops} />
             </Row>
 
             {!isEdit && (

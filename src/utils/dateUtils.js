@@ -54,6 +54,8 @@ export const locale = {
   formatLong,
 };
 
+export const getNowString = () => new Date().toString();
+
 export const DateFrom = (date) => {
   const formatDate = new Date(Date.parse(date));
   return new Date(formatDate.toUTCString());

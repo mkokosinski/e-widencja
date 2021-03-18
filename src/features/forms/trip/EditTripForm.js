@@ -21,8 +21,6 @@ const EditTripForm = () => {
     tripTemplate: trip.templateId,
   };
 
-  console.log(trip);
-
   return trip ? <TripForm trip={tripData} isEdit={true} /> : null;
 };
 

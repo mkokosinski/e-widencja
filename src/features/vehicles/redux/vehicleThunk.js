@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore, firestoreFunctions } from '../../../app/firebase/firebase';
+import { getNowString } from '../../../utils/dateUtils';
 
 export const fetchVehicles = createAsyncThunk(
   'vehicles/fetchVehicles',
@@ -66,7 +67,11 @@ export const addVehicle = createAsyncThunk(
 
       const newVehicle = await firestore.collection('Vehicles').add(vehicle);
 
-      return { ...vehicle, id: newVehicle.id };
+      return {
+        ...vehicle,
+        id: newVehicle.id,
+        created: getNowString(),
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -85,13 +90,9 @@ export const editVehicle = createAsyncThunk(
         updated: firestoreFunctions.FieldValue.serverTimestamp(),
       };
 
-      await firestore
-        .collection('Vehicles')
-        .doc(editedVehicle.id)
-        .update(vehicle)
-        .catch((err) => {});
+      firestore.collection('Vehicles').doc(editedVehicle.id).update(vehicle);
 
-      return editedVehicle;
+      return { ...editedVehicle, ...vehicle, updated: getNowString() };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -104,7 +105,7 @@ export const deleteVehicle = createAsyncThunk(
     try {
       const currUser = thunkAPI.getState().auth.user;
 
-      await firestore.collection('Vehicles').doc(deletedVehicleId).update({
+      firestore.collection('Vehicles').doc(deletedVehicleId).update({
         active: false,
         deletedBy: currUser.id,
         deleted: firestoreFunctions.FieldValue.serverTimestamp(),

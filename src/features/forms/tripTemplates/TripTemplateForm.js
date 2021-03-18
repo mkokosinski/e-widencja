@@ -1,5 +1,5 @@
 import React from 'react';
-import { FieldArray, Formik } from 'formik';
+import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
@@ -13,13 +13,8 @@ import {
   ButtonsContainer,
   Row,
   StyledSelect,
-  AddItemButton,
-  RemoveItemButton,
-  MileageFieldsGroup,
 } from '../FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
-import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addTripTemplate,
@@ -28,9 +23,10 @@ import {
 import { selectPurposes } from '../../settings/redux/settingsSlice';
 import useValidation from '../../hooks/useValidation';
 import { toast } from 'react-toastify';
+import StopsList from '../trip/StopsList';
 
 const validationSchema = Yup.object().shape({
-  label: Yup.string().required('Wymagane'),
+  name: Yup.string().required('Wymagane'),
   purpose: Yup.string().required('Wymagane'),
   tripTemplate: Yup.string(),
   stops: Yup.array().of(
@@ -60,11 +56,10 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
 
   const stops = tripTemplate.stops.map((stop) => ({
     ...stop,
-    mileage: 0,
   }));
 
   const initValues = {
-    label: tripTemplate.label,
+    name: tripTemplate.name,
     purpose: tripTemplate.purpose ? selectedPurpose : '',
     stops: stops,
   };
@@ -129,64 +124,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
             </Row>
 
             <Row>
-              <FieldArray name='stops'>
-                {({ remove, push }) => {
-                  const labels = [
-                    'Początek trasy',
-                    ...values.stops
-                      .map((s, i) => 'Przystanek ' + i)
-                      .slice(1, -1),
-                    'Koniec trasy',
-                  ];
-
-                  return values.stops.map((stop, index) => (
-                    <React.Fragment key={stop.label + index}>
-                      <MileageFieldsGroup>
-                        <FieldWithErrors
-                          name={`stops[${index}].place`}
-                          label={labels[index]}
-                          scrollFocused
-                        >
-                          <StyledField type='text' placeholder='Miejsce' />
-                        </FieldWithErrors>
-
-                        <FieldWithErrors
-                          name={`stops[${index}].distance`}
-                          scrollFocused
-                        >
-                          <StyledField
-                            index={index}
-                            type='number'
-                            min='0'
-                            placeholder='km'
-                          />
-                        </FieldWithErrors>
-
-                        {index >= 1 && index < values.stops.length - 1 && (
-                          <RemoveItemButton onClick={() => remove(index)}>
-                            <FontAwesomeIcon icon={faMinus} />
-                          </RemoveItemButton>
-                        )}
-                      </MileageFieldsGroup>
-                      {index === values.stops.length - 2 && (
-                        <AddItemButton
-                          onClick={() => {
-                            push(values.stops.length - 1, {
-                              label: `Przystanek ${index + 1}`,
-                              place: ``,
-                              distance: 0,
-                              mileage: values.stops[index].mileage,
-                            });
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPlusCircle} />
-                          <span> Dodaj przystanek </span>
-                        </AddItemButton>
-                      )}
-                    </React.Fragment>
-                  ));
-                }}
-              </FieldArray>
+              <StopsList stops={values.stops} isTemplate />
             </Row>
 
             <ButtonsContainer>

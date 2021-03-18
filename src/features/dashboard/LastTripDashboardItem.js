@@ -23,12 +23,13 @@ import {
 } from './DashboardStyles';
 import { ReactComponent as UserIco } from '../../assets/man.svg';
 import Routing from '../routing/Routing';
+import AppLink from '../templates/AppLink';
 
 const LastTripDashboardItem = ({ trip }) => {
   const user = useSelector(selectFbUser);
   const tripDistance = trip.stops.reduce((sum, cur) => sum + cur.distance, 0);
   return (
-    <A to={`${Routing.TripEdit.action}/${trip.id}`}>
+    <AppLink to={`${Routing.TripEdit.action}/${trip.id}`}>
       <RecentUsersSectionStyled>
         <RecentUsersSectionPhotoWrapper>
           <RecentUsersSectionPhoto>
@@ -62,7 +63,7 @@ const LastTripDashboardItem = ({ trip }) => {
           </RecentUsersSectionIco>
         </RecentUsersSectionInfoWrapper>
       </RecentUsersSectionStyled>
-    </A>
+    </AppLink>
   );
 };
 

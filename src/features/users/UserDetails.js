@@ -65,18 +65,16 @@ const UserDetalis = () => {
         <DetailsTopPanel>
           <ButtonGoBack />
           <DetailsTitle>{user.label}</DetailsTitle>
-          {canEdit && (
-            <>
-              <ButtonEdit
-                actionPath={`${Routing.UserEdit.action}/${user.id}`}
-              />
-              <DetailsDeleteButton
-                item={user}
-                redirectPath={Routing.Users.path}
-                onClick={() => dispatch(deleteUser(user.id))}
-              />
-            </>
-          )}
+          <ButtonEdit
+            disabled={!canEdit}
+            actionPath={`${Routing.UserEdit.action}/${user.id}`}
+          />
+          <DetailsDeleteButton
+            disabled={!canEdit}
+            item={user}
+            redirectPath={Routing.Users.path}
+            onClick={() => dispatch(deleteUser(user.id))}
+          />
         </DetailsTopPanel>
 
         <DetailsInfo>

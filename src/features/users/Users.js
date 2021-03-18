@@ -1,6 +1,6 @@
 import React from 'react';
-import { selectFilteredUsers } from './usersSlice';
-import { useSelector } from 'react-redux';
+import { deleteUser, selectFilteredUsers } from './usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import Routing from '../routing/Routing';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
@@ -18,32 +18,50 @@ import {
   faFileAlt,
   faPlusSquare,
   faEdit,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import FilterButton from '../../app/components/FilterButton';
 import FilterModal from '../records/FilterModal';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { EmptyState } from '../templates/detailsView/DetailsStyles';
-
-const buttons = (id) => [
-  {
-    ico: faFileAlt,
-    label: 'Szczegóły',
-    action: `${Routing.UserDetails.action}/${id}`,
-  },
-  {
-    ico: faEdit,
-    label: 'Edytuj',
-    action: `${Routing.UserEdit.action}/${id}`,
-  },
-  {
-    ico: faPlusSquare,
-    label: 'cośtam',
-    action: 'details',
-  },
-];
+import { selectFbUser } from '../auth/authSlice';
+import { USER_ROLES } from '../../utils/constants';
 
 function Users() {
   const { items: users } = useSelector(selectFilteredUsers);
+  const currentUser = useSelector(selectFbUser);
+  const dispatch = useDispatch();
+
+  const buttons = (id) => {
+    const canEdit =
+      currentUser.role === USER_ROLES.ADMIN || currentUser.id === id;
+    return [
+      {
+        ico: faFileAlt,
+        label: 'Szczegóły',
+        action: `${Routing.UserDetails.action}/${id}`,
+      },
+      {
+        ico: faEdit,
+        label: 'Edytuj',
+        action: `${Routing.UserEdit.action}/${id}`,
+        props: {
+          disabled: !canEdit,
+          noPermission: !canEdit,
+        },
+      },
+      {
+        ico: faTrash,
+        label: 'Usuń',
+        type: 'deleteButton',
+        action: () => dispatch(deleteUser(id)),
+        props: {
+          disabled: !canEdit,
+          noPermission: !canEdit,
+        },
+      },
+    ];
+  };
 
   return (
     <ItemsList>
