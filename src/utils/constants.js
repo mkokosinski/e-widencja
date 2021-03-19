@@ -30,3 +30,9 @@ export const INFO_STATUS = {
   INFO: 'info',
   WARNING: 'warning',
 };
+
+export const INPUT_SIZE = {
+  LARGE: 4,
+  NORMAL: 2,
+  SMALL: 1,
+};

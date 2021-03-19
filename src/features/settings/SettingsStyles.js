@@ -9,8 +9,8 @@ export const StyledSettings = styled.div`
   width: 100%;
 `;
 
-export const SettingsSection = styled(DetailsSection)`
-  padding: 30px;
+export const SettingsSection = styled.div`
+  padding: 20px 60px 40px;
 `;
 
 export const SettingsTitle = styled.h4``;

@@ -71,7 +71,7 @@ const ButtonStyles = styled(ButtonLightSoft)`
 
 export const ProfileButton = styled(ButtonStyles)``;
 
-export const NotificationButton = styled(ButtonStyles)`
+export const StyledNotificationButton = styled(ButtonStyles)`
   ${(props) =>
     props.isNewNotification &&
     css`

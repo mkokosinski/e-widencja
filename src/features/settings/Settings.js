@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
+import EditCompanyForm from '../forms/company/EditCompanyForm';
 import FeatureItems from './FeatureItems';
 import {
   settingsAddNotice,
@@ -14,7 +15,7 @@ import {
   selectNotices,
   selectPurposes,
 } from './redux/settingsSlice';
-import { StyledSettings } from './SettingsStyles';
+import { SettingsSection, StyledSettings } from './SettingsStyles';
 
 const Settings = () => {
   const purposes = useSelector(selectPurposes);
@@ -22,7 +23,12 @@ const Settings = () => {
 
   return (
     <StyledSettings>
-      <DropdownPanel title={purposes.name}>
+      <DropdownPanel title={'Dane firmy'}>
+        <SettingsSection>
+          <EditCompanyForm />
+        </SettingsSection>
+      </DropdownPanel>
+      <DropdownPanel title={purposes.name} startExpanded>
         <FeatureItems
           items={purposes.items}
           addItem={addPurpose}
@@ -30,7 +36,7 @@ const Settings = () => {
           deleteItem={deletePurpose}
         />
       </DropdownPanel>
-      <DropdownPanel title={notices.name}>
+      <DropdownPanel title={notices.name} startExpanded>
         <FeatureItems
           items={notices.items}
           addItem={settingsAddNotice}

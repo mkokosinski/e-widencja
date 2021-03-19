@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { regonValidation } from '../../utils/formUtils';
 import { shallowEqual, deepEqual } from '../../utils/objectUtils';
 
 export const validationMessages = {
@@ -26,6 +27,7 @@ const useValidation = () => {
   const { items: vehicles } = state.vehicles;
   const { items: users } = state.users;
   const { items: tripTemplates } = state.tripTemplates;
+  const companyData = state.company.data;
 
   const record = (values) => {
     const { month, year, vehicleId, mileage, id } = values;
@@ -173,7 +175,18 @@ const useValidation = () => {
     return { error: null, success: true };
   };
 
-  return { record, vehicle, user, tripTemplate };
+  const company = (values) => {
+    console.log('732065814', regonValidation('732065814'));
+    console.log('732025814', regonValidation('732025814'));
+    console.log('572418334', regonValidation('572418334'));
+
+    console.log('####### 14 ##########');
+
+    console.log('23511332857188', regonValidation('23511332857188'));
+    console.log('23521332857188', regonValidation('23521332857188'));
+  };
+
+  return { record, vehicle, user, tripTemplate, company };
 };
 
 export default useValidation;

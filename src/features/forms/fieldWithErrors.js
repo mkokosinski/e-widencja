@@ -3,9 +3,17 @@ import { ErrorContainer, FormField, Label, StyledError } from './FormsStyles';
 import { ErrorMessage, useFormikContext, getIn } from 'formik';
 import { selectIsMobile } from '../layout/layoutSlice';
 import { useSelector } from 'react-redux';
+import { INPUT_SIZE } from '../../utils/constants';
 
 const FieldWithErrors = React.forwardRef((props, ref) => {
-  const { children, label, name, onFocus, scrollFocused } = props;
+  const {
+    children,
+    label,
+    name,
+    size = INPUT_SIZE.NORMAL,
+    onFocus,
+    scrollFocused,
+  } = props;
 
   const context = useFormikContext();
   const isMobile = useSelector(selectIsMobile);
@@ -33,7 +41,7 @@ const FieldWithErrors = React.forwardRef((props, ref) => {
   };
 
   return (
-    <FormField>
+    <FormField size={size}>
       <Label htmlFor={name}>{label}</Label>
 
       {React.Children.map(children, (child) =>

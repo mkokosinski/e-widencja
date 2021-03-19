@@ -1,43 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 
-import {
-  ItemDesc,
-  ItemTitle,
-  ListItem,
-  NotificationButton,
-} from './ProfilebarStyles';
+import { ItemDesc, ItemTitle, ListItem } from './ProfilebarStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBell,
   faChartPie,
   faCloudMoonRain,
   faSnowboarding,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { useDropdown } from '../hooks/useDropdown';
+import NotificationButton from './NotificationButton';
 
 const Notification = () => {
-  const [isNewNotification, setIsNewNotification] = useState(true);
-
-  const button = useRef(null);
+  const button = useRef();
   const { List, isOpen } = useDropdown(button);
-
-  const handleClick = () => {
-    setIsNewNotification(false);
-  };
 
   return (
     <>
-      <NotificationButton
-        tabIndex={0}
-        ref={button}
-        onClick={handleClick}
-        active={isOpen}
-        isNewNotification={isNewNotification}
-      >
-        <FontAwesomeIcon icon={faBell} />
-      </NotificationButton>
+      <NotificationButton isActive={isOpen} buttonRef={button} />
 
       <List>
         <ListItem>
@@ -53,7 +34,7 @@ const Notification = () => {
 
         <ListItem>
           <ItemTitle>
-            Dodano kierowcę <FontAwesomeIcon icon={faChartPie} />{' '}
+            Dodano kierowcę <FontAwesomeIcon icon={faChartPie} />
           </ItemTitle>
           <ItemDesc>
             Explicabo commodi omnis illo minus similique eos minima labore,

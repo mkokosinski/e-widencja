@@ -68,7 +68,7 @@ export const StyledForm = styled(Form)`
 export const FormField = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex: ${(props) => `${props.size} ${props.size}`};
 `;
 
 export const StyledCheckbox = styled(FormField)`

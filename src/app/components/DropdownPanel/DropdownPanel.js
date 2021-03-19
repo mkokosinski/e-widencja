@@ -32,8 +32,8 @@ const contentAnimation = {
   },
 };
 
-const DropdownPanel = ({ children, title, onOpen, onClose }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const DropdownPanel = ({ children, startExpanded, title, onOpen, onClose }) => {
+  const [isOpen, setIsOpen] = useState(startExpanded);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -61,8 +61,9 @@ const DropdownPanel = ({ children, title, onOpen, onClose }) => {
 
         <DoropdownContent
           layoutId='dropdownPanel'
-          animate={!isOpen ? 'enter' : 'exit'}
+          animate={isOpen ? 'enter' : 'exit'}
           variants={contentAnimation}
+          initial={false}
         >
           {children}
         </DoropdownContent>
@@ -78,6 +79,7 @@ DropdownPanel.defaultProps = {
 
 DropdownPanel.propTypes = {
   children: PropTypes.node,
+  startExpanded: PropTypes.bool,
   title: PropTypes.string,
   opOpen: PropTypes.func,
   onClose: PropTypes.func,

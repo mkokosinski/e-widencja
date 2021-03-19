@@ -88,10 +88,13 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
   };
 
   useEffect(() => {
-    buttonRef.current.addEventListener('mousedown', openDropdown);
+    const currentButton = buttonRef.current;
+    if (currentButton) {
+      currentButton.addEventListener('mousedown', openDropdown);
+    }
 
     return () => {
-      buttonRef.current.removeEventListener('mousedown', openDropdown);
+      currentButton.removeEventListener('mousedown', openDropdown);
     };
   }, [buttonRef]);
 
