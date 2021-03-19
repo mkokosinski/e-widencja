@@ -1,46 +1,31 @@
 import { useField, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Input } from '../FormsStyles';
 
 const MilageInput = (props) => {
-  const [value, setValue] = useState(0);
-
   const {
-    values: { stops },
-    initialValues,
+    values: { stops, record },
     setFieldValue,
   } = useFormikContext();
   const [field] = useField(props);
 
-  useEffect(() => {
-    const newStops = [...stops];
+  const handleChange = useCallback(
+    (value) => {
+      const newStops = stops.reduce((acc, cur, i) => {
+        const previousMileage = acc[i - 1]?.mileage || record?.mileage || 0;
+        if (props.index === i) {
+          return [
+            ...acc,
+            { ...cur, distance: value - previousMileage, mileage: value },
+          ];
+        }
+        return [...acc, { ...cur, mileage: previousMileage + cur.distance }];
+      }, []);
 
-    newStops[props.index] = {
-      ...newStops[props.index],
-      mileage: value,
-    };
-
-    for (let i = 0; i < newStops.length; i++) {
-      const s = newStops[i];
-      const pre = i !== 0 ? newStops[i - 1].mileage : initialValues.initMileage;
-
-      const newDistance = parseFloat(s.mileage - pre);
-
-      if (i === props.index) {
-        newStops[i] = {
-          ...s,
-          distance: newDistance,
-        };
-      } else {
-        newStops[i] = {
-          ...s,
-          mileage: pre + s.distance,
-        };
-      }
-    }
-
-    setFieldValue('stops', newStops);
-  }, [initialValues.initMileage, setFieldValue, value, stops.length]);
+      setFieldValue('stops', newStops);
+    },
+    [props],
+  );
 
   return (
     <>
@@ -48,8 +33,8 @@ const MilageInput = (props) => {
         {...props}
         {...field}
         onChange={(e) => {
-          const val = Number.parseInt(e.target.value);
-          setValue(val);
+          const val = parseFloat(e.target.value);
+          handleChange(val);
         }}
       />
     </>

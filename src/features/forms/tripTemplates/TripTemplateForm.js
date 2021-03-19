@@ -69,7 +69,11 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
       id: tripTemplate?.id || '',
       name: values.name,
       purpose: values.purpose.value,
-      stops: values.stops,
+      stops:
+        values.stops?.map((stop) => ({
+          place: stop.place,
+          distance: stop.distance,
+        })) || [],
     };
 
     const validate = validation.tripTemplate(data);

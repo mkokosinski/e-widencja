@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FieldArray } from 'formik';
+import { FieldArray, useFormikContext } from 'formik';
 import {
   AddItemButton,
   MileageFieldsGroup,
@@ -12,8 +12,13 @@ import DistanceInput from './DistanceInput';
 import MileageInput from './MileageInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { refreshStopsMileage } from '../../../utils/trips';
 
-const StopsList = ({ stops, isTemplate }) => {
+const StopsList = ({ isTemplate }) => {
+  const {
+    values: { stops },
+    setFieldValue,
+  } = useFormikContext();
   return (
     <FieldArray name='stops'>
       {({ remove, insert }) => {
@@ -63,7 +68,20 @@ const StopsList = ({ stops, isTemplate }) => {
               )}
 
               {index >= 1 && index < stops.length - 1 && (
-                <RemoveItemButton type='button' onClick={() => remove(index)}>
+                <RemoveItemButton
+                  type='button'
+                  onClick={() => {
+                    if (isTemplate) {
+                      const newStops = stops.filter((item, i) => i !== index);
+                      setFieldValue(
+                        'stops',
+                        refreshStopsMileage(newStops[0].mileage, newStops),
+                      );
+                    } else {
+                      remove(index);
+                    }
+                  }}
+                >
                   <FontAwesomeIcon icon={faMinus} />
                 </RemoveItemButton>
               )}

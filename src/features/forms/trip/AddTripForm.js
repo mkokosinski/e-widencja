@@ -22,8 +22,8 @@ const AddTripForm = () => {
     purpose: '',
     record: recordId,
     stops: [
-      { label: 'Start', place: '', mileage: '', distance: 0 },
-      { label: 'Cel', place: '', mileage: '', distance: 0 },
+      { label: 'Start', place: '', mileage: 0, distance: 0 },
+      { label: 'Cel', place: '', mileage: 0, distance: 0 },
     ],
     tripTemplate: '',
   };

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { FieldArray, Formik } from 'formik';
+import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
@@ -14,14 +14,9 @@ import {
   ButtonsContainer,
   Row,
   StyledSelect,
-  AddItemButton,
-  RemoveItemButton,
-  MileageFieldsGroup,
 } from '../FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import DateInput, { DATEPICKER_TYPES } from '../DateInput';
-import { faMinus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
@@ -29,11 +24,10 @@ import { selectFbUser } from '../../auth/authSlice';
 import { USER_ROLES } from '../../../utils/constants';
 import { selectTripTemplates } from '../../tripTemplates/tripTemplatesSlice';
 import { selectPurposes } from '../../settings/redux/settingsSlice';
-import MileageInput from './MileageInput';
-import DistanceInput from './DistanceInput';
 import Checkbox from '../checkbox';
 import { addTrip, editTrip } from '../../trips/tripsSlice';
 import StopsList from './StopsList';
+import { refreshStopsMileage } from '../../../utils/trips';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -43,7 +37,6 @@ const validationSchema = Yup.object().shape({
   tripTemplate: Yup.string(),
   stops: Yup.array().of(
     Yup.object().shape({
-      label: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       place: Yup.string().max(28, 'Max 28 chars').required('Wymagane'),
       mileage: Yup.number()
         .typeError('Wymagane')
@@ -249,10 +242,7 @@ const TripForm = ({ trip, isEdit }) => {
                       );
                       setFieldValue(
                         'stops',
-                        values.stops.map((stop) => ({
-                          ...stop,
-                          mileage: option.mileage,
-                        })),
+                        refreshStopsMileage(option.mileage, values.stops),
                       );
                       focusOn(tripTemplateRef);
                     }}
@@ -277,15 +267,23 @@ const TripForm = ({ trip, isEdit }) => {
                     onChange={(option) => {
                       setFieldTouched('tripTemplate');
                       setFieldValue('tripTemplate', option);
+                      console.log(option);
+
                       setFieldValue('purpose', {
                         label: option.purpose,
                         value: option.purpose,
                       });
 
-                      setFieldValue('stops', option.stops);
+                      setFieldValue(
+                        'stops',
+                        refreshStopsMileage(
+                          values.record.mileage,
+                          option.stops,
+                        ),
+                      );
                     }}
                     placeholder='Opcjonalne'
-                    defaultValue={values.tripTemplate}
+                    value={values.tripTemplate}
                   />
                 </StyledSelect>
               </FieldWithErrors>
@@ -309,7 +307,7 @@ const TripForm = ({ trip, isEdit }) => {
                       setFieldValue('purpose', option);
                     }}
                     placeholder='Wybierz cel'
-                    defaultValue={values.purpose}
+                    value={values.purpose}
                   />
                 </StyledSelect>
               </FieldWithErrors>

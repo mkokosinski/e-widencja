@@ -97,7 +97,7 @@ export const addTrip = createAsyncThunk(
           ? currentTripMileage
           : maxVehicleMileage;
 
-      firestore.collection('Trips').add(trip);
+      const doc = await firestore.collection('Trips').add(trip);
 
       thunkAPI.dispatch(
         editVehicle({
@@ -112,7 +112,6 @@ export const addTrip = createAsyncThunk(
             name: newTrip.templateName,
             purpose: newTrip.purpose,
             stops: trip.stops.map((stop) => ({
-              label: stop.label,
               place: stop.place,
               distance: stop.distance,
             })),
@@ -124,7 +123,7 @@ export const addTrip = createAsyncThunk(
         );
       }
 
-      return { ...trip, id: newTrip.id, created: getNowString() };
+      return { ...trip, id: doc.id, created: getNowString() };
     } catch (error) {
       console.error(error);
       return thunkAPI.rejectWithValue(error);

@@ -1,37 +1,35 @@
 import { useField, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Input } from '../FormsStyles';
 
 const DistanceInput = (props) => {
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
 
   const {
-    values: { stops },
-    initialValues,
+    values: { stops, record },
     setFieldValue,
   } = useFormikContext();
   const [field] = useField(props);
 
-  useEffect(() => {
-    const newStops = [...stops];
+  const handleChange = useCallback(
+    (value) => {
+      const newStops = stops.reduce((acc, cur, i) => {
+        const previousMileage = acc[i - 1]?.mileage || record?.mileage || 0;
 
-    newStops[props.index] = {
-      ...newStops[props.index],
-      distance: value,
-    };
+        if (props.index === i) {
+          return [
+            ...acc,
+            { ...cur, distance: value, mileage: value + previousMileage },
+          ];
+        }
 
-    for (let i = 0; i < newStops.length; i++) {
-      const s = newStops[i];
-      const pre = i !== 0 ? newStops[i - 1].mileage : initialValues.initMileage;
-      const newMileage = parseFloat(pre + s.distance);
-      newStops[i] = {
-        ...s,
-        mileage: newMileage,
-      };
-    }
+        return [...acc, { ...cur, mileage: previousMileage + cur.distance }];
+      }, []);
 
-    setFieldValue('stops', newStops);
-  }, [initialValues.initMileage, setFieldValue, value, stops.length]);
+      setFieldValue('stops', newStops);
+    },
+    [props],
+  );
 
   return (
     <>
@@ -39,8 +37,8 @@ const DistanceInput = (props) => {
         {...props}
         {...field}
         onChange={(e) => {
-          const val = Number.parseInt(e.target.value);
-          setValue(val);
+          const val = parseInt(e.target.value);
+          handleChange(val);
         }}
       />
     </>
