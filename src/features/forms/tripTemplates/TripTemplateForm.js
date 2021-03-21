@@ -14,7 +14,7 @@ import {
   Row,
   StyledSelect,
 } from '../../../components/Form/FormsStyles';
-import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
+import { ButtonBordered } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addTripTemplate,
@@ -24,6 +24,7 @@ import { selectPurposes } from '../../settings/redux/settingsSlice';
 import useValidation from '../../../hooks/useValidation';
 import { toast } from 'react-toastify';
 import StopsList from '../trip/StopsList';
+import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Wymagane'),
@@ -95,7 +96,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue, dirty }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa' scrollFocused>
@@ -132,9 +133,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain disabled={!dirty} type='submit'>
-                Zapisz
-              </ButtonMain>
+              <SubmitButton>Zapisz</SubmitButton>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

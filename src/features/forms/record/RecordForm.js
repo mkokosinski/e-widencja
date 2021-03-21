@@ -23,8 +23,9 @@ import {
   Row,
   StyledSelect,
 } from '../../../components/Form/FormsStyles';
-import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
+import { ButtonBordered } from '../../layout/LayoutStyles';
 import Routing from '../../routing/Routing';
+import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object({
   date: Yup.date().required('Pole wymagane'),
@@ -90,7 +91,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue, dirty }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -139,9 +140,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain disabled={!dirty} type='submit'>
-                Zapisz
-              </ButtonMain>
+              <SubmitButton>Zapisz</SubmitButton>
               <ButtonBordered
                 type='button'
                 onClick={() => push(Routing.Records.path)}

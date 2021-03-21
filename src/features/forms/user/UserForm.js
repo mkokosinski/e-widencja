@@ -13,12 +13,13 @@ import {
   ButtonsContainer,
   Row,
 } from '../../../components/Form/FormsStyles';
-import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
+import { ButtonBordered } from '../../layout/LayoutStyles';
 import { validationMessages } from '../../../utils/formUtils';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { addUser, editUser } from '../../users/usersSlice';
 import useValidation from '../../../hooks/useValidation';
+import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -81,7 +82,7 @@ const UserForm = ({ user, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ dirty }) => (
+        {() => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Imię' scrollFocused>
@@ -124,9 +125,7 @@ const UserForm = ({ user, isEdit }) => {
             )} */}
 
             <ButtonsContainer>
-              <ButtonMain disabled={!dirty} type='submit'>
-                Zapisz
-              </ButtonMain>
+              <SubmitButton>Zapisz</SubmitButton>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

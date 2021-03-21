@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 
 import Routing from '../routing/Routing';
 import FieldWithErrors from '../../components/Form/fieldWithErrors';
-import { ButtonMain } from '../layout/LayoutStyles';
 import {
   StyledField,
   Row,
@@ -24,6 +23,7 @@ import {
 } from './AuthStyles';
 import { motion } from 'framer-motion';
 import { authFormAnimations } from '../../utils/animationUtils';
+import SubmitButton from '../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -113,7 +113,7 @@ const SignUpForm = ({ redirectPath = Routing.Dashboard.path }) => {
               </Row>
 
               <AuthButtonsWrapper>
-                <ButtonMain type='submit'>Zarejestruj</ButtonMain>
+                <SubmitButton>Zarejestruj</SubmitButton>
               </AuthButtonsWrapper>
               <Row>
                 <StyledError>{error}</StyledError>

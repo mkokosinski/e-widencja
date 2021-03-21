@@ -17,7 +17,7 @@ import {
   ButtonsContainer,
   Row,
 } from '../../../components/Form/FormsStyles';
-import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
+import { ButtonBordered } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCarBrands } from '../../vehicles/carBrandsSlice';
 import {
@@ -27,6 +27,7 @@ import {
 import { addVehicle, editVehicle } from '../../vehicles/redux/vehicleThunk';
 import { toast } from 'react-toastify';
 import useValidation from '../../../hooks/useValidation';
+import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -123,7 +124,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue, dirty }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa' scrollFocused>
@@ -229,9 +230,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain disabled={!dirty} type='submit'>
-                Zapisz
-              </ButtonMain>
+              <SubmitButton>Zapisz</SubmitButton>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

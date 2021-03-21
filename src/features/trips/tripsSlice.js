@@ -151,6 +151,7 @@ export const editTrip = createAsyncThunk(
 
       const trip = {
         ...editedTrip,
+        distance,
         updatedBy: currUser.id,
         updated: firestoreFunctions.FieldValue.serverTimestamp(),
       };
@@ -265,8 +266,6 @@ export const tripSlice = createSlice({
   },
 });
 
-const trips = (state) => state.trips;
-
 export const selectTrips = (state) => ({
   ...state.trips,
   items: state.trips.items.filter((trip) => trip.active),
@@ -282,7 +281,6 @@ export const selectTripsFullData = createSelector(
       const record = records.items.find((r) => r.id === trip.recordId);
       const vehicle = vehicles.find((veh) => veh.id === trip.vehicleId);
       const driver = drivers.find((driver) => driver.id === trip.driverId);
-      const subname = `${trip.date} ${vehicle}`;
       items.push({
         ...trip,
         record,

@@ -11,7 +11,6 @@ import {
 } from './ListViewItemStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { A } from '../../layout/LayoutStyles';
 import { DeleteButton } from '../detailsView/DetailsComponents';
 import AppLink from '../AppLink';
 

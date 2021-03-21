@@ -15,7 +15,7 @@ import {
   Row,
   StyledSelect,
 } from '../../../components/Form/FormsStyles';
-import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
+import { ButtonBordered } from '../../layout/LayoutStyles';
 import DateInput, {
   DATEPICKER_TYPES,
 } from '../../../components/Form/DateInput';
@@ -30,6 +30,7 @@ import Checkbox from '../../../components/Form/checkbox';
 import { addTrip, editTrip } from '../../trips/tripsSlice';
 import StopsList from './StopsList';
 import { refreshStopsMileage } from '../../../utils/trips';
+import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -185,7 +186,7 @@ const TripForm = ({ trip, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue, dirty }) => (
+        {({ values, setFieldTouched, setFieldValue }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -269,8 +270,6 @@ const TripForm = ({ trip, isEdit }) => {
                     onChange={(option) => {
                       setFieldTouched('tripTemplate');
                       setFieldValue('tripTemplate', option);
-                      console.log(option);
-
                       setFieldValue('purpose', {
                         label: option.purpose,
                         value: option.purpose,
@@ -337,9 +336,7 @@ const TripForm = ({ trip, isEdit }) => {
             )}
 
             <ButtonsContainer>
-              <ButtonMain disabled={!dirty} type='submit'>
-                Zapisz
-              </ButtonMain>
+              <SubmitButton>Zapisz</SubmitButton>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

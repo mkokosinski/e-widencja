@@ -17,7 +17,7 @@ import { INPUT_SIZE, USER_ROLES } from '../../../utils/constants';
 import { validationMessages } from '../../../utils/formUtils';
 import { removeChar, removeWhiteSpaces } from '../../../utils/stringUtils';
 
-import { ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
+import { ButtonBordered } from '../../layout/LayoutStyles';
 import {
   ButtonsContainer,
   Row,
@@ -25,6 +25,7 @@ import {
   StyledField,
   StyledForm,
 } from '../../../components/Form/FormsStyles';
+import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object({
   companyName: Yup.string().required(validationMessages.required),
@@ -54,7 +55,7 @@ const EditCompanyForm = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const canEdit = currentUser.role === USER_ROLES.ADMIN;
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     const data = {
       id: companyData.id,
       name: values.companyName,
@@ -68,7 +69,9 @@ const EditCompanyForm = (props) => {
     const validate = validation.company(data);
 
     if (validate.success) {
-      dispatch(editCompany(data));
+      dispatch(editCompany(data)).then(() => {
+        resetForm(values);
+      });
     } else {
       toast.error(validate.error);
     }
@@ -90,7 +93,7 @@ const EditCompanyForm = (props) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ dirty }) => (
+      {() => (
         <StyledForm>
           <Row>
             <FieldWithErrors
@@ -156,9 +159,7 @@ const EditCompanyForm = (props) => {
           </Row>
           {canEdit ? (
             <ButtonsContainer>
-              <ButtonMain disabled={!dirty} type='submit'>
-                Zapisz
-              </ButtonMain>
+              <SubmitButton>Zapisz</SubmitButton>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>
