@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectFbUser } from '../auth/authSlice';
+import { selectCurrentUser } from '../auth/authSlice';
 import { A } from '../layout/LayoutStyles';
 import {
   RecentUsersSectionInfoWrapper,
@@ -26,7 +26,7 @@ import Routing from '../routing/Routing';
 import AppLink from '../templates/AppLink';
 
 const LastTripDashboardItem = ({ trip }) => {
-  const user = useSelector(selectFbUser);
+  const user = useSelector(selectCurrentUser);
   const tripDistance = trip.stops.reduce((sum, cur) => sum + cur.distance, 0);
   return (
     <AppLink to={`${Routing.TripEdit.action}/${trip.id}`}>

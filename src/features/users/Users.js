@@ -24,12 +24,12 @@ import FilterButton from '../../app/components/FilterButton';
 import FilterModal from '../records/FilterModal';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { EmptyState } from '../templates/detailsView/DetailsStyles';
-import { selectFbUser } from '../auth/authSlice';
+import { selectCurrentUser } from '../auth/authSlice';
 import { USER_ROLES } from '../../utils/constants';
 
 function Users() {
   const { items: users } = useSelector(selectFilteredUsers);
-  const currentUser = useSelector(selectFbUser);
+  const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
   const buttons = (id) => {

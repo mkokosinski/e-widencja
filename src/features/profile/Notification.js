@@ -25,11 +25,7 @@ const Notification = () => {
           <ItemTitle>
             Nowa wersja! <FontAwesomeIcon icon={faCloudMoonRain} />
           </ItemTitle>
-          <ItemDesc>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-            voluptates reiciendis tempora quisquam veniam. Eum vel Lorem ipsum
-            dolor sit amet consectetur adipisicing elit.
-          </ItemDesc>
+          <ItemDesc>Dodano edycję danych firmy!</ItemDesc>
         </ListItem>
 
         <ListItem>
@@ -46,7 +42,8 @@ const Notification = () => {
 
         <ListItem>
           <ItemTitle>
-            Ciągle ni ma API <FontAwesomeIcon icon={faSnowboarding} />
+            Aplikacja wciąż jest rozwijana{' '}
+            <FontAwesomeIcon icon={faSnowboarding} />
           </ItemTitle>
           <ItemDesc>
             Modi beatae neque sequi ratione accusantium nemo? Vitae doloremque

@@ -86,8 +86,8 @@ export const addTrip = createAsyncThunk(
 
         active: true,
         companyId: currUser.companyId,
-        createdBy: currUser.id,
-        created: firestoreFunctions.FieldValue.serverTimestamp(),
+        updatedBy: currUser.id,
+        updated: firestoreFunctions.FieldValue.serverTimestamp(),
       };
 
       const currentTripMileage =

@@ -151,7 +151,7 @@ export const authSlice = createSlice({
 
 export const selectAuth = (state) => state.auth;
 
-export const selectFbUser = (state) => state.auth.user;
+export const selectCurrentUser = (state) => state.auth.user;
 
 // export const selectUser = (state) =>
 //   createSelector([selectAuth, selectUsers], (auth, users) => {

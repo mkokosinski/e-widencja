@@ -5,7 +5,7 @@ import ReportVat from './VatReport/ReportVat';
 
 const Reports = () => {
   return (
-    <DropdownPanel title='Raport VAT'>
+    <DropdownPanel title='Raport VAT' startExpanded>
       <ReportVat />
     </DropdownPanel>
   );

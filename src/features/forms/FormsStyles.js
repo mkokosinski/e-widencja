@@ -7,6 +7,7 @@ import {
   ButtonBordered,
 } from '../layout/LayoutStyles';
 import { FlexCenter } from '../../AppStyles';
+import ReactInputMask from 'react-input-mask';
 
 // export const StyledForm = styled.form`
 //     display:flex;
@@ -148,6 +149,10 @@ export const StyledField = styled(Field)`
   ${inputStyle}
 
   resize: ${(props) => props.resize};
+`;
+
+export const StyledMaskedInput = styled(ReactInputMask)`
+  ${inputStyle}
 `;
 
 export const StyledSelect = styled.div`

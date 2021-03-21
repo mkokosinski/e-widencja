@@ -95,7 +95,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue, dirty }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa' scrollFocused>
@@ -132,7 +132,9 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain type='submit'>Zapisz</ButtonMain>
+              <ButtonMain disabled={!dirty} type='submit'>
+                Zapisz
+              </ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

@@ -20,7 +20,7 @@ import DateInput, { DATEPICKER_TYPES } from '../DateInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
-import { selectFbUser } from '../../auth/authSlice';
+import { selectCurrentUser } from '../../auth/authSlice';
 import { USER_ROLES } from '../../../utils/constants';
 import { selectTripTemplates } from '../../tripTemplates/tripTemplatesSlice';
 import { selectPurposes } from '../../settings/redux/settingsSlice';
@@ -73,7 +73,7 @@ const TripForm = ({ trip, isEdit }) => {
 
   const { items: records } = useSelector(selectRecords);
   const drivers = useSelector(selectDrivers);
-  const user = useSelector(selectFbUser);
+  const user = useSelector(selectCurrentUser);
   const tripTemplates = useSelector(selectTripTemplates);
   const purposes = useSelector(selectPurposes);
 
@@ -183,7 +183,7 @@ const TripForm = ({ trip, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue, dirty }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -335,7 +335,9 @@ const TripForm = ({ trip, isEdit }) => {
             )}
 
             <ButtonsContainer>
-              <ButtonMain type='submit'>Zapisz</ButtonMain>
+              <ButtonMain disabled={!dirty} type='submit'>
+                Zapisz
+              </ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

@@ -21,7 +21,7 @@ import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCarBrands } from '../../vehicles/carBrandsSlice';
 import {
-  formSelectCreateLabel,
+  getSelectCreateLabel,
   validationMessages,
 } from '../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../vehicles/redux/vehicleThunk';
@@ -123,7 +123,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue, dirty }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Nazwa' scrollFocused>
@@ -156,7 +156,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
                   <SelectCreatable
                     as='select'
                     defaultValue={initValues.model}
-                    formatCreateLabel={(label) => formSelectCreateLabel(label)}
+                    formatCreateLabel={(label) => getSelectCreateLabel(label)}
                     innerRef={modelRef}
                     id='model'
                     isDisabled={!selectedBrand}
@@ -222,14 +222,16 @@ const VehicleForm = ({ vehicle, isEdit }) => {
                     noOptionsMessage={() => 'Wpisz nowy typ'}
                     openMenuOnFocus={true}
                     defaultValue={{ label: values.type, value: values.type }}
-                    formatCreateLabel={(label) => formSelectCreateLabel(label)}
+                    formatCreateLabel={(label) => getSelectCreateLabel(label)}
                   />
                 </StyledSelect>
               </FieldWithErrors>
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain type='submit'>Zapisz</ButtonMain>
+              <ButtonMain disabled={!dirty} type='submit'>
+                Zapisz
+              </ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

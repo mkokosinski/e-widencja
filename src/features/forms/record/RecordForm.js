@@ -88,7 +88,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldTouched, setFieldValue }) => (
+        {({ values, setFieldTouched, setFieldValue, dirty }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='date' label='Data'>
@@ -137,7 +137,9 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
             </Row>
 
             <ButtonsContainer>
-              <ButtonMain type='submit'>Zapisz</ButtonMain>
+              <ButtonMain disabled={!dirty} type='submit'>
+                Zapisz
+              </ButtonMain>
               <ButtonBordered
                 type='button'
                 onClick={() => push(Routing.Records.path)}

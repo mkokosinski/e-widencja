@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import { useDropdown } from '../hooks/useDropdown';
-import { selectFbUser, signOut } from '../auth/authSlice';
+import { selectCurrentUser, signOut } from '../auth/authSlice';
 
 import { ProfileButton, ItemTitle, ListItem } from './ProfilebarStyles';
 
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
-  const user = useSelector(selectFbUser);
+  const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const button = useRef(null);
 

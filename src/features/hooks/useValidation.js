@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
-import { regonValidation } from '../../utils/formUtils';
-import { shallowEqual, deepEqual } from '../../utils/objectUtils';
+import { USER_ROLES } from '../../utils/constants';
+import { validateNip, validateRegon } from '../../utils/formUtils';
 
 export const validationMessages = {
   isDuplicate: 'Element już istnieje',
+  insufficientPrivileges: 'Brak uprawnień',
   record: {
     isDuplicate: 'Istnieje już ewidencja dla tego pojazdu w podanym okresie',
     wrongMileage:
@@ -19,6 +20,10 @@ export const validationMessages = {
   tripTemplate: {
     isDuplicateLabel: 'Istnieje już szablon z taką nazwą',
   },
+  company: {
+    incorrectRegon: 'Niepoprany numer REGON',
+    incorrectNip: 'Niepoprany numer NIP',
+  },
 };
 
 const useValidation = () => {
@@ -27,27 +32,17 @@ const useValidation = () => {
   const { items: vehicles } = state.vehicles;
   const { items: users } = state.users;
   const { items: tripTemplates } = state.tripTemplates;
-  const companyData = state.company.data;
+  const currentUser = state.auth.user;
 
   const record = (values) => {
-    const { month, year, vehicleId, mileage, id } = values;
-    const oldRecord = records
-      .map((rec) => ({
-        month: rec.month,
-        year: rec.year,
-        vehicleId: rec.vehicleId,
-        mileage: rec.mileage,
-        id: rec.id,
-      }))
-      .find((rec) => rec.id === id);
+    const { month, year, vehicleId, mileage } = values;
 
-    const itemWasChanged = id ? !shallowEqual(values, oldRecord) : true;
     const isDuplicate = records.some(
       (rec) =>
         rec.month === month && rec.year === year && rec.vehicleId === vehicleId,
     );
 
-    if (itemWasChanged && isDuplicate) {
+    if (isDuplicate) {
       return {
         error: validationMessages.record.isDuplicate,
         success: false,
@@ -66,124 +61,90 @@ const useValidation = () => {
   };
 
   const vehicle = (values) => {
-    const { id, name, registrationNumber } = values;
+    const { name, registrationNumber } = values;
 
-    const oldVehicle = vehicles
-      .map((rec) => ({
-        id: rec.id,
-        name: rec.name,
-        brand: rec.brand,
-        model: rec.model,
-        registrationNumber: rec.registrationNumber,
-        mileage: rec.mileage,
-        checkupDate: rec.checkupDate,
-        type: rec.type,
-      }))
-      .find((veh) => veh.id === id);
+    const isDuplicateName = vehicles.some(
+      (veh) => veh.name.trim() === name.trim(),
+    );
+    if (isDuplicateName) {
+      return {
+        error: validationMessages.vehicle.isDuplicateName,
+        success: false,
+      };
+    }
 
-    const itemWasChanged = id ? !shallowEqual(values, oldVehicle) : true;
-    const nameWasChanged = id ? name !== oldVehicle.name : true;
-    const regNumberWasChanged = id
-      ? registrationNumber !== oldVehicle.registrationNumber
-      : true;
-
-    if (itemWasChanged) {
-      const isDuplicateName = vehicles.some(
-        (veh) => veh.name.trim() === name.trim(),
-      );
-      if (nameWasChanged && isDuplicateName) {
-        return {
-          error: validationMessages.vehicle.isDuplicateName,
-          success: false,
-        };
-      }
-
-      const isDuplicateRegistration = vehicles.some(
-        (veh) => veh.registrationNumber.trim() === registrationNumber.trim(),
-      );
-      if (regNumberWasChanged && isDuplicateRegistration) {
-        return {
-          error: validationMessages.vehicle.isDuplicateRegistration,
-          success: false,
-        };
-      }
+    const isDuplicateRegistration = vehicles.some(
+      (veh) => veh.registrationNumber.trim() === registrationNumber.trim(),
+    );
+    if (isDuplicateRegistration) {
+      return {
+        error: validationMessages.vehicle.isDuplicateRegistration,
+        success: false,
+      };
     }
 
     return { success: true, error: null };
   };
 
   const user = (values) => {
-    const { id, email } = values;
+    const { email } = values;
 
-    const oldUser = users
-      .map((user) => ({
-        id: user.id,
-        name: user.name,
-        surname: user.surname,
-        label: user.label,
-        email: user.email,
-        isDriver: user.isDriver,
-        isAppUser: user.isAppUser,
-      }))
-      .find((user) => user.id === id);
+    const isDuplicatemail = users.some(
+      (user) => user.email?.trim() === email?.trim(),
+    );
 
-    const itemWasChanged = id ? !shallowEqual(values, oldUser) : true;
-    const emailChanged = id ? oldUser.email !== email : true;
-
-    if (itemWasChanged) {
-      const isDuplicatemail = users.some(
-        (user) => user.email?.trim() === email?.trim(),
-      );
-
-      if (emailChanged && isDuplicatemail) {
-        return {
-          error: validationMessages.user.isDuplicateEmail,
-          success: false,
-        };
-      }
+    if (isDuplicatemail) {
+      return {
+        error: validationMessages.user.isDuplicateEmail,
+        success: false,
+      };
     }
 
     return { success: true, error: null };
   };
 
   const tripTemplate = (values) => {
-    const { id, name } = values;
+    const { name } = values;
 
     const isDuplicateLabel = tripTemplates.some(
       (template) => template.name.trim() === name.trim(),
     );
 
-    const oldTemplate = tripTemplates
-      .map((t) => {
-        const { id, name, purpose, stops } = t;
-        return { id, name, purpose, stops };
-      })
-      .find((template) => template.id === id);
-
-    const nameWasChanged = id ? name !== oldTemplate.name : true;
-    const itemWasChanged = id ? !deepEqual(values, oldTemplate) : true;
-
-    if (itemWasChanged) {
-      if (nameWasChanged && isDuplicateLabel) {
-        return {
-          error: validationMessages.tripTemplate.isDuplicateLabel,
-          success: false,
-        };
-      }
+    if (isDuplicateLabel) {
+      return {
+        error: validationMessages.tripTemplate.isDuplicateLabel,
+        success: false,
+      };
     }
 
     return { error: null, success: true };
   };
 
   const company = (values) => {
-    console.log('732065814', regonValidation('732065814'));
-    console.log('732025814', regonValidation('732025814'));
-    console.log('572418334', regonValidation('572418334'));
+    const { regon, nip } = values;
 
-    console.log('####### 14 ##########');
+    if (!validateRegon(regon)) {
+      return {
+        error: validationMessages.company.incorrectRegon,
+        success: false,
+      };
+    }
 
-    console.log('23511332857188', regonValidation('23511332857188'));
-    console.log('23521332857188', regonValidation('23521332857188'));
+    if (!validateNip(nip)) {
+      return {
+        error: validationMessages.company.incorrectNip,
+        success: false,
+      };
+    }
+
+    if (currentUser.role !== USER_ROLES.ADMIN) {
+      return {
+        error: validationMessages.insufficientPrivileges,
+        success: false,
+      };
+    }
+
+    return { error: null, success: true };
   };
 
   return { record, vehicle, user, tripTemplate, company };

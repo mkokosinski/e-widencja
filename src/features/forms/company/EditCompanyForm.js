@@ -7,6 +7,7 @@ import {
   StyledError,
   StyledField,
   StyledForm,
+  StyledMaskedInput,
 } from '../FormsStyles';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -17,23 +18,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import useValidation from '../../hooks/useValidation';
 import { INPUT_SIZE, USER_ROLES } from '../../../utils/constants';
-import { selectCompany } from '../../company/companySlice';
-import { selectFbUser } from '../../auth/authSlice';
+import { editCompany, selectCompany } from '../../company/companySlice';
+import { selectCurrentUser } from '../../auth/authSlice';
+import { toast } from 'react-toastify';
+import InputMask from 'react-input-mask';
+import MaskedField from '../MaskedField';
+import { removeChar, removeWhiteSpaces } from '../../../utils/stringUtils';
 
 const validationSchema = Yup.object({
-  name: Yup.string()
-    .max(30, validationMessages.max(30))
+  companyName: Yup.string().required(validationMessages.required),
+  phone: Yup.string()
+    .matches(/^\+48\s?([0-9]{3}\s?){3}$/, validationMessages.incorrectFormat)
     .required(validationMessages.required),
-  surname: Yup.string()
-    .max(30, validationMessages.max(30))
+
+  address: Yup.string().required(validationMessages.required),
+  city: Yup.string().required(validationMessages.required),
+  postcode: Yup.string()
+    .matches(/^[0-9]{2}-[0-9]{3}$/, validationMessages.incorrectFormat)
     .required(validationMessages.required),
-  label: Yup.string()
-    .max(15, validationMessages.max(15))
+  nip: Yup.string()
+    .matches(/^[0-9]{10}$/, validationMessages.incorrectFormat)
     .required(validationMessages.required),
-  isDriver: Yup.bool(),
-  email: Yup.string()
-    .email(validationMessages.email)
-    .min(7, validationMessages.min(7))
+  regon: Yup.string()
+    .matches(/^[0-9]{9}$|^[0-9]{14}$/, validationMessages.incorrectFormat)
     .required(validationMessages.required),
 });
 
@@ -43,20 +50,27 @@ const EditCompanyForm = (props) => {
   const validation = useValidation();
 
   const companyData = useSelector(selectCompany);
-  const currentUser = useSelector(selectFbUser);
+  const currentUser = useSelector(selectCurrentUser);
   const canEdit = currentUser.role === USER_ROLES.ADMIN;
 
   const handleSubmit = (values) => {
-    const data = {};
+    const data = {
+      id: companyData.id,
+      name: values.companyName,
+      phone: removeWhiteSpaces(values.phone),
+      address: values.address,
+      city: values.city,
+      postcode: values.postcode,
+      nip: removeChar(values.nip, '-'),
+      regon: values.regon,
+    };
     const validate = validation.company(data);
 
-    //   if (validate.success) {
-    //     dispatch(action(data)).then((res) => {
-    //       goBack();
-    //     });
-    //   } else {
-    //     toast.error(validate.error);
-    //   }
+    if (validate.success) {
+      dispatch(editCompany(data));
+    } else {
+      toast.error(validate.error);
+    }
   };
 
   const initValues = {
@@ -72,10 +86,10 @@ const EditCompanyForm = (props) => {
   return (
     <Formik
       initialValues={initValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {() => (
+      {({ dirty }) => (
         <StyledForm>
           <Row>
             <FieldWithErrors
@@ -84,16 +98,29 @@ const EditCompanyForm = (props) => {
               size={INPUT_SIZE.LARGE}
               scrollFocused
             >
-              <StyledField disabled={!canEdit} type='text' />
+              <StyledField
+                disabled={!canEdit}
+                type='text'
+                placeholder='Nazwa firmy'
+              />
             </FieldWithErrors>
             <FieldWithErrors name='phone' label='Telefon' scrollFocused>
-              <StyledField disabled={!canEdit} type='text' />
+              <MaskedField
+                mask='+48 999 999 999'
+                disabled={!canEdit}
+                name='phone'
+                placeholder='+48 000 000 000'
+              />
             </FieldWithErrors>
           </Row>
 
           <Row>
             <FieldWithErrors name='address' label='Adres' scrollFocused>
-              <StyledField disabled={!canEdit} type='text' />
+              <StyledField
+                disabled={!canEdit}
+                type='text'
+                placeholder='Ulica 00/00'
+              />
             </FieldWithErrors>
             <FieldWithErrors name='city' label='Miasto' scrollFocused>
               <StyledField disabled={!canEdit} type='text' />
@@ -104,7 +131,12 @@ const EditCompanyForm = (props) => {
               size={INPUT_SIZE.SMALL}
               scrollFocused
             >
-              <StyledField disabled={!canEdit} type='text' />
+              <MaskedField
+                mask='99-999'
+                disabled={!canEdit}
+                name='postcode'
+                placeholder='00-000'
+              />
             </FieldWithErrors>
           </Row>
 
@@ -113,12 +145,19 @@ const EditCompanyForm = (props) => {
               <StyledField disabled={!canEdit} type='text' />
             </FieldWithErrors>
             <FieldWithErrors name='regon' label='REGON' scrollFocused>
-              <StyledField disabled={!canEdit} type='text' />
+              <MaskedField
+                autoComplete='off'
+                disabled={!canEdit}
+                mask=''
+                maxLength='14'
+              />
             </FieldWithErrors>
           </Row>
           {canEdit ? (
             <ButtonsContainer>
-              <ButtonMain type='submit'>Zapisz</ButtonMain>
+              <ButtonMain disabled={!dirty} type='submit'>
+                Zapisz
+              </ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

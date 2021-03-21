@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectFbUser } from '../auth/authSlice';
+import { selectCurrentUser } from '../auth/authSlice';
 import Notification from './Notification';
 import Profile from './Profile';
 import {
@@ -11,7 +11,7 @@ import {
 } from './ProfilebarStyles';
 
 const Profilebar = () => {
-  const user = useSelector(selectFbUser);
+  const user = useSelector(selectCurrentUser);
 
   return (
     <StyledBar>

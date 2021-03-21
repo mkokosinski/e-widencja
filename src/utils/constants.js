@@ -36,3 +36,5 @@ export const INPUT_SIZE = {
   NORMAL: 2,
   SMALL: 1,
 };
+
+export const MAX_INPUT_LENGTH = 524288;

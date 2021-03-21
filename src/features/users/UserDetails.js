@@ -28,7 +28,7 @@ import { ReactComponent as SurnameIco } from '../../assets/idCard.svg';
 import { ReactComponent as DriverIco } from '../../assets/driver.svg';
 import { ReactComponent as EmailIco } from '../../assets/email.svg';
 import { selectTripsForDriver } from '../trips/tripsSlice';
-import { selectFbUser } from '../auth/authSlice';
+import { selectCurrentUser } from '../auth/authSlice';
 import { USER_ROLES } from '../../utils/constants';
 import { monthsShort } from '../../utils/dateUtils';
 import { getTripsData } from '../../utils/chartUtils';
@@ -37,7 +37,7 @@ const UserDetalis = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => selectUserById(state, id));
-  const appUser = useSelector(selectFbUser);
+  const appUser = useSelector(selectCurrentUser);
   const trips = useSelector((state) => selectTripsForDriver(state, id));
 
   const canEdit = appUser.role === USER_ROLES.ADMIN || appUser.id === user.id;

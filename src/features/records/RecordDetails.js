@@ -28,12 +28,14 @@ import { ReactComponent as MonthIco } from '../../assets/month.svg';
 import { ReactComponent as CarIco } from '../../assets/car.svg';
 import { months } from '../../utils/dateUtils';
 import { selectTripsForRecord } from '../trips/tripsSlice';
+import { selectCompany } from '../company/companySlice';
 
 const RecordDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const record = useSelector((state) => selectRecordById(state, id));
   const trips = useSelector((state) => selectTripsForRecord(state, id));
+  const company = useSelector(selectCompany);
 
   return record ? (
     <Details>
@@ -52,7 +54,7 @@ const RecordDetails = () => {
           <DetailsIco>
             <CompanyIco />
           </DetailsIco>
-          <DetailsData>{record.company}</DetailsData>
+          <DetailsData>{company.name}</DetailsData>
           <DetailsLabel>Firma</DetailsLabel>
         </DetailsInfo>
 

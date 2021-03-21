@@ -81,7 +81,7 @@ const UserForm = ({ user, isEdit }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => (
+        {({ dirty }) => (
           <StyledForm>
             <Row>
               <FieldWithErrors name='name' label='Imię' scrollFocused>
@@ -124,7 +124,9 @@ const UserForm = ({ user, isEdit }) => {
             )} */}
 
             <ButtonsContainer>
-              <ButtonMain type='submit'>Zapisz</ButtonMain>
+              <ButtonMain disabled={!dirty} type='submit'>
+                Zapisz
+              </ButtonMain>
               <ButtonBordered type='button' onClick={goBack}>
                 Anuluj
               </ButtonBordered>

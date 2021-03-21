@@ -45,7 +45,6 @@ export const StyledLayout = styled.div`
     grid-template-areas:
       'logo body'
       'menu body';
-    overflow: auto;
     flex-direction: row;
     font-size: ${({ theme }) => theme.font.size};
   }
