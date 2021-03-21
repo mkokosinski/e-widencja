@@ -38,7 +38,7 @@ const FilterModal = ({ closeModal }) => {
     carBrandFilter: carBrandFilter.filter,
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     dispatch(setFilter(values));
     closeModal();
   };

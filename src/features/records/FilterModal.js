@@ -28,7 +28,7 @@ const FilterModal = ({ closeModal }) => {
     ...vehicles.map((veh) => ({ label: veh.name, value: veh.id })),
   ];
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const formatedValue = {
       vehicleFilter: values.vehicleFilter,
       dateFilter: {

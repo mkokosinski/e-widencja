@@ -75,7 +75,7 @@ const VehicleNoticeForm = ({ isEdit, editedNotice }) => {
     type: editedNotice?.type || '',
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const data = {
       id: editedNotice?.id || null,
       date: values.date,

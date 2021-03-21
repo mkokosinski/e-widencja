@@ -33,7 +33,7 @@ const UserFiltersModal = ({ closeModal }) => {
     userDriverFilter: userDriverFilter.filter,
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     dispatch(setFilter(values));
     closeModal();
   };

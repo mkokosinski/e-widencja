@@ -1,12 +1,29 @@
 import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select';
+import SelectCreatable from 'react-select/creatable';
+
 import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
+import Checkbox from '../../../components/Form/checkbox';
 import FieldWithErrors from '../../../components/Form/fieldWithErrors';
-import Select from 'react-select';
-import SelectCreatable from 'react-select/creatable';
+import SubmitButton from '../../../components/Form/SubmitButton';
+import StopsList from './StopsList';
+import DateInput, {
+  DATEPICKER_TYPES,
+} from '../../../components/Form/DateInput';
 
+import { selectCurrentUser } from '../../auth/authSlice';
+import { selectRecords } from '../../records/recordsSlice';
+import { selectPurposes } from '../../settings/redux/settingsSlice';
+import { addTrip, editTrip } from '../../trips/tripsSlice';
+import { selectTripTemplates } from '../../tripTemplates/tripTemplatesSlice';
+import { selectDrivers } from '../../users/usersSlice';
+
+import { refreshStopsMileage } from '../../../utils/trips';
+import { USER_ROLES } from '../../../utils/constants';
 import {
   StyledForm,
   Container,
@@ -16,21 +33,6 @@ import {
   StyledSelect,
 } from '../../../components/Form/FormsStyles';
 import { ButtonBordered } from '../../layout/LayoutStyles';
-import DateInput, {
-  DATEPICKER_TYPES,
-} from '../../../components/Form/DateInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectDrivers } from '../../users/usersSlice';
-import { selectRecords } from '../../records/recordsSlice';
-import { selectCurrentUser } from '../../auth/authSlice';
-import { USER_ROLES } from '../../../utils/constants';
-import { selectTripTemplates } from '../../tripTemplates/tripTemplatesSlice';
-import { selectPurposes } from '../../settings/redux/settingsSlice';
-import Checkbox from '../../../components/Form/checkbox';
-import { addTrip, editTrip } from '../../trips/tripsSlice';
-import StopsList from './StopsList';
-import { refreshStopsMileage } from '../../../utils/trips';
-import SubmitButton from '../../../components/Form/SubmitButton';
 
 const validationSchema = Yup.object().shape({
   date: Yup.date().required('Pole wymagane'),
@@ -162,7 +164,7 @@ const TripForm = ({ trip, isEdit }) => {
     templateName: '',
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const newTrip = {
       id: trip?.id,
       date: values.date,
@@ -315,7 +317,7 @@ const TripForm = ({ trip, isEdit }) => {
             </Row>
 
             <Row>
-              <StopsList stops={values.stops} />
+              <StopsList />
             </Row>
 
             {!isEdit && (

@@ -61,60 +61,76 @@ const useValidation = () => {
   };
 
   const vehicle = (values) => {
-    const { name, registrationNumber } = values;
+    const { id, name, registrationNumber } = values;
+    const oldVehicle = vehicles.find((veh) => veh.id === id);
 
-    const isDuplicateName = vehicles.some(
-      (veh) => veh.name.trim() === name.trim(),
-    );
-    if (isDuplicateName) {
-      return {
-        error: validationMessages.vehicle.isDuplicateName,
-        success: false,
-      };
+    const nameWasChanged = id ? name !== oldVehicle.name : true;
+
+    if (nameWasChanged) {
+      const isDuplicateName = vehicles.some(
+        (veh) => veh.name.trim() === name.trim(),
+      );
+      if (isDuplicateName) {
+        return {
+          error: validationMessages.vehicle.isDuplicateName,
+          success: false,
+        };
+      }
     }
 
-    const isDuplicateRegistration = vehicles.some(
-      (veh) => veh.registrationNumber.trim() === registrationNumber.trim(),
-    );
-    if (isDuplicateRegistration) {
-      return {
-        error: validationMessages.vehicle.isDuplicateRegistration,
-        success: false,
-      };
+    const registrationWasChanged = id ? name !== oldVehicle.name : true;
+    if (registrationWasChanged) {
+      const isDuplicateRegistration = vehicles.some(
+        (veh) => veh.registrationNumber.trim() === registrationNumber.trim(),
+      );
+      if (isDuplicateRegistration) {
+        return {
+          error: validationMessages.vehicle.isDuplicateRegistration,
+          success: false,
+        };
+      }
     }
 
     return { success: true, error: null };
   };
 
   const user = (values) => {
-    const { email } = values;
+    const { id, email } = values;
+    const oldUser = users.find((user) => user.id === id);
 
-    const isDuplicatemail = users.some(
-      (user) => user.email?.trim() === email?.trim(),
-    );
+    const emailChanged = id ? oldUser.email !== email : true;
+    if (emailChanged) {
+      const isDuplicatemail = users.some(
+        (user) => user.email?.trim() === email?.trim(),
+      );
 
-    if (isDuplicatemail) {
-      return {
-        error: validationMessages.user.isDuplicateEmail,
-        success: false,
-      };
+      if (isDuplicatemail) {
+        return {
+          error: validationMessages.user.isDuplicateEmail,
+          success: false,
+        };
+      }
     }
 
     return { success: true, error: null };
   };
 
   const tripTemplate = (values) => {
-    const { name } = values;
+    const { id, name } = values;
+    const oldTemplate = tripTemplates.find((user) => user.id === id);
 
-    const isDuplicateLabel = tripTemplates.some(
-      (template) => template.name.trim() === name.trim(),
-    );
+    const nameWasChanged = id ? oldTemplate.name !== name : true;
+    if (nameWasChanged) {
+      const isDuplicateLabel = tripTemplates.some(
+        (template) => template.name.trim() === name.trim(),
+      );
 
-    if (isDuplicateLabel) {
-      return {
-        error: validationMessages.tripTemplate.isDuplicateLabel,
-        success: false,
-      };
+      if (isDuplicateLabel) {
+        return {
+          error: validationMessages.tripTemplate.isDuplicateLabel,
+          success: false,
+        };
+      }
     }
 
     return { error: null, success: true };

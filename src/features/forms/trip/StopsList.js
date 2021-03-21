@@ -72,13 +72,13 @@ const StopsList = ({ isTemplate }) => {
                   type='button'
                   onClick={() => {
                     if (isTemplate) {
+                      remove(index);
+                    } else {
                       const newStops = stops.filter((item, i) => i !== index);
                       setFieldValue(
                         'stops',
                         refreshStopsMileage(newStops[0].mileage, newStops),
                       );
-                    } else {
-                      remove(index);
                     }
                   }}
                 >

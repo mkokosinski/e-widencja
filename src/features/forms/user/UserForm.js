@@ -43,7 +43,7 @@ const UserForm = ({ user, isEdit }) => {
   const { goBack } = useHistory();
   const validation = useValidation();
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const data = {
       id: values.id,
       name: values.name,
@@ -61,6 +61,7 @@ const UserForm = ({ user, isEdit }) => {
         goBack();
       });
     } else {
+      setSubmitting(false);
       toast.error(validate.error);
     }
   };

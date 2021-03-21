@@ -62,7 +62,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
     mileage: record?.mileage || defaultVehicleOption?.mileage,
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const date = new Date(values.date);
     const data = {
       id: record?.id || '',
@@ -80,6 +80,7 @@ const RecordForm = ({ record, isEdit, vehicleId }) => {
         push(Routing.Records.path);
       });
     } else {
+      setSubmitting(false);
       toast.error(validate.error);
     }
   };

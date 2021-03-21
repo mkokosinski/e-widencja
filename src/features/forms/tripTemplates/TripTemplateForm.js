@@ -65,7 +65,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
     stops: stops,
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const data = {
       id: tripTemplate?.id || '',
       name: values.name,
@@ -85,6 +85,7 @@ const TripTemplateForm = ({ tripTemplate, isEdit }) => {
         goBack();
       });
     } else {
+      setSubmitting(false);
       toast.error(validate.error);
     }
   };

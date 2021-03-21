@@ -55,7 +55,7 @@ const EditCompanyForm = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const canEdit = currentUser.role === USER_ROLES.ADMIN;
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm, setSubmitting }) => {
     const data = {
       id: companyData.id,
       name: values.companyName,
@@ -70,10 +70,11 @@ const EditCompanyForm = (props) => {
 
     if (validate.success) {
       dispatch(editCompany(data)).then(() => {
-        resetForm(values);
+        resetForm({ values });
       });
     } else {
       toast.error(validate.error);
+      setSubmitting(false);
     }
   };
 

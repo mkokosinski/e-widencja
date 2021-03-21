@@ -11,9 +11,11 @@ const SortModalContent = ({ sortFunc, closeModal, sortItems = [] }) => {
   // const minDate = useSelector(selectEldestDate);
   const dispatch = useDispatch();
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     setTimeout(() => {
-      dispatch(sortFunc(values));
+      dispatch(sortFunc(values)).catch(() => {
+        setSubmitting(false);
+      });
       closeModal();
     }, 200);
   };

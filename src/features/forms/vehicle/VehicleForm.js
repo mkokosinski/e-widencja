@@ -79,7 +79,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
       : '';
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     const data = {
       id: values.id,
       name: values.name,
@@ -99,6 +99,7 @@ const VehicleForm = ({ vehicle, isEdit }) => {
         goBack();
       });
     } else {
+      setSubmitting(false);
       toast.error(validate.error);
     }
   };
