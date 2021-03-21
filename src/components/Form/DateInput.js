@@ -1,8 +1,8 @@
 import React from 'react';
 import { Input } from './FormsStyles';
 
-import Datepicker from '../../app/components/Datepicker/Datepicker';
-import Monthpicker from '../../app/components/Datepicker/Monthpicker/Monthpicker';
+import Datepicker from '../..//components/Datepicker/Datepicker';
+import Monthpicker from '../..//components/Datepicker/Monthpicker/Monthpicker';
 
 export const DATEPICKER_TYPES = {
   daypicker: 'daypicker',

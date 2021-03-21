@@ -1,7 +1,6 @@
 import { device } from '../layout/LayoutStyles';
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
-import { DetailsSection } from '../templates/detailsView/DetailsStyles';
 
 export const StyledSettings = styled.div`
   display: flex;

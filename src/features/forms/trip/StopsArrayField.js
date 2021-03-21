@@ -2,8 +2,12 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, useFormikContext } from 'formik';
 import React, { useState } from 'react';
-import FieldWithErrors from '../fieldWithErrors';
-import { AddItemButton, FieldsGroup, Input } from '../FormsStyles';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
+import {
+  AddItemButton,
+  FieldsGroup,
+  Input,
+} from '../../components/Form/FormsStyles';
 
 const StopsArrayField = ({ items }) => {
   const [stops, setStops] = useState(items);
@@ -14,7 +18,7 @@ const StopsArrayField = ({ items }) => {
         const labels = [
           'Początek trasy',
           ...stops.map((s, i) => 'Przystanek ' + i).slice(1, -1),
-          'Koniec trasy'
+          'Koniec trasy',
         ];
 
         return (

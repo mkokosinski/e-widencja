@@ -9,7 +9,7 @@ import {
   faSnowboarding,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { useDropdown } from '../hooks/useDropdown';
+import { useDropdown } from '../../hooks/useDropdown';
 import NotificationButton from './NotificationButton';
 
 const Notification = () => {

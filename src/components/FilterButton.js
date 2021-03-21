@@ -1,12 +1,14 @@
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import useModal from '../../features/hooks/useModal';
+
+import useModal from '../hooks/useModal';
+
 import {
   ShowFilterLabel,
   TopButtonIco,
   TopPanelButton,
-} from '../../features/templates/ListView/ListViewStyles';
+} from '../features/templates/ListView/ListViewStyles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const FilterButton = ({ modalComponent: ModalContent }) => {
   const { Modal, openModal, closeModal } = useModal();

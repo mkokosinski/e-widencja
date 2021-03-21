@@ -4,8 +4,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 
-import DateInput from '../forms/DateInput';
-import FieldWithErrors from '../forms/fieldWithErrors';
+import DateInput from '../../components/Form/DateInput';
+import FieldWithErrors from '../../components/Form/fieldWithErrors';
 import {
   filterDefaults,
   selectFilters,
@@ -13,7 +13,7 @@ import {
 } from '../templates/filterSlice';
 import { selectSortedVehicles } from '../vehicles/redux/vehiclesSlice';
 
-import { ButtonsContainer, Row } from '../forms/FormsStyles';
+import { ButtonsContainer, Row } from '../../components/Form/FormsStyles';
 import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
 import { ModalContent } from '../templates/ListView/ListViewStyles';
 

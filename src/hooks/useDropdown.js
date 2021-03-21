@@ -81,7 +81,7 @@ export const useDropdown = (buttonRef, direction = 'bottom') => {
 
       setPosition({ top, bottom, left, right });
     }
-  }, [buttonRef, dropdownRef, direction, isOpen]);
+  }, [buttonRef, dropdownRef, direction]);
 
   const openDropdown = () => {
     setIsOpen(true);

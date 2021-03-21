@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import GliderJS from 'glider-js';
-import '../../../node_modules/glider-js/glider.min.css';
+import '../../node_modules/glider-js/glider.min.css';
 import styled from 'styled-components';
 
 const StyledGlider = styled.div`

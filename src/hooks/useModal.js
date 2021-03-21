@@ -1,10 +1,12 @@
-import { motion } from 'framer-motion';
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { ModalAnimation } from '../../utils/animationUtils';
-import { device } from '../layout/LayoutStyles';
+
+import { motion } from 'framer-motion';
 import useDetectOutsideClick from './useDetectOutsideClick';
+import { ModalAnimation } from '../utils/animationUtils';
+
+import { device } from '../features/layout/LayoutStyles';
 
 export const ModalBackground = styled(motion.div)`
   align-items: flex-start;

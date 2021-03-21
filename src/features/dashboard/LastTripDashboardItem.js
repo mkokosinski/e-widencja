@@ -1,15 +1,10 @@
-import {
-  faCalendarAlt,
-  faCar,
-  faEllipsisH,
-  faRoad,
-  faTachometerAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
+
+import Routing from '../routing/Routing';
+import AppLink from '../templates/AppLink';
 import { selectCurrentUser } from '../auth/authSlice';
-import { A } from '../layout/LayoutStyles';
+
 import {
   RecentUsersSectionInfoWrapper,
   RecentUsersSectionPhoto,
@@ -22,8 +17,14 @@ import {
   RecentUsersSectionIco,
 } from './DashboardStyles';
 import { ReactComponent as UserIco } from '../../assets/man.svg';
-import Routing from '../routing/Routing';
-import AppLink from '../templates/AppLink';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCalendarAlt,
+  faCar,
+  faEllipsisH,
+  faRoad,
+  faTachometerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 const LastTripDashboardItem = ({ trip }) => {
   const user = useSelector(selectCurrentUser);

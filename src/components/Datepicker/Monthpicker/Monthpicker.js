@@ -8,14 +8,14 @@ import { AnimatePresence } from 'framer-motion';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRef } from 'react';
 import ReactDOM from 'react-dom';
-import useDetectOutsideClick from '../../../../features/hooks/useDetectOutsideClick';
-import { ModalAnimation } from '../../../../utils/animationUtils';
+import useDetectOutsideClick from '../../../hooks/useDetectOutsideClick';
+import { ModalAnimation } from '../../../utils/animationUtils';
 import {
   months as monthsNames,
   datesAreEqual,
   dateBetween,
   compareDates,
-} from '../../../../utils/dateUtils';
+} from '../../../utils/dateUtils';
 
 import {
   DatepickerContainer,

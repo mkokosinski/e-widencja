@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyledMaskedInput } from './FormsStyles';
 import { useField } from 'formik';
-import { MAX_INPUT_LENGTH } from '../../utils/constants';
 
 const MaskedField = (props) => {
   const [field] = useField(props.name);

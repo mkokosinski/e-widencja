@@ -6,13 +6,15 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 
-import FieldWithErrors from '../fieldWithErrors';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
 
-import DateInput, { DATEPICKER_TYPES } from '../DateInput';
-import { DependenttInput } from '../DepentetInput';
+import DateInput, {
+  DATEPICKER_TYPES,
+} from '../../../components/Form/DateInput';
+import { DependenttInput } from '../../../components/Form/DepentetInput';
 import { addRecord, editRecord } from '../../records/recordsSlice';
 import { selectSortedVehicles } from '../../vehicles/redux/vehiclesSlice';
-import useValidation from '../../hooks/useValidation';
+import useValidation from '../../../hooks/useValidation';
 
 import {
   StyledForm,
@@ -20,7 +22,7 @@ import {
   ButtonsContainer,
   Row,
   StyledSelect,
-} from '../FormsStyles';
+} from '../../../components/Form/FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import Routing from '../../routing/Routing';
 

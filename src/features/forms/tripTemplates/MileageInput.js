@@ -1,7 +1,7 @@
 import { useField, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { number } from 'yup';
-import { Input } from '../FormsStyles';
+import { Input } from '../../components/Form/FormsStyles';
 
 const MilageInput = (props) => {
   const [value, setValue] = useState(0);
@@ -10,7 +10,7 @@ const MilageInput = (props) => {
     values: { stops },
     touched,
     initialValues,
-    setFieldValue
+    setFieldValue,
   } = useFormikContext();
   const [field] = useField(props);
 
@@ -19,24 +19,24 @@ const MilageInput = (props) => {
 
     newStops[props.index] = {
       ...newStops[props.index],
-      mileage: value
+      mileage: value,
     };
 
     for (let i = 0; i < newStops.length; i++) {
       const s = newStops[i];
       const pre = i !== 0 ? newStops[i - 1].mileage : initialValues.initMileage;
 
-      const newDistance = parseFloat(s.mileage - pre)
+      const newDistance = parseFloat(s.mileage - pre);
 
       if (i === props.index) {
         newStops[i] = {
           ...s,
-          distance: newDistance
+          distance: newDistance,
         };
       } else {
         newStops[i] = {
           ...s,
-          mileage: pre + s.distance
+          mileage: pre + s.distance,
         };
       }
     }

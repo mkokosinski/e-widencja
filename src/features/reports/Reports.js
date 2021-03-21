@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
+import DropdownPanel from '../..//components/DropdownPanel/DropdownPanel';
 import ReportVat from './VatReport/ReportVat';
 
 const Reports = () => {

@@ -1,7 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 
+import useModal from '../../../hooks/useModal';
+
+import AppLink from '../AppLink';
+
 import { DetailsGoBack, DetailsButton } from './DetailsStyles';
+import { ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
+import { ModalContent } from '../ListView/ListViewStyles';
+import { ButtonsContainer, Row } from '../../../components/Form/FormsStyles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,11 +16,6 @@ import {
   faPen,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import useModal from '../../hooks/useModal';
-import { A, ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
-import { ButtonsContainer, Row } from '../../forms/FormsStyles';
-import { ModalContent } from '../ListView/ListViewStyles';
-import AppLink from '../AppLink';
 
 export const ButtonGoBack = () => {
   const { goBack } = useHistory();

@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router';
 import * as Yup from 'yup';
 
 import Select from 'react-select';
-import FieldWithErrors from '../../fieldWithErrors';
+import FieldWithErrors from '../../../../components/Form/fieldWithErrors';
 
 import {
   StyledForm,
@@ -15,7 +15,7 @@ import {
   Row,
   StyledFormTitle,
   FormTitleDeleteButton,
-} from '../../FormsStyles';
+} from '../../../../components/Form/FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { validationMessages } from '../../../../utils/formUtils';
@@ -26,7 +26,9 @@ import {
   deleteNotice,
   editNotice,
 } from '../../../vehicles/redux/notices';
-import DateInput, { DATEPICKER_TYPES } from '../../DateInput';
+import DateInput, {
+  DATEPICKER_TYPES,
+} from '../../../../components/Form/DateInput';
 import { ThemeContext } from 'styled-components';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

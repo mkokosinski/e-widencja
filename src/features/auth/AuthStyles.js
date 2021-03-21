@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { device } from '../layout/LayoutStyles';
 import Wave from '../../assets/wave.svg';
 import Squares from '../../assets/chessBoard.svg';
-import { StyledForm } from '../forms/FormsStyles';
+import { StyledForm } from '../../components/Form/FormsStyles';
 import { motion } from 'framer-motion';
 
 export const AuthContainer = styled.div`

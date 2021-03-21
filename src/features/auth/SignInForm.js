@@ -4,9 +4,13 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import Routing from '../routing/Routing';
-import FieldWithErrors from '../forms/fieldWithErrors';
+import FieldWithErrors from '../../components/Form/fieldWithErrors';
 import { ButtonMain } from '../layout/LayoutStyles';
-import { StyledField, Row, StyledError } from '../forms/FormsStyles';
+import {
+  StyledField,
+  Row,
+  StyledError,
+} from '../../components/Form/FormsStyles';
 
 import { selectAuth, signIn } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';

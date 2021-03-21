@@ -6,8 +6,8 @@ import {
   MileageFieldsGroup,
   RemoveItemButton,
   StyledField,
-} from '../FormsStyles';
-import FieldWithErrors from '../fieldWithErrors';
+} from '../../../components/Form/FormsStyles';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
 import DistanceInput from './DistanceInput';
 import MileageInput from './MileageInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

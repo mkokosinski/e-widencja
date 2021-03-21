@@ -8,11 +8,11 @@ import {
   selectFilters,
   setFilter,
 } from '../templates/filterSlice';
-import FieldWithErrors from '../forms/fieldWithErrors';
+import FieldWithErrors from '../../components/Form/fieldWithErrors';
 
 import { ModalContent } from '../templates/ListView/ListViewStyles';
 
-import { ButtonsContainer, Row } from '../forms/FormsStyles';
+import { ButtonsContainer, Row } from '../../components/Form/FormsStyles';
 import { Formik } from 'formik';
 import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
 import { selectCarBrands, selectSortedVehicles } from './redux/vehiclesSlice';

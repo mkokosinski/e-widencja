@@ -4,7 +4,7 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../templates/filterSlice';
-import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../firebase/firebase';
 import { selectRecords } from '../records/recordsSlice';
 import { compareDates, getNowString } from '../../utils/dateUtils';
 import { FETCH_STATUS } from '../../utils/constants';

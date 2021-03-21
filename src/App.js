@@ -8,7 +8,7 @@ import Routing from './features/routing/Routing';
 import AppRouter from './features/routing/AppRouter';
 
 import LayoutProvider from './features/layout/LayoutProvider';
-import { auth } from './app/firebase/firebase';
+import { auth } from './firebase/firebase';
 import Loading from './features/loading/Loading';
 import { selectAuth, authorize } from './features/auth/authSlice';
 import { fetchCompany } from './features/company/companySlice';

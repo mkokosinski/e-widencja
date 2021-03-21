@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../firebase/firebase';
 import { FETCH_STATUS } from '../../utils/constants';
 
 export const fetchCompany = createAsyncThunk(

@@ -1,13 +1,15 @@
-import { faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import useModal from '../../features/hooks/useModal';
+
+import SortModalContent from './SortModal';
+import useModal from '../hooks/useModal';
+
 import {
   ShowFilterLabel,
   TopButtonIco,
   TopPanelButton,
-} from '../../features/templates/ListView/ListViewStyles';
-import SortModalContent from './SortModal';
+} from '../features/templates/ListView/ListViewStyles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortAmountUpAlt } from '@fortawesome/free-solid-svg-icons';
 
 const SortButton = ({ modalItems, sortFunc }) => {
   const SortModal = useModal();

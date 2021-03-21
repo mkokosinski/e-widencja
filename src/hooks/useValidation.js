@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { USER_ROLES } from '../../utils/constants';
-import { validateNip, validateRegon } from '../../utils/formUtils';
+import { USER_ROLES } from '../utils/constants';
+import { validateNip, validateRegon } from '../utils/formUtils';
 
 export const validationMessages = {
   isDuplicate: 'Element już istnieje',

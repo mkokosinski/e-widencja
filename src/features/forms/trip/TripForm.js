@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
-import FieldWithErrors from '../fieldWithErrors';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
 import Select from 'react-select';
 import SelectCreatable from 'react-select/creatable';
 
@@ -14,9 +14,11 @@ import {
   ButtonsContainer,
   Row,
   StyledSelect,
-} from '../FormsStyles';
+} from '../../../components/Form/FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
-import DateInput, { DATEPICKER_TYPES } from '../DateInput';
+import DateInput, {
+  DATEPICKER_TYPES,
+} from '../../../components/Form/DateInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDrivers } from '../../users/usersSlice';
 import { selectRecords } from '../../records/recordsSlice';
@@ -24,7 +26,7 @@ import { selectCurrentUser } from '../../auth/authSlice';
 import { USER_ROLES } from '../../../utils/constants';
 import { selectTripTemplates } from '../../tripTemplates/tripTemplatesSlice';
 import { selectPurposes } from '../../settings/redux/settingsSlice';
-import Checkbox from '../checkbox';
+import Checkbox from '../../../components/Form/checkbox';
 import { addTrip, editTrip } from '../../trips/tripsSlice';
 import StopsList from './StopsList';
 import { refreshStopsMileage } from '../../../utils/trips';

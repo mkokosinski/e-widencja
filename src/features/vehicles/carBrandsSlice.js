@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { firestore } from '../../app/firebase/firebase';
+import { firestore } from '../../firebase/firebase';
 import { FETCH_STATUS } from '../../utils/constants';
 
 export const fetchCarBrands = createAsyncThunk(

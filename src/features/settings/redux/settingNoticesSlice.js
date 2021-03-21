@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { firestore } from '../../../app/firebase/firebase';
+import { firestore } from '../../../firebase/firebase';
 import { toast } from 'react-toastify';
 import { FETCH_STATUS, SETTING_NAME } from '../../../utils/constants';
 

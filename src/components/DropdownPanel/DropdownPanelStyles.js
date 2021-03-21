@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { FlexCenter } from '../../../AppStyles';
 import { motion } from 'framer-motion';
-import { device } from '../../../features/layout/LayoutStyles';
+import { FlexCenter } from '../../AppStyles';
+import { device } from '../../features/layout/LayoutStyles';
 
 export const StyledDropdownPanel = styled(motion.div)`
   width: 98%;

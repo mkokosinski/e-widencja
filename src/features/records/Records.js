@@ -9,7 +9,7 @@ import {
   setSortFunc,
 } from './recordsSlice';
 import ListViewItem from '../templates/ListView/ListViewItem';
-import SortButton from '../../app/components/SortButton';
+import SortButton from '../..//components/SortButton';
 import FilterModal from './FilterModal';
 
 import {
@@ -25,7 +25,7 @@ import {
   faPlusSquare,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import FilterButton from '../../app/components/FilterButton';
+import FilterButton from '../..//components/FilterButton';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { EmptyState } from '../templates/detailsView/DetailsStyles';
 

@@ -3,8 +3,8 @@ import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
-import FieldWithErrors from '../fieldWithErrors';
-import Checkbox from '../checkbox';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
+import Checkbox from '../../../components/Form/checkbox';
 
 import {
   StyledForm,
@@ -12,13 +12,13 @@ import {
   StyledField,
   ButtonsContainer,
   Row,
-} from '../FormsStyles';
+} from '../../../components/Form/FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import { validationMessages } from '../../../utils/formUtils';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { addUser, editUser } from '../../users/usersSlice';
-import useValidation from '../../hooks/useValidation';
+import useValidation from '../../../hooks/useValidation';
 
 const validationSchema = Yup.object({
   name: Yup.string()

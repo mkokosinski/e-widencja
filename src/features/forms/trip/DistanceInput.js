@@ -1,6 +1,6 @@
 import { useField, useFormikContext } from 'formik';
 import React, { useCallback } from 'react';
-import { Input } from '../FormsStyles';
+import { Input } from '../../../components/Form/FormsStyles';
 
 const DistanceInput = (props) => {
   // const [value, setValue] = useState(0);

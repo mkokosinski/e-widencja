@@ -1,5 +1,20 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { format } from 'date-fns';
+import { AnimatePresence } from 'framer-motion';
+
+import Day from './Day';
+import useDetectOutsideClick from '../../hooks/useDetectOutsideClick';
+
+import {
+  compareDates,
+  dateBetween,
+  datesAreEqual,
+  daysShort,
+  months,
+} from '../../utils/dateUtils';
+import { ModalAnimation } from '../../utils/animationUtils';
+
 import {
   DatepickerContainer,
   DatepickerContent,
@@ -10,25 +25,11 @@ import {
   DatepickerPrevious,
   DetepickerActiveMonth,
 } from './DatepickerStyles';
-
-import { useEffect } from 'react';
-import { format } from 'date-fns';
-import {
-  compareDates,
-  dateBetween,
-  datesAreEqual,
-  daysShort,
-  months,
-} from '../../../utils/dateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import Day from './Day';
-import useDetectOutsideClick from '../../../features/hooks/useDetectOutsideClick';
-import { AnimatePresence } from 'framer-motion';
-import { ModalAnimation } from '../../../utils/animationUtils';
 
 const getDaysCount = (year, month) => new Date(year, month + 1, 0).getDate();
 

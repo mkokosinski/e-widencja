@@ -5,7 +5,7 @@ import {
   device,
   Button,
   ButtonBordered,
-} from '../layout/LayoutStyles';
+} from '../../features/layout/LayoutStyles';
 import { FlexCenter } from '../../AppStyles';
 import ReactInputMask from 'react-input-mask';
 

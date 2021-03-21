@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import DropdownPanel from '../../app/components/DropdownPanel/DropdownPanel';
+import DropdownPanel from '../..//components/DropdownPanel/DropdownPanel';
 import EditCompanyForm from '../forms/company/EditCompanyForm';
 import FeatureItems from './FeatureItems';
 import {

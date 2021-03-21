@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { useDropdown } from '../hooks/useDropdown';
+import Routing from '../routing/Routing';
+import { useDropdown } from '../../hooks/useDropdown';
 import { selectCurrentUser, signOut } from '../auth/authSlice';
 
 import { ProfileButton, ItemTitle, ListItem } from './ProfilebarStyles';
@@ -11,9 +14,6 @@ import {
   faUserAlt,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import Routing from '../routing/Routing';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const user = useSelector(selectCurrentUser);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ModalContent } from '../templates/ListView/ListViewStyles';
-import { ButtonsContainer, Row } from '../forms/FormsStyles';
+import { ButtonsContainer, Row } from '../../components/Form/FormsStyles';
 import { ButtonBordered, ButtonMain } from '../layout/LayoutStyles';
 import { Redirect, useHistory, useLocation } from 'react-router';
 import Routing from '../routing/Routing';

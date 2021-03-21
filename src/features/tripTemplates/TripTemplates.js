@@ -15,7 +15,7 @@ import {
 } from '../templates/ListView/ListViewStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ListViewItem from '../templates/ListView/ListViewItem';
-import FilterButton from '../../app/components/FilterButton';
+import FilterButton from '../..//components/FilterButton';
 import FilterModal from './TripFilters';
 import { deleteTripTemplate, selectTripTemplates } from './tripTemplatesSlice';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';

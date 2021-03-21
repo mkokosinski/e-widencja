@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import SelectCreatable from 'react-select/creatable';
 
-import FieldWithErrors from '../fieldWithErrors';
-import DateInput from '../DateInput';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
+import DateInput from '../../../components/Form/DateInput';
 
 import {
   StyledForm,
@@ -16,7 +16,7 @@ import {
   StyledSelect,
   ButtonsContainer,
   Row,
-} from '../FormsStyles';
+} from '../../../components/Form/FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCarBrands } from '../../vehicles/carBrandsSlice';
@@ -26,7 +26,7 @@ import {
 } from '../../../utils/formUtils';
 import { addVehicle, editVehicle } from '../../vehicles/redux/vehicleThunk';
 import { toast } from 'react-toastify';
-import useValidation from '../../hooks/useValidation';
+import useValidation from '../../../hooks/useValidation';
 
 const validationSchema = Yup.object({
   name: Yup.string()

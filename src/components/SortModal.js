@@ -1,12 +1,13 @@
 import React from 'react';
-
-import { Group, GroupTitle } from '../../features/forms/FormsStyles';
-import { Formik } from 'formik';
-import { ModalContentSort } from '../../features/templates/ListView/ListViewStyles';
-import RadioGroup from '../../features/forms/RadioGroup';
 import { useDispatch } from 'react-redux';
+import { Formik } from 'formik';
 
-const SortModalContent = ({ sortFunc , closeModal, sortItems = [] }) => {
+import { Group, GroupTitle } from '../components/Form/FormsStyles';
+import RadioGroup from '../components/Form/RadioGroup';
+
+import { ModalContentSort } from '../features/templates/ListView/ListViewStyles';
+
+const SortModalContent = ({ sortFunc, closeModal, sortItems = [] }) => {
   // const minDate = useSelector(selectEldestDate);
   const dispatch = useDispatch();
 

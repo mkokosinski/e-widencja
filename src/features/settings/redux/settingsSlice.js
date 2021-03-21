@@ -4,7 +4,7 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { selectFilters } from '../../templates/filterSlice';
-import { firestore } from '../../../app/firebase/firebase';
+import { firestore } from '../../../firebase/firebase';
 import { compareDates } from '../../../utils/dateUtils';
 import { FETCH_STATUS, SETTING_NAME } from '../../../utils/constants';
 import { toast } from 'react-toastify';

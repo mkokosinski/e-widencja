@@ -24,9 +24,9 @@ import {
   AddItem,
   ItemsList,
 } from '../templates/ListView/ListViewStyles';
-import FilterButton from '../../app/components/FilterButton';
+import FilterButton from '../..//components/FilterButton';
 import FilterModal from './VehiclesFiltersModal';
-import SortButton from '../../app/components/SortButton';
+import SortButton from '../..//components/SortButton';
 import {
   InfoMain,
   InfoSecondary,

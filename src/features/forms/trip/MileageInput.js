@@ -1,6 +1,7 @@
-import { useField, useFormikContext } from 'formik';
 import React, { useCallback } from 'react';
-import { Input } from '../FormsStyles';
+import { useField, useFormikContext } from 'formik';
+
+import { Input } from '../../../components/Form/FormsStyles';
 
 const MilageInput = (props) => {
   const {

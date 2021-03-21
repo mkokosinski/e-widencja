@@ -1,31 +1,32 @@
 import React from 'react';
-import { deleteUser, selectFilteredUsers } from './usersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import Routing from '../routing/Routing';
 
+import Routing from '../routing/Routing';
 import ListViewItem from '../templates/ListView/ListViewItem';
+import { deleteUser, selectFilteredUsers } from './usersSlice';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FilterButton from '../../components/FilterButton';
+
+import FilterModal from '../records/FilterModal';
+import { selectCurrentUser } from '../auth/authSlice';
+import { USER_ROLES } from '../../utils/constants';
+
+import { EmptyState } from '../templates/detailsView/DetailsStyles';
+import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import {
   ButtonAdd,
   TopPanel,
   AddItem,
   ItemsList,
 } from '../templates/ListView/ListViewStyles';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
   faUser,
   faFileAlt,
-  faPlusSquare,
   faEdit,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import FilterButton from '../../app/components/FilterButton';
-import FilterModal from '../records/FilterModal';
-import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
-import { EmptyState } from '../templates/detailsView/DetailsStyles';
-import { selectCurrentUser } from '../auth/authSlice';
-import { USER_ROLES } from '../../utils/constants';
 
 function Users() {
   const { items: users } = useSelector(selectFilteredUsers);

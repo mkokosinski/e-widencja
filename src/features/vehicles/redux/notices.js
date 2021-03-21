@@ -1,6 +1,6 @@
 import { v4 as uuid4 } from 'uuid';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { firestore } from '../../../app/firebase/firebase';
+import { firestore } from '../../../firebase/firebase';
 import { toast } from 'react-toastify';
 import { FETCH_STATUS } from '../../../utils/constants';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import LastTripDashboardItem from './LastTripDashboardItem';
 import CheckupList from '../forms/vehicle/CheckupList';
-import Glider from '../../app/components/Glider';
+import Glider from '../..//components/Glider';
 import NoticesList from '../forms/vehicle/NoticesList';
 import { useSelector } from 'react-redux';
 import { selectSortedVehicles } from '../vehicles/redux/vehiclesSlice';

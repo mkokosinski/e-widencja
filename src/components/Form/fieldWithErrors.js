@@ -1,9 +1,12 @@
 import React from 'react';
-import { ErrorContainer, FormField, Label, StyledError } from './FormsStyles';
-import { ErrorMessage, useFormikContext, getIn } from 'formik';
-import { selectIsMobile } from '../layout/layoutSlice';
 import { useSelector } from 'react-redux';
+
+import { ErrorMessage, useFormikContext, getIn } from 'formik';
+
+import { selectIsMobile } from '../../features/layout/layoutSlice';
 import { INPUT_SIZE } from '../../utils/constants';
+
+import { ErrorContainer, FormField, Label, StyledError } from './FormsStyles';
 
 const FieldWithErrors = React.forwardRef((props, ref) => {
   const {

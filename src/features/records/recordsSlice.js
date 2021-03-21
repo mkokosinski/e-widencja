@@ -6,7 +6,7 @@ import {
 import { getNowString, months } from '../../utils/dateUtils';
 import { selectFilters } from '../templates/filterSlice';
 import { selectVehicleById } from '../vehicles/redux/vehiclesSlice';
-import { firestore, firestoreFunctions } from '../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../firebase/firebase';
 
 import { FETCH_STATUS } from '../../utils/constants';
 import { toast } from 'react-toastify';

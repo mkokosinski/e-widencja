@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { firestore, firestoreFunctions } from '../../../app/firebase/firebase';
+import { firestore, firestoreFunctions } from '../../../firebase/firebase';
 import { getNowString } from '../../../utils/dateUtils';
 
 export const fetchVehicles = createAsyncThunk(

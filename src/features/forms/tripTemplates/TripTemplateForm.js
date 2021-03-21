@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
-import FieldWithErrors from '../fieldWithErrors';
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
 import SelectCreatable from 'react-select/creatable';
 
 import {
@@ -13,7 +13,7 @@ import {
   ButtonsContainer,
   Row,
   StyledSelect,
-} from '../FormsStyles';
+} from '../../../components/Form/FormsStyles';
 import { ButtonMain, ButtonBordered } from '../../layout/LayoutStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -21,7 +21,7 @@ import {
   editTripTemplate,
 } from '../../tripTemplates/tripTemplatesSlice';
 import { selectPurposes } from '../../settings/redux/settingsSlice';
-import useValidation from '../../hooks/useValidation';
+import useValidation from '../../../hooks/useValidation';
 import { toast } from 'react-toastify';
 import StopsList from '../trip/StopsList';
 

@@ -1,29 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
+
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+import FieldWithErrors from '../../../components/Form/fieldWithErrors';
+import MaskedField from '../../../components/Form/MaskedField';
+import useValidation from '../../../hooks/useValidation';
+
+import { editCompany, selectCompany } from '../../company/companySlice';
+import { selectCurrentUser } from '../../auth/authSlice';
+
+import { INPUT_SIZE, USER_ROLES } from '../../../utils/constants';
+import { validationMessages } from '../../../utils/formUtils';
+import { removeChar, removeWhiteSpaces } from '../../../utils/stringUtils';
+
+import { ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
 import {
   ButtonsContainer,
-  Container,
   Row,
   StyledError,
   StyledField,
   StyledForm,
-  StyledMaskedInput,
-} from '../FormsStyles';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import FieldWithErrors from '../fieldWithErrors';
-import { ButtonBordered, ButtonMain } from '../../layout/LayoutStyles';
-import { validationMessages } from '../../../utils/formUtils';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import useValidation from '../../hooks/useValidation';
-import { INPUT_SIZE, USER_ROLES } from '../../../utils/constants';
-import { editCompany, selectCompany } from '../../company/companySlice';
-import { selectCurrentUser } from '../../auth/authSlice';
-import { toast } from 'react-toastify';
-import InputMask from 'react-input-mask';
-import MaskedField from '../MaskedField';
-import { removeChar, removeWhiteSpaces } from '../../../utils/stringUtils';
+} from '../../../components/Form/FormsStyles';
 
 const validationSchema = Yup.object({
   companyName: Yup.string().required(validationMessages.required),
