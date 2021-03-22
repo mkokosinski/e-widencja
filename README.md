@@ -9,7 +9,7 @@
 
 </div>
 
-## General InFo
+## General Info
 
 The e-widencja application has been created to keep records of the journeys of company vehicles for the purposes of VAT settlement
 
