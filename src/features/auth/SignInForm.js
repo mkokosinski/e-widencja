@@ -89,7 +89,7 @@ const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {
                 </Row>
 
                 <AuthButtonsWrapper>
-                  <SubmitButton>Zaloguj</SubmitButton>
+                  <SubmitButton disabled={false}>Zaloguj</SubmitButton>
                 </AuthButtonsWrapper>
                 <Row>
                   <StyledError>{error}</StyledError>

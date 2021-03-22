@@ -4,48 +4,11 @@
    height="100mm"
    viewBox="0 0 100 100"
    version="1.1"
-  <defs
-     id="defs2" />
-  <sodipodi:namedview
-     inkscape:snap-page="false"
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="96.357923"
-     inkscape:cy="236.07194"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
-  <metadata
-     id="metadata5">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
   <g
      style="display:inline"
-     inkscape:label="Warstwa 1"
-     inkscape:groupmode="layer"
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:224.395px;line-height:1.25;font-family:'OCR A Extended';-inkscape-font-specification:'OCR A Extended';fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.60989"
        x="19.366711"
        y="230.70892"
        id="text837"><tspan
@@ -53,7 +16,6 @@
          id="tspan835"
          x="19.366711"
          y="230.70892"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'OCR A Extended';-inkscape-font-specification:'OCR A Extended';stroke-width:5.60989" /></text>
     <g
        transform="matrix(1.0287365,0,0,1.0287365,-41.470504,-79.830182)"
        id="g873">
@@ -61,9 +23,7 @@
          id="text1776"
          y="171.09367"
          x="44.202911"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.4209px;line-height:1.25;font-family:Aldrich;-inkscape-font-specification:Aldrich;opacity:1;fill:#5e48b6;fill-opacity:1;stroke:none;stroke-width:0.410524"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Aldrich;-inkscape-font-specification:Aldrich;fill:#5e48b6;fill-opacity:1;stroke-width:0.410524"
            y="171.09367"
            x="44.202911"
            id="tspan1774"

@@ -28,6 +28,7 @@ import {
 import FilterButton from '../..//components/FilterButton';
 import { Name, Subname, Title } from '../templates/ListView/ListViewItemStyles';
 import { EmptyState } from '../templates/detailsView/DetailsStyles';
+import { Helmet } from 'react-helmet';
 
 const buttons = (id) => [
   {
@@ -51,6 +52,10 @@ const Records = () => {
   const sortItems = useSelector(selectSortCases);
   const isMobileKeyboard = useSelector(selectIsMobileKeyboard);
   return (
+    <>
+    <Helmet>
+      <title>Ewidencje pojazdów</title>
+      </Helmet>
     <ItemsList>
       <TopPanel isMobileKeyboard={isMobileKeyboard}>
         <ButtonAdd type='button'>
@@ -85,6 +90,7 @@ const Records = () => {
         <EmptyState>Brak aktywnych ewidencji</EmptyState>
       )}
     </ItemsList>
+    </>
   );
 };
 

@@ -58,7 +58,7 @@ const Logo = () => {
       <LogoIco />
       <Content>
         <h2>E-widencja</h2>
-        <h4>pojazdów</h4>
+        <h4>przejazdów</h4>
       </Content>
     </StyledLogo>
   );

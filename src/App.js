@@ -30,6 +30,7 @@ import {
   StyledLogo,
 } from './features/layout/LayoutStyles';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet';
 
 const App = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -83,45 +84,56 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <LayoutProvider>
-      <ToastContainer
-        position='top-right'
-        autoClose={4000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-      />
-      {shouldSignIn ? (
-        <Routing.Login.Component />
-      ) : isDataLoading || errors ? (
-        <Loading errors={errors} />
-      ) : (
-        <Switch>
-          <Route path={Routing.Login.path}>
-            <Routing.Login.Component />
-          </Route>
+    <>
+      <Helmet titleTemplate='E-widecja - %s'>
+        <meta property='og:type' content='article' />
+        <meta
+          name='description'
+          content='E-widecja - najwygodniejszy sposób prowadzenia ewidencji przejazdów na potrzeby VAT'
+        />
+        <link rel='canonical' href='https://mkokosinski.github.io/e-widencja' />
+        <link rel='icon' type='image/png' href='favicon.ico' sizes='16x16' />
+      </Helmet>
+      <LayoutProvider>
+        <ToastContainer
+          position='top-right'
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+        />
+        {shouldSignIn ? (
+          <Routing.Login.Component />
+        ) : isDataLoading || errors ? (
+          <Loading errors={errors} />
+        ) : (
+          <Switch>
+            <Route path={Routing.Login.path}>
+              <Routing.Login.Component />
+            </Route>
 
-          <PrivateRoute path='/'>
-            <StyledLayout>
-              <StyledLogo>
-                <Logo />
-              </StyledLogo>
-              <Menu>
-                <Navbar />
-              </Menu>
-              <Body>
-                <Profilebar />
-                <AppRouter />
-              </Body>
-            </StyledLayout>
-          </PrivateRoute>
-        </Switch>
-      )}
-    </LayoutProvider>
+            <PrivateRoute path='/'>
+              <StyledLayout>
+                <StyledLogo>
+                  <Logo />
+                </StyledLogo>
+                <Menu>
+                  <Navbar />
+                </Menu>
+                <Body>
+                  <Profilebar />
+                  <AppRouter />
+                </Body>
+              </StyledLayout>
+            </PrivateRoute>
+          </Switch>
+        )}
+      </LayoutProvider>
+    </>
   );
 };
 
