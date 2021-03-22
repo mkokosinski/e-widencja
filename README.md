@@ -28,6 +28,7 @@ The e-widencja application has been created to keep records of the journeys of c
 ## Features
 
 <br/>
+
 **Dynamically converted values and destinations**
 
   ![Mileage](https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/Mileage.gif?alt=media&token=ce9808c8-57ab-4331-82be-bbd32edad638 'Mileage')<br/><br/>
