@@ -1,10 +1,11 @@
-<p align="center" color='red' >
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/LogoMD.png?alt=media&token=428cf0be-ad32-42a8-81fe-f7c8190d0893" alt="Logo" height=160>
-  </a>
+<br />
 
-  <h3 align="center">Best-README-Template</h3>
+<p align="center">
+  <a href="https://mkokosinski.github.io/e-widencja">
+    <img src="https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/LogoMDWhite.png?alt=media&token=641be6a2-3606-431f-afcd-e3650c6277c3" alt="Logo" width=400>
+  </a>
 </p>
+<br />
 
 </div>
 
