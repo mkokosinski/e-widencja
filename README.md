@@ -1,14 +1,14 @@
-# E-widencja App
+<div style='width: 100%; height: 180px; padding: 20px 0 0; display:flex;
+background: url("https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/LogoMD.png?alt=media&token=428cf0be-ad32-42a8-81fe-f7c8190d0893") center center / auto 70% no-repeat;
+background-color:#5a4fad;
+'>
 
-## General Ingo
+</div>
+
+## General InFo
 
 The e-widencja application has been created to keep records of the journeys of company vehicles for the purposes of VAT settlement
 
-**Table of Contents**
-
-[TOCM]
-
-[TOC]
 
 ## Demo
 
@@ -23,21 +23,20 @@ The e-widencja application has been created to keep records of the journeys of c
 
 ## Features
 
-- ** Straightforward adding trips **
-
-       - Dynamically converted values and destinations <br/>
+<br/>
+**Dynamically converted values and destinations**
 
   ![Mileage](https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/Mileage.gif?alt=media&token=ce9808c8-57ab-4331-82be-bbd32edad638 'Mileage')<br/><br/>
 
-       - Save your trip as a template<br/>
+**Save your trip as a template**<br/>
 
   ![SaveAsTemplate](https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/SaveTemplate.gif?alt=media&token=418cf4b3-30b4-445c-afea-b3f99d243991 'SaveAsTemplate') <br/><br/>
+  
+**Customize the application to your requirements**
 
-       - Customize the application to your requirements<br/>
+  ![Settings](https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/Settings.gif?alt=media&token=026f73d8-56a8-411b-a1bb-aa67d085aeb0 'Settings')<br/><br/>
 
-  ![Settings](https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/Settings.png?alt=media&token=7dea5012-d3fd-4f11-8763-b698d3bc1a6b 'Settings')<br/><br/>
-
-### To Do:
+### To Do
 
 - Theme customization
 - Interface customization
