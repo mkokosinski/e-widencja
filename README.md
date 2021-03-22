@@ -1,7 +1,10 @@
-<div style='width: 100%; height: 180px; padding: 20px 0 0; display:flex;
-background: url("https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/LogoMD.png?alt=media&token=428cf0be-ad32-42a8-81fe-f7c8190d0893") center center / auto 70% no-repeat;
-background-color:#5a4fad;
-'>
+<p align="center" color='red' >
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/LogoMD.png?alt=media&token=428cf0be-ad32-42a8-81fe-f7c8190d0893" alt="Logo" height=160>
+  </a>
+
+  <h3 align="center">Best-README-Template</h3>
+</p>
 
 </div>
 
