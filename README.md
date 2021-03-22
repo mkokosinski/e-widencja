@@ -52,10 +52,10 @@ The e-widencja application has been created to keep records of the journeys of c
 
 ## Technologies
 
-- <img src='https://miro.medium.com/fit/c/184/184/1*K0a7xINk0RM5gfXGSN68cw.png' width="24" height="24" /> React
+- <img src='https://miro.medium.com/fit/c/184/184/1*K0a7xINk0RM5gfXGSN68cw.png' width="24" height="24" />&nbsp;React
 
-- <img src='https://cdn.iconscout.com/icon/free/png-256/redux-283024.png' width="24" height="18" style='object-fit: contain;' /> Redux and Redux toolkit
+- &nbsp;<img src='https://cdn.iconscout.com/icon/free/png-256/redux-283024.png' width="18" height="18"  />   &nbsp;Redux and Redux toolkit
 
-- <img src='https://miro.medium.com/max/318/1*7jRD5QhgARucFKvRHFxpOg.png' width="24" height="24" /> Styled-components
+- <img src='https://miro.medium.com/max/318/1*7jRD5QhgARucFKvRHFxpOg.png' width="24" height="24" /> &nbsp;Styled-components
 
-- <img src='https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png' width="24" height="24" />Firebase
+- <img src='https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png' width="24" height="24" /> &nbsp;Firebase
