@@ -6,6 +6,13 @@
   </a>
 </p>
 <br />
+<br />
+
+
+<p align="center">
+    <img src="https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/ewidencjaViews.png?alt=media&token=454297c5-46eb-476a-87ed-e1fd61280d69" alt="Logo" width=400>
+</p>
+<br />
 
 </div>
 
