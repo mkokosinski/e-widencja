@@ -10,7 +10,7 @@
 
 
 <p align="center">
-    <img src="https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/ewidencjaViews.png?alt=media&token=454297c5-46eb-476a-87ed-e1fd61280d69" alt="Logo" width=400>
+    <img src="https://firebasestorage.googleapis.com/v0/b/e-widencja.appspot.com/o/ewidencja.png?alt=media&token=ebb68adc-526e-4442-a4d0-a260a98452ba" alt="Logo" width=400>
 </p>
 <br />
 
