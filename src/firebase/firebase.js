@@ -13,7 +13,7 @@ let config = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-const isLocal = !window.location.hostname === 'localhost';
+const isLocal = window.location.hostname === 'localhost';
 // const isLocal = false;
 
 if (isLocal) {
