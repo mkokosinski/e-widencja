@@ -18,13 +18,7 @@ import {
 } from './DashboardStyles';
 import { ReactComponent as UserIco } from '../../assets/man.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCalendarAlt,
-  faCar,
-  faEllipsisH,
-  faRoad,
-  faTachometerAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faCar, faEllipsisH, faRoad, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
 
 const LastTripDashboardItem = ({ trip }) => {
   const user = useSelector(selectCurrentUser);
@@ -44,7 +38,7 @@ const LastTripDashboardItem = ({ trip }) => {
           <RecentUsersSectionName>{user.name}</RecentUsersSectionName>
           <RecentUsersSectionDesc>
             <FontAwesomeIcon icon={faCar} />
-            {`${trip.vehicle.brand} ${trip.vehicle.model}`}
+            {`${trip.vehicle?.brand} ${trip.vehicle?.model}`}
           </RecentUsersSectionDesc>
           <RecentUsersSectionInfo>
             <FontAwesomeIcon icon={faRoad} />
@@ -56,11 +50,7 @@ const LastTripDashboardItem = ({ trip }) => {
             {`${tripDistance} km`}
           </RecentUsersSectionInfo>
           <RecentUsersSectionIco>
-            <FontAwesomeIcon
-              icon={faCalendarAlt}
-              style={{ marginRight: '5px' }}
-            />
-            ${trip.date}
+            <FontAwesomeIcon icon={faCalendarAlt} style={{ marginRight: '5px' }} />${trip.date}
           </RecentUsersSectionIco>
         </RecentUsersSectionInfoWrapper>
       </RecentUsersSectionStyled>

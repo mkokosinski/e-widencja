@@ -2,12 +2,7 @@ import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { selectFilters } from '../../templates/filterSlice';
 import { FETCH_STATUS } from '../../../utils/constants';
 import { toast } from 'react-toastify';
-import {
-  addVehicle,
-  deleteVehicle,
-  editVehicle,
-  fetchVehicles,
-} from './vehicleThunk';
+import { addVehicle, deleteVehicle, editVehicle, fetchVehicles } from './vehicleThunk';
 import noticeReducers from './notices';
 
 const sortMethods = {
@@ -100,9 +95,7 @@ export const vehicleSlice = createSlice({
     },
     [editVehicle.fulfilled]: (state, { payload }) => {
       state.status = FETCH_STATUS.SUCCESS;
-      state.items = state.items.map((vehicle) =>
-        vehicle.id === payload.id ? { ...vehicle, ...payload } : vehicle,
-      );
+      state.items = state.items.map((vehicle) => (vehicle.id === payload.id ? { ...vehicle, ...payload } : vehicle));
       toast.success('Poprawnie edytowano pojazd');
     },
     [editVehicle.rejected]: (state, action) => {
@@ -136,35 +129,24 @@ export const selectVehicles = (state) => ({
 export const selectSortedVehicles = (state) => {
   const { vehicles } = state;
   const { sortFunc } = vehicles;
-  const sorted = [...vehicles.items].sort(
-    sortMethods[sortFunc.name][sortFunc.condition],
-  );
+  const sorted = [...vehicles.items].sort(sortMethods[sortFunc.name][sortFunc.condition]);
   return { ...vehicles, items: sorted };
 };
 
-export const selectFilteredVehicles = createSelector(
-  [selectSortedVehicles, selectFilters],
-  (vehicles, filters) => {
-    const { vehicleFilter, carBrandFilter } = filters;
+export const selectFilteredVehicles = createSelector([selectSortedVehicles, selectFilters], (vehicles, filters) => {
+  const { vehicleFilter, carBrandFilter } = filters;
 
-    const filtered = vehicles.items
-      .filter((veh) =>
-        vehicleFilter.enable ? veh.id === vehicleFilter.filter.value : veh,
-      )
-      .filter((veh) =>
-        carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh,
-      );
+  const filtered = vehicles.items
+    .filter((veh) => veh.active)
+    .filter((veh) => (vehicleFilter.enable ? veh.id === vehicleFilter.filter.value : veh))
+    .filter((veh) => (carBrandFilter.enable ? veh.brand === carBrandFilter.filter.value : veh));
 
-    return { ...vehicles, items: filtered };
-  },
-);
+  return { ...vehicles, items: filtered };
+});
 
-export const selectVehicleById = (state, vehicleId) =>
-  state.vehicles.items.find((vehicle) => vehicle.id === vehicleId);
+export const selectVehicleById = (state, vehicleId) => state.vehicles.items.find((vehicle) => vehicle.id === vehicleId);
 
-export const selectCarBrands = (state) => [
-  ...new Set(state.vehicles.items.map((veh) => veh.brand)),
-];
+export const selectCarBrands = (state) => [...new Set(state.vehicles.items.map((veh) => veh.brand))];
 
 export const selectVehicleSort = (state) => state.vehicles.sortCases;
 

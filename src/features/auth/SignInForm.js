@@ -5,22 +5,11 @@ import * as Yup from 'yup';
 
 import Routing from '../routing/Routing';
 import FieldWithErrors from '../../components/Form/fieldWithErrors';
-import {
-  StyledField,
-  Row,
-  StyledError,
-} from '../../components/Form/FormsStyles';
+import { StyledField, Row, StyledError } from '../../components/Form/FormsStyles';
 
 import { selectAuth, signIn } from './authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  AuthForm,
-  AuthButtonsWrapper,
-  AuthFormFooter,
-  AuthFormHeader,
-  AuthLink,
-  AuthFormBody,
-} from './AuthStyles';
+import { AuthForm, AuthButtonsWrapper, AuthFormFooter, AuthFormHeader, AuthLink, AuthFormBody } from './AuthStyles';
 import { motion } from 'framer-motion';
 import { authFormAnimations } from '../../utils/animationUtils';
 import SubmitButton from '../../components/Form/SubmitButton';
@@ -47,8 +36,8 @@ const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {
 
   const { user, error } = useSelector(selectAuth);
 
-  const handleSubmit = ({ email, password }) => {
-    dispatch(signIn({ email, password }));
+  const handleSubmit = async ({ email, password }) => {
+    await dispatch(signIn({ email, password }));
   };
 
   if (user) {
@@ -57,18 +46,13 @@ const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {
 
   return (
     <>
-      <Formik
-        initialValues={initValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {() => (
           <AuthForm>
             <AuthFormHeader>
               <motion.h2 {...authFormAnimations}>Logowanie</motion.h2>
               <motion.h4 {...authFormAnimations} transition={{ delay: 0.05 }}>
-                Zaloguj się na e-mail. Pamiętaj, że musisz być zaproszony przez
-                administratora swojej firmy
+                Zaloguj się na e-mail. Pamiętaj, że musisz być zaproszony przez administratora swojej firmy
               </motion.h4>
             </AuthFormHeader>
 
@@ -81,10 +65,7 @@ const SignInForm = ({ redirectPath = Routing.Dashboard.path }) => {
                 </Row>
                 <Row>
                   <FieldWithErrors label='Hasło' name='password'>
-                    <StyledField
-                      type='password'
-                      autoComplete='current-password'
-                    />
+                    <StyledField type='password' autoComplete='current-password' />
                   </FieldWithErrors>
                 </Row>
 

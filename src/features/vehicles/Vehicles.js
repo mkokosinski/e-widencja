@@ -1,29 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-  selectFilteredVehicles,
-  selectVehicleSort,
-  setSortFunc,
-} from './redux/vehiclesSlice';
+import { selectFilteredVehicles, selectVehicleSort, setSortFunc } from './redux/vehiclesSlice';
 import Routing from '../routing/Routing';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPlus,
-  faCarAlt,
-  faFileAlt,
-  faPlusSquare,
-  faEdit,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCarAlt, faFileAlt, faPlusSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import ListViewItem from '../templates/ListView/ListViewItem';
-import {
-  ButtonAdd,
-  TopPanel,
-  AddItem,
-  ItemsList,
-} from '../templates/ListView/ListViewStyles';
+import { ButtonAdd, TopPanel, AddItem, ItemsList } from '../templates/ListView/ListViewStyles';
 import FilterButton from '../..//components/FilterButton';
 import FilterModal from './VehiclesFiltersModal';
 import SortButton from '../..//components/SortButton';
@@ -79,9 +64,7 @@ function Vehicles() {
       {vehicles.length > 0 ? (
         vehicles.map((vehicle) => {
           const recordForCurrentMonth = records.find(
-            (rec) =>
-              rec.vehicleId === vehicle.id &&
-              rec.month === new Date().getMonth() + 1,
+            (rec) => rec.vehicleId === vehicle.id && rec.month === new Date().getMonth() + 1
           );
           return (
             <ListViewItem
